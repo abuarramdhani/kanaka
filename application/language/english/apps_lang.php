@@ -168,6 +168,15 @@ $lang['saving_area_successfully'] = 'Saving data Area succesfully';
 $lang['deleting_area_successfully'] = 'Deleting data Area succesfully';
 ## END Area ##
 
+## Category ##
+$lang['category'] = 'Category';
+$lang['new_category'] = "New Category";
+$lang['edit_category'] = "Edit Category";
+$lang['category_name'] = "Category Name";
+$lang['saving_category_successfully'] = 'Saving data Category succesfully';
+$lang['deleting_category_successfully'] = 'Deleting data Category succesfully';
+## END Category ##
+
 ## Product ##
 $lang['product'] = 'Product';
 $lang['new_product'] = "New Product";

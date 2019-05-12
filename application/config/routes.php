@@ -107,6 +107,13 @@ $route['logs/lists/(:any)'] = 'log/activities/lists/$1';
 $route['logs/detail/(:any)']	= 'log/activities/detail/$1';
 
 /**
+* CATEGORY
+*/
+$route['master/category'] = 'category/categories/index';
+$route['master/category/pdf']	= 'category/categories/pdf';
+$route['master/category/excel']	= 'category/categories/excel';
+
+/**
 * PRODUCT
 */
 $route['master/product'] = 'product/products/index';

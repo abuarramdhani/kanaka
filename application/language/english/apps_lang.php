@@ -55,6 +55,7 @@ $lang['data_details'] = 'Data Details';
 $lang['data_change'] = 'Data Change';
 $lang['old_data'] = 'Old Data';
 $lang['new_data'] = 'New Data';
+$lang['image'] = 'Image';
 ## END GENERAL	##
 
 ## LOGIN PAGE   ##

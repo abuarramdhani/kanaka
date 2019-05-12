@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-09 05:33:14
+Date: 2019-05-12 23:42:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ INSERT INTO `reference_logs` VALUES ('1', '1', 'Menu');
 INSERT INTO `reference_logs` VALUES ('2', '2', 'User');
 INSERT INTO `reference_logs` VALUES ('3', '3', 'User Menus');
 INSERT INTO `reference_logs` VALUES ('4', '4', 'Product');
-INSERT INTO `reference_logs` VALUES ('5', '5', 'Category Product');
+INSERT INTO `reference_logs` VALUES ('5', '5', 'Category');
 INSERT INTO `reference_logs` VALUES ('6', '6', 'DIPO');
 INSERT INTO `reference_logs` VALUES ('7', '7', 'Partner');
 INSERT INTO `reference_logs` VALUES ('8', '8', '-');

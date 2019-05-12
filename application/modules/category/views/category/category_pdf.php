@@ -34,13 +34,7 @@
 	<tr >
 		<th  align="center" width="5%" height="20px">No</th>
 		<th  align="center"><?=lang('name')?></th>
-		<th  align="center"><?=lang('address')?></th>
-		<th  align="center"><?=lang('phone')?></th>
-		<th  align="center"><?=lang('email')?></th>
-		<th  align="center"><?=lang('city')?></th>
-		<th  align="center"><?=lang('subdistrict')?></th>
-		<th  align="center"><?=lang('latitude')?></th>
-		<th  align="center"><?=lang('longitude')?></th>
+		<th  align="center"><?=lang('description')?></th>
 		<th  align="center"><?=lang('created_date')?></th>
 	</tr>
 	<?php 
@@ -53,13 +47,7 @@
 	<tr style="font-size:9px">
 		<td align="center"><?php echo $i;?></td>
 		<td><?=$category->name?></td>
-		<td><?=$category->address?></td>
-		<td><?=$category->phone?></td>
-		<td><?=$category->email?></td>
-		<td><?=$category->city?></td>
-		<td><?=$category->subdistrict?></td>
-		<td><?=$category->latitude?></td>
-		<td><?=$category->longitude?></td>
+		<td><?=$category->description?></td>
 		<td><?=date('d-m-Y',strtotime($category->date_created))?></td>
 	</tr>
 	<?php 
@@ -68,7 +56,7 @@
     else{
     ?>
         <tr style="font-size:9px">
-		  <td align="center" colspan="10">No Data Available</td>
+		  <td align="center" colspan="4">No Data Available</td>
         </tr>
     <?php
     }

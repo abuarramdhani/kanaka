@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-09 05:33:27
+Date: 2019-05-12 23:43:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,7 @@ CREATE TABLE `logs` (
   `type` int(11) NOT NULL,
   PRIMARY KEY (`id_logs`),
   KEY `users_id` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=199 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of logs
@@ -199,3 +199,12 @@ INSERT INTO `logs` VALUES ('186', '1', null, '{\"Name\":\"Bandung Store 1\",\"Ad
 INSERT INTO `logs` VALUES ('187', '1', '{\"Name\":\"Semarang Store\",\"Address\":\"Jalan Diponegoro No 7\",\"Phone\":\"02358618236\",\"Email\":\"semarang_store@kanaka.com\",\"City\":\"Semarang\",\"Subdistrict\":\"Semarang Utara\",\"Latitude\":\"89815236576152\",\"Longitude\":\"-89123617623781\"}', null, null, 'Add dipo Semarang Store succesfully by PT Kanaka', '2019-05-09 05:25:51', 'C', '6');
 INSERT INTO `logs` VALUES ('188', '1', '{\"Name\":\"Semarang Store\",\"Address\":\"Jalan Diponegoro No 7\",\"Phone\":\"02358618236\",\"Email\":\"diposemarang@kanaka.com\",\"City\":\"Semarang\",\"Subdistrict\":\"Semarang Utara\",\"Latitude\":\"89815236576152\",\"Longitude\":\"-89123617623781\"}', '{\"Name\":\"Semarang Store\",\"Address\":\"Jalan Diponegoro No 7\",\"Phone\":\"02358618236\",\"Email\":\"semarang_store@kanaka.com\",\"City\":\"Semarang\",\"Subdistrict\":\"Semarang Utara\",\"Latitude\":\"89815236576152\",\"Longitude\":\"-89123617623781\"}', '{\"Email\":\"diposemarang@kanaka.com\"}', 'Update dipo Semarang Store succesfully by PT Kanaka', '2019-05-09 05:26:07', 'U', '6');
 INSERT INTO `logs` VALUES ('189', '1', null, '{\"Name\":\"Semarang Store\",\"Address\":\"Jalan Diponegoro No 7\",\"Phone\":\"02358618236\",\"Email\":\"diposemarang@kanaka.com\",\"City\":\"Semarang\",\"Subdistrict\":\"Semarang Utara\",\"Latitude\":\"89815236576152\",\"Longitude\":\"-89123617623781\"}', null, 'Delete dipo Semarang Store succesfully by PT Kanaka', '2019-05-09 05:31:15', 'D', '6');
+INSERT INTO `logs` VALUES ('190', '1', '{\"Menu Code\":\"2\",\"Menu Name\":\"Product Category\",\"Menu Link\":\"product_category\",\"Lang\":\"product_category\",\"Parent Menu\":\"Admin\",\"Status\":\"Active\"}', '{\"Menu Code\":2,\"Menu Name\":\"Transaction\",\"Menu Link\":\"transaction\",\"Lang\":\"transaction\",\"Parent Menu\":\"-\",\"Status\":\"Not Active\"}', '{\"Menu Name\":\"Product Category\",\"Menu Link\":\"product_category\",\"Lang\":\"product_category\",\"Parent Menu\":\"Admin\",\"Status\":\"Active\"}', 'Update menu Product Category succesfully by PT Kanaka', '2019-05-10 05:44:43', 'U', '1');
+INSERT INTO `logs` VALUES ('191', '1', '{\"User\":\"PT Kanaka\",\"Menu\":\"Product Category\",\"Availabled\":\"Yes\",\"Created\":\"Yes\",\"Viewed\":\"Yes\",\"Updated\":\"Yes\",\"Deleted\":\"Yes\",\"Approved\":\"Yes\",\"Verified\":\"Yes\",\"Fullaccess\":\"Yes\",\"Print Limited\":\"No\",\"Print Unlimited\":\"Yes\",\"Status Usermenu\":\"Active\"}', null, null, 'Add user menu PT Kanaka succesfully by PT Kanaka', '2019-05-10 05:45:35', 'C', '3');
+INSERT INTO `logs` VALUES ('192', '1', '{\"Menu Code\":\"2\",\"Menu Name\":\"Product Category\",\"Menu Link\":\"product_category\",\"Lang\":\"product_category\",\"Parent Menu\":\"Master\",\"Status\":\"Active\"}', '{\"Menu Code\":2,\"Menu Name\":\"Product Category\",\"Menu Link\":\"product_category\",\"Lang\":\"product_category\",\"Parent Menu\":\"Admin\",\"Status\":\"Active\"}', '{\"Parent Menu\":\"Master\"}', 'Update menu Product Category succesfully by PT Kanaka', '2019-05-10 05:46:01', 'U', '1');
+INSERT INTO `logs` VALUES ('193', '1', '{\"Menu Code\":\"8\",\"Menu Name\":\"Category\",\"Menu Link\":\"category\",\"Lang\":\"category\",\"Parent Menu\":\"Master\",\"Status\":\"Active\"}', '{\"Menu Code\":8,\"Menu Name\":\"Product Category\",\"Menu Link\":\"product_category\",\"Lang\":\"product_category\",\"Parent Menu\":\"Master\",\"Status\":\"Active\"}', '{\"Menu Name\":\"Category\",\"Menu Link\":\"category\",\"Lang\":\"category\"}', 'Update menu Category succesfully by PT Kanaka', '2019-05-12 21:50:22', 'U', '1');
+INSERT INTO `logs` VALUES ('194', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan Pokok\",\"Image\":\"\"}', null, null, 'Add category Beras succesfully by PT Kanaka', '2019-05-12 23:31:11', 'C', '5');
+INSERT INTO `logs` VALUES ('195', '1', '{\"Name\":\"Gula\",\"Description\":\"Makanan\",\"Image\":\"logo-template.png\"}', null, null, 'Add category Gula succesfully by PT Kanaka', '2019-05-12 23:32:51', 'C', '5');
+INSERT INTO `logs` VALUES ('196', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Logo-Property.png\"}', '{\"Name\":\"Beras\",\"Description\":\"Makanan Pokok\",\"Image\":\"\"}', '{\"Description\":\"Makanan\",\"Image\":\"Logo-Property.png\"}', 'Update category Beras succesfully by PT Kanaka', '2019-05-12 23:34:29', 'U', '5');
+INSERT INTO `logs` VALUES ('197', '1', null, '{\"Name\":\"Gula\",\"Description\":\"Makanan\",\"Image\":\"logo-template.png\"}', null, 'Delete category Gula succesfully by PT Kanaka', '2019-05-12 23:37:08', 'D', '5');
+INSERT INTO `logs` VALUES ('198', '1', '{\"Name\":\"Gula\",\"Description\":\"Makanan\",\"Image\":\"\"}', null, null, 'Add category Gula succesfully by PT Kanaka', '2019-05-12 23:38:43', 'C', '5');

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-09 05:32:45
+Date: 2019-05-12 23:42:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,7 +23,7 @@ CREATE TABLE `m_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
   `description` varchar(150) NOT NULL,
-  `image` varchar(30) NOT NULL,
+  `image` varchar(50) NOT NULL,
   `printed` tinyint(4) NOT NULL DEFAULT '0',
   `user_printed` int(11) NOT NULL DEFAULT '0',
   `date_printed` date NOT NULL DEFAULT '1901-01-01',
@@ -41,8 +41,11 @@ CREATE TABLE `m_category` (
   PRIMARY KEY (`id`),
   KEY `rowID` (`id`),
   KEY `deleted` (`deleted`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of m_category
 -- ----------------------------
+INSERT INTO `m_category` VALUES ('1', 'Beras', 'Makanan', 'Logo-Property.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:31:11', '1', '2019-05-12', '23:34:29', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_category` VALUES ('2', 'Gula', 'Makanan', 'logo-template.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:32:51', '0', '1901-01-01', '00:00:00', '1', '1', '2019-05-12', '23:37:08');
+INSERT INTO `m_category` VALUES ('3', 'Gula', 'Makanan', 'logo-template.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:38:43', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');

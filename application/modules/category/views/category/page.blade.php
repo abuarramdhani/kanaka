@@ -57,11 +57,7 @@
                         <thead>
                             <tr>
                                 <th><?=lang('name')?></th>
-                                <th><?=lang('address')?></th>
-                                <th><?=lang('phone')?></th>
-                                <th><?=lang('email')?></th>
-                                <th><?=lang('city')?></th>
-                                <th><?=lang('subdistrict')?></th>
+                                <th><?=lang('description')?></th>
                                 <th><?=lang('created_date')?></th>
                                 <th width="13%"><?=lang('options')?></th>
                             </tr>
@@ -93,58 +89,24 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('address')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('description')?></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="address" id="address" placeholder="<?=lang('address')?>" maxlength="150" />
+                <input type="text" class="form-control input-sm" name="description" id="description" placeholder="<?=lang('description')?>" maxlength="150" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('phone')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm number" name="phone" id="phone" placeholder="<?=lang('phone')?>" maxlength="20" />
+                <input type="file" class="form-control" name="image" id="image" accept="image/*" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('email')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="email" class="form-control input-sm" name="email" id="email" placeholder="<?=lang('email')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('city')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="city" id="city" placeholder="<?=lang('city')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('subdistrict')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="subdistrict" id="subdistrict" placeholder="<?=lang('subdistrict')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('latitude')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="latitude" id="latitude" placeholder="<?=lang('latitude')?>" maxlength="30" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('longitude')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="longitude" id="longitude" placeholder="<?=lang('longitude')?>" maxlength="30" />
-                <div class="form-control-focus"> </div>
+
+        <div class="form-group form-md-line-input" id="preview-upload-image-field">
+            <div class="col-md-offset-4 col-md-6">
+                <div class="preview-upload-image"></div>
             </div>
         </div>
         
@@ -161,6 +123,8 @@
 
 @section('scripts')
 <script type="text/javascript">
+    $('#preview-upload-image-field').hide();
+
     function add_category(){
         $('#form-category')[0].reset(); 
         $('#modal_form').modal('show'); 
@@ -178,8 +142,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}category/categories/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [7]},
-            {"targets": [7], "orderable": false}
+            {"className": "dt-center", "targets": [3]},
+            {"targets": [3], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
@@ -192,9 +156,11 @@
         errorElement: "span",
         rules: {
             name: "required",
+            image: "required",
         },
         messages: {
             name: "{{lang('name')}}" + " {{lang('not_empty')}}",
+            image: "{{lang('image')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -244,13 +210,8 @@
                 var row = json.data;
                 $('[name="id"]').val(row.id);
                 $('[name="name"]').val(row.name);
-                $('[name="address"]').val(row.address);
-                $('[name="phone"]').val(row.phone);
-                $('[name="email"]').val(row.email);
-                $('[name="city"]').val(row.city);
-                $('[name="subdistrict"]').val(row.subdistrict);
-                $('[name="latitude"]').val(row.latitude);
-                $('[name="longitude"]').val(row.longitude);
+                $('[name="description"]').val(row.description);
+                $('[name="image"]').val(row.image);
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_category')?>'); 
@@ -296,5 +257,23 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
+    
+    // Preview image in browser
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+        if (input.files) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $($.parseHTML('<img width="100" style="padding: 10px;">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+            }
+            reader.readAsDataURL(input.files);
+        }
+    };
+
+    $('#image').on('change', function() {
+        $('.preview-upload-image').html('');
+        imagesPreview(this, 'div.preview-upload-image');
+        $('#preview-upload-image-field').show();
+    });
+    
 </script>
 @stop

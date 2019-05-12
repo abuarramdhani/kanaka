@@ -22,23 +22,13 @@ class Categories extends MX_Controller {
         $database_columns = array(
             'id',
             'name',
-            'address',
-            'phone',
-            'email',
-            'city',
-            'subdistrict',
-            'latitude',
-            'longitude',
+            'description',
             'date_created',
         );
 
         $header_columns = array(
             'name',
-            'address',
-            'phone',
-            'email',
-            'city',
-            'subdistrict',
+            'description',
             'date_created',
         );
 
@@ -53,11 +43,7 @@ class Categories extends MX_Controller {
             }
             $where .= " AND (";
             $where .= "name LIKE '%" . $sSearch . "%' OR ";
-            $where .= "address LIKE '%" . $sSearch . "%' OR ";
-            $where .= "phone LIKE '%" . $sSearch . "%' OR ";
-            $where .= "email LIKE '%" . $sSearch . "%' OR ";
-            $where .= "city LIKE '%" . $sSearch . "%' OR ";
-            $where .= "subdistrict LIKE '%" . $sSearch . "%' OR ";
+            $where .= "description LIKE '%" . $sSearch . "%' OR ";
             $where .= "date_created LIKE '%" . $sSearch . "%'";
             $where .= ")";
         }
@@ -83,11 +69,7 @@ class Categories extends MX_Controller {
             }
 
             $row_value[] = $row->name;
-            $row_value[] = $row->address;
-            $row_value[] = $row->phone;
-            $row_value[] = $row->email;
-            $row_value[] = $row->city;
-            $row_value[] = $row->subdistrict;
+            $row_value[] = $row->description;
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             
@@ -102,29 +84,43 @@ class Categories extends MX_Controller {
         if ($this->input->is_ajax_request()) {
             $user = $this->ion_auth->user()->row();
             $id_category = $this->input->post('id');
-            $get_category = Dipo::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
+            $get_category = Category::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
             if (empty($id_category)) {
                 if (!empty($get_category->name)) {
                     $status = array('status' => 'unique', 'message' => lang('already_exist'));
                 }else{
                     $name = ucwords($this->input->post('name'));
-                    $address = $this->input->post('address');
-                    $phone = $this->input->post('phone');
-                    $email = $this->input->post('email');
-                    $city = $this->input->post('city');
-                    $subdistrict = $this->input->post('subdistrict');
-                    $latitude = $this->input->post('latitude');
-                    $longitude = $this->input->post('longitude');
-                    
-                    $model = new Dipo();
+                    $description = $this->input->post('description');
+                    $filename = '';
+
+                    if(!empty($_FILES['image']['name'])){
+                        $_FILES['file']['name']     = $_FILES['image']['name'];
+                        $_FILES['file']['type']     = $_FILES['image']['type'];
+                        $_FILES['file']['tmp_name'] = $_FILES['image']['tmp_name'];
+                        $_FILES['file']['error']     = $_FILES['image']['error'];
+                        $_FILES['file']['size']     = $_FILES['image']['size'];
+                        
+                        // File upload configuration
+                        $uploadPath = 'uploads/images/';
+                        $config['upload_path'] = $uploadPath;
+                        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                        
+                        // Load and initialize upload library
+                        $this->load->library('upload', $config);
+                        $this->upload->initialize($config);
+                        
+                        // Upload file to server
+                        if($this->upload->do_upload('file')){
+                            // Uploaded file data
+                            $fileData = $this->upload->data();
+                            $filename = $fileData['file_name'];
+                        }
+                    }
+
+                    $model = new Category();
                     $model->name = $name;
-                    $model->address = $address;
-                    $model->phone = $phone;
-                    $model->email = $email;
-                    $model->city = $city;
-                    $model->subdistrict = $subdistrict;
-                    $model->latitude = $latitude;
-                    $model->longitude = $longitude;
+                    $model->description = $description;
+                    $model->image = $filename;
                     
                     $model->user_created = $user->id;
                     $model->date_created = date('Y-m-d');
@@ -133,51 +129,58 @@ class Categories extends MX_Controller {
                     if ($save) {
                         $data_notif = array(
                             'Name' => $name,
-                            'Address' => $address,
-                            'Phone' => $phone,
-                            'Email' => $email,
-                            'City' => $city,
-                            'Subdistrict' => $subdistrict,
-                            'Latitude' => $latitude,
-                            'Longitude' => $longitude,
+                            'Description' => $description,
+                            'Image' => $filename,
                         );
                         $message = "Add " . strtolower(lang('category')) . " " . $name . " succesfully by " . $user->full_name;
-                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 6);
+                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 5);
                         $status = array('status' => 'success', 'message' => lang('message_save_success'));
                     } else {
                         $status = array('status' => 'error', 'message' => lang('message_save_failed'));
                     }
                 }
             } elseif(!empty($id_category)) {
-                $model = Dipo::find($id_category);
+                $model = Category::find($id_category);
                 $name = ucwords($this->input->post('name'));
-                $address = $this->input->post('address');
-                $phone = $this->input->post('phone');
-                $email = $this->input->post('email');
-                $city = $this->input->post('city');
-                $subdistrict = $this->input->post('subdistrict');
-                $latitude = $this->input->post('latitude');
-                $longitude = $this->input->post('longitude');
-            
+                $description = $this->input->post('description');
+
+                if(!empty($_FILES['image']['name'])){
+                    $_FILES['file']['name']     = $_FILES['image']['name'];
+                    $_FILES['file']['type']     = $_FILES['image']['type'];
+                    $_FILES['file']['tmp_name'] = $_FILES['image']['tmp_name'];
+                    $_FILES['file']['error']     = $_FILES['image']['error'];
+                    $_FILES['file']['size']     = $_FILES['image']['size'];
+                    
+                    // File upload configuration
+                    $uploadPath = 'uploads/images/';
+                    $config['upload_path'] = $uploadPath;
+                    $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                    
+                    // Load and initialize upload library
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    
+                    // Upload file to server
+                    if($this->upload->do_upload('file')){
+                        // Uploaded file data
+                        $fileData = $this->upload->data();
+                        $filename = $fileData['file_name'];
+                    }
+                }
+                else{
+                    $filename = $model->image;
+                }
+
+                $image_files = $model->images;
                 $data_old = array(
                     'Name' => $model->name,
-                    'Address' => $model->address,
-                    'Phone' => $model->phone,
-                    'Email' => $model->email,
-                    'City' => $model->city,
-                    'Subdistrict' => $model->subdistrict,
-                    'Latitude' => $model->latitude,
-                    'Longitude' => $model->longitude,
+                    'Description' => $model->description,
+                    'Image' => $model->image,
                 );
 
                 $model->name = $name;
-                $model->address = $address;
-                $model->phone = $phone;
-                $model->email = $email;
-                $model->city = $city;
-                $model->subdistrict = $subdistrict;
-                $model->latitude = $latitude;
-                $model->longitude = $longitude;
+                $model->description = $description;
+                $model->image = $filename;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
@@ -186,18 +189,20 @@ class Categories extends MX_Controller {
                 if ($update) {
                     $data_new = array(
                         'Name' => $name,
-                        'Address' => $address,
-                        'Phone' => $phone,
-                        'Email' => $email,
-                        'City' => $city,
-                        'Subdistrict' => $subdistrict,
-                        'Latitude' => $latitude,
-                        'Longitude' => $longitude,
+                        'Description' => $description,
+                        'Image' => $filename,
                     );
+
+                    if(!empty($_FILES['image']['name'])){
+                        $data_image_files = $image_files;
+                        $path_file = 'uploads/images/'.$data_image_files;
+                        if(file_exists($path_file))
+                            unlink($path_file);
+                    }
 
                     $data_change = array_diff_assoc($data_new, $data_old);
                     $message = "Update " . strtolower(lang('category')) . " " .  $model->name . " succesfully by " . $user->full_name;
-                    $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 6);
+                    $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 5);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
                     $status = array('status' => 'error', 'message' => lang('message_save_failed'));
@@ -213,7 +218,7 @@ class Categories extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $model = array('status' => 'success', 'data' => Dipo::find($id));
+            $model = array('status' => 'success', 'data' => Category::find($id));
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }
@@ -225,7 +230,7 @@ class Categories extends MX_Controller {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
             $user = $this->ion_auth->user()->row();
-            $model = Dipo::find($id);
+            $model = Category::find($id);
             if (!empty($model)) {
                 $model->deleted = 1;
                 $model->user_deleted = $user->id;
@@ -235,16 +240,11 @@ class Categories extends MX_Controller {
 
                 $data_notif = array(
                     'Name' => $model->name,
-                    'Address' => $model->address,
-                    'Phone' => $model->phone,
-                    'Email' => $model->email,
-                    'City' => $model->city,
-                    'Subdistrict' => $model->subdistrict,
-                    'Latitude' => $model->latitude,
-                    'Longitude' => $model->longitude,
+                    'Description' => $model->description,
+                    'Image' => $model->image,
                 );
                 $message = "Delete " . strtolower(lang('category')) . " " .  $model->name . " succesfully by " . $user->full_name;
-                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 6);
+                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 5);
                 $status = array('status' => 'success');
             } else {
                 $status = array('status' => 'error');
@@ -257,7 +257,7 @@ class Categories extends MX_Controller {
     }
 
     function pdf(){
-        $data['categories'] = Dipo::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['categories'] = Category::where('deleted', 0)->orderBy('id', 'DESC')->get();
         $html = $this->load->view('category/category/category_pdf', $data, true);
         $this->pdf_generator->generate($html, 'category pdf', $orientation='Portrait');
     }
@@ -265,7 +265,7 @@ class Categories extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=category.xls");
-        $data['categories'] = Dipo::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['categories'] = Category::where('deleted', 0)->orderBy('id', 'DESC')->get();
         $this->load->view('category/category/category_pdf', $data);
     }
 

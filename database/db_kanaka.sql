@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-09 05:34:09
+Date: 2019-05-13 06:08:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -70,7 +70,11 @@ INSERT INTO `app_sessions` VALUES ('sbueq3ethnhmslk4aklkcsg8qjpkp7t2', '::1', '1
 INSERT INTO `app_sessions` VALUES ('2g1ttp0otgmk138htfafiu3dhrmvoc97', '::1', '1556726858', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535363731393230383B7265717565737465645F706167657C733A34313A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F6469706F2F657863656C223B70726576696F75735F706167657C733A34313A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F6469706F2F657863656C223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353536363931343535223B6C6173745F636865636B7C693A313535363731393231323B);
 INSERT INTO `app_sessions` VALUES ('va56id0lsj9af3c9boos03lctn7hrr6s', '::1', '1557243886', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373234323137373B7265717565737465645F706167657C733A34353A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6469706F2F6469706F732F66657463685F64617461223B70726576696F75735F706167657C733A34353A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6469706F2F6469706F732F66657463685F64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353536373139323132223B6C6173745F636865636B7C693A313535373234323139333B);
 INSERT INTO `app_sessions` VALUES ('e93k4bbsrigfim835fpg4fn85rsmnj2e', '::1', '1557330934', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373333303836333B7265717565737465645F706167657C733A34353A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6469706F2F6469706F732F66657463685F64617461223B70726576696F75735F706167657C733A34353A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6469706F2F6469706F732F66657463685F64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537323432313933223B6C6173745F636865636B7C693A313535373333303837393B);
-INSERT INTO `app_sessions` VALUES ('nu1s93lf48voe4jopn2aqd1gbnhjb7mv', '::1', '1557354697', 0x7265717565737465645F706167657C733A34353A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6469706F2F6469706F732F66657463685F64617461223B5F5F63695F6C6173745F726567656E65726174657C693A313535373335343039323B70726576696F75735F706167657C733A34353A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6469706F2F6469706F732F66657463685F64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537333330383739223B6C6173745F636865636B7C693A313535373335343039383B);
+INSERT INTO `app_sessions` VALUES ('nu1s93lf48voe4jopn2aqd1gbnhjb7mv', '::1', '1557354968', 0x7265717565737465645F706167657C733A34313A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F6469706F2F657863656C223B5F5F63695F6C6173745F726567656E65726174657C693A313535373335343039323B70726576696F75735F706167657C733A34313A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F6469706F2F657863656C223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537333330383739223B6C6173745F636865636B7C693A313535373335343039383B);
+INSERT INTO `app_sessions` VALUES ('2fnuc4p59qjou9fegndrkgpc9d22a3en', '::1', '1557421063', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373432303935333B7265717565737465645F706167657C733A34363A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F6D656E752F66657463682D64617461223B70726576696F75735F706167657C733A34363A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F6D656E752F66657463682D64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537333534303938223B6C6173745F636865636B7C693A313535373432303936333B);
+INSERT INTO `app_sessions` VALUES ('tqnkup8ddn8t53koh0nkiraqq8ttpl0q', '::1', '1557441997', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373434313137333B7265717565737465645F706167657C733A34363A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F6D656E752F66657463682D64617461223B70726576696F75735F706167657C733A34363A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F6D656E752F66657463682D64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537343230393633223B6C6173745F636865636B7C693A313535373434313138333B);
+INSERT INTO `app_sessions` VALUES ('lsfg8pem4ru45a3mmsirna673s7bb0k0', '::1', '1557504154', 0x7265717565737465645F706167657C733A32393A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6C6F67696E223B5F5F63695F6C6173745F726567656E65726174657C693A313535373530343135333B70726576696F75735F706167657C733A32393A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6C6F67696E223B);
+INSERT INTO `app_sessions` VALUES ('peq9sbseik6lii7fkhadfr376d22jljv', '::1', '1557679208', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373637323539313B7265717565737465645F706167657C733A34383A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F76696577223B70726576696F75735F706167657C733A34383A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F76696577223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537343431313833223B6C6173745F636865636B7C693A313535373637323539353B);
 
 -- ----------------------------
 -- Table structure for company
@@ -179,7 +183,7 @@ CREATE TABLE `login_attempts` (
   `login` varchar(100) NOT NULL,
   `time` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of login_attempts
@@ -201,7 +205,7 @@ CREATE TABLE `logs` (
   `type` int(11) NOT NULL,
   PRIMARY KEY (`id_logs`),
   KEY `users_id` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=199 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of logs
@@ -369,6 +373,15 @@ INSERT INTO `logs` VALUES ('186', '1', null, '{\"Name\":\"Bandung Store 1\",\"Ad
 INSERT INTO `logs` VALUES ('187', '1', '{\"Name\":\"Semarang Store\",\"Address\":\"Jalan Diponegoro No 7\",\"Phone\":\"02358618236\",\"Email\":\"semarang_store@kanaka.com\",\"City\":\"Semarang\",\"Subdistrict\":\"Semarang Utara\",\"Latitude\":\"89815236576152\",\"Longitude\":\"-89123617623781\"}', null, null, 'Add dipo Semarang Store succesfully by PT Kanaka', '2019-05-09 05:25:51', 'C', '6');
 INSERT INTO `logs` VALUES ('188', '1', '{\"Name\":\"Semarang Store\",\"Address\":\"Jalan Diponegoro No 7\",\"Phone\":\"02358618236\",\"Email\":\"diposemarang@kanaka.com\",\"City\":\"Semarang\",\"Subdistrict\":\"Semarang Utara\",\"Latitude\":\"89815236576152\",\"Longitude\":\"-89123617623781\"}', '{\"Name\":\"Semarang Store\",\"Address\":\"Jalan Diponegoro No 7\",\"Phone\":\"02358618236\",\"Email\":\"semarang_store@kanaka.com\",\"City\":\"Semarang\",\"Subdistrict\":\"Semarang Utara\",\"Latitude\":\"89815236576152\",\"Longitude\":\"-89123617623781\"}', '{\"Email\":\"diposemarang@kanaka.com\"}', 'Update dipo Semarang Store succesfully by PT Kanaka', '2019-05-09 05:26:07', 'U', '6');
 INSERT INTO `logs` VALUES ('189', '1', null, '{\"Name\":\"Semarang Store\",\"Address\":\"Jalan Diponegoro No 7\",\"Phone\":\"02358618236\",\"Email\":\"diposemarang@kanaka.com\",\"City\":\"Semarang\",\"Subdistrict\":\"Semarang Utara\",\"Latitude\":\"89815236576152\",\"Longitude\":\"-89123617623781\"}', null, 'Delete dipo Semarang Store succesfully by PT Kanaka', '2019-05-09 05:31:15', 'D', '6');
+INSERT INTO `logs` VALUES ('190', '1', '{\"Menu Code\":\"2\",\"Menu Name\":\"Product Category\",\"Menu Link\":\"product_category\",\"Lang\":\"product_category\",\"Parent Menu\":\"Admin\",\"Status\":\"Active\"}', '{\"Menu Code\":2,\"Menu Name\":\"Transaction\",\"Menu Link\":\"transaction\",\"Lang\":\"transaction\",\"Parent Menu\":\"-\",\"Status\":\"Not Active\"}', '{\"Menu Name\":\"Product Category\",\"Menu Link\":\"product_category\",\"Lang\":\"product_category\",\"Parent Menu\":\"Admin\",\"Status\":\"Active\"}', 'Update menu Product Category succesfully by PT Kanaka', '2019-05-10 05:44:43', 'U', '1');
+INSERT INTO `logs` VALUES ('191', '1', '{\"User\":\"PT Kanaka\",\"Menu\":\"Product Category\",\"Availabled\":\"Yes\",\"Created\":\"Yes\",\"Viewed\":\"Yes\",\"Updated\":\"Yes\",\"Deleted\":\"Yes\",\"Approved\":\"Yes\",\"Verified\":\"Yes\",\"Fullaccess\":\"Yes\",\"Print Limited\":\"No\",\"Print Unlimited\":\"Yes\",\"Status Usermenu\":\"Active\"}', null, null, 'Add user menu PT Kanaka succesfully by PT Kanaka', '2019-05-10 05:45:35', 'C', '3');
+INSERT INTO `logs` VALUES ('192', '1', '{\"Menu Code\":\"2\",\"Menu Name\":\"Product Category\",\"Menu Link\":\"product_category\",\"Lang\":\"product_category\",\"Parent Menu\":\"Master\",\"Status\":\"Active\"}', '{\"Menu Code\":2,\"Menu Name\":\"Product Category\",\"Menu Link\":\"product_category\",\"Lang\":\"product_category\",\"Parent Menu\":\"Admin\",\"Status\":\"Active\"}', '{\"Parent Menu\":\"Master\"}', 'Update menu Product Category succesfully by PT Kanaka', '2019-05-10 05:46:01', 'U', '1');
+INSERT INTO `logs` VALUES ('193', '1', '{\"Menu Code\":\"8\",\"Menu Name\":\"Category\",\"Menu Link\":\"category\",\"Lang\":\"category\",\"Parent Menu\":\"Master\",\"Status\":\"Active\"}', '{\"Menu Code\":8,\"Menu Name\":\"Product Category\",\"Menu Link\":\"product_category\",\"Lang\":\"product_category\",\"Parent Menu\":\"Master\",\"Status\":\"Active\"}', '{\"Menu Name\":\"Category\",\"Menu Link\":\"category\",\"Lang\":\"category\"}', 'Update menu Category succesfully by PT Kanaka', '2019-05-12 21:50:22', 'U', '1');
+INSERT INTO `logs` VALUES ('194', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan Pokok\",\"Image\":\"\"}', null, null, 'Add category Beras succesfully by PT Kanaka', '2019-05-12 23:31:11', 'C', '5');
+INSERT INTO `logs` VALUES ('195', '1', '{\"Name\":\"Gula\",\"Description\":\"Makanan\",\"Image\":\"logo-template.png\"}', null, null, 'Add category Gula succesfully by PT Kanaka', '2019-05-12 23:32:51', 'C', '5');
+INSERT INTO `logs` VALUES ('196', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Logo-Property.png\"}', '{\"Name\":\"Beras\",\"Description\":\"Makanan Pokok\",\"Image\":\"\"}', '{\"Description\":\"Makanan\",\"Image\":\"Logo-Property.png\"}', 'Update category Beras succesfully by PT Kanaka', '2019-05-12 23:34:29', 'U', '5');
+INSERT INTO `logs` VALUES ('197', '1', null, '{\"Name\":\"Gula\",\"Description\":\"Makanan\",\"Image\":\"logo-template.png\"}', null, 'Delete category Gula succesfully by PT Kanaka', '2019-05-12 23:37:08', 'D', '5');
+INSERT INTO `logs` VALUES ('198', '1', '{\"Name\":\"Gula\",\"Description\":\"Makanan\",\"Image\":\"\"}', null, null, 'Add category Gula succesfully by PT Kanaka', '2019-05-12 23:38:43', 'C', '5');
 
 -- ----------------------------
 -- Table structure for menu
@@ -392,7 +405,7 @@ CREATE TABLE `menu` (
 -- Records of menu
 -- ----------------------------
 INSERT INTO `menu` VALUES ('1', '2', 'Master', 'master', 'icon-grid', '0', 'master', '1', '2019-04-25 01:16:17', '2019-04-27 23:54:40');
-INSERT INTO `menu` VALUES ('2', '2', 'Transaction', 'transaction', 'icon-briefcase', '0', 'transaction', '0', null, null);
+INSERT INTO `menu` VALUES ('2', '8', 'Category', 'category', 'icon-briefcase', '1', 'category', '1', null, '2019-05-12 21:50:22');
 INSERT INTO `menu` VALUES ('3', '1', 'Reports', 'reports', 'icon-notebook', '0', 'reports', '1', null, '2017-10-11 15:45:49');
 INSERT INTO `menu` VALUES ('4', '14', 'Menus', 'menu', null, '1', 'menus', '1', null, null);
 INSERT INTO `menu` VALUES ('5', '13', 'Users', 'users/account', null, '1', 'users', '1', null, null);
@@ -417,7 +430,7 @@ CREATE TABLE `m_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
   `description` varchar(150) NOT NULL,
-  `image` varchar(30) NOT NULL,
+  `image` varchar(50) NOT NULL,
   `printed` tinyint(4) NOT NULL DEFAULT '0',
   `user_printed` int(11) NOT NULL DEFAULT '0',
   `date_printed` date NOT NULL DEFAULT '1901-01-01',
@@ -435,11 +448,14 @@ CREATE TABLE `m_category` (
   PRIMARY KEY (`id`),
   KEY `rowID` (`id`),
   KEY `deleted` (`deleted`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of m_category
 -- ----------------------------
+INSERT INTO `m_category` VALUES ('1', 'Beras', 'Makanan', 'Logo-Property.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:31:11', '1', '2019-05-12', '23:34:29', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_category` VALUES ('2', 'Gula', 'Makanan', 'logo-template.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:32:51', '0', '1901-01-01', '00:00:00', '1', '1', '2019-05-12', '23:37:08');
+INSERT INTO `m_category` VALUES ('3', 'Gula', 'Makanan', 'logo-template.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:38:43', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');
 
 -- ----------------------------
 -- Table structure for m_dipo
@@ -603,7 +619,7 @@ INSERT INTO `reference_logs` VALUES ('1', '1', 'Menu');
 INSERT INTO `reference_logs` VALUES ('2', '2', 'User');
 INSERT INTO `reference_logs` VALUES ('3', '3', 'User Menus');
 INSERT INTO `reference_logs` VALUES ('4', '4', 'Product');
-INSERT INTO `reference_logs` VALUES ('5', '5', 'Category Product');
+INSERT INTO `reference_logs` VALUES ('5', '5', 'Category');
 INSERT INTO `reference_logs` VALUES ('6', '6', 'DIPO');
 INSERT INTO `reference_logs` VALUES ('7', '7', 'Partner');
 INSERT INTO `reference_logs` VALUES ('8', '8', '-');
@@ -646,7 +662,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '127.0.0.1', 'admin', '$2y$08$9LW7MTZlxDHExxeL2RowqOzwj8HfP5t1Y6yGw.KH7Wdou1ddPV49G', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'admin@kanaka.com', '', null, null, null, '1268889823', '1557354098', '1', 'Kanaka', 'Indonesia', 'PT Kanaka', 'PT Kanaka', '+62878987654321', 'Jalan Sudirman No 1', '0', '1', 'Jakarta Selatan', null, 'default_avatar.jpg', '2019-04-28 00:25:43');
+INSERT INTO `users` VALUES ('1', '127.0.0.1', 'admin', '$2y$08$9LW7MTZlxDHExxeL2RowqOzwj8HfP5t1Y6yGw.KH7Wdou1ddPV49G', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'admin@kanaka.com', '', null, null, null, '1268889823', '1557672595', '1', 'Kanaka', 'Indonesia', 'PT Kanaka', 'PT Kanaka', '+62878987654321', 'Jalan Sudirman No 1', '0', '1', 'Jakarta Selatan', null, 'default_avatar.jpg', '2019-04-28 00:25:43');
 INSERT INTO `users` VALUES ('2', '127.0.0.1', 'dipo_jatinegara', '$2y$08$yESv9EQ/YDTZxfxODayOp.4VgHHD8DshNLOVri.PjnWK2WkCAi7SG', '5f4dcc3b5aa765d61d8327deb882cf99', null, 'dipo-jatinegara@kanaka.com', null, null, null, null, '0', '1556386731', '1', 'DIPO', 'Jatinegara', 'DIPO Jatinegara', 'PT Kanaka', '085123567123', 'Jalan Jatinegara 12', '0', '2', 'Jakarta Timur', null, 'default_avatar.jpg', '2019-04-28 00:25:43');
 INSERT INTO `users` VALUES ('8', '127.0.0.1', 'mitra_beras_jatinegara', '$2y$08$cWRlP6Yswl35eoc7G49M8.nrWvZ4yBInAaj72W0pcVIch.W8Iwjui', '', null, 'mitra_beras_jatinegara@kanaka.com', null, null, null, null, '1556385943', '1556386951', '1', 'Mitra Beras', 'Jatinegara', 'Mitra Beras Jatinegara', 'PT Kanaka', '0212378176', 'Jalan Jatinegara 50', '0', '3', null, null, 'default_avatar.jpg', '2019-04-28 00:25:43');
 
@@ -694,7 +710,7 @@ CREATE TABLE `users_menu` (
   `StatusUsermenu` enum('0','1') NOT NULL,
   PRIMARY KEY (`id_user_menu`),
   UNIQUE KEY `key01` (`user_id`,`menu_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of users_menu
@@ -720,3 +736,4 @@ INSERT INTO `users_menu` VALUES ('18', '1', '10', '1', '1', '1', '1', '1', '1', 
 INSERT INTO `users_menu` VALUES ('19', '1', '11', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1');
 INSERT INTO `users_menu` VALUES ('20', '1', '16', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1');
 INSERT INTO `users_menu` VALUES ('21', '1', '17', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1');
+INSERT INTO `users_menu` VALUES ('22', '1', '2', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1');

@@ -29,7 +29,8 @@
             "application/modules/user/models",
             "application/modules/log/models",
             "application/modules/dipo/models",
-            "application/modules/category/models"
+			"application/modules/category/models",
+            "application/modules/product/models"			
         ]
     }
 }

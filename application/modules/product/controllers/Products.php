@@ -131,7 +131,7 @@ class Products extends MX_Controller {
                             'Feature' => $feature,
                         );
                         $message = "Add " . strtolower(lang('product')) . " " . $name . " succesfully by " . $user->full_name;
-                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 6);
+                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 4);
                         $status = array('status' => 'success', 'message' => lang('message_save_success'));
                     } else {
                         $status = array('status' => 'error', 'message' => lang('message_save_failed'));
@@ -174,7 +174,7 @@ class Products extends MX_Controller {
 
                     $data_change = array_diff_assoc($data_new, $data_old);
                     $message = "Update " . strtolower(lang('product')) . " " .  $model->name . " succesfully by " . $user->full_name;
-                    $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 6);
+                    $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 4);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
                     $status = array('status' => 'error', 'message' => lang('message_save_failed'));
@@ -218,7 +218,7 @@ class Products extends MX_Controller {
                     'Feature' => $model->feature,
                 );
                 $message = "Delete " . strtolower(lang('product')) . " " .  $model->name . " succesfully by " . $user->full_name;
-                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 6);
+                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 4);
                 $status = array('status' => 'success');
             } else {
                 $status = array('status' => 'error');

@@ -183,6 +183,11 @@ $lang['product'] = 'Product';
 $lang['new_product'] = "New Product";
 $lang['edit_product'] = "Edit Product";
 $lang['product_name'] = "Product Name";
+$lang['category'] = "Category";
+$lang['sku'] = "SKU";
+$lang['view_total'] = "View Total";
+$lang['description'] = "Description";
+$lang['feature'] = "Feature";
 $lang['saving_product_successfully'] = 'Saving data Product succesfully';
 $lang['deleting_product_successfully'] = 'Deleting data Product succesfully';
 ## END Product ##

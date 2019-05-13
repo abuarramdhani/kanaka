@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-13 06:08:55
+Date: 2019-05-14 06:13:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -75,6 +75,8 @@ INSERT INTO `app_sessions` VALUES ('2fnuc4p59qjou9fegndrkgpc9d22a3en', '::1', '1
 INSERT INTO `app_sessions` VALUES ('tqnkup8ddn8t53koh0nkiraqq8ttpl0q', '::1', '1557441997', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373434313137333B7265717565737465645F706167657C733A34363A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F6D656E752F66657463682D64617461223B70726576696F75735F706167657C733A34363A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F6D656E752F66657463682D64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537343230393633223B6C6173745F636865636B7C693A313535373434313138333B);
 INSERT INTO `app_sessions` VALUES ('lsfg8pem4ru45a3mmsirna673s7bb0k0', '::1', '1557504154', 0x7265717565737465645F706167657C733A32393A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6C6F67696E223B5F5F63695F6C6173745F726567656E65726174657C693A313535373530343135333B70726576696F75735F706167657C733A32393A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6C6F67696E223B);
 INSERT INTO `app_sessions` VALUES ('peq9sbseik6lii7fkhadfr376d22jljv', '::1', '1557679208', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373637323539313B7265717565737465645F706167657C733A34383A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F76696577223B70726576696F75735F706167657C733A34383A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F76696577223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537343431313833223B6C6173745F636865636B7C693A313535373637323539353B);
+INSERT INTO `app_sessions` VALUES ('8ntrok0do7eqkspp09te4rnpbji5s3af', '::1', '1557766020', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373736333837393B7265717565737465645F706167657C733A34383A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F73617665223B70726576696F75735F706167657C733A34383A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F73617665223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537363732353935223B6C6173745F636865636B7C693A313535373736333839353B);
+INSERT INTO `app_sessions` VALUES ('5664oapa0p198sdbrgrjjgs1adkil2u9', '::1', '1557789168', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373738363530383B7265717565737465645F706167657C733A35343A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F66657463685F64617461223B70726576696F75735F706167657C733A35343A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F66657463685F64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537373836353132223B6C6173745F636865636B7C693A313535373738363533373B);
 
 -- ----------------------------
 -- Table structure for company
@@ -183,7 +185,7 @@ CREATE TABLE `login_attempts` (
   `login` varchar(100) NOT NULL,
   `time` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of login_attempts
@@ -205,7 +207,7 @@ CREATE TABLE `logs` (
   `type` int(11) NOT NULL,
   PRIMARY KEY (`id_logs`),
   KEY `users_id` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=199 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of logs
@@ -382,6 +384,14 @@ INSERT INTO `logs` VALUES ('195', '1', '{\"Name\":\"Gula\",\"Description\":\"Mak
 INSERT INTO `logs` VALUES ('196', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Logo-Property.png\"}', '{\"Name\":\"Beras\",\"Description\":\"Makanan Pokok\",\"Image\":\"\"}', '{\"Description\":\"Makanan\",\"Image\":\"Logo-Property.png\"}', 'Update category Beras succesfully by PT Kanaka', '2019-05-12 23:34:29', 'U', '5');
 INSERT INTO `logs` VALUES ('197', '1', null, '{\"Name\":\"Gula\",\"Description\":\"Makanan\",\"Image\":\"logo-template.png\"}', null, 'Delete category Gula succesfully by PT Kanaka', '2019-05-12 23:37:08', 'D', '5');
 INSERT INTO `logs` VALUES ('198', '1', '{\"Name\":\"Gula\",\"Description\":\"Makanan\",\"Image\":\"\"}', null, null, 'Add category Gula succesfully by PT Kanaka', '2019-05-12 23:38:43', 'C', '5');
+INSERT INTO `logs` VALUES ('199', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan Pokok\",\"Image\":\"Logo-Property.png\"}', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Logo-Property.png\"}', '{\"Description\":\"Makanan Pokok\"}', 'Update category Beras succesfully by PT Kanaka', '2019-05-13 23:45:56', 'U', '5');
+INSERT INTO `logs` VALUES ('200', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Real_Estate.png\"}', '{\"Name\":\"Beras\",\"Description\":\"Makanan Pokok\",\"Image\":\"Logo-Property.png\"}', '{\"Description\":\"Makanan\",\"Image\":\"Real_Estate.png\"}', 'Update category Beras succesfully by PT Kanaka', '2019-05-13 23:47:00', 'U', '5');
+INSERT INTO `logs` VALUES ('201', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Real_Estate.png\"}', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Real_Estate.png\"}', '[]', 'Update category Beras succesfully by PT Kanaka', '2019-05-14 05:28:42', 'U', '5');
+INSERT INTO `logs` VALUES ('202', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"t-transparent-logo-7.png\"}', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Real_Estate.png\"}', '{\"Image\":\"t-transparent-logo-7.png\"}', 'Update category Beras succesfully by PT Kanaka', '2019-05-14 05:29:59', 'U', '5');
+INSERT INTO `logs` VALUES ('203', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Real_Estate.png\"}', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"t-transparent-logo-7.png\"}', '{\"Image\":\"Real_Estate.png\"}', 'Update category Beras succesfully by PT Kanaka', '2019-05-14 05:32:17', 'U', '5');
+INSERT INTO `logs` VALUES ('204', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"logo_property.jpg\"}', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Real_Estate.png\"}', '{\"Image\":\"logo_property.jpg\"}', 'Update category Beras succesfully by PT Kanaka', '2019-05-14 05:37:00', 'U', '5');
+INSERT INTO `logs` VALUES ('205', '1', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Real_Estate.png\"}', '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"logo_property.jpg\"}', '{\"Image\":\"Real_Estate.png\"}', 'Update category Beras succesfully by PT Kanaka', '2019-05-14 05:39:15', 'U', '5');
+INSERT INTO `logs` VALUES ('206', '1', null, '{\"Name\":\"Beras\",\"Description\":\"Makanan\",\"Image\":\"Real_Estate.png\"}', null, 'Delete category Beras succesfully by PT Kanaka', '2019-05-14 05:39:55', 'D', '5');
 
 -- ----------------------------
 -- Table structure for menu
@@ -453,7 +463,7 @@ CREATE TABLE `m_category` (
 -- ----------------------------
 -- Records of m_category
 -- ----------------------------
-INSERT INTO `m_category` VALUES ('1', 'Beras', 'Makanan', 'Logo-Property.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:31:11', '1', '2019-05-12', '23:34:29', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_category` VALUES ('1', 'Beras', 'Makanan', 'Real_Estate.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:31:11', '1', '2019-05-14', '05:39:15', '0', '0', '1901-01-01', '00:00:00');
 INSERT INTO `m_category` VALUES ('2', 'Gula', 'Makanan', 'logo-template.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:32:51', '0', '1901-01-01', '00:00:00', '1', '1', '2019-05-12', '23:37:08');
 INSERT INTO `m_category` VALUES ('3', 'Gula', 'Makanan', 'logo-template.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:38:43', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');
 
@@ -662,7 +672,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '127.0.0.1', 'admin', '$2y$08$9LW7MTZlxDHExxeL2RowqOzwj8HfP5t1Y6yGw.KH7Wdou1ddPV49G', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'admin@kanaka.com', '', null, null, null, '1268889823', '1557672595', '1', 'Kanaka', 'Indonesia', 'PT Kanaka', 'PT Kanaka', '+62878987654321', 'Jalan Sudirman No 1', '0', '1', 'Jakarta Selatan', null, 'default_avatar.jpg', '2019-04-28 00:25:43');
+INSERT INTO `users` VALUES ('1', '127.0.0.1', 'admin', '$2y$08$9LW7MTZlxDHExxeL2RowqOzwj8HfP5t1Y6yGw.KH7Wdou1ddPV49G', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'admin@kanaka.com', '', null, null, null, '1268889823', '1557786537', '1', 'Kanaka', 'Indonesia', 'PT Kanaka', 'PT Kanaka', '+62878987654321', 'Jalan Sudirman No 1', '0', '1', 'Jakarta Selatan', null, 'default_avatar.jpg', '2019-04-28 00:25:43');
 INSERT INTO `users` VALUES ('2', '127.0.0.1', 'dipo_jatinegara', '$2y$08$yESv9EQ/YDTZxfxODayOp.4VgHHD8DshNLOVri.PjnWK2WkCAi7SG', '5f4dcc3b5aa765d61d8327deb882cf99', null, 'dipo-jatinegara@kanaka.com', null, null, null, null, '0', '1556386731', '1', 'DIPO', 'Jatinegara', 'DIPO Jatinegara', 'PT Kanaka', '085123567123', 'Jalan Jatinegara 12', '0', '2', 'Jakarta Timur', null, 'default_avatar.jpg', '2019-04-28 00:25:43');
 INSERT INTO `users` VALUES ('8', '127.0.0.1', 'mitra_beras_jatinegara', '$2y$08$cWRlP6Yswl35eoc7G49M8.nrWvZ4yBInAaj72W0pcVIch.W8Iwjui', '', null, 'mitra_beras_jatinegara@kanaka.com', null, null, null, null, '1556385943', '1556386951', '1', 'Mitra Beras', 'Jatinegara', 'Mitra Beras Jatinegara', 'PT Kanaka', '0212378176', 'Jalan Jatinegara 50', '0', '3', null, null, 'default_avatar.jpg', '2019-04-28 00:25:43');
 

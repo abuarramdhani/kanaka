@@ -156,11 +156,11 @@
         errorElement: "span",
         rules: {
             name: "required",
-            image: "required",
+            // image: "required",
         },
         messages: {
             name: "{{lang('name')}}" + " {{lang('not_empty')}}",
-            image: "{{lang('image')}}" + " {{lang('not_empty')}}",
+            // image: "{{lang('image')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -211,7 +211,7 @@
                 $('[name="id"]').val(row.id);
                 $('[name="name"]').val(row.name);
                 $('[name="description"]').val(row.description);
-                $('[name="image"]').val(row.image);
+                // $('[name="image"]').val(row.image);
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_category')?>'); 

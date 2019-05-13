@@ -101,7 +101,7 @@ class Categories extends MX_Controller {
                         $_FILES['file']['size']     = $_FILES['image']['size'];
                         
                         // File upload configuration
-                        $uploadPath = 'uploads/images/';
+                        $uploadPath = 'uploads/images/categories/';
                         $config['upload_path'] = $uploadPath;
                         $config['allowed_types'] = 'jpg|jpeg|png|gif';
                         
@@ -152,7 +152,7 @@ class Categories extends MX_Controller {
                     $_FILES['file']['size']     = $_FILES['image']['size'];
                     
                     // File upload configuration
-                    $uploadPath = 'uploads/images/';
+                    $uploadPath = 'uploads/images/categories/';
                     $config['upload_path'] = $uploadPath;
                     $config['allowed_types'] = 'jpg|jpeg|png|gif';
                     
@@ -193,12 +193,11 @@ class Categories extends MX_Controller {
                         'Image' => $filename,
                     );
 
-                    if(!empty($_FILES['image']['name'])){
-                        $data_image_files = $image_files;
-                        $path_file = 'uploads/images/'.$data_image_files;
-                        if(file_exists($path_file))
-                            unlink($path_file);
-                    }
+                    // if(!empty($_FILES['image']['name'])){
+                    //     $path_file = 'uploads/images/categories/'.$image_files;
+                    //     if(file_exists($path_file))
+                    //         unlink($path_file);
+                    // }
 
                     $data_change = array_diff_assoc($data_new, $data_old);
                     $message = "Update " . strtolower(lang('category')) . " " .  $model->name . " succesfully by " . $user->full_name;

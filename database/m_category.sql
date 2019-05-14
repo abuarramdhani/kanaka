@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-14 06:13:18
+Date: 2019-05-14 23:51:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,6 +46,6 @@ CREATE TABLE `m_category` (
 -- ----------------------------
 -- Records of m_category
 -- ----------------------------
-INSERT INTO `m_category` VALUES ('1', 'Beras', 'Makanan', 'Real_Estate.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:31:11', '1', '2019-05-14', '05:39:15', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_category` VALUES ('1', 'Beras', 'Makanan Pokok', 'Real_Estate.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:31:11', '1', '2019-05-14', '22:31:08', '0', '0', '1901-01-01', '00:00:00');
 INSERT INTO `m_category` VALUES ('2', 'Gula', 'Makanan', 'logo-template.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:32:51', '0', '1901-01-01', '00:00:00', '1', '1', '2019-05-12', '23:37:08');
 INSERT INTO `m_category` VALUES ('3', 'Gula', 'Makanan', 'logo-template.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-12', '23:38:43', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');

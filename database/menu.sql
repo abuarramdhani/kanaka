@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-12 21:50:50
+Date: 2019-05-14 23:51:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,7 +46,7 @@ INSERT INTO `menu` VALUES ('7', '7', 'Area', 'area', null, '1', 'area', '0', '20
 INSERT INTO `menu` VALUES ('8', '9', 'Product', 'product', null, '1', 'product', '1', '2019-04-28 20:19:00', '2019-04-28 20:19:00');
 INSERT INTO `menu` VALUES ('9', '10', 'DIPO', 'dipo', null, '1', 'dipo', '1', '2019-04-28 20:19:30', '2019-04-28 20:19:30');
 INSERT INTO `menu` VALUES ('10', '11', 'Partner', 'partner', null, '1', 'partner', '1', '2019-04-28 20:19:55', '2019-04-28 20:19:55');
-INSERT INTO `menu` VALUES ('11', '12', 'Transfer', 'transfer', null, '1', 'transfer', '1', '2019-04-28 20:20:13', '2019-04-28 20:20:13');
+INSERT INTO `menu` VALUES ('11', '12', 'Vendor', 'vendor', null, '1', 'vendor', '1', '2019-04-28 20:20:13', '2019-05-14 23:22:48');
 INSERT INTO `menu` VALUES ('12', '5', 'Customer', 'customer', null, '3', 'customer', '1', '2019-04-28 20:21:08', '2019-04-28 20:21:08');
 INSERT INTO `menu` VALUES ('13', '6', 'Company', 'company', null, '3', 'company', '1', '2019-04-28 20:21:29', '2019-04-28 20:21:29');
 INSERT INTO `menu` VALUES ('14', '7', 'DIPO Report', 'dipo_report', null, '3', 'dipo_report', '1', '2019-04-28 20:22:00', '2019-04-28 20:23:40');

@@ -21,6 +21,7 @@ class Dipos extends MX_Controller {
     public function fetch_data() {
         $database_columns = array(
             'id',
+            'code',
             'name',
             'address',
             'phone',
@@ -33,6 +34,7 @@ class Dipos extends MX_Controller {
         );
 
         $header_columns = array(
+            'code',
             'name',
             'address',
             'phone',
@@ -52,6 +54,7 @@ class Dipos extends MX_Controller {
                 $sSearch = date('Y-m-d',strtotime($sSearch));
             }
             $where .= " AND (";
+            $where .= "code LIKE '%" . $sSearch . "%' OR ";
             $where .= "name LIKE '%" . $sSearch . "%' OR ";
             $where .= "address LIKE '%" . $sSearch . "%' OR ";
             $where .= "phone LIKE '%" . $sSearch . "%' OR ";
@@ -82,6 +85,7 @@ class Dipos extends MX_Controller {
                 $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
 
+            $row_value[] = $row->code;
             $row_value[] = $row->name;
             $row_value[] = $row->address;
             $row_value[] = $row->phone;
@@ -107,6 +111,7 @@ class Dipos extends MX_Controller {
                 if (!empty($get_dipo->name)) {
                     $status = array('status' => 'unique', 'message' => lang('already_exist'));
                 }else{
+                    $code = strtoupper($this->input->post('code'));
                     $name = ucwords($this->input->post('name'));
                     $address = $this->input->post('address');
                     $phone = $this->input->post('phone');
@@ -117,6 +122,7 @@ class Dipos extends MX_Controller {
                     $longitude = $this->input->post('longitude');
                     
                     $model = new Dipo();
+                    $model->code = $code;
                     $model->name = $name;
                     $model->address = $address;
                     $model->phone = $phone;
@@ -132,6 +138,7 @@ class Dipos extends MX_Controller {
                     $save = $model->save();
                     if ($save) {
                         $data_notif = array(
+                            'Code' => $code,
                             'Name' => $name,
                             'Address' => $address,
                             'Phone' => $phone,
@@ -150,6 +157,7 @@ class Dipos extends MX_Controller {
                 }
             } elseif(!empty($id_dipo)) {
                 $model = Dipo::find($id_dipo);
+                $code = strtoupper($this->input->post('code'));
                 $name = ucwords($this->input->post('name'));
                 $address = $this->input->post('address');
                 $phone = $this->input->post('phone');
@@ -160,6 +168,7 @@ class Dipos extends MX_Controller {
                 $longitude = $this->input->post('longitude');
             
                 $data_old = array(
+                    'Code' => $model->code,
                     'Name' => $model->name,
                     'Address' => $model->address,
                     'Phone' => $model->phone,
@@ -170,6 +179,7 @@ class Dipos extends MX_Controller {
                     'Longitude' => $model->longitude,
                 );
 
+                $model->code = $code;
                 $model->name = $name;
                 $model->address = $address;
                 $model->phone = $phone;
@@ -185,6 +195,7 @@ class Dipos extends MX_Controller {
                 $update = $model->save();
                 if ($update) {
                     $data_new = array(
+                        'Code' => $code,
                         'Name' => $name,
                         'Address' => $address,
                         'Phone' => $phone,
@@ -234,6 +245,7 @@ class Dipos extends MX_Controller {
                 $delete = $model->save();
 
                 $data_notif = array(
+                    'Code' => $model->code,
                     'Name' => $model->name,
                     'Address' => $model->address,
                     'Phone' => $model->phone,

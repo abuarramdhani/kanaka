@@ -22,7 +22,6 @@
                 <span>{{lang('dipo')}}</span>
             </li>
         </ul>
-        
     </div>
     <!-- END PAGE BAR -->
     <!-- BEGIN PAGE TITLE-->
@@ -57,6 +56,7 @@
                     <table id="table-dipo" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
+                                <th><?=lang('code')?></th>
                                 <th><?=lang('name')?></th>
                                 <th><?=lang('address')?></th>
                                 <th><?=lang('phone')?></th>
@@ -86,6 +86,14 @@
         <input type="hidden" name="id" value="">
         
         <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="code" id="code" placeholder="<?=lang('code')?>" maxlength="10" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
                 <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
@@ -110,7 +118,7 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('email')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('email')?></label>
             <div class="col-lg-7">
                 <input type="email" class="form-control input-sm" name="email" id="email" placeholder="<?=lang('email')?>" maxlength="50" />
                 <div class="form-control-focus"> </div>
@@ -134,7 +142,7 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('latitude')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('latitude')?></label>
             <div class="col-lg-7">
                 <input type="text" class="form-control input-sm" name="latitude" id="latitude" placeholder="<?=lang('latitude')?>" maxlength="30" />
                 <div class="form-control-focus"> </div>
@@ -142,7 +150,7 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('longitude')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('longitude')?></label>
             <div class="col-lg-7">
                 <input type="text" class="form-control input-sm" name="longitude" id="longitude" placeholder="<?=lang('longitude')?>" maxlength="30" />
                 <div class="form-control-focus"> </div>
@@ -179,8 +187,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}dipo/dipos/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [7]},
-            {"targets": [7], "orderable": false}
+            {"className": "dt-center", "targets": [8]},
+            {"targets": [8], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
@@ -192,10 +200,20 @@
         },
         errorElement: "span",
         rules: {
+            code: "required",
             name: "required",
+            address: "required",
+            phone: "required",
+            city: "required",
+            subdistrict: "required",
         },
         messages: {
+            code: "{{lang('code')}}" + " {{lang('not_empty')}}",
             name: "{{lang('name')}}" + " {{lang('not_empty')}}",
+            address: "{{lang('address')}}" + " {{lang('not_empty')}}",
+            phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
+            city: "{{lang('city')}}" + " {{lang('not_empty')}}",
+            subdistrict: "{{lang('subdistrict')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -244,6 +262,7 @@
             if(json.status == "success"){
                 var row = json.data;
                 $('[name="id"]').val(row.id);
+                $('[name="code"]').val(row.code);
                 $('[name="name"]').val(row.name);
                 $('[name="address"]').val(row.address);
                 $('[name="phone"]').val(row.phone);

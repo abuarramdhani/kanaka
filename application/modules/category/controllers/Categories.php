@@ -193,6 +193,7 @@ class Categories extends MX_Controller {
                         'Image' => $filename,
                     );
 
+                    // Hapus File Gambar Sebelumnya
                     // if(!empty($_FILES['image']['name'])){
                     //     $path_file = 'uploads/images/categories/'.$image_files;
                     //     if(file_exists($path_file))

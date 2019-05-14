@@ -48,6 +48,7 @@ $lang['activity'] = 'Activity';
 $lang['last_activity'] = 'Last Activity';
 $lang['level'] = 'Level';
 $lang['name'] = "Name";
+$lang['code'] = "Code";
 $lang['description'] = 'Description';
 $lang['created_date'] = 'Created Date';
 $lang['created_time'] = 'Created Time';
@@ -56,6 +57,7 @@ $lang['data_change'] = 'Data Change';
 $lang['old_data'] = 'Old Data';
 $lang['new_data'] = 'New Data';
 $lang['image'] = 'Image';
+$lang['no_data_available'] = 'No Data Available';
 ## END GENERAL	##
 
 ## LOGIN PAGE   ##
@@ -212,14 +214,14 @@ $lang['saving_partner_successfully'] = 'Saving data Partner succesfully';
 $lang['deleting_partner_successfully'] = 'Deleting data Partner succesfully';
 ## END Partner ##
 
-## Transfer ##
-$lang['transfer'] = 'Transfer';
-$lang['new_transfer'] = "New Transfer";
-$lang['edit_transfer'] = "Edit Transfer";
-$lang['transfer_name'] = "Transfer Name";
-$lang['saving_transfer_successfully'] = 'Saving data Transfer succesfully';
-$lang['deleting_transfer_successfully'] = 'Deleting data Transfer succesfully';
-## END Transfer ##
+## Vendor ##
+$lang['vendor'] = 'Vendor';
+$lang['new_vendor'] = "New Vendor";
+$lang['edit_vendor'] = "Edit Vendor";
+$lang['vendor_name'] = "Vendor Name";
+$lang['saving_vendor_successfully'] = 'Saving data Vendor succesfully';
+$lang['deleting_vendor_successfully'] = 'Deleting data Vendor succesfully';
+## END Vendor ##
 
 ## Admin ##
 $lang['admin'] = 'Admin';

@@ -106,7 +106,7 @@
 
         <div class="form-group form-md-line-input" id="preview-upload-image-field">
             <div class="col-md-offset-4 col-md-6">
-                <div class="preview-upload-image"></div>
+                <div class="preview-upload-image text-center"></div>
             </div>
         </div>
         
@@ -212,6 +212,10 @@
                 $('[name="name"]').val(row.name);
                 $('[name="description"]').val(row.description);
                 // $('[name="image"]').val(row.image);
+
+                var html = '<img width="250" style="padding: 10px;" src="{{ base_url() }}uploads/images/categories/' + row.image + '">';
+                $('.preview-upload-image').html(html);
+                $('#preview-upload-image-field').show();
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_category')?>'); 

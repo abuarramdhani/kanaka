@@ -9,6 +9,8 @@ class Products extends MX_Controller {
         if (!$this->ion_auth->logged_in()) {
             redirect('login', 'refresh');
         }
+
+        $this->load->model('product');
     }
 
     public function index() {
@@ -21,48 +23,50 @@ class Products extends MX_Controller {
 
     public function fetch_data() {
         $database_columns = array(
-            'id',
-            'name',
-            'category_id',
-            'sku',
-            'view_total',
-            'description',
-            'feature',
-            'date_created',
+            'm_product.id',
+            'm_product.name',
+            'm_category.name as category_name',
+            'm_product.sku',
+            'm_product.view_total',
+            'm_product.description',
+            'm_product.feature',
+            'm_product.date_created',
         );
 
         $header_columns = array(
-            'name',
-            'category_id',
-            'sku',
-            'view_total',
-            'description',
-            'feature',
-            'date_created',
+            'm_product.name',
+            'm_category.name as category_name',
+            'm_product.sku',
+            'm_product.view_total',
+            'm_product.description',
+            'm_product.feature',
+            'm_product.date_created',
         );
 
         $from = "m_product";
-        $where = "deleted = 0";
+        $where = "m_product.deleted = 0";
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
-        
+        $join[] = array('m_category', 'm_category.id = m_product.category_id', 'inner');
+
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
             if((bool)strtotime($sSearch)){
                 $sSearch = date('Y-m-d',strtotime($sSearch));
             }
             $where .= " AND (";
-            $where .= "name LIKE '%" . $sSearch . "%' OR ";
-            $where .= "category_id LIKE '%" . $sSearch . "%' OR ";
-            $where .= "sku LIKE '%" . $sSearch . "%' OR ";
-            $where .= "description LIKE '%" . $sSearch . "%' OR ";
-            $where .= "feature LIKE '%" . $sSearch . "%' OR ";
-            $where .= "date_created LIKE '%" . $sSearch . "%'";
+            $where .= "m_product.name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "category_name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.sku LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.description LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.feature LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.date_created LIKE '%" . $sSearch . "%'";
             $where .= ")";
         }
 
-        $this->datatables->set_index('id');
+        $this->datatables->set_index('m_product.id');
         $this->datatables->config('database_columns', $database_columns);
         $this->datatables->config('from', $from);
+        $this->datatables->config('join', $join);
         $this->datatables->config('where', $where);
         $this->datatables->config('order_by', $order_by);
         $selected_data = $this->datatables->get_select_data();
@@ -81,7 +85,7 @@ class Products extends MX_Controller {
             }
 
             $row_value[] = $row->name;
-            $row_value[] = $row->category_id;
+            $row_value[] = $row->category_name;
             $row_value[] = $row->sku;
             $row_value[] = $row->view_total;
             $row_value[] = $row->description;
@@ -117,11 +121,60 @@ class Products extends MX_Controller {
                     $model->sku = $sku;
                     $model->description = $description;
                     $model->feature = $feature;
-                    
-                    $model->user_created = $user->id;
-                    $model->date_created = date('Y-m-d');
-                    $model->time_created = date('H:i:s');
-                    $save = $model->save();
+
+                    $dataProduct = array('name'         => $name,
+                                      'category_id'     => $category_id,
+                                      'sku'             => $sku,
+                                      'description'     => $description,
+                                      'feature'         => $feature,
+                                      'date_created'    => date('Y-m-d'),
+                                      'time_created'    => date('H:i:s'));
+
+                    $save       = $this->db->insert('m_product', $dataProduct);
+                    $id_product = $this->db->insert_id();
+
+                    if(!empty($_FILES['upload_Files']['name'])){
+                        $filesCount = count($_FILES['upload_Files']['name']);
+                        for($i = 0; $i < $filesCount; $i++){ 
+                            $_FILES['upload_File']['name']      = $_FILES['upload_Files']['name'][$i]; 
+                            $_FILES['upload_File']['type']      = $_FILES['upload_Files']['type'][$i]; 
+                            $_FILES['upload_File']['tmp_name']  = $_FILES['upload_Files']['tmp_name'][$i]; 
+                            $_FILES['upload_File']['error']     = $_FILES['upload_Files']['error'][$i]; 
+                            $_FILES['upload_File']['size']      = $_FILES['upload_Files']['size'][$i]; 
+                            
+                            // File upload configuration
+                            $uploadPath = 'uploads/images/products/'; 
+                            $config['upload_path'] = $uploadPath; 
+                            $config['allowed_types'] = 'gif|jpg|png'; 
+
+                            // Load and initialize upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+
+                            // Upload file to server
+                            if($this->upload->do_upload('upload_File')){
+                                // Uploaded file data
+                                $fileData = $this->upload->data();
+                                $uploadData[$i]['product_id']   = $id_product;
+                                $uploadData[$i]['order']        = $i+1;
+                                $uploadData[$i]['file_name']    = $fileData['file_name'];
+                                // $uploadData[$i]['user_created'] = $user->id;
+                                // $uploadData[$i]['date_created'] = date('Y-m-d');
+                                // $uploadData[$i]['time_created'] = date('H:i:s');
+                            
+                                $imageModel = new ProductImage();
+                                $imageModel->product_id = $id_product;
+                                $imageModel->order      = $i+1;
+                                $imageModel->image      = $uploadData[$i]['file_name'];
+    
+                                $imageModel->user_created = $user->id;
+                                $imageModel->date_created = date('Y-m-d');
+                                $imageModel->time_created = date('H:i:s');
+                                $saveImage = $imageModel->save();
+                            }
+                        }
+                    }
+
                     if ($save) {
                         $data_notif = array(
                             'Name' => $name,

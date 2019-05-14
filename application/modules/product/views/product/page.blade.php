@@ -129,7 +129,30 @@
                 <div class="form-control-focus"> </div>
             </div>
         </div>
-        
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+            <input type="file" class="form-control" name="upload_Files[]" multiple/>
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="product_image">
+                <ul>
+                    <?php if(!empty($product_image)): foreach($product_image as $file): ?>
+                    <li>
+                        <img src="<?php echo base_url('uploads/files/'.$file['file_name']); ?>" alt="" >
+                        <p>Uploaded On <?php echo date("j M Y",strtotime($file['created'])); ?></p>
+                    </li>
+                    <?php endforeach; else: ?>
+                    <p>No File uploaded</p>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div> -->
+
       </div>
       <div class="modal-footer">
         <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>

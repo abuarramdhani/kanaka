@@ -138,20 +138,11 @@
             </div>
         </div>
 
-        <!-- <div class="row">
-            <div class="product_image">
-                <ul>
-                    <?php if(!empty($product_image)): foreach($product_image as $file): ?>
-                    <li>
-                        <img src="<?php echo base_url('uploads/files/'.$file['file_name']); ?>" alt="" >
-                        <p>Uploaded On <?php echo date("j M Y",strtotime($file['created'])); ?></p>
-                    </li>
-                    <?php endforeach; else: ?>
-                    <p>No File uploaded</p>
-                    <?php endif; ?>
-                </ul>
+        <div class="form-group form-md-line-input" id="preview-upload-image-field">
+            <div class="col-md-12">
+                <div class="product-image preview-upload-image text-center"></div>
             </div>
-        </div> -->
+        </div>
 
       </div>
       <div class="modal-footer">
@@ -166,6 +157,8 @@
 
 @section('scripts')
 <script type="text/javascript">
+    $('#preview-upload-image-field').hide();
+
     function add_product(){
         $('#form-product')[0].reset(); 
         $('#modal_form').modal('show'); 
@@ -247,12 +240,23 @@
         $.getJSON('{{base_url()}}product/products/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
+                var rowImage = json.image;
+                var i;
+                var html = "";
+
                 $('[name="id"]').val(row.id);
                 $('[name="name"]').val(row.name);
                 $('[name="category_id"]').val(row.category_id);
                 $('[name="sku"]').val(row.sku);
                 $('[name="description"]').val(row.description);
                 $('[name="feature"]').val(row.feature);
+
+                for(i=0; i<rowImage.length; i++){
+                    html += '<div class="product-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/' + rowImage[i].image + '"></div>';
+                }
+               
+                $('.preview-upload-image').html(html);
+                $('#preview-upload-image-field').show();
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_product')?>'); 
@@ -298,5 +302,58 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
+
+    // Proses hapus image
+    function deleteImage(value){
+        form_validator.resetForm();
+        $("html, body").animate({
+            scrollTop: 0
+        }, 500);
+        $.confirm({
+            content : "{{ lang('delete_this_data') }}",
+            title : "{{ lang('are_you_sure') }}",
+            confirm: function() {
+
+                App.blockUI({
+                    target: '#table-wrapper'
+                });
+                $.getJSON('{{base_url()}}product/products/deleteImage', {id: value}, function(json, textStatus) {
+                    if(json.status == "success"){
+                        toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
+                    }else if(json.status == "error"){
+                        toastr.error('{{lang("deleted_unsuccesfully")}}','{{ lang("notification") }}');
+                    }
+                    setTimeout(function(){
+                        window.location.reload()
+                    },1000);
+               });
+            },
+            cancel: function(button) {
+                // nothing to do
+            },
+            confirmButton: "Yes",
+            cancelButton: "No",
+            confirmButtonClass: "btn-danger",
+            cancelButtonClass: "btn-success",
+            dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
+        });
+    }
+
+    // Preview image in browser
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+        if (input.files) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $($.parseHTML('<img width="100" style="padding: 10px;">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+            }
+            reader.readAsDataURL(input.files);
+        }
+    };
+
+    $('#image').on('change', function() {
+        $('.preview-upload-image').html('');
+        imagesPreview(this, 'div.preview-upload-image');
+        $('#preview-upload-image-field').show();
+    });
 </script>
 @stop

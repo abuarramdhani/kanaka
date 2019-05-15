@@ -158,9 +158,6 @@ class Products extends MX_Controller {
                                 $uploadData[$i]['product_id']   = $id_product;
                                 $uploadData[$i]['order']        = $i+1;
                                 $uploadData[$i]['file_name']    = $fileData['file_name'];
-                                // $uploadData[$i]['user_created'] = $user->id;
-                                // $uploadData[$i]['date_created'] = date('Y-m-d');
-                                // $uploadData[$i]['time_created'] = date('H:i:s');
                             
                                 $imageModel = new ProductImage();
                                 $imageModel->product_id = $id_product;
@@ -216,6 +213,46 @@ class Products extends MX_Controller {
                 $model->date_modified = date('Y-m-d');
                 $model->time_modified = date('H:i:s');
                 $update = $model->save();
+
+                if(!empty($_FILES['upload_Files']['name'])){
+                    $filesCount = count($_FILES['upload_Files']['name']);
+                    for($i = 0; $i < $filesCount; $i++){ 
+                        $_FILES['upload_File']['name']      = $_FILES['upload_Files']['name'][$i]; 
+                        $_FILES['upload_File']['type']      = $_FILES['upload_Files']['type'][$i]; 
+                        $_FILES['upload_File']['tmp_name']  = $_FILES['upload_Files']['tmp_name'][$i]; 
+                        $_FILES['upload_File']['error']     = $_FILES['upload_Files']['error'][$i]; 
+                        $_FILES['upload_File']['size']      = $_FILES['upload_Files']['size'][$i]; 
+                        
+                        // File upload configuration
+                        $uploadPath = 'uploads/images/products/'; 
+                        $config['upload_path'] = $uploadPath; 
+                        $config['allowed_types'] = 'gif|jpg|png'; 
+
+                        // Load and initialize upload library
+                        $this->load->library('upload', $config);
+                        $this->upload->initialize($config);
+
+                        // Upload file to server
+                        if($this->upload->do_upload('upload_File')){
+                            // Uploaded file data
+                            $fileData = $this->upload->data();
+                            $uploadData[$i]['product_id']   = $id_product;
+                            $uploadData[$i]['order']        = $i+1;
+                            $uploadData[$i]['file_name']    = $fileData['file_name'];
+                        
+                            $imageModel = new ProductImage();
+                            $imageModel->product_id = $id_product;
+                            $imageModel->order      = $i+1;
+                            $imageModel->image      = $uploadData[$i]['file_name'];
+
+                            $imageModel->user_created = $user->id;
+                            $imageModel->date_created = date('Y-m-d');
+                            $imageModel->time_created = date('H:i:s');
+                            $saveImage = $imageModel->save();
+                        }
+                    }
+                }
+
                 if ($update) {
                     $data_new = array(
                         'Name' => $name,
@@ -243,7 +280,7 @@ class Products extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $model = array('status' => 'success', 'data' => Product::find($id));
+            $model = array('status' => 'success', 'data' => Product::find($id), 'image' => ProductImage::where('product_id', $id)->where('deleted', '0')->get());
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }
@@ -271,6 +308,34 @@ class Products extends MX_Controller {
                     'Feature' => $model->feature,
                 );
                 $message = "Delete " . strtolower(lang('product')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 4);
+                $status = array('status' => 'success');
+            } else {
+                $status = array('status' => 'error');
+            }
+        } else {
+            $status = array('status' => 'error');
+        }
+        $data = $status;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    public function deleteImage() {
+        if ($this->input->is_ajax_request()) {
+            $id = $this->input->get('id');
+            $user = $this->ion_auth->user()->row();
+            $model = ProductImage::find($id);
+            if (!empty($model)) {
+                $model->deleted = 1;
+                $model->user_deleted = $user->id;
+                $model->date_deleted = date('Y-m-d');
+                $model->time_deleted = date('H:i:s');
+                $delete = $model->save();
+
+                $data_notif = array(
+                    'Image' => $model->image,
+                );
+                $message = "Delete " . strtolower(lang('product')) . " " .  $model->image . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 4);
                 $status = array('status' => 'success');
             } else {

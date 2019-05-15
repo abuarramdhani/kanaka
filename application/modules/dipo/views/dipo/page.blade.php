@@ -63,6 +63,7 @@
                                 <th><?=lang('email')?></th>
                                 <th><?=lang('city')?></th>
                                 <th><?=lang('subdistrict')?></th>
+                                <th><?=lang('zona')?></th>
                                 <th><?=lang('created_date')?></th>
                                 <th width="13%"><?=lang('options')?></th>
                             </tr>
@@ -142,6 +143,19 @@
         </div>
         
         <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('zona')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <select class="form-control input-sm" name="zona_id" id="zona_id" style="width: 100%;">
+                    <option value=""><?= lang('select_your_option') ?></option>
+                    @foreach($zonas as $zona)
+                        <option value="{{ $zona->id }}">{{ $zona->name }}</option>
+                    @endforeach
+                </select>
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('latitude')?></label>
             <div class="col-lg-7">
                 <input type="text" class="form-control input-sm" name="latitude" id="latitude" placeholder="<?=lang('latitude')?>" maxlength="30" />
@@ -170,6 +184,10 @@
 
 @section('scripts')
 <script type="text/javascript">
+    $(function(){
+        $('#zona_id').select2();
+    });
+
     function add_dipo(){
         $('#form-dipo')[0].reset(); 
         $('#modal_form').modal('show'); 
@@ -269,6 +287,7 @@
                 $('[name="email"]').val(row.email);
                 $('[name="city"]').val(row.city);
                 $('[name="subdistrict"]').val(row.subdistrict);
+                $('[name="zona_id"]').val(row.zona_id).change();
                 $('[name="latitude"]').val(row.latitude);
                 $('[name="longitude"]').val(row.longitude);
 

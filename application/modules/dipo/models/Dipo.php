@@ -5,7 +5,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Dipo extends Eloquent {
 
-	public $table = 'm_dipo';
+	public $table = 'm_dipo_partner';
 	public $primaryKey = 'id';
 	public $timestamps = false;
 

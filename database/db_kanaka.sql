@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-15 22:54:36
+Date: 2019-05-16 00:14:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -79,7 +79,7 @@ INSERT INTO `app_sessions` VALUES ('8ntrok0do7eqkspp09te4rnpbji5s3af', '::1', '1
 INSERT INTO `app_sessions` VALUES ('5664oapa0p198sdbrgrjjgs1adkil2u9', '::1', '1557789168', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373738363530383B7265717565737465645F706167657C733A35343A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F66657463685F64617461223B70726576696F75735F706167657C733A35343A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F66657463685F64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537373836353132223B6C6173745F636865636B7C693A313535373738363533373B);
 INSERT INTO `app_sessions` VALUES ('01b176gqcdff3v5tquh3lt5l47vinl9k', '::1', '1557804373', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373830323737323B7265717565737465645F706167657C733A35343A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F66657463685F64617461223B70726576696F75735F706167657C733A35343A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F63617465676F72792F63617465676F726965732F66657463685F64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537373836353132223B6C6173745F636865636B7C693A313535373738363533373B);
 INSERT INTO `app_sessions` VALUES ('2dag7a8nd3jhng4e0di1dv4qjhcmj191', '::1', '1557852586', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373834363537353B7265717565737465645F706167657C733A34353A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6469706F2F6469706F732F66657463685F64617461223B70726576696F75735F706167657C733A34353A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6469706F2F6469706F732F66657463685F64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537373836353337223B6C6173745F636865636B7C693A313535373834363537393B);
-INSERT INTO `app_sessions` VALUES ('u00t60hv9lnn5rqojn30krdumfni01mk', '::1', '1557935336', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373933323332333B7265717565737465645F706167657C733A34313A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F7A6F6E612F657863656C223B70726576696F75735F706167657C733A34313A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6D61737465722F7A6F6E612F657863656C223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537383436353739223B6C6173745F636865636B7C693A313535373933323333303B);
+INSERT INTO `app_sessions` VALUES ('u00t60hv9lnn5rqojn30krdumfni01mk', '::1', '1557940427', 0x5F5F63695F6C6173745F726567656E65726174657C693A313535373933323332333B7265717565737465645F706167657C733A34353A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6469706F2F6469706F732F66657463685F64617461223B70726576696F75735F706167657C733A34353A22687474703A2F2F6C6F63616C686F73742F6B616E616B612F6469706F2F6469706F732F66657463685F64617461223B6964656E746974797C733A353A2261646D696E223B757365726E616D657C733A353A2261646D696E223B656D61696C7C733A31363A2261646D696E406B616E616B612E636F6D223B757365725F69647C733A313A2231223B6F6C645F6C6173745F6C6F67696E7C733A31303A2231353537383436353739223B6C6173745F636865636B7C693A313535373933323333303B);
 
 -- ----------------------------
 -- Table structure for company
@@ -210,7 +210,7 @@ CREATE TABLE `logs` (
   `type` int(11) NOT NULL,
   PRIMARY KEY (`id_logs`),
   KEY `users_id` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=230 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of logs
@@ -410,6 +410,14 @@ INSERT INTO `logs` VALUES ('218', '1', '{\"Name\":\"Zona 1\",\"Description\":\"J
 INSERT INTO `logs` VALUES ('219', '1', '{\"Name\":\"Zona 2\",\"Description\":\"Padang\"}', null, null, 'Add zona Zona 2 succesfully by PT Kanaka', '2019-05-15 22:45:49', 'C', '8');
 INSERT INTO `logs` VALUES ('220', '1', '{\"Name\":\"Zona 2\",\"Description\":\"Padang, Lampung\"}', '{\"Name\":\"Zona 2\",\"Description\":\"Padang\"}', '{\"Description\":\"Padang, Lampung\"}', 'Update zona Zona 2 succesfully by PT Kanaka', '2019-05-15 22:45:58', 'U', '8');
 INSERT INTO `logs` VALUES ('221', '1', null, '{\"Name\":\"Zona 2\",\"Description\":\"Padang, Lampung\"}', null, 'Delete zona Zona 2 succesfully by PT Kanaka', '2019-05-15 22:48:11', 'D', '8');
+INSERT INTO `logs` VALUES ('222', '1', '{\"Code\":\"PDG\",\"Name\":\"Padang Store\",\"Address\":\"Jalan Ahmad Yani\",\"Phone\":\"0236787129\",\"Email\":\"dipopadang@kanaka.com\",\"City\":\"Padang\",\"Subdistrict\":\"Sumatera Barat\",\"Latitude\":\"871761564615\",\"Longitude\":\"-819685717651\"}', '{\"Code\":\"SRB\",\"Name\":\"Surabaya Store\",\"Address\":\"Jalan Bung Tomo\",\"Phone\":\"0236787129\",\"Email\":\"diposurabaya@kanaka.com\",\"City\":\"Surabaya\",\"Subdistrict\":\"Surabaya Barat\",\"Latitude\":\"871761564615\",\"Longitude\":\"-819685717651\"}', '{\"Code\":\"PDG\",\"Name\":\"Padang Store\",\"Address\":\"Jalan Ahmad Yani\",\"Email\":\"dipopadang@kanaka.com\",\"City\":\"Padang\",\"Subdistrict\":\"Sumatera Barat\"}', 'Update dipo Padang Store succesfully by PT Kanaka', '2019-05-15 23:58:02', 'U', '6');
+INSERT INTO `logs` VALUES ('223', '1', '{\"Code\":\"PDG\",\"Name\":\"Padang Store\",\"Address\":\"Jalan Ahmad Yani\",\"Phone\":\"0256787129\",\"Email\":\"dipopadang@kanaka.com\",\"City\":\"Padang\",\"Subdistrict\":\"Sumatera Barat\",\"Zona Name\":\"Zona 2\",\"Latitude\":\"87176156461589\",\"Longitude\":\"-81968571765176\"}', '{\"Code\":\"PDG\",\"Name\":\"Padang Store\",\"Address\":\"Jalan Ahmad Yani\",\"Phone\":\"0236787129\",\"Email\":\"dipopadang@kanaka.com\",\"City\":\"Padang\",\"Subdistrict\":\"Sumatera Barat\",\"Zona Name\":\"Zona 2\",\"Latitude\":\"871761564615\",\"Longitude\":\"-819685717651\"}', '{\"Phone\":\"0256787129\",\"Latitude\":\"87176156461589\",\"Longitude\":\"-81968571765176\"}', 'Update dipo Padang Store succesfully by PT Kanaka', '2019-05-16 00:02:03', 'U', '6');
+INSERT INTO `logs` VALUES ('224', '1', '{\"Code\":\"PDG\",\"Name\":\"Padang Store\",\"Address\":\"Jalan Ahmad Yani\",\"Phone\":\"0256787129\",\"Email\":\"dipopadang@kanaka.com\",\"City\":\"Padang\",\"Subdistrict\":\"Sumatera Barat\",\"Zona Name\":\"Zona 1\",\"Latitude\":\"87176156461589\",\"Longitude\":\"-81968571765176\"}', '{\"Code\":\"PDG\",\"Name\":\"Padang Store\",\"Address\":\"Jalan Ahmad Yani\",\"Phone\":\"0256787129\",\"Email\":\"dipopadang@kanaka.com\",\"City\":\"Padang\",\"Subdistrict\":\"Sumatera Barat\",\"Zona Name\":\"Zona 2\",\"Latitude\":\"87176156461589\",\"Longitude\":\"-81968571765176\"}', '{\"Zona Name\":\"Zona 1\"}', 'Update dipo Padang Store succesfully by PT Kanaka', '2019-05-16 00:02:48', 'U', '6');
+INSERT INTO `logs` VALUES ('225', '1', '{\"Code\":\"PDG\",\"Name\":\"Padang Store\",\"Address\":\"Jalan Ahmad Yani\",\"Phone\":\"0256787129\",\"Email\":\"dipopadang@kanaka.com\",\"City\":\"Padang\",\"Subdistrict\":\"Sumatera Barat\",\"Zona Name\":\"Zona 2\",\"Latitude\":\"87176156461589\",\"Longitude\":\"-81968571765176\"}', '{\"Code\":\"PDG\",\"Name\":\"Padang Store\",\"Address\":\"Jalan Ahmad Yani\",\"Phone\":\"0256787129\",\"Email\":\"dipopadang@kanaka.com\",\"City\":\"Padang\",\"Subdistrict\":\"Sumatera Barat\",\"Zona Name\":\"Zona 1\",\"Latitude\":\"87176156461589\",\"Longitude\":\"-81968571765176\"}', '{\"Zona Name\":\"Zona 2\"}', 'Update dipo Padang Store succesfully by PT Kanaka', '2019-05-16 00:03:11', 'U', '6');
+INSERT INTO `logs` VALUES ('226', '1', '{\"Code\":\"LMP\",\"Name\":\"Lampung Store\",\"Address\":\"Jalan Sudirman\",\"Phone\":\"02657687623\",\"Email\":\"dipolampung@kanaka.com\",\"City\":\"Lampung\",\"Subdistrict\":\"Bandar Lampung\",\"Zona Name\":\"Zona 2\",\"Latitude\":\"8917236516\",\"Longitude\":\"-8186237152\"}', null, null, 'Add dipo Lampung Store succesfully by PT Kanaka', '2019-05-16 00:04:22', 'C', '6');
+INSERT INTO `logs` VALUES ('227', '1', null, '{\"Code\":\"LMP\",\"Name\":\"Lampung Store\",\"Address\":\"Jalan Sudirman\",\"Phone\":\"02657687623\",\"Email\":\"dipolampung@kanaka.com\",\"City\":\"Lampung\",\"Subdistrict\":\"Bandar Lampung\",\"Zona Name\":\"Zona 2\",\"Latitude\":\"8917236516\",\"Longitude\":\"-8186237152\"}', null, 'Delete dipo Lampung Store succesfully by PT Kanaka', '2019-05-16 00:04:57', 'D', '6');
+INSERT INTO `logs` VALUES ('228', '1', '{\"Code\":\"PDG\",\"Name\":\"Padang Store\",\"Address\":\"Jalan Ahmad Yani\",\"Phone\":\"0256787120\",\"Email\":\"dipopadang@kanaka.com\",\"City\":\"Padang\",\"Subdistrict\":\"Sumatera Barat\",\"Zona Name\":\"Zona 2\",\"Latitude\":\"87176156461589\",\"Longitude\":\"-81968571765176\"}', '{\"Code\":\"PDG\",\"Name\":\"Padang Store\",\"Address\":\"Jalan Ahmad Yani\",\"Phone\":\"0256787129\",\"Email\":\"dipopadang@kanaka.com\",\"City\":\"Padang\",\"Subdistrict\":\"Sumatera Barat\",\"Zona Name\":\"Zona 2\",\"Latitude\":\"87176156461589\",\"Longitude\":\"-81968571765176\"}', '{\"Phone\":\"0256787120\"}', 'Update DIPO Padang Store succesfully by PT Kanaka', '2019-05-16 00:06:11', 'U', '6');
+INSERT INTO `logs` VALUES ('229', '1', '{\"Code\":\"PLB\",\"Name\":\"Palembang Store\",\"Address\":\"Jalan Ampera No 10\",\"Phone\":\"02458123671\",\"Email\":\"dipopalembang@kanaka.com\",\"City\":\"Palembang\",\"Subdistrict\":\"Sumatera Selatan\",\"Zona Name\":\"Zona 2\",\"Latitude\":\"887182367125\",\"Longitude\":\"-871623152271\"}', null, null, 'Add DIPO Palembang Store succesfully by PT Kanaka', '2019-05-16 00:13:44', 'C', '6');
 
 -- ----------------------------
 -- Table structure for menu
@@ -487,11 +495,13 @@ INSERT INTO `m_category` VALUES ('3', 'Gula', 'Makanan', 'logo-template.png', '0
 INSERT INTO `m_category` VALUES ('4', 'Gas', 'Gas 3 Kg', 'Logo-Property.png', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-15', '22:37:59', '1', '2019-05-15', '22:42:00', '0', '0', '1901-01-01', '00:00:00');
 
 -- ----------------------------
--- Table structure for m_dipo
+-- Table structure for m_dipo_partner
 -- ----------------------------
-DROP TABLE IF EXISTS `m_dipo`;
-CREATE TABLE `m_dipo` (
+DROP TABLE IF EXISTS `m_dipo_partner`;
+CREATE TABLE `m_dipo_partner` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(10) NOT NULL,
+  `dipo_id` int(11) NOT NULL,
   `code` varchar(10) NOT NULL,
   `name` varchar(50) NOT NULL,
   `address` varchar(150) NOT NULL,
@@ -499,6 +509,7 @@ CREATE TABLE `m_dipo` (
   `email` varchar(50) NOT NULL,
   `city` varchar(50) NOT NULL,
   `subdistrict` varchar(50) NOT NULL,
+  `zona_id` int(11) NOT NULL,
   `latitude` varchar(30) NOT NULL,
   `longitude` varchar(30) NOT NULL,
   `printed` tinyint(4) NOT NULL DEFAULT '0',
@@ -516,18 +527,20 @@ CREATE TABLE `m_dipo` (
   `date_deleted` date NOT NULL DEFAULT '1901-01-01',
   `time_deleted` time NOT NULL DEFAULT '00:00:00',
   PRIMARY KEY (`id`),
-  KEY `rowID` (`id`),
+  KEY `rowID` (`id`) USING BTREE,
   KEY `deleted` (`deleted`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
--- Records of m_dipo
+-- Records of m_dipo_partner
 -- ----------------------------
-INSERT INTO `m_dipo` VALUES ('1', 'BGR', 'Bogor Store', 'Jalan Pajajaran No 10', '02518790654', 'dipobogor@kanaka.com', 'Bogor', 'Bogor Tengah', '8098898999', '-889898989', '0', '0', '1901-01-01', '00:00:00', '1', '2019-04-29', '22:10:29', '1', '2019-05-14', '23:45:07', '0', '0', '1901-01-01', '00:00:00');
-INSERT INTO `m_dipo` VALUES ('2', 'BDG', 'Bandung Store', 'Jalan Asia Afrika No 19', '02318654259', 'dipobandungstore@kanaka.com', 'Bandung Barat', 'Ciwidey', '87817283799', '-8738827319', '0', '0', '1901-01-01', '00:00:00', '1', '2019-04-30', '22:14:50', '1', '2019-05-01', '23:04:32', '0', '0', '1901-01-01', '00:00:00');
-INSERT INTO `m_dipo` VALUES ('3', 'JKT', 'Jakarta Store', 'Jalan Kemang 20', '0218765234', 'dipojakarta@kanaka.com', 'Jakarta Selatan', 'Pasar Minggu', '87971923719', '-8978196237', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-01', '22:25:23', '1', '2019-05-14', '23:44:59', '0', '0', '1901-01-01', '00:00:00');
-INSERT INTO `m_dipo` VALUES ('4', 'SMR', 'Semarang Store', 'Jalan Diponegoro No 7', '02358618236', 'diposemarang@kanaka.com', 'Semarang', 'Semarang Utara', '89815236576152', '-89123617623781', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-09', '05:25:51', '1', '2019-05-09', '05:26:07', '0', '0', '1901-01-01', '00:00:00');
-INSERT INTO `m_dipo` VALUES ('5', 'SRB', 'Surabaya Store', 'Jalan Bung Tomo', '0236787129', 'diposurabaya@kanaka.com', 'Surabaya', 'Surabaya Barat', '871761564615', '-819685717651', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-14', '23:44:41', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_dipo_partner` VALUES ('1', 'dipo', '0', 'BGR', 'Bogor Store', 'Jalan Pajajaran No 10', '02518790654', 'dipobogor@kanaka.com', 'Bogor', 'Bogor Tengah', '1', '8098898999', '-889898989', '0', '0', '1901-01-01', '00:00:00', '1', '2019-04-29', '22:10:29', '1', '2019-05-14', '23:45:07', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_dipo_partner` VALUES ('2', 'dipo', '0', 'BDG', 'Bandung Store', 'Jalan Asia Afrika No 19', '02318654259', 'dipobandungstore@kanaka.com', 'Bandung Barat', 'Ciwidey', '1', '87817283799', '-8738827319', '0', '0', '1901-01-01', '00:00:00', '1', '2019-04-30', '22:14:50', '1', '2019-05-01', '23:04:32', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_dipo_partner` VALUES ('3', 'dipo', '0', 'JKT', 'Jakarta Store', 'Jalan Kemang 20', '0218765234', 'dipojakarta@kanaka.com', 'Jakarta Selatan', 'Pasar Minggu', '1', '87971923719', '-8978196237', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-01', '22:25:23', '1', '2019-05-14', '23:44:59', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_dipo_partner` VALUES ('4', 'dipo', '0', 'SMR', 'Semarang Store', 'Jalan Diponegoro No 7', '02358618236', 'diposemarang@kanaka.com', 'Semarang', 'Semarang Utara', '1', '89815236576152', '-89123617623781', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-09', '05:25:51', '1', '2019-05-09', '05:26:07', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_dipo_partner` VALUES ('5', 'dipo', '0', 'PDG', 'Padang Store', 'Jalan Ahmad Yani', '0256787120', 'dipopadang@kanaka.com', 'Padang', 'Sumatera Barat', '2', '87176156461589', '-81968571765176', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-14', '23:44:41', '1', '2019-05-16', '00:06:11', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_dipo_partner` VALUES ('6', 'dipo', '0', 'LMP', 'Lampung Store', 'Jalan Sudirman', '02657687623', 'dipolampung@kanaka.com', 'Lampung', 'Bandar Lampung', '2', '8917236516', '-8186237152', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-16', '00:04:22', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_dipo_partner` VALUES ('7', 'dipo', '0', 'PLB', 'Palembang Store', 'Jalan Ampera No 10', '02458123671', 'dipopalembang@kanaka.com', 'Palembang', 'Sumatera Selatan', '2', '887182367125', '-871623152271', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-16', '00:13:44', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');
 
 -- ----------------------------
 -- Table structure for m_product
@@ -627,7 +640,7 @@ CREATE TABLE `m_zona` (
 -- Records of m_zona
 -- ----------------------------
 INSERT INTO `m_zona` VALUES ('1', 'Zona 1', 'Jakarta, Bogor, Bandung', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-15', '22:45:30', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');
-INSERT INTO `m_zona` VALUES ('2', 'Zona 2', 'Padang, Lampung', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-15', '22:45:49', '1', '2019-05-15', '22:45:58', '1', '1', '2019-05-15', '22:48:11');
+INSERT INTO `m_zona` VALUES ('2', 'Zona 2', 'Padang, Lampung', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-15', '22:45:49', '1', '2019-05-15', '22:45:58', '0', '0', '1901-01-01', '00:00:00');
 
 -- ----------------------------
 -- Table structure for notifications

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-14 23:51:03
+Date: 2019-05-15 22:51:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,7 +41,7 @@ INSERT INTO `menu` VALUES ('2', '8', 'Category', 'category', 'icon-briefcase', '
 INSERT INTO `menu` VALUES ('3', '1', 'Reports', 'reports', 'icon-notebook', '0', 'reports', '1', null, '2017-10-11 15:45:49');
 INSERT INTO `menu` VALUES ('4', '14', 'Menus', 'menu', null, '1', 'menus', '1', null, null);
 INSERT INTO `menu` VALUES ('5', '13', 'Users', 'users/account', null, '1', 'users', '1', null, null);
-INSERT INTO `menu` VALUES ('6', '6', 'Brand', 'brand', 'icon-clock', '1', 'brand', '0', '2017-10-11 17:02:05', '2017-10-31 09:50:36');
+INSERT INTO `menu` VALUES ('6', '4', 'Zona', 'zona', 'icon-clock', '1', 'zona', '1', '2017-10-11 17:02:05', '2019-05-15 22:06:39');
 INSERT INTO `menu` VALUES ('7', '7', 'Area', 'area', null, '1', 'area', '0', '2018-12-13 10:27:48', '2019-04-27 07:52:18');
 INSERT INTO `menu` VALUES ('8', '9', 'Product', 'product', null, '1', 'product', '1', '2019-04-28 20:19:00', '2019-04-28 20:19:00');
 INSERT INTO `menu` VALUES ('9', '10', 'DIPO', 'dipo', null, '1', 'dipo', '1', '2019-04-28 20:19:30', '2019-04-28 20:19:30');

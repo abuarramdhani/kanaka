@@ -15,38 +15,46 @@ class Dipos extends MX_Controller {
         $data['add_access'] = $this->user_profile->get_user_access('Created', 'dipo');
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'dipo');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'dipo');
+        
+        $data['zonas'] = Zona::where('deleted', 0)->get();
+
         $this->load->blade('dipo.views.dipo.page', $data);
     }
 
     public function fetch_data() {
         $database_columns = array(
-            'id',
+            'm_dipo_partner.id',
+            'm_dipo_partner.type',
             'code',
-            'name',
+            'm_dipo_partner.name',
             'address',
             'phone',
             'email',
             'city',
             'subdistrict',
+            'm_zona.name as zona_name',
             'latitude',
             'longitude',
-            'date_created',
+            'm_dipo_partner.date_created',
         );
 
         $header_columns = array(
             'code',
-            'name',
+            'm_dipo_partner.name',
             'address',
             'phone',
             'email',
             'city',
             'subdistrict',
-            'date_created',
+            'm_zona.name',
+            'm_dipo_partner.date_created',
         );
 
-        $from = "m_dipo";
-        $where = "deleted = 0";
+        $from = "m_dipo_partner";
+        $where = "m_dipo_partner.type = 'dipo' AND m_dipo_partner.deleted = 0 AND m_zona.deleted = 0";
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
+
+        $join[] = array('m_zona as m_zona', 'm_zona.id = m_dipo_partner.zona_id', 'left');
         
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
@@ -55,19 +63,21 @@ class Dipos extends MX_Controller {
             }
             $where .= " AND (";
             $where .= "code LIKE '%" . $sSearch . "%' OR ";
-            $where .= "name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_dipo_partner.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "address LIKE '%" . $sSearch . "%' OR ";
             $where .= "phone LIKE '%" . $sSearch . "%' OR ";
             $where .= "email LIKE '%" . $sSearch . "%' OR ";
             $where .= "city LIKE '%" . $sSearch . "%' OR ";
             $where .= "subdistrict LIKE '%" . $sSearch . "%' OR ";
-            $where .= "date_created LIKE '%" . $sSearch . "%'";
+            $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_dipo_partner.date_created LIKE '%" . $sSearch . "%'";
             $where .= ")";
         }
 
-        $this->datatables->set_index('id');
+        $this->datatables->set_index('m_dipo_partner.id');
         $this->datatables->config('database_columns', $database_columns);
         $this->datatables->config('from', $from);
+        $this->datatables->config('join', $join);
         $this->datatables->config('where', $where);
         $this->datatables->config('order_by', $order_by);
         $selected_data = $this->datatables->get_select_data();
@@ -92,6 +102,7 @@ class Dipos extends MX_Controller {
             $row_value[] = $row->email;
             $row_value[] = $row->city;
             $row_value[] = $row->subdistrict;
+            $row_value[] = $row->zona_name;
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             
@@ -118,10 +129,12 @@ class Dipos extends MX_Controller {
                     $email = $this->input->post('email');
                     $city = $this->input->post('city');
                     $subdistrict = $this->input->post('subdistrict');
+                    $zona_id = $this->input->post('zona_id');
                     $latitude = $this->input->post('latitude');
                     $longitude = $this->input->post('longitude');
                     
                     $model = new Dipo();
+                    $model->type = 'dipo';
                     $model->code = $code;
                     $model->name = $name;
                     $model->address = $address;
@@ -129,6 +142,7 @@ class Dipos extends MX_Controller {
                     $model->email = $email;
                     $model->city = $city;
                     $model->subdistrict = $subdistrict;
+                    $model->zona_id = $zona_id;
                     $model->latitude = $latitude;
                     $model->longitude = $longitude;
                     
@@ -145,10 +159,11 @@ class Dipos extends MX_Controller {
                             'Email' => $email,
                             'City' => $city,
                             'Subdistrict' => $subdistrict,
+                            'Zona Name' => Zona::find($zona_id)->name,
                             'Latitude' => $latitude,
                             'Longitude' => $longitude,
                         );
-                        $message = "Add " . strtolower(lang('dipo')) . " " . $name . " succesfully by " . $user->full_name;
+                        $message = "Add " . lang('dipo') . " " . $name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 6);
                         $status = array('status' => 'success', 'message' => lang('message_save_success'));
                     } else {
@@ -164,6 +179,7 @@ class Dipos extends MX_Controller {
                 $email = $this->input->post('email');
                 $city = $this->input->post('city');
                 $subdistrict = $this->input->post('subdistrict');
+                $zona_id = $this->input->post('zona_id');
                 $latitude = $this->input->post('latitude');
                 $longitude = $this->input->post('longitude');
             
@@ -175,6 +191,7 @@ class Dipos extends MX_Controller {
                     'Email' => $model->email,
                     'City' => $model->city,
                     'Subdistrict' => $model->subdistrict,
+                    'Zona Name' => Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
                 );
@@ -186,6 +203,7 @@ class Dipos extends MX_Controller {
                 $model->email = $email;
                 $model->city = $city;
                 $model->subdistrict = $subdistrict;
+                $model->zona_id = $zona_id;
                 $model->latitude = $latitude;
                 $model->longitude = $longitude;
 
@@ -202,12 +220,13 @@ class Dipos extends MX_Controller {
                         'Email' => $email,
                         'City' => $city,
                         'Subdistrict' => $subdistrict,
+                        'Zona Name' => Zona::find($zona_id)->name,
                         'Latitude' => $latitude,
                         'Longitude' => $longitude,
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
-                    $message = "Update " . strtolower(lang('dipo')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                    $message = "Update " . lang('dipo') . " " .  $model->name . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 6);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
@@ -252,10 +271,11 @@ class Dipos extends MX_Controller {
                     'Email' => $model->email,
                     'City' => $model->city,
                     'Subdistrict' => $model->subdistrict,
+                    'Zona Name' => Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
                 );
-                $message = "Delete " . strtolower(lang('dipo')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                $message = "Delete " . lang('dipo') . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 6);
                 $status = array('status' => 'success');
             } else {

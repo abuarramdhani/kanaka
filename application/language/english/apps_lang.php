@@ -153,14 +153,14 @@ $lang['printlimited'] = 'Print Limited';
 $lang['printunlimited'] = 'Print Unlimited';
 ## END USER MENU ##
 
-## BRAND ##
-$lang['brand'] = 'Brand';
-$lang['new_brand'] = "New Brand";
-$lang['edit_brand'] = "Edit Brand";
-$lang['brand_name'] = "Brand Name";
-$lang['saving_brand_successfully'] = 'Saving data Brand succesfully';
-$lang['deleting_brand_successfully'] = 'Deleting data Brand succesfully';
-## END BRAND ##
+## ZONA ##
+$lang['zona'] = 'Zona';
+$lang['new_zona'] = "New Zona";
+$lang['edit_zona'] = "Edit Zona";
+$lang['zona_name'] = "Zona Name";
+$lang['saving_zona_successfully'] = 'Saving data Zona succesfully';
+$lang['deleting_zona_successfully'] = 'Deleting data Zona succesfully';
+## END ZONA ##
 
 ## Area ##
 $lang['area'] = 'Area';

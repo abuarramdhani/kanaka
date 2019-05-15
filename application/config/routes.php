@@ -168,3 +168,10 @@ $route['report/dipo_report/excel']	= 'dipo_report/dipo_reports/excel';
 $route['report/partner'] = 'partner/partners/index';
 $route['report/partner/pdf']	= 'partner/partners/pdf';
 $route['report/partner/excel']	= 'partner/partners/excel';
+
+/**
+* ZONA
+*/
+$route['master/zona'] = 'zona/zonas/index';
+$route['master/zona/pdf']	= 'zona/zonas/pdf';
+$route['master/zona/excel']	= 'zona/zonas/excel';

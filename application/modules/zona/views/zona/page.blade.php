@@ -1,6 +1,6 @@
 @extends('default.views.layouts.default')
 
-@section('title') {{lang('dipo')}} @stop
+@section('title') {{lang('zona')}} @stop
 
 @section('body')
 <style type="text/css">
@@ -19,13 +19,13 @@
                 <i class="fa fa-circle"></i>
             </li>
             <li>
-                <span>{{lang('dipo')}}</span>
+                <span>{{lang('zona')}}</span>
             </li>
         </ul>
     </div>
     <!-- END PAGE BAR -->
     <!-- BEGIN PAGE TITLE-->
-    <h3 class="page-title"> {{lang('dipo')}} </h3>
+    <h3 class="page-title"> {{lang('zona')}} </h3>
     <!-- END PAGE TITLE-->
     <!-- END PAGE HEADERs-->
     <div class="row">
@@ -35,35 +35,29 @@
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="icon-grid font-dark"></i>
-                        <span class="caption-subject">{{lang('dipo')}}</span>
+                        <span class="caption-subject">{{lang('zona')}}</span>
                     </div>
                     <div class="tools">
                         @if($add_access == 1)
-                            <button onclick="add_dipo()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('new_dipo')}}</button>
+                            <button onclick="add_zona()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('new_zona')}}</button>
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}master/dipo/pdf')" class="btn btn-danger btn-sm">
+                            <button onClick="return window.open('{{base_url()}}master/zona/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
-                            <button onClick="return window.open('{{base_url()}}master/dipo/excel')" class="btn btn-success btn-sm">
+                            <button onClick="return window.open('{{base_url()}}master/zona/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
                             </button>
                         @endif
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <table id="table-dipo" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+                    <table id="table-zona" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
-                                <th><?=lang('code')?></th>
                                 <th><?=lang('name')?></th>
-                                <th><?=lang('address')?></th>
-                                <th><?=lang('phone')?></th>
-                                <th><?=lang('email')?></th>
-                                <th><?=lang('city')?></th>
-                                <th><?=lang('subdistrict')?></th>
-                                <th><?=lang('zona')?></th>
+                                <th><?=lang('description')?></th>
                                 <th><?=lang('created_date')?></th>
                                 <th width="13%"><?=lang('options')?></th>
                             </tr>
@@ -80,19 +74,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title"><?=lang('new_dipo')?></h3>
+        <h3 class="modal-title"><?=lang('new_zona')?></h3>
       </div>
-      {{ form_open(null,array('id' => 'form-dipo', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      {{ form_open(null,array('id' => 'form-zona', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
         <input type="hidden" name="id" value="">
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="code" id="code" placeholder="<?=lang('code')?>" maxlength="10" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
         
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
@@ -103,73 +89,13 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('address')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('description')?></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="address" id="address" placeholder="<?=lang('address')?>" maxlength="150" />
+                <input type="text" class="form-control input-sm" name="description" id="description" placeholder="<?=lang('description')?>" maxlength="150" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
         
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('phone')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm number" name="phone" id="phone" placeholder="<?=lang('phone')?>" maxlength="20" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('email')?></label>
-            <div class="col-lg-7">
-                <input type="email" class="form-control input-sm" name="email" id="email" placeholder="<?=lang('email')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('city')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="city" id="city" placeholder="<?=lang('city')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('subdistrict')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="subdistrict" id="subdistrict" placeholder="<?=lang('subdistrict')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('zona')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <select class="form-control input-sm" name="zona_id" id="zona_id" style="width: 100%;">
-                    <option value=""><?= lang('select_your_option') ?></option>
-                    @foreach($zonas as $zona)
-                        <option value="{{ $zona->id }}">{{ $zona->name }}</option>
-                    @endforeach
-                </select>
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('latitude')?></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="latitude" id="latitude" placeholder="<?=lang('latitude')?>" maxlength="30" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('longitude')?></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="longitude" id="longitude" placeholder="<?=lang('longitude')?>" maxlength="30" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
         
       </div>
       <div class="modal-footer">
@@ -184,54 +110,44 @@
 
 @section('scripts')
 <script type="text/javascript">
-    $(function(){
-        $('#zona_id').select2();
-    });
+    $('#preview-upload-image-field').hide();
 
-    function add_dipo(){
-        $('#form-dipo')[0].reset(); 
+    function add_zona(){
+        $('#form-zona')[0].reset(); 
         $('#modal_form').modal('show'); 
-        $('.modal-title').text('<?=lang('new_dipo')?>'); 
+        $('.modal-title').text('<?=lang('new_zona')?>'); 
 
         $('[name="id"]').val('');
     }
     toastr.options = { "positionClass": "toast-top-right", };
 
     // Pengaturan Datatable 
-    var oTable =$('#table-dipo').dataTable({
+    var oTable =$('#table-zona').dataTable({
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,
         "sServerMethod": "GET",
-        "sAjaxSource": "{{ base_url() }}dipo/dipos/fetch_data",
+        "sAjaxSource": "{{ base_url() }}zona/zonas/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [8]},
-            {"targets": [8], "orderable": false}
+            {"className": "dt-center", "targets": [3]},
+            {"targets": [3], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
 
     // Pengaturan Form Validation 
-    var form_validator = $("#form-dipo").validate({
+    var form_validator = $("#form-zona").validate({
         errorPlacement: function(error, element) {
             $(element).parent().closest('.form-group').append(error);
         },
         errorElement: "span",
         rules: {
-            code: "required",
             name: "required",
-            address: "required",
-            phone: "required",
-            city: "required",
-            subdistrict: "required",
+            // image: "required",
         },
         messages: {
-            code: "{{lang('code')}}" + " {{lang('not_empty')}}",
             name: "{{lang('name')}}" + " {{lang('not_empty')}}",
-            address: "{{lang('address')}}" + " {{lang('not_empty')}}",
-            phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
-            city: "{{lang('city')}}" + " {{lang('not_empty')}}",
-            subdistrict: "{{lang('subdistrict')}}" + " {{lang('not_empty')}}",
+            // image: "{{lang('image')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -240,7 +156,7 @@
             $(form).ajaxSubmit({  
                 beforeSubmit:  showRequest,  
                 success:       showResponse,
-                url:       '{{base_url()}}dipo/dipos/save',      
+                url:       '{{base_url()}}zona/zonas/save',      
                 type:      'POST',       
                 clearForm: true ,       
                 resetForm: true ,  
@@ -276,23 +192,20 @@
         App.blockUI({
             target: '#form-wrapper'
         });
-        $.getJSON('{{base_url()}}dipo/dipos/view', {id: value}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}zona/zonas/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
                 $('[name="id"]').val(row.id);
-                $('[name="code"]').val(row.code);
                 $('[name="name"]').val(row.name);
-                $('[name="address"]').val(row.address);
-                $('[name="phone"]').val(row.phone);
-                $('[name="email"]').val(row.email);
-                $('[name="city"]').val(row.city);
-                $('[name="subdistrict"]').val(row.subdistrict);
-                $('[name="zona_id"]').val(row.zona_id).change();
-                $('[name="latitude"]').val(row.latitude);
-                $('[name="longitude"]').val(row.longitude);
+                $('[name="description"]').val(row.description);
+                // $('[name="image"]').val(row.image);
+
+                var html = '<img width="250" style="padding: 10px;" src="{{ base_url() }}uploads/images/zonas/' + row.image + '">';
+                $('.preview-upload-image').html(html);
+                $('#preview-upload-image-field').show();
 
                 $('#modal_form').modal('show');
-                $('.modal-title').text('<?=lang('edit_dipo')?>'); 
+                $('.modal-title').text('<?=lang('edit_zona')?>'); 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -314,7 +227,7 @@
                 App.blockUI({
                     target: '#table-wrapper'
                 });
-                $.getJSON('{{base_url()}}dipo/dipos/delete', {id: value}, function(json, textStatus) {
+                $.getJSON('{{base_url()}}zona/zonas/delete', {id: value}, function(json, textStatus) {
                     if(json.status == "success"){
                         toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
                     }else if(json.status == "error"){
@@ -335,5 +248,23 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
+    
+    // Preview image in browser
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+        if (input.files) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $($.parseHTML('<img width="100" style="padding: 10px;">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+            }
+            reader.readAsDataURL(input.files);
+        }
+    };
+
+    $('#image').on('change', function() {
+        $('.preview-upload-image').html('');
+        imagesPreview(this, 'div.preview-upload-image');
+        $('#preview-upload-image-field').show();
+    });
+    
 </script>
 @stop

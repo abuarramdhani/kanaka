@@ -24,22 +24,40 @@ class Products extends MX_Controller {
     public function fetch_data() {
         $database_columns = array(
             'm_product.id',
+            'm_product.product_code',
             'm_product.name',
             'm_category.name as category_name',
-            'm_product.sku',
             'm_product.view_total',
             'm_product.description',
             'm_product.feature',
+            'm_product.barcode_product',
+            'm_product.barcode_carton',
+            'm_product.packing_size',
+            'm_product.qty',
+            'm_product.length',
+            'm_product.height',
+            'm_product.width',
+            'm_product.volume',
+            'm_product.weight',
             'm_product.date_created',
         );
 
         $header_columns = array(
+            'm_product.product_code',
             'm_product.name',
             'm_category.name as category_name',
-            'm_product.sku',
             'm_product.view_total',
             'm_product.description',
             'm_product.feature',
+            'm_product.barcode_product',
+            'm_product.barcode_carton',
+            'm_product.packing_size',
+            'm_product.qty',
+            'm_product.length',
+            'm_product.height',
+            'm_product.width',
+            'm_product.volume',
+            'm_product.weight',
             'm_product.date_created',
         );
 
@@ -56,9 +74,18 @@ class Products extends MX_Controller {
             $where .= " AND (";
             $where .= "m_product.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "category_name LIKE '%" . $sSearch . "%' OR ";
-            $where .= "m_product.sku LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.product_code LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_product.description LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_product.feature LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.barcode_product LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.barcode_carton LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.packing_size LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.qty LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.length LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.height LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.width LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.volume LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.weight LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_product.date_created LIKE '%" . $sSearch . "%'";
             $where .= ")";
         }
@@ -84,9 +111,18 @@ class Products extends MX_Controller {
                 $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
 
+            $row_value[] = $row->product_code;
+            $row_value[] = $row->barcode_product;
+            $row_value[] = $row->barcode_carton;
             $row_value[] = $row->name;
+            $row_value[] = $row->packing_size;
+            $row_value[] = $row->qty;
+            $row_value[] = $row->length;
+            $row_value[] = $row->width;
+            $row_value[] = $row->height;
+            $row_value[] = $row->volume;
+            $row_value[] = $row->weight;
             $row_value[] = $row->category_name;
-            $row_value[] = $row->sku;
             $row_value[] = $row->view_total;
             $row_value[] = $row->description;
             $row_value[] = $row->feature;
@@ -111,22 +147,49 @@ class Products extends MX_Controller {
                 }else{
                     $name = ucwords($this->input->post('name'));
                     $category_id = $this->input->post('category_id');
-                    $sku = $this->input->post('sku');
+                    $product_code = $this->input->post('product_code');
                     $description = $this->input->post('description');
                     $feature = $this->input->post('feature');
+                    $barcode_product = $this->input->post('barcode_product');
+                    $barcode_carton = $this->input->post('barcode_carton');
+                    $packing_size = $this->input->post('packing_size');
+                    $qty = $this->input->post('qty');
+                    $length = $this->input->post('length');
+                    $height = $this->input->post('width');
+                    $width = $this->input->post('height');
+                    $volume = $this->input->post('volume');
+                    $weight = $this->input->post('weight');
                     
                     $model = new Product();
                     $model->name = $name;
                     $model->category_id = $category_id;
-                    $model->sku = $sku;
+                    $model->product_code = $product_code;
                     $model->description = $description;
                     $model->feature = $feature;
+                    $model->barcode_product = $barcode_product;
+                    $model->barcode_carton = $barcode_carton;
+                    $model->packing_size = $packing_size;
+                    $model->qty = $qty;
+                    $model->length = $length;
+                    $model->height = $height;
+                    $model->width = $width;
+                    $model->volume = $volume;
+                    $model->weight = $weight;
 
                     $dataProduct = array('name'         => $name,
                                       'category_id'     => $category_id,
-                                      'sku'             => $sku,
+                                      'product_code'    => $product_code,
                                       'description'     => $description,
                                       'feature'         => $feature,
+                                      'barcode_product' => $barcode_product,
+                                      'barcode_carton'  => $barcode_carton,
+                                      'packing_size'    => $packing_size,
+                                      'qty'             => $qty,
+                                      'length'     => $length,
+                                      'height'     => $height,
+                                      'width'     => $width,
+                                      'volume'   => $volume,
+                                      'weight'          => $weight,
                                       'date_created'    => date('Y-m-d'),
                                       'time_created'    => date('H:i:s'));
 
@@ -174,11 +237,20 @@ class Products extends MX_Controller {
 
                     if ($save) {
                         $data_notif = array(
-                            'Name' => $name,
-                            'Category' => $category_id,
-                            'SKU' => $sku,
-                            'Description' => $description,
-                            'Feature' => $feature,
+                            'Name'            => $name,
+                            'Category'        => $category_id,
+                            'Product Code'    => $product_code,
+                            'Description'     => $description,
+                            'Feature'         => $feature,
+                            'Barcode Product' => $barcode_product,
+                            'Barcode Carton'  => $barcode_carton,
+                            'Packing Size'    => $packing_size,
+                            'Qty'             => $qty,
+                            'Dimension L'     => $length,
+                            'Dimension H'     => $height,
+                            'Dimension W'     => $width,
+                            'Dimension vol'   => $volume,
+                            'Weight'          => $weight,
                         );
                         $message = "Add " . strtolower(lang('product')) . " " . $name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 4);
@@ -191,23 +263,50 @@ class Products extends MX_Controller {
                 $model = Product::find($id_product);
                 $name = ucwords($this->input->post('name'));
                 $category_id = $this->input->post('category_id');
-                $sku = $this->input->post('sku');
+                $product_code = $this->input->post('product_code');
                 $description = $this->input->post('description');
                 $feature = $this->input->post('feature');
+                $barcode_product = $this->input->post('barcode_product');
+                $barcode_carton = $this->input->post('barcode_carton');
+                $packing_size = $this->input->post('packing_size');
+                $qty = $this->input->post('qty');
+                $weight = $this->input->post('weight');
+                $length = $this->input->post('length');
+                $width = $this->input->post('width');
+                $height = $this->input->post('height');
+                $volume = $this->input->post('volume');
             
                 $data_old = array(
-                    'Name' => $model->name,
-                    'Category' => $model->category_id,
-                    'SKU' => $model->sku,
-                    'Description' => $model->description,
-                    'Feature' => $model->feature,
+                    'Name'            => $model->name,
+                    'Category'        => $model->category_id,
+                    'Product Code'    => $model->product_code,
+                    'Description'     => $model->description,
+                    'Feature'         => $model->feature,
+                    'Barcode Product' => $model->barcode_product,
+                    'Barcode Carton'  => $model->barcode_carton,
+                    'Packing Size'    => $model->packing_size,
+                    'Qty'             => $model->qty,
+                    'Dimension L'     => $model->length,
+                    'Dimension H'     => $height,
+                    'Dimension W'     => $width,
+                    'Dimension vol'   => $volume,
+                    'Weight'          => $weight,
                 );
 
-                $model->name = $name;
-                $model->category_id = $category_id;
-                $model->sku = $sku;
-                $model->description = $description;
-                $model->feature = $feature;
+                $model->name            = $name;
+                $model->category_id     = $category_id;
+                $model->product_code             = $product_code;
+                $model->description     = $description;
+                $model->feature         = $feature;
+                $model->barcode_product = $barcode_product;
+                $model->barcode_carton  = $barcode_carton;
+                $model->packing_size    = $packing_size;
+                $model->qty             = $qty;
+                $model->length     = $length;
+                $model->height     = $height;
+                $model->width     = $width;
+                $model->volume   = $volume;
+                $model->weight          = $weight;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
@@ -255,11 +354,20 @@ class Products extends MX_Controller {
 
                 if ($update) {
                     $data_new = array(
-                        'Name' => $name,
-                        'Category' => $category_id,
-                        'SKU' => $sku,
-                        'Description' => $description,
-                        'Feature' => $feature,
+                        'Name'            => $name,
+                        'Category'        => $category_id,
+                        'Product Code'    => $product_code,
+                        'Description'     => $description,
+                        'Feature'         => $feature,
+                        'Barcode Product' => $barcode_product,
+                        'Barcode Carton'  => $barcode_carton,
+                        'Packing Size'    => $packing_size,
+                        'Qty'             => $qty,
+                        'Dimension L'     => $model->length,
+                        'Dimension H'     => $height,
+                        'Dimension W'     => $width,
+                        'Dimension vol'   => $volume,
+                        'Weight'          => $weight,
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
@@ -301,11 +409,20 @@ class Products extends MX_Controller {
                 $delete = $model->save();
 
                 $data_notif = array(
-                    'Name' => $model->name,
-                    'Category' => $model->category_id,
-                    'SKU' => $model->sku,
-                    'Description' => $model->description,
-                    'Feature' => $model->feature,
+                    'Name'            => $model->name,
+                    'Category'        => $model->category_id,
+                    'Product Code'    => $model->product_code,
+                    'Description'     => $model->description,
+                    'Feature'         => $model->feature,
+                    'Barcode Product' => $barcode_product,
+                    'Barcode Carton'  => $barcode_carton,
+                    'Packing Size'    => $packing_size,
+                    'Qty'             => $qty,
+                    'Dimension L'     => $model->length,
+                    'Dimension H'     => $height,
+                    'Dimension W'     => $width,
+                    'Dimension vol'   => $volume,
+                    'Weight'          => $weight,
                 );
                 $message = "Delete " . strtolower(lang('product')) . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 4);

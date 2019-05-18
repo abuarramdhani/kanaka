@@ -259,9 +259,17 @@
         errorElement: "span",
         rules: {
             name: "required",
+            product_code: "required",
+            packing_size: "required",
+            qty: "required",
+            category_id: "required",
         },
         messages: {
             name: "{{lang('product_name')}}" + " {{lang('not_empty')}}",
+            product_code: "{{lang('product_code')}}" + " {{lang('not_empty')}}",
+            packing_size: "{{lang('packing_size')}}" + " {{lang('not_empty')}}",
+            qty: "{{lang('qty_per_ctn')}}" + " {{lang('not_empty')}}",
+            category_id: "{{lang('category')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({

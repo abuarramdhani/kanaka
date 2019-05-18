@@ -175,3 +175,10 @@ $route['report/partner/excel']	= 'partner/partners/excel';
 $route['master/zona'] = 'zona/zonas/index';
 $route['master/zona/pdf']	= 'zona/zonas/pdf';
 $route['master/zona/excel']	= 'zona/zonas/excel';
+
+/**
+* VENDOR/PRINCIPLE
+*/
+$route['master/vendor'] = 'principle/principles/index';
+$route['master/vendor/pdf']	= 'principle/principles/pdf';
+$route['master/vendor/excel'] = 'principle/principles/excel';

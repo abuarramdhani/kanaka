@@ -185,10 +185,10 @@ class Products extends MX_Controller {
                                       'barcode_carton'  => $barcode_carton,
                                       'packing_size'    => $packing_size,
                                       'qty'             => $qty,
-                                      'length'     => $length,
-                                      'height'     => $height,
-                                      'width'     => $width,
-                                      'volume'   => $volume,
+                                      'length'          => $length,
+                                      'height'          => $height,
+                                      'width'           => $width,
+                                      'volume'          => $volume,
                                       'weight'          => $weight,
                                       'date_created'    => date('Y-m-d'),
                                       'time_created'    => date('H:i:s'));
@@ -238,7 +238,7 @@ class Products extends MX_Controller {
                     if ($save) {
                         $data_notif = array(
                             'Name'            => $name,
-                            'Category'        => $category_id,
+                            'Category'        => Category::find($category_id)->name,
                             'Product Code'    => $product_code,
                             'Description'     => $description,
                             'Feature'         => $feature,
@@ -246,10 +246,10 @@ class Products extends MX_Controller {
                             'Barcode Carton'  => $barcode_carton,
                             'Packing Size'    => $packing_size,
                             'Qty'             => $qty,
-                            'Length'     => $length,
-                            'Height'     => $height,
-                            'Width'     => $width,
-                            'Volume'   => $volume,
+                            'Length'          => $length,
+                            'Height'          => $height,
+                            'Width'           => $width,
+                            'Volume'          => $volume,
                             'Weight'          => $weight,
                         );
                         $message = "Add " . strtolower(lang('product')) . " " . $name . " succesfully by " . $user->full_name;
@@ -410,7 +410,7 @@ class Products extends MX_Controller {
 
                 $data_notif = array(
                     'Name'            => $model->name,
-                    'Category'        => $model->category_id,
+                    'Category'        => Category::find($category_id)->name,
                     'Product Code'    => $model->product_code,
                     'Description'     => $model->description,
                     'Feature'         => $model->feature,
@@ -466,7 +466,7 @@ class Products extends MX_Controller {
     }
 
     function pdf(){
-        $data['products'] = Product::join('m_category','m_category.id = m_product.category_id')->where('m_product.deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['products'] = Product::where('m_product.deleted', 0)->orderBy('id', 'DESC')->get();
         $html = $this->load->view('product/product/product_pdf', $data, true);
         $this->pdf_generator->generate($html, 'product pdf', $orientation='Portrait');
     }

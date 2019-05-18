@@ -283,3 +283,18 @@ $lang['partner_report_name'] = "Partner Name";
 $lang['saving_partner_report_successfully'] = 'Saving data Partner succesfully';
 $lang['deleting_partner_report_successfully'] = 'Deleting data Partner succesfully';
 ## END Partner Report ##
+
+## Principle ##
+$lang['principle'] = 'Principle';
+$lang['new_principle'] = "New Principle";
+$lang['edit_principle'] = "Edit Principle";
+$lang['saving_principle_successfully'] = 'Saving data principle succesfully';
+$lang['deleting_principle_successfully'] = 'Deleting data principle succesfully';
+$lang['brand'] = 'Brand';
+$lang['top'] = 'TOP';
+$lang['pic'] = 'PIC';
+$lang['web'] = 'Web';
+$lang['fax'] = 'Fax';
+$lang['office'] = 'Office';
+$lang['personal'] = 'Personal';
+## END Principle ##

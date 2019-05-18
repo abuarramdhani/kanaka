@@ -246,10 +246,10 @@ class Products extends MX_Controller {
                             'Barcode Carton'  => $barcode_carton,
                             'Packing Size'    => $packing_size,
                             'Qty'             => $qty,
-                            'Dimension L'     => $length,
-                            'Dimension H'     => $height,
-                            'Dimension W'     => $width,
-                            'Dimension vol'   => $volume,
+                            'Length'     => $length,
+                            'Height'     => $height,
+                            'Width'     => $width,
+                            'Volume'   => $volume,
                             'Weight'          => $weight,
                         );
                         $message = "Add " . strtolower(lang('product')) . " " . $name . " succesfully by " . $user->full_name;
@@ -286,10 +286,10 @@ class Products extends MX_Controller {
                     'Barcode Carton'  => $model->barcode_carton,
                     'Packing Size'    => $model->packing_size,
                     'Qty'             => $model->qty,
-                    'Dimension L'     => $model->length,
-                    'Dimension H'     => $height,
-                    'Dimension W'     => $width,
-                    'Dimension vol'   => $volume,
+                    'Length'     => $model->length,
+                    'Height'     => $height,
+                    'Width'     => $width,
+                    'Volume'   => $volume,
                     'Weight'          => $weight,
                 );
 
@@ -363,10 +363,10 @@ class Products extends MX_Controller {
                         'Barcode Carton'  => $barcode_carton,
                         'Packing Size'    => $packing_size,
                         'Qty'             => $qty,
-                        'Dimension L'     => $model->length,
-                        'Dimension H'     => $height,
-                        'Dimension W'     => $width,
-                        'Dimension vol'   => $volume,
+                        'Length'          => $length,
+                        'Height'          => $height,
+                        'Width'           => $width,
+                        'Volume'          => $volume,
                         'Weight'          => $weight,
                     );
 
@@ -418,10 +418,10 @@ class Products extends MX_Controller {
                     'Barcode Carton'  => $barcode_carton,
                     'Packing Size'    => $packing_size,
                     'Qty'             => $qty,
-                    'Dimension L'     => $model->length,
-                    'Dimension H'     => $height,
-                    'Dimension W'     => $width,
-                    'Dimension vol'   => $volume,
+                    'Length'          => $length,
+                    'Height'          => $height,
+                    'Width'           => $width,
+                    'Volume'          => $volume,
                     'Weight'          => $weight,
                 );
                 $message = "Delete " . strtolower(lang('product')) . " " .  $model->name . " succesfully by " . $user->full_name;

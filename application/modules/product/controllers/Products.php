@@ -466,7 +466,7 @@ class Products extends MX_Controller {
     }
 
     function pdf(){
-        $data['products'] = Product::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['products'] = Product::join('m_category','m_category.id = m_product.category_id')->where('m_product.deleted', 0)->orderBy('id', 'DESC')->get();
         $html = $this->load->view('product/product/product_pdf', $data, true);
         $this->pdf_generator->generate($html, 'product pdf', $orientation='Portrait');
     }

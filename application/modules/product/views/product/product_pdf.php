@@ -31,28 +31,51 @@
 
 <div id="content" style="text-align:center;">
 <table width="100%" border="1" cellpadding="1" cellspacing="0">
-	<tr >
-		<th  align="center" width="5%" height="20px">No</th>
-		<th  align="center"><?=lang('product_name')?></th>
-		<th  align="center"><?=lang('category')?></th>
-		<th  align="center"><?=lang('SKU')?></th>
-		<th  align="center"><?=lang('view_total')?></th>
-		<th  align="center"><?=lang('description')?></th>
-		<th  align="center"><?=lang('feature')?></th>
-		<th  align="center"><?=lang('created_date')?></th>
+	<tr>
+		<th rowspan="2" align="center" width="5%" height="20px">No</th>
+		<th rowspan="2" align="center"><?=lang('product_code')?></th>
+		<th colspan="2" align="center"><?=lang('barcode')?></th>
+		<th rowspan="2" align="center"><?=lang('product_name')?></th>
+		<th rowspan="2" align="center"><?=lang('packing_size')?></th>
+		<th rowspan="2" align="center"><?=lang('qty_per_ctn')?></th>
+		<th colspan="4" align="center"><?=lang('carton_dimension')?></th>
+		<th rowspan="2" align="center"><?=lang('weight')?></th>
+		<th rowspan="2" align="center"><?=lang('category')?></th>
+		<th rowspan="2" align="center"><?=lang('view_total')?></th>
+		<th rowspan="2" align="center"><?=lang('description')?></th>
+		<th rowspan="2" align="center"><?=lang('feature')?></th>
+		<th rowspan="2" align="center"><?=lang('created_date')?></th>
+	</tr>
+	<tr>
+		<th><?=lang('product')?></th>
+		<th><?=lang('carton')?></th> 
+		<th>L</th> 
+		<th>W</th> 
+		<th>H</th> 
+		<th>Vol (m<sup>3</sup>)</th> 
 	</tr>
 	<?php 
     $i=0;
     if(count($products) > 0){
 	   foreach($products as $product){
+		   print_r($products);exit;
 	   $i++;
    	?>
 					
 	<tr style="font-size:9px">
 		<td align="center"><?php echo $i;?></td>
+		<td><?=$product->product_code?></td>
+		<td><?=$product->barcode_product?></td>
+		<td><?=$product->barcode_carton?></td>
 		<td><?=$product->name?></td>
+		<td><?=$product->packing_size?></td>
+		<td><?=$product->qty_per_ctn?></td>
+		<td><?=$product->length?></td>
+		<td><?=$product->width?></td>
+		<td><?=$product->height?></td>
+		<td><?=$product->volume?></td>
+		<td><?=$product->weight?></td>
 		<td><?=$product->category_id?></td>
-		<td><?=$product->sku?></td>
 		<td><?=$product->view_total?></td>
 		<td><?=$product->description?></td>
 		<td><?=$product->feature?></td>

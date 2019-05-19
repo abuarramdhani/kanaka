@@ -151,9 +151,9 @@ $route['report/customer/excel']	= 'customer/customers/excel';
 /**
 * COMPANY REPORT
 */
-$route['report/company'] = 'company/companies/index';
-$route['report/company/pdf']	= 'company/companies/pdf';
-$route['report/company/excel']	= 'company/companies/excel';
+$route['report/company'] = 'companyreport/companyreports/index';
+$route['report/company/pdf']	= 'companyreport/companyreports/pdf';
+$route['report/company/excel']	= 'companyreport/companyreports/excel';
 
 /**
 * DIPO REPORT

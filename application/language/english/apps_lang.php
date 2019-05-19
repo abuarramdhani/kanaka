@@ -317,3 +317,12 @@ $lang['available'] = "Available";
 $lang['saving_pricelist_successfully'] = 'Saving data Pricelist succesfully';
 $lang['deleting_pricelist_successfully'] = 'Deleting data Pricelist succesfully';
 ## END Pricelist ##
+
+## Company Report ##
+$lang['companyreport'] = 'Company Report';
+$lang['new_companyreport'] = "New Company Report";
+$lang['edit_companyreport'] = "Edit Company Report";
+$lang['companyreport_name'] = "Company Name";
+$lang['saving_companyreport_successfully'] = 'Saving data Company Report succesfully';
+$lang['deleting_companyreport_successfully'] = 'Deleting data Company Report succesfully';
+## END Company Report ##

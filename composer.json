@@ -31,7 +31,8 @@
             "application/modules/dipo/models",
 			"application/modules/category/models",
             "application/modules/product/models",	
-            "application/modules/zona/models"
+            "application/modules/zona/models",
+            "application/modules/principle/models"
         ]
     }
 }

@@ -57,14 +57,27 @@
                     <table id="table-product" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
-                                <th><?=lang('product_name')?></th>
-                                <th><?=lang('category')?></th>
-                                <th><?=lang('sku')?></th>
-                                <th><?=lang('view_total')?></th>
-                                <th><?=lang('description')?></th>
-                                <th><?=lang('feature')?></th>
-                                <th><?=lang('created_date')?></th>
-                                <th width="13%"><?=lang('options')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('product_code')?></th>
+                                <th colspan="2" class="text-center"><?=lang('barcode')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('product_name')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('packing_size')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('qty_per_ctn')?></th>
+                                <th colspan="4" class="text-center"><?=lang('carton_dimension')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('weight')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('category')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('view_total')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('description')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('feature')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('created_date')?></th>
+                                <th rowspan="2" width="13%"><?=lang('options')?></th>
+                            </tr>
+                            <tr>
+                                <th><?=lang('product')?></th>
+                                <th><?=lang('carton')?></th> 
+                                <th>L</th> 
+                                <th>W</th> 
+                                <th>H</th> 
+                                <th>Vol (m<sup>3</sup>)</th> 
                             </tr>
                         </thead>
                     </table>
@@ -84,11 +97,62 @@
       {{ form_open(null,array('id' => 'form-product', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
         <input type="hidden" name="id" value="">
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('product_code')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="product_code" id="product_code" placeholder="<?=lang('product_code')?>" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
         
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('barcode')?></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="barcode_product" id="barcode_product" placeholder="<?=lang('product')?>" maxlength="50" />
+                <input type="text" class="form-control input-sm" name="barcode_carton" id="barcode_carton" placeholder="<?=lang('carton')?>" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('product_name')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
                 <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('packing_size')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="packing_size" id="packing_size" placeholder="<?=lang('packing_size')?>" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('qty_per_ctn')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="number" class="form-control input-sm" name="qty" id="qty" placeholder="<?=lang('qty_per_ctn')?>" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('carton_dimension')?></label>
+            <div class="col-lg-7 form-inline">
+                <input oninput="get_volume()" type="number" class="form-control input-sm" name="length" id="length" placeholder="Length" maxlength="20" />
+                <input oninput="get_volume()" type="number" class="form-control input-sm" name="width" id="width" placeholder="Width" maxlength="20" />
+                <input oninput="get_volume()" type="number" class="form-control input-sm" name="height" id="height" placeholder="Height" maxlength="20" />
+                <input type="number" class="form-control input-sm" name="volume" id="volume" placeholder="Volume" maxlength="20" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('weight')?></label>
+            <div class="col-lg-7">
+                <input type="number" class="form-control input-sm" name="weight" id="weight" placeholder="<?=lang('weight')?>" maxlength="50" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -107,15 +171,7 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('sku')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="sku" id="sku" placeholder="<?=lang('sku')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('description')?></label>
             <div class="col-lg-7">
                 <textarea rows="4" cols="50" class="form-control input-sm" name="description" id="description" placeholder="<?=lang('description')?>"></textarea>
                 <div class="form-control-focus"> </div>
@@ -123,7 +179,7 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('feature')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('feature')?></label>
             <div class="col-lg-7">
                 <textarea rows="4" cols="50" class="form-control input-sm" name="feature" id="feature" placeholder="<?=lang('feature')?>"></textarea>
                 <div class="form-control-focus"> </div>
@@ -131,27 +187,18 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('image')?></label>
             <div class="col-lg-7">
             <input type="file" class="form-control" name="upload_Files[]" multiple/>
                 <div class="form-control-focus"> </div>
             </div>
         </div>
 
-        <!-- <div class="row">
-            <div class="product_image">
-                <ul>
-                    <?php if(!empty($product_image)): foreach($product_image as $file): ?>
-                    <li>
-                        <img src="<?php echo base_url('uploads/files/'.$file['file_name']); ?>" alt="" >
-                        <p>Uploaded On <?php echo date("j M Y",strtotime($file['created'])); ?></p>
-                    </li>
-                    <?php endforeach; else: ?>
-                    <p>No File uploaded</p>
-                    <?php endif; ?>
-                </ul>
+        <div class="form-group form-md-line-input" id="preview-upload-image-field">
+            <div class="col-md-12">
+                <div class="product-image preview-upload-image text-center"></div>
             </div>
-        </div> -->
+        </div>
 
       </div>
       <div class="modal-footer">
@@ -166,6 +213,21 @@
 
 @section('scripts')
 <script type="text/javascript">
+    $('#preview-upload-image-field').hide();
+
+    function get_volume(){
+        var length = $('#length').val();
+        var height = $('#height').val();
+        var width  = $('#width').val();
+        var volume = 0;
+
+        if(length != '' && height != '' && width != ''){
+            var volume = (length * height * width)/100;
+        }
+
+        $('#volume').val(volume);
+    }
+
     function add_product(){
         $('#form-product')[0].reset(); 
         $('#modal_form').modal('show'); 
@@ -183,8 +245,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}product/products/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [7]},
-            {"targets": [7], "orderable": false}
+            {"className": "dt-center", "targets": [11]},
+            {"targets": [11], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
@@ -197,9 +259,17 @@
         errorElement: "span",
         rules: {
             name: "required",
+            product_code: "required",
+            packing_size: "required",
+            qty: "required",
+            category_id: "required",
         },
         messages: {
             name: "{{lang('product_name')}}" + " {{lang('not_empty')}}",
+            product_code: "{{lang('product_code')}}" + " {{lang('not_empty')}}",
+            packing_size: "{{lang('packing_size')}}" + " {{lang('not_empty')}}",
+            qty: "{{lang('qty_per_ctn')}}" + " {{lang('not_empty')}}",
+            category_id: "{{lang('category')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -247,12 +317,32 @@
         $.getJSON('{{base_url()}}product/products/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
+                var rowImage = json.image;
+                var i;
+                var html = "";
+
                 $('[name="id"]').val(row.id);
+                $('[name="product_code"]').val(row.product_code);
+                $('[name="barcode_product"]').val(row.barcode_product);
+                $('[name="barcode_carton"]').val(row.barcode_carton);
                 $('[name="name"]').val(row.name);
+                $('[name="packing_size"]').val(row.packing_size);
+                $('[name="qty"]').val(row.qty);
+                $('[name="length"]').val(row.length);
+                $('[name="width"]').val(row.width);
+                $('[name="height"]').val(row.height);
+                $('[name="volume"]').val(row.volume);
+                $('[name="weight"]').val(row.weight);
                 $('[name="category_id"]').val(row.category_id);
-                $('[name="sku"]').val(row.sku);
                 $('[name="description"]').val(row.description);
                 $('[name="feature"]').val(row.feature);
+
+                for(i=0; i<rowImage.length; i++){
+                    html += '<div class="product-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/' + rowImage[i].image + '"></div>';
+                }
+               
+                $('.preview-upload-image').html(html);
+                $('#preview-upload-image-field').show();
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_product')?>'); 
@@ -298,5 +388,58 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
+
+    // Proses hapus image
+    function deleteImage(value){
+        form_validator.resetForm();
+        $("html, body").animate({
+            scrollTop: 0
+        }, 500);
+        $.confirm({
+            content : "{{ lang('delete_this_data') }}",
+            title : "{{ lang('are_you_sure') }}",
+            confirm: function() {
+
+                App.blockUI({
+                    target: '#table-wrapper'
+                });
+                $.getJSON('{{base_url()}}product/products/deleteImage', {id: value}, function(json, textStatus) {
+                    if(json.status == "success"){
+                        toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
+                    }else if(json.status == "error"){
+                        toastr.error('{{lang("deleted_unsuccesfully")}}','{{ lang("notification") }}');
+                    }
+                    setTimeout(function(){
+                        window.location.reload()
+                    },1000);
+               });
+            },
+            cancel: function(button) {
+                // nothing to do
+            },
+            confirmButton: "Yes",
+            cancelButton: "No",
+            confirmButtonClass: "btn-danger",
+            cancelButtonClass: "btn-success",
+            dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
+        });
+    }
+
+    // Preview image in browser
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+        if (input.files) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $($.parseHTML('<img width="100" style="padding: 10px;">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+            }
+            reader.readAsDataURL(input.files);
+        }
+    };
+
+    $('#image').on('change', function() {
+        $('.preview-upload-image').html('');
+        imagesPreview(this, 'div.preview-upload-image');
+        $('#preview-upload-image-field').show();
+    });
 </script>
 @stop

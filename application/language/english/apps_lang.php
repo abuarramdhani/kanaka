@@ -186,10 +186,17 @@ $lang['new_product'] = "New Product";
 $lang['edit_product'] = "Edit Product";
 $lang['product_name'] = "Product Name";
 $lang['category'] = "Category";
-$lang['sku'] = "SKU";
+$lang['product_code'] = "Product Code";
 $lang['view_total'] = "View Total";
 $lang['description'] = "Description";
 $lang['feature'] = "Feature";
+$lang['product_code'] = "Product Code";
+$lang['barcode'] = "Barcode";
+$lang['carton'] = "Carton";
+$lang['qty_per_ctn'] = "Qty per Ctn (pcs)";
+$lang['weight'] = "Weight (kg)";
+$lang['packing_size'] = "Packing Size";
+$lang['carton_dimension'] = "Carton Dimension (cm)";
 $lang['saving_product_successfully'] = 'Saving data Product succesfully';
 $lang['deleting_product_successfully'] = 'Deleting data Product succesfully';
 ## END Product ##
@@ -277,3 +284,18 @@ $lang['partner_report_name'] = "Partner Name";
 $lang['saving_partner_report_successfully'] = 'Saving data Partner succesfully';
 $lang['deleting_partner_report_successfully'] = 'Deleting data Partner succesfully';
 ## END Partner Report ##
+
+## Principle ##
+$lang['principle'] = 'Principle';
+$lang['new_principle'] = "New Principle";
+$lang['edit_principle'] = "Edit Principle";
+$lang['saving_principle_successfully'] = 'Saving data principle succesfully';
+$lang['deleting_principle_successfully'] = 'Deleting data principle succesfully';
+$lang['brand'] = 'Brand';
+$lang['top'] = 'TOP';
+$lang['pic'] = 'PIC';
+$lang['web'] = 'Web';
+$lang['fax'] = 'Fax';
+$lang['office'] = 'Office';
+$lang['personal'] = 'Personal';
+## END Principle ##

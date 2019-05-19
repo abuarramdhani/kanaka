@@ -97,3 +97,15 @@ tr.details .details-control {
         margin-right: 0px;
     }
 }
+
+.product-image .btn-icon-only.btn-circle {
+    position: absolute;
+}
+
+.product-image.preview-upload-image.text-center {
+    display: -webkit-inline-box;
+}
+
+.form-group.form-md-line-input .form-inline .form-control.input-sm {
+    width: 24%;
+}

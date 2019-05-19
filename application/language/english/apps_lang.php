@@ -201,6 +201,7 @@ $lang['edit_dipo'] = "Edit DIPO";
 $lang['subdistrict'] = "Subdistrict";
 $lang['latitude'] = "Latitude";
 $lang['longitude'] = "Longitude";
+$lang['pic'] = "PIC";
 $lang['saving_dipo_successfully'] = 'Saving data DIPO succesfully';
 $lang['deleting_dipo_successfully'] = 'Deleting data DIPO succesfully';
 ## END DIPO ##

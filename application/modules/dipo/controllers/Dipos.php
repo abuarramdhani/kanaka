@@ -35,6 +35,7 @@ class Dipos extends MX_Controller {
             'm_zona.name as zona_name',
             'latitude',
             'longitude',
+            'pic',
             'm_dipo_partner.date_created',
         );
 
@@ -45,8 +46,8 @@ class Dipos extends MX_Controller {
             'phone',
             'email',
             'city',
-            'subdistrict',
             'm_zona.name',
+            'pic',
             'm_dipo_partner.date_created',
         );
 
@@ -70,6 +71,7 @@ class Dipos extends MX_Controller {
             $where .= "city LIKE '%" . $sSearch . "%' OR ";
             $where .= "subdistrict LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "pic LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.date_created LIKE '%" . $sSearch . "%'";
             $where .= ")";
         }
@@ -101,8 +103,8 @@ class Dipos extends MX_Controller {
             $row_value[] = $row->phone;
             $row_value[] = $row->email;
             $row_value[] = $row->city;
-            $row_value[] = $row->subdistrict;
             $row_value[] = $row->zona_name;
+            $row_value[] = $row->pic;
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             
@@ -132,6 +134,7 @@ class Dipos extends MX_Controller {
                     $zona_id = $this->input->post('zona_id');
                     $latitude = $this->input->post('latitude');
                     $longitude = $this->input->post('longitude');
+                    $pic = $this->input->post('pic');
                     
                     $model = new Dipo();
                     $model->type = 'dipo';
@@ -145,6 +148,7 @@ class Dipos extends MX_Controller {
                     $model->zona_id = $zona_id;
                     $model->latitude = $latitude;
                     $model->longitude = $longitude;
+                    $model->pic = $pic;
                     
                     $model->user_created = $user->id;
                     $model->date_created = date('Y-m-d');
@@ -162,6 +166,7 @@ class Dipos extends MX_Controller {
                             'Zona Name' => Zona::find($zona_id)->name,
                             'Latitude' => $latitude,
                             'Longitude' => $longitude,
+                            'PIC' => $pic,
                         );
                         $message = "Add " . lang('dipo') . " " . $name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 6);
@@ -182,6 +187,7 @@ class Dipos extends MX_Controller {
                 $zona_id = $this->input->post('zona_id');
                 $latitude = $this->input->post('latitude');
                 $longitude = $this->input->post('longitude');
+                $pic = $this->input->post('pic');
             
                 $data_old = array(
                     'Code' => $model->code,
@@ -194,6 +200,7 @@ class Dipos extends MX_Controller {
                     'Zona Name' => Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
+                    'PIC' => $model->pic,
                 );
 
                 $model->code = $code;
@@ -206,6 +213,7 @@ class Dipos extends MX_Controller {
                 $model->zona_id = $zona_id;
                 $model->latitude = $latitude;
                 $model->longitude = $longitude;
+                $model->pic = $pic;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
@@ -223,6 +231,7 @@ class Dipos extends MX_Controller {
                         'Zona Name' => Zona::find($zona_id)->name,
                         'Latitude' => $latitude,
                         'Longitude' => $longitude,
+                        'PIC' => $pic,
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
@@ -274,6 +283,7 @@ class Dipos extends MX_Controller {
                     'Zona Name' => Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
+                    'PIC' => $model->pic,
                 );
                 $message = "Delete " . lang('dipo') . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 6);

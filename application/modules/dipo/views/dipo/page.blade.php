@@ -62,8 +62,8 @@
                                 <th><?=lang('phone')?></th>
                                 <th><?=lang('email')?></th>
                                 <th><?=lang('city')?></th>
-                                <th><?=lang('subdistrict')?></th>
                                 <th><?=lang('zona')?></th>
+                                <th><?=lang('pic')?></th>
                                 <th><?=lang('created_date')?></th>
                                 <th width="13%"><?=lang('options')?></th>
                             </tr>
@@ -171,6 +171,14 @@
             </div>
         </div>
         
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('pic')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="pic" id="pic" placeholder="<?=lang('pic')?>" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
       </div>
       <div class="modal-footer">
         <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
@@ -224,6 +232,7 @@
             phone: "required",
             city: "required",
             subdistrict: "required",
+            pic: "required",
         },
         messages: {
             code: "{{lang('code')}}" + " {{lang('not_empty')}}",
@@ -232,6 +241,7 @@
             phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
             city: "{{lang('city')}}" + " {{lang('not_empty')}}",
             subdistrict: "{{lang('subdistrict')}}" + " {{lang('not_empty')}}",
+            pic: "{{lang('pic')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -290,6 +300,7 @@
                 $('[name="zona_id"]').val(row.zona_id).change();
                 $('[name="latitude"]').val(row.latitude);
                 $('[name="longitude"]').val(row.longitude);
+                $('[name="pic"]').val(row.pic);
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_dipo')?>'); 

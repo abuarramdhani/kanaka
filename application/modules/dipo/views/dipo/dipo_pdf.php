@@ -38,6 +38,7 @@
 				<th  align="center"><?=lang('latitude')?></th>
 				<th  align="center"><?=lang('longitude')?></th>
 				<th  align="center"><?=lang('pic')?></th>
+				<th  align="center"><?=lang('top')?></th>
 				<th  align="center"><?=lang('created_date')?></th>
 			</tr>
 			<?php 
@@ -59,6 +60,7 @@
 					<td><?= $dipo->latitude ?></td>
 					<td><?= $dipo->longitude ?></td>
 					<td><?= $dipo->pic ?></td>
+					<td><?= $dipo->top ?></td>
 					<td><?= date('d-m-Y',strtotime($dipo->date_created)) ?></td>
 				</tr>
 			<?php 

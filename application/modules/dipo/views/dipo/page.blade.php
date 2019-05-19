@@ -179,6 +179,14 @@
             </div>
         </div>
         
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('top')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="top" id="top" placeholder="<?=lang('top')?>" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
       </div>
       <div class="modal-footer">
         <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
@@ -213,8 +221,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}dipo/dipos/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [8]},
-            {"targets": [8], "orderable": false}
+            {"className": "dt-center", "targets": [8, 9]},
+            {"targets": [8, 9], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
@@ -233,6 +241,7 @@
             city: "required",
             subdistrict: "required",
             pic: "required",
+            top: "required",
         },
         messages: {
             code: "{{lang('code')}}" + " {{lang('not_empty')}}",
@@ -242,6 +251,7 @@
             city: "{{lang('city')}}" + " {{lang('not_empty')}}",
             subdistrict: "{{lang('subdistrict')}}" + " {{lang('not_empty')}}",
             pic: "{{lang('pic')}}" + " {{lang('not_empty')}}",
+            top: "{{lang('top')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -301,6 +311,7 @@
                 $('[name="latitude"]').val(row.latitude);
                 $('[name="longitude"]').val(row.longitude);
                 $('[name="pic"]').val(row.pic);
+                $('[name="top"]').val(row.top);
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_dipo')?>'); 

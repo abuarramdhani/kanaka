@@ -36,6 +36,7 @@ class Dipos extends MX_Controller {
             'latitude',
             'longitude',
             'pic',
+            'top',
             'm_dipo_partner.date_created',
         );
 
@@ -69,7 +70,6 @@ class Dipos extends MX_Controller {
             $where .= "phone LIKE '%" . $sSearch . "%' OR ";
             $where .= "email LIKE '%" . $sSearch . "%' OR ";
             $where .= "city LIKE '%" . $sSearch . "%' OR ";
-            $where .= "subdistrict LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "pic LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.date_created LIKE '%" . $sSearch . "%'";
@@ -135,6 +135,7 @@ class Dipos extends MX_Controller {
                     $latitude = $this->input->post('latitude');
                     $longitude = $this->input->post('longitude');
                     $pic = $this->input->post('pic');
+                    $top = $this->input->post('top');
                     
                     $model = new Dipo();
                     $model->type = 'dipo';
@@ -149,6 +150,7 @@ class Dipos extends MX_Controller {
                     $model->latitude = $latitude;
                     $model->longitude = $longitude;
                     $model->pic = $pic;
+                    $model->top = $top;
                     
                     $model->user_created = $user->id;
                     $model->date_created = date('Y-m-d');
@@ -167,6 +169,7 @@ class Dipos extends MX_Controller {
                             'Latitude' => $latitude,
                             'Longitude' => $longitude,
                             'PIC' => $pic,
+                            'TOP' => $top,
                         );
                         $message = "Add " . lang('dipo') . " " . $name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 6);
@@ -188,6 +191,7 @@ class Dipos extends MX_Controller {
                 $latitude = $this->input->post('latitude');
                 $longitude = $this->input->post('longitude');
                 $pic = $this->input->post('pic');
+                $top = $this->input->post('top');
             
                 $data_old = array(
                     'Code' => $model->code,
@@ -201,6 +205,7 @@ class Dipos extends MX_Controller {
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
                     'PIC' => $model->pic,
+                    'TOP' => $model->top,
                 );
 
                 $model->code = $code;
@@ -214,6 +219,7 @@ class Dipos extends MX_Controller {
                 $model->latitude = $latitude;
                 $model->longitude = $longitude;
                 $model->pic = $pic;
+                $model->top = $top;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
@@ -232,6 +238,7 @@ class Dipos extends MX_Controller {
                         'Latitude' => $latitude,
                         'Longitude' => $longitude,
                         'PIC' => $pic,
+                        'TOP' => $top,
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
@@ -284,6 +291,7 @@ class Dipos extends MX_Controller {
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
                     'PIC' => $model->pic,
+                    'TOP' => $model->top,
                 );
                 $message = "Delete " . lang('dipo') . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 6);

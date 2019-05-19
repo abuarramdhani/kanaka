@@ -138,7 +138,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('top')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="top" id="top" placeholder="<?=lang('top')?>" maxlength="150" />
+                <input type="text" class="form-control input-sm" name="top" id="top" placeholder="<?=lang('top')?>" maxlength="50" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -146,7 +146,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('pic')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="pic" id="pic" placeholder="<?=lang('pic')?>" maxlength="150" />
+                <input type="text" class="form-control input-sm" name="pic" id="pic" placeholder="<?=lang('pic')?>" maxlength="50" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>

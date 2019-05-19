@@ -299,3 +299,21 @@ $lang['fax'] = 'Fax';
 $lang['office'] = 'Office';
 $lang['personal'] = 'Personal';
 ## END Principle ##
+
+## Pricelist ##
+$lang['pricelist'] = 'Pricelist';
+$lang['new_pricelist'] = "New Pricelist";
+$lang['edit_pricelist'] = "Edit Pricelist";
+$lang['normal_price'] = "Normal Price";
+$lang['kanaka'] = "Kanaka";
+$lang['before_tax'] = "Before Tax";
+$lang['after_tax'] = "After Tax";
+$lang['stock_availibility'] = "Stock Availibility";
+$lang['in_ctn'] = "In Ctn";
+$lang['in_pcs'] = "In Pcs";
+$lang['round_up_in_ctn'] = "Round Up In Ctn";
+$lang['out_of_stock'] = "Out of Stock";
+$lang['available'] = "Available";
+$lang['saving_pricelist_successfully'] = 'Saving data Pricelist succesfully';
+$lang['deleting_pricelist_successfully'] = 'Deleting data Pricelist succesfully';
+## END Pricelist ##

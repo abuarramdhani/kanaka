@@ -182,3 +182,11 @@ $route['master/zona/excel']	= 'zona/zonas/excel';
 $route['master/vendor'] = 'principle/principles/index';
 $route['master/vendor/pdf']	= 'principle/principles/pdf';
 $route['master/vendor/excel'] = 'principle/principles/excel';
+
+/**
+* PRICELIST
+*/
+$route['reports/pricelist'] = 'pricelist/pricelists/index';
+$route['reports/pricelist/pdf'] = 'pricelist/pricelists/pdf';
+$route['reports/pricelist/excel'] = 'pricelist/pricelists/excel';
+

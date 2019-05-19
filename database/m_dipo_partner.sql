@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-19 09:00:14
+Date: 2019-05-19 10:33:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,7 +52,7 @@ CREATE TABLE `m_dipo_partner` (
   PRIMARY KEY (`id`),
   KEY `rowID` (`id`) USING BTREE,
   KEY `deleted` (`deleted`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of m_dipo_partner
@@ -61,6 +61,7 @@ INSERT INTO `m_dipo_partner` VALUES ('1', 'dipo', '0', 'BGR', 'Bogor Store', 'Ja
 INSERT INTO `m_dipo_partner` VALUES ('2', 'dipo', '0', 'BDG', 'Bandung Store', 'Jalan Asia Afrika No 19', '02318654259', 'dipobandungstore@kanaka.com', 'Bandung Barat', 'Ciwidey', '1', '87817283799', '-8738827319', 'Reza', '14', '0', '0', '1901-01-01', '00:00:00', '1', '2019-04-30', '22:14:50', '1', '2019-05-19', '08:38:56', '0', '0', '1901-01-01', '00:00:00');
 INSERT INTO `m_dipo_partner` VALUES ('3', 'dipo', '0', 'JKT', 'Jakarta Store', 'Jalan Kemang 20', '0218765234', 'dipojakarta@kanaka.com', 'Jakarta Selatan', 'Pasar Minggu', '1', '87971923719', '-8978196237', 'Andi', '14', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-01', '22:25:23', '1', '2019-05-14', '23:44:59', '0', '0', '1901-01-01', '00:00:00');
 INSERT INTO `m_dipo_partner` VALUES ('4', 'dipo', '0', 'SMR', 'Semarang Store', 'Jalan Diponegoro No 7', '02358618236', 'diposemarang@kanaka.com', 'Semarang', 'Semarang Utara', '1', '89815236576152', '-89123617623781', 'Seila', '14', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-09', '05:25:51', '1', '2019-05-09', '05:26:07', '0', '0', '1901-01-01', '00:00:00');
-INSERT INTO `m_dipo_partner` VALUES ('5', 'dipo', '0', 'PDG', 'Padang Store', 'Jalan Ahmad Yani', '0256787120', 'dipopadang@kanaka.com', 'Padang', 'Sumatera Barat', '2', '87176156461589', '-81968571765176', 'Riki', '7', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-14', '23:44:41', '1', '2019-05-16', '00:06:11', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_dipo_partner` VALUES ('5', 'dipo', '0', 'PDG', 'Padang Store', 'Jalan Ahmad Yani', '0256787120', 'dipopadang@kanaka.com', 'Padang', 'Sumatera Barat', '2', '87176156461589', '-81968571765176', 'Riki', '14', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-14', '23:44:41', '1', '2019-05-16', '00:06:11', '0', '0', '1901-01-01', '00:00:00');
 INSERT INTO `m_dipo_partner` VALUES ('6', 'dipo', '0', 'LMP', 'Lampung Store', 'Jalan Sudirman', '02657687623', 'dipolampung@kanaka.com', 'Lampung', 'Bandar Lampung', '2', '8917236516', '-8186237152', 'Asep', '14', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-16', '00:04:22', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');
 INSERT INTO `m_dipo_partner` VALUES ('7', 'dipo', '0', 'PLB', 'Palembang Store', 'Jalan Ampera No 10', '02458123671', 'dipopalembang@kanaka.com', 'Palembang', 'Sumatera Selatan', '2', '887182367125', '-871623152271', 'Ujang', '14', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-16', '00:13:44', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');
+INSERT INTO `m_dipo_partner` VALUES ('8', 'partner', '3', 'M00001', 'MITRA Cimanggis', 'Jl. Bungur No. 28, Cimanggis, Depok, Jawa Barat', '085811275490', 'mitracimanggis@kanaka.com', 'Depok', 'Cimanggis', '1', '897918623123', '-899891723812', 'Asep', '7', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-19', '09:55:44', '1', '2019-05-19', '09:59:33', '0', '0', '1901-01-01', '00:00:00');

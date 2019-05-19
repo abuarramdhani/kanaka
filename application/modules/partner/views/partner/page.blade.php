@@ -1,6 +1,6 @@
 @extends('default.views.layouts.default')
 
-@section('title') {{lang('dipo')}} @stop
+@section('title') {{lang('partner')}} @stop
 
 @section('body')
 <style type="text/css">
@@ -19,13 +19,13 @@
                 <i class="fa fa-circle"></i>
             </li>
             <li>
-                <span>{{lang('dipo')}}</span>
+                <span>{{lang('partner')}}</span>
             </li>
         </ul>
     </div>
     <!-- END PAGE BAR -->
     <!-- BEGIN PAGE TITLE-->
-    <h3 class="page-title"> {{lang('dipo')}} </h3>
+    <h3 class="page-title"> {{lang('partner')}} </h3>
     <!-- END PAGE TITLE-->
     <!-- END PAGE HEADERs-->
     <div class="row">
@@ -35,29 +35,30 @@
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="icon-grid font-dark"></i>
-                        <span class="caption-subject">{{lang('dipo')}}</span>
+                        <span class="caption-subject">{{lang('partner')}}</span>
                     </div>
                     <div class="tools">
                         @if($add_access == 1)
-                            <button onclick="add_dipo()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('new_dipo')}}</button>
+                            <button onclick="add_partner()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('new_partner')}}</button>
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}master/dipo/pdf')" class="btn btn-danger btn-sm">
+                            <button onClick="return window.open('{{base_url()}}master/partner/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
-                            <button onClick="return window.open('{{base_url()}}master/dipo/excel')" class="btn btn-success btn-sm">
+                            <button onClick="return window.open('{{base_url()}}master/partner/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
                             </button>
                         @endif
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <table id="table-dipo" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+                    <table id="table-partner" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
                                 <th><?=lang('code')?></th>
                                 <th><?=lang('name')?></th>
+                                <th><?=lang('dipo_name')?></th>
                                 <th><?=lang('address')?></th>
                                 <th><?=lang('phone')?></th>
                                 <th><?=lang('email')?></th>
@@ -84,12 +85,25 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title"><?=lang('new_dipo')?></h3>
+        <h3 class="modal-title"><?=lang('new_partner')?></h3>
       </div>
-      {{ form_open(null,array('id' => 'form-dipo', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      {{ form_open(null,array('id' => 'form-partner', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
         <input type="hidden" name="id" value="">
         
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('dipo')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <select class="form-control input-sm" name="dipo_id" id="dipo_id" style="width: 100%;">
+                    <option value=""><?= lang('select_your_option') ?></option>
+                    @foreach($dipos as $dipo)
+                        <option value="{{ $dipo->id }}">{{ $dipo->name }}</option>
+                    @endforeach
+                </select>
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
@@ -205,41 +219,43 @@
 @section('scripts')
 <script type="text/javascript">
     $(function(){
-        $('#zona_id').select2();
+        $('#dipo_id, #zona_id').select2();
     });
 
-    function add_dipo(){
-        $('#form-dipo')[0].reset(); 
+    function add_partner(){
+        $('#form-partner')[0].reset(); 
         $('#modal_form').modal('show'); 
-        $('.modal-title').text('<?=lang('new_dipo')?>'); 
+        $('.modal-title').text('<?=lang('new_partner')?>'); 
 
         $('[name="id"]').val('');
+        $('[name="dipo_id"]').val('').change();
         $('[name="zona_id"]').val('').change();
         $('[name="code"').attr('readonly',false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
 
     // Pengaturan Datatable 
-    var oTable =$('#table-dipo').dataTable({
+    var oTable =$('#table-partner').dataTable({
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,
         "sServerMethod": "GET",
-        "sAjaxSource": "{{ base_url() }}dipo/dipos/fetch_data",
+        "sAjaxSource": "{{ base_url() }}partner/partners/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [12, 13]},
-            {"targets": [12, 13], "orderable": false}
+            {"className": "dt-center", "targets": [13, 14]},
+            {"targets": [13, 14], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
 
     // Pengaturan Form Validation 
-    var form_validator = $("#form-dipo").validate({
+    var form_validator = $("#form-partner").validate({
         errorPlacement: function(error, element) {
             $(element).parent().closest('.form-group').append(error);
         },
         errorElement: "span",
         rules: {
+            dipo_id: "required",
             code: "required",
             name: "required",
             address: "required",
@@ -251,6 +267,7 @@
             top: "required",
         },
         messages: {
+            dipo_id: "{{lang('dipo')}}" + " {{lang('not_empty')}}",
             code: "{{lang('code')}}" + " {{lang('not_empty')}}",
             name: "{{lang('name')}}" + " {{lang('not_empty')}}",
             address: "{{lang('address')}}" + " {{lang('not_empty')}}",
@@ -268,7 +285,7 @@
             $(form).ajaxSubmit({  
                 beforeSubmit:  showRequest,  
                 success:       showResponse,
-                url:       '{{base_url()}}dipo/dipos/save',      
+                url:       '{{base_url()}}partner/partners/save',      
                 type:      'POST',       
                 clearForm: true ,       
                 resetForm: true ,  
@@ -304,10 +321,11 @@
         App.blockUI({
             target: '#form-wrapper'
         });
-        $.getJSON('{{base_url()}}dipo/dipos/view', {id: value}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}partner/partners/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
                 $('[name="id"]').val(row.id);
+                $('[name="dipo_id"]').val(row.dipo_id).change();
                 $('[name="code"]').val(row.code);
                 $('[name="name"]').val(row.name);
                 $('[name="address"]').val(row.address);
@@ -324,7 +342,7 @@
                 $('[name="code"').attr('readonly',true);
 
                 $('#modal_form').modal('show');
-                $('.modal-title').text('<?=lang('edit_dipo')?>'); 
+                $('.modal-title').text('<?=lang('edit_partner')?>'); 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -346,7 +364,7 @@
                 App.blockUI({
                     target: '#table-wrapper'
                 });
-                $.getJSON('{{base_url()}}dipo/dipos/delete', {id: value}, function(json, textStatus) {
+                $.getJSON('{{base_url()}}partner/partners/delete', {id: value}, function(json, textStatus) {
                     if(json.status == "success"){
                         toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
                     }else if(json.status == "error"){

@@ -35,6 +35,7 @@
 				<th  align="center"><?=lang('email')?></th>
 				<th  align="center"><?=lang('city')?></th>
 				<th  align="center"><?=lang('subdistrict')?></th>
+				<th  align="center"><?=lang('zona')?></th>
 				<th  align="center"><?=lang('latitude')?></th>
 				<th  align="center"><?=lang('longitude')?></th>
 				<th  align="center"><?=lang('pic')?></th>
@@ -57,6 +58,7 @@
 					<td><?= $dipo->email ?></td>
 					<td><?= $dipo->city ?></td>
 					<td><?= $dipo->subdistrict ?></td>
+					<td><?= $dipo->zona_name ?></td>
 					<td><?= $dipo->latitude ?></td>
 					<td><?= $dipo->longitude ?></td>
 					<td><?= $dipo->pic ?></td>

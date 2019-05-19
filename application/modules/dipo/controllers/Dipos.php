@@ -47,8 +47,12 @@ class Dipos extends MX_Controller {
             'phone',
             'email',
             'city',
-            'm_zona.name',
+            'subdistrict',
+            'm_zona.name as zona_name',
+            'latitude',
+            'longitude',
             'pic',
+            'top',
             'm_dipo_partner.date_created',
         );
 
@@ -70,8 +74,12 @@ class Dipos extends MX_Controller {
             $where .= "phone LIKE '%" . $sSearch . "%' OR ";
             $where .= "email LIKE '%" . $sSearch . "%' OR ";
             $where .= "city LIKE '%" . $sSearch . "%' OR ";
+            $where .= "subdistrict LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "latitude LIKE '%" . $sSearch . "%' OR ";
+            $where .= "longitude LIKE '%" . $sSearch . "%' OR ";
             $where .= "pic LIKE '%" . $sSearch . "%' OR ";
+            $where .= "top LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.date_created LIKE '%" . $sSearch . "%'";
             $where .= ")";
         }
@@ -103,8 +111,12 @@ class Dipos extends MX_Controller {
             $row_value[] = $row->phone;
             $row_value[] = $row->email;
             $row_value[] = $row->city;
+            $row_value[] = $row->subdistrict;
             $row_value[] = $row->zona_name;
+            $row_value[] = $row->latitude;
+            $row_value[] = $row->longitude;
             $row_value[] = $row->pic;
+            $row_value[] = $row->top;
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             
@@ -307,15 +319,15 @@ class Dipos extends MX_Controller {
     }
 
     function pdf(){
-        $data['dipos'] = Dipo::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['dipos'] = Dipo::select('m_dipo_partner.*', 'm_zona.name as zona_name')->join('m_zona', 'm_dipo_partner.zona_id', '=' ,'m_zona.id')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
         $html = $this->load->view('dipo/dipo/dipo_pdf', $data, true);
-        $this->pdf_generator->generate($html, 'dipo pdf', $orientation='Portrait');
+        $this->pdf_generator->generate($html, 'dipo pdf', $orientation='Landscape');
     }
 
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=dipo.xls");
-        $data['dipos'] = Dipo::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['dipos'] = Dipo::select('m_dipo_partner.*', 'm_zona.name as zona_name')->join('m_zona', 'm_dipo_partner.zona_id', '=' ,'m_zona.id')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
         $this->load->view('dipo/dipo/dipo_pdf', $data);
     }
 

@@ -62,8 +62,12 @@
                                 <th><?=lang('phone')?></th>
                                 <th><?=lang('email')?></th>
                                 <th><?=lang('city')?></th>
+                                <th><?=lang('subdistrict')?></th>
                                 <th><?=lang('zona')?></th>
+                                <th><?=lang('latitude')?></th>
+                                <th><?=lang('longitude')?></th>
                                 <th><?=lang('pic')?></th>
+                                <th><?=lang('top')?></th>
                                 <th><?=lang('created_date')?></th>
                                 <th width="13%"><?=lang('options')?></th>
                             </tr>
@@ -221,8 +225,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}dipo/dipos/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [8, 9]},
-            {"targets": [8, 9], "orderable": false}
+            {"className": "dt-center", "targets": [12, 13]},
+            {"targets": [12, 13], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);

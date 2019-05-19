@@ -205,10 +205,10 @@ $lang['deleting_product_successfully'] = 'Deleting data Product succesfully';
 $lang['dipo'] = 'DIPO';
 $lang['new_dipo'] = "New DIPO";
 $lang['edit_dipo'] = "Edit DIPO";
+$lang['dipo_name'] = 'DIPO Name';
 $lang['subdistrict'] = "Subdistrict";
 $lang['latitude'] = "Latitude";
 $lang['longitude'] = "Longitude";
-$lang['pic'] = "PIC";
 $lang['saving_dipo_successfully'] = 'Saving data DIPO succesfully';
 $lang['deleting_dipo_successfully'] = 'Deleting data DIPO succesfully';
 ## END DIPO ##

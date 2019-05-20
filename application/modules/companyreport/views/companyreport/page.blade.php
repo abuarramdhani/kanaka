@@ -81,22 +81,157 @@
         <input type="hidden" name="id" value="">
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('po_date')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
+                <input type="text" class="form-control input-sm datepicker" name="po_date" id="po_date" placeholder="<?=lang('po_date')?>" maxlength="10" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('description')?></label>
+            <label class="col-lg-4 control-label"><?=lang('receive_date')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="description" id="description" placeholder="<?=lang('description')?>" maxlength="150" />
+                <input type="text" class="form-control input-sm datepicker" name="receive_date" id="receive_date" placeholder="<?=lang('receive_date')?>" maxlength="10" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
         
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('check_status')?></label>
+            <div class="col-lg-7">
+                <select class="form-control input-sm" name="check_status" id="check_status">
+                    <option value=""><?= lang('select_your_option') ?></option>
+                    <option value="0"><?= lang('no') ?></option>
+                    <option value="1"><?= lang('yes') ?></option>
+                </select>
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
         
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('principle_id')?></label>
+            <div class="col-lg-7">
+                <select class="form-control input-sm all_select2" name="principle_id" id="principle_id">
+                    <option value=""><?= lang('select_your_option') ?></option>
+                    <option value="0"><?= lang('no') ?></option>
+                    <option value="1"><?= lang('yes') ?></option>
+                </select>
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('product_id')?></label>
+            <div class="col-lg-7">
+                <select class="form-control input-sm all_select2" name="product_id" id="product_id">
+                    <option value=""><?= lang('select_your_option') ?></option>
+                    <option value="0"><?= lang('no') ?></option>
+                    <option value="1"><?= lang('yes') ?></option>
+                </select>
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('price_before_tax_ctn')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm currency" name="price_before_tax_ctn" id="price_before_tax_ctn" placeholder="<?=lang('price_before_tax_ctn')?>" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('price_after_tax_ctn')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm currency" name="price_after_tax_ctn" id="price_after_tax_ctn" placeholder="<?=lang('price_after_tax_ctn')?>" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('total_order')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm currency" name="total_order" id="total_order" placeholder="<?=lang('total_order')?>" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('total_value_order_before_tax_ctn')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm currency" name="total_value_order_before_tax_ctn" id="total_value_order_before_tax_ctn" placeholder="<?=lang('total_value_order_before_tax_ctn')?>" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('total_value_order_after_tax_ctn')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm currency" name="total_value_order_after_tax_ctn" id="total_value_order_after_tax_ctn" placeholder="<?=lang('total_value_order_after_tax_ctn')?>" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('top')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm currency" name="top" id="top" placeholder="<?=lang('top')?>" maxlength="150" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('due_date_invoice')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm datepicker" name="due_date_invoice" id="due_date_invoice" placeholder="<?=lang('due_date_invoice')?>" maxlength="10" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('aging_invoice')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm number" name="aging_invoice" id="aging_invoice" placeholder="<?=lang('aging_invoice')?>" maxlength="10" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('due_date_ar')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm number" name="due_date_ar" id="due_date_ar" placeholder="<?=lang('due_date_ar')?>" maxlength="10" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('payment_status')?></label>
+            <div class="col-lg-7">
+                <select class="form-control input-sm all_select2" name="payment_status" id="payment_status">
+                    <option value=""><?= lang('select_your_option') ?></option>
+                    <option value="0"><?= lang('no') ?></option>
+                    <option value="1"><?= lang('yes') ?></option>
+                </select>
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('payment_value')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm currency" name="payment_value" id="payment_value" placeholder="<?=lang('payment_value')?>" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('difference')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm currency" name="difference" id="difference" placeholder="<?=lang('difference')?>" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
@@ -110,7 +245,9 @@
 
 @section('scripts')
 <script type="text/javascript">
-    $('#preview-upload-image-field').hide();
+    $(function(){
+        $('.all_select2').select2();
+    });
 
     function add_companyreport(){
         $('#form-companyreport')[0].reset(); 
@@ -248,23 +385,6 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
-    
-    // Preview image in browser
-    var imagesPreview = function(input, placeToInsertImagePreview) {
-        if (input.files) {
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                $($.parseHTML('<img width="100" style="padding: 10px;">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-            }
-            reader.readAsDataURL(input.files);
-        }
-    };
-
-    $('#image').on('change', function() {
-        $('.preview-upload-image').html('');
-        imagesPreview(this, 'div.preview-upload-image');
-        $('#preview-upload-image-field').show();
-    });
     
 </script>
 @stop

@@ -5,7 +5,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Companyreport extends Eloquent {
 
-	public $table = 't_company';
+	public $table = 't_sell_in_company';
 	public $primaryKey = 'id';
 	public $timestamps = false;
 	

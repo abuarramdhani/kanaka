@@ -142,34 +142,6 @@ $route['master/transfer/pdf']	= 'transfer/transfers/pdf';
 $route['master/transfer/excel']	= 'transfer/transfers/excel';
 
 /**
-* CUSTOMER REPORT
-*/
-$route['report/customer'] = 'customer/customers/index';
-$route['report/customer/pdf']	= 'customer/customers/pdf';
-$route['report/customer/excel']	= 'customer/customers/excel';
-
-/**
-* COMPANY REPORT
-*/
-$route['report/company'] = 'companyreport/companyreports/index';
-$route['report/company/pdf']	= 'companyreport/companyreports/pdf';
-$route['report/company/excel']	= 'companyreport/companyreports/excel';
-
-/**
-* DIPO REPORT
-*/
-$route['report/dipo_report'] = 'dipo_report/dipo_reports/index';
-$route['report/dipo_report/pdf']	= 'dipo_report/dipo_reports/pdf';
-$route['report/dipo_report/excel']	= 'dipo_report/dipo_reports/excel';
-
-/**
-* PARTNER REPORT
-*/
-$route['report/partner'] = 'partner/partners/index';
-$route['report/partner/pdf']	= 'partner/partners/pdf';
-$route['report/partner/excel']	= 'partner/partners/excel';
-
-/**
 * ZONA
 */
 $route['master/zona'] = 'zona/zonas/index';
@@ -190,3 +162,30 @@ $route['reports/pricelist'] = 'pricelist/pricelists/index';
 $route['reports/pricelist/pdf'] = 'pricelist/pricelists/pdf';
 $route['reports/pricelist/excel'] = 'pricelist/pricelists/excel';
 
+/**
+* COMPANY REPORT
+*/
+$route['reports/company'] = 'companyreport/companyreports/index';
+$route['reports/company/pdf']	= 'companyreport/companyreports/pdf';
+$route['reports/company/excel']	= 'companyreport/companyreports/excel';
+
+/**
+* DIPO REPORT
+*/
+$route['reports/dipo_report'] = 'dipo_report/dipo_reports/index';
+$route['reports/dipo_report/pdf']	= 'dipo_report/dipo_reports/pdf';
+$route['reports/dipo_report/excel']	= 'dipo_report/dipo_reports/excel';
+
+/**
+* PARTNER REPORT
+*/
+$route['reports/partner'] = 'partner/partners/index';
+$route['reports/partner/pdf']	= 'partner/partners/pdf';
+$route['reports/partner/excel']	= 'partner/partners/excel';
+
+/**
+* CUSTOMER REPORT
+*/
+$route['reports/customer'] = 'customer/customers/index';
+$route['reports/customer/pdf']	= 'customer/customers/pdf';
+$route['reports/customer/excel']	= 'customer/customers/excel';

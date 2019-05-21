@@ -109,7 +109,7 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('principle_id')?></label>
+            <label class="col-lg-4 control-label"><?=lang('principle')?></label>
             <div class="col-lg-7">
                 <select class="form-control input-sm all_select2" name="principle_id" id="principle_id">
                     <option value=""><?= lang('select_your_option') ?></option>
@@ -121,7 +121,7 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('product_id')?></label>
+            <label class="col-lg-4 control-label"><?=lang('product')?></label>
             <div class="col-lg-7">
                 <select class="form-control input-sm all_select2" name="product_id" id="product_id">
                     <option value=""><?= lang('select_your_option') ?></option>

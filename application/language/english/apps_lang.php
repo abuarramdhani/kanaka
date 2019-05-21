@@ -323,6 +323,21 @@ $lang['companyreport'] = 'Company Report';
 $lang['new_companyreport'] = "New Company Report";
 $lang['edit_companyreport'] = "Edit Company Report";
 $lang['companyreport_name'] = "Company Name";
+$lang['po_date'] = "PO Date";
+$lang['receive_date'] = "Receive Date";
+$lang['check_status'] = "Check Status";
+$lang['price_before_tax_ctn'] = "Price HNA Per Ctn (Before Tax)";
+$lang['price_after_tax_ctn'] = "Price HNA Per Ctn (After Tax)";
+$lang['total_order'] = "Total Order";
+$lang['total_value_order_before_tax_ctn'] = "Total Value Order In Ctn (Before Tax)";
+$lang['total_value_order_after_tax_ctn'] = "Total Value Order In Ctn (After Tax)";
+$lang['due_date_invoice'] = "Due Date Invoice";
+$lang['aging_invoice'] = "Aging Invoice";
+$lang['due_date_ar'] = "Due Date AR";
+$lang['payment_status'] = "Payment Status";
+$lang['payment_value'] = "Payment Value";
+$lang['difference'] = "Difference";
+
 $lang['saving_companyreport_successfully'] = 'Saving data Company Report succesfully';
 $lang['deleting_companyreport_successfully'] = 'Deleting data Company Report succesfully';
 ## END Company Report ##

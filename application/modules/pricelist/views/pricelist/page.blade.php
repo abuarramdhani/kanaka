@@ -66,7 +66,7 @@
                                 <th rowspan="3" class="text-center"><?=lang('weight')?></th>
                                 <th rowspan="3" class="text-center"><?=lang('normal_price')?></th>
                                 <th colspan="5" class="text-center"><?=lang('kanaka')?></th>
-                                <th colspan="5" class="text-center">DIST-POINT (DIPO)</th>
+                                <!-- <th colspan="5" class="text-center">DIST-POINT (DIPO)</th> -->
                                 <th rowspan="3" class="text-center"><?=lang('created_date')?></th>
                                 <th rowspan="3" width="13%"><?=lang('options')?></th>
                             </tr>
@@ -80,20 +80,19 @@
                                 <th colspan="2"><?=lang('before_tax')?></th> 
                                 <th colspan="2"><?=lang('after_tax')?></th> 
                                 <th rowspan="2" class="text-center"><?=lang('stock_availibility')?></th>
-                                <th colspan="2"><?=lang('before_tax')?></th> 
-                                <th colspan="3"><?=lang('after_tax')?></th>
+                                <!-- <th colspan="2"><?=lang('before_tax')?></th> 
+                                <th colspan="3"><?=lang('after_tax')?></th> -->
                             </tr>
                             <tr>
                                 <th><?=lang('in_pcs')?></th> 
                                 <th><?=lang('in_ctn')?></th> 
                                 <th><?=lang('in_pcs')?></th> 
                                 <th><?=lang('in_ctn')?></th> 
+                                <!-- <th><?=lang('in_pcs')?></th> 
                                 <th><?=lang('in_ctn')?></th> 
                                 <th><?=lang('in_pcs')?></th> 
                                 <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('in_pcs')?></th> 
-                                <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('round_up_in_ctn')?></th> 
+                                <th><?=lang('round_up_in_ctn')?></th>  -->
                             </tr>
                         </thead>
                     </table>

@@ -212,6 +212,8 @@
             $(function() {
                 $("input[type='search']").focus();
                 $('.number').mask('000000000000000');
+                $(".currency").inputmask("999,999,999",{numericInput:!0,rightAlignNumerics:!1,greedy:!1});
+                $(".currency_decimal").inputmask("999,999,999.99",{numericInput:!0,rightAlignNumerics:!1,greedy:!1});
                 $('.datepicker').datepicker({
                     autoclose: true,
                     format: 'dd-mm-yyyy',

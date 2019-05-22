@@ -300,10 +300,10 @@ $lang['office'] = 'Office';
 $lang['personal'] = 'Personal';
 ## END Principle ##
 
-## Pricelist ##
-$lang['pricelist'] = 'Pricelist';
-$lang['new_pricelist'] = "New Pricelist";
-$lang['edit_pricelist'] = "Edit Pricelist";
+## Price List ##
+$lang['pricelist'] = 'Price List';
+$lang['new_pricelist'] = "New Price List";
+$lang['edit_pricelist'] = "Edit Price List";
 $lang['normal_price'] = "Normal Price";
 $lang['kanaka'] = "Kanaka";
 $lang['before_tax'] = "Before Tax";
@@ -312,8 +312,13 @@ $lang['stock_availibility'] = "Stock Availibility";
 $lang['in_ctn'] = "In Ctn";
 $lang['in_pcs'] = "In Pcs";
 $lang['round_up_in_ctn'] = "Round Up In Ctn";
+$lang['round_up_in_pcs'] = "Round Up In Pcs";
 $lang['out_of_stock'] = "Out of Stock";
 $lang['available'] = "Available";
-$lang['saving_pricelist_successfully'] = 'Saving data Pricelist succesfully';
-$lang['deleting_pricelist_successfully'] = 'Deleting data Pricelist succesfully';
-## END Pricelist ##
+$lang['discount'] = "Discount";
+$lang['mitra'] = "Mitra";
+$lang['customer'] = "Customer";
+$lang['het'] = "HET";
+$lang['saving_pricelist_successfully'] = 'Saving data Price List succesfully';
+$lang['deleting_pricelist_successfully'] = 'Deleting data Price List succesfully';
+## END Price List ##

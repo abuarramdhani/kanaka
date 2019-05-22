@@ -41,11 +41,19 @@ class Pricelists extends MX_Controller {
             'company_after_tax_pcs',
             'company_after_tax_ctn',
             'stock_availibility',
+            'dipo_discount',
             'dipo_before_tax_pcs',
             'dipo_before_tax_ctn',
             'dipo_after_tax_pcs',
             'dipo_after_tax_ctn',
             'dipo_after_tax_round_up',
+            'mitra_discount',
+            'mitra_before_tax_pcs',
+            'mitra_before_tax_ctn',
+            'mitra_after_tax_pcs',
+            'mitra_after_tax_ctn',
+            'mitra_after_tax_round_up',
+            'customer_discount',
             'customer_before_tax_pcs',
             'customer_before_tax_ctn',
             'customer_after_tax_pcs',
@@ -68,17 +76,24 @@ class Pricelists extends MX_Controller {
             'width',
             'volume',
             'weight',
-            'normal_price',
             'company_before_tax_pcs',
             'company_before_tax_ctn',
             'company_after_tax_pcs',
             'company_after_tax_ctn',
             'stock_availibility',
+            'dipo_discount',
             'dipo_before_tax_pcs',
             'dipo_before_tax_ctn',
             'dipo_after_tax_pcs',
             'dipo_after_tax_ctn',
             'dipo_after_tax_round_up',
+            'mitra_discount',
+            'mitra_before_tax_pcs',
+            'mitra_before_tax_ctn',
+            'mitra_after_tax_pcs',
+            'mitra_after_tax_ctn',
+            'mitra_after_tax_round_up',
+            'customer_discount',
             'customer_before_tax_pcs',
             'customer_before_tax_ctn',
             'customer_after_tax_pcs',
@@ -117,11 +132,19 @@ class Pricelists extends MX_Controller {
             $where .= "t_pricelist.company_after_tax_pcs LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_pricelist.company_after_tax_ctn LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_pricelist.stock_availibility LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.dipo_discount LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_pricelist.dipo_before_tax_pcs LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_pricelist.dipo_before_tax_ctn LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_pricelist.dipo_after_tax_pcs LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_pricelist.dipo_after_tax_ctn LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_pricelist.dipo_after_tax_round_up LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_discount LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_before_tax_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_before_tax_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_after_tax_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_after_tax_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_after_tax_round_up LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.customer_discount LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_pricelist.customer_before_tax_pcs LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_pricelist.customer_before_tax_ctn LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_pricelist.customer_after_tax_pcs LIKE '%" . $sSearch . "%' OR ";
@@ -171,11 +194,19 @@ class Pricelists extends MX_Controller {
             $row_value[] = $row->company_after_tax_pcs;
             $row_value[] = $row->company_after_tax_ctn;
             $row_value[] = $row->stock_availibility;
+            $row_value[] = $row->dipo_discount;
             $row_value[] = $row->dipo_before_tax_pcs;
             $row_value[] = $row->dipo_before_tax_ctn;
             $row_value[] = $row->dipo_after_tax_pcs;
             $row_value[] = $row->dipo_after_tax_ctn;
             $row_value[] = $row->dipo_after_tax_round_up;
+            $row_value[] = $row->mitra_discount;
+            $row_value[] = $row->mitra_before_tax_pcs;
+            $row_value[] = $row->mitra_before_tax_ctn;
+            $row_value[] = $row->mitra_after_tax_pcs;
+            $row_value[] = $row->mitra_after_tax_ctn;
+            $row_value[] = $row->mitra_after_tax_round_up;
+            $row_value[] = $row->customer_discount;
             $row_value[] = $row->customer_before_tax_pcs;
             $row_value[] = $row->customer_before_tax_ctn;
             $row_value[] = $row->customer_after_tax_pcs;
@@ -197,119 +228,105 @@ class Pricelists extends MX_Controller {
         if ($this->input->is_ajax_request()) {
             $user = $this->ion_auth->user()->row();
             $id_pricelist = $this->input->post('id');
-            $get_pricelist = Product::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
-            if (empty($id_pricelist)) {
-                if (!empty($get_pricelist->name)) {
+           if (empty($id_pricelist)) {
+                if (!empty($get_pricelist->product_id)) {
                     $status = array('status' => 'unique', 'message' => lang('already_exist'));
                 }else{
-                    $name = ucwords($this->input->post('name'));
                     $product_id = $this->input->post('product_id');
-                    $product_code = $this->input->post('product_code');
-                    $description = $this->input->post('description');
-                    $feature = $this->input->post('feature');
-                    $barcode_product = $this->input->post('barcode_product');
-                    $barcode_carton = $this->input->post('barcode_carton');
-                    $packing_size = $this->input->post('packing_size');
-                    $qty = $this->input->post('qty');
-                    $length = $this->input->post('length');
-                    $height = $this->input->post('width');
-                    $width = $this->input->post('height');
-                    $volume = $this->input->post('volume');
-                    $weight = $this->input->post('weight');
-                    
-                    $model = new Product();
-                    $model->name = $name;
-                    $model->category_id = $category_id;
-                    $model->product_code = $product_code;
-                    $model->description = $description;
-                    $model->feature = $feature;
-                    $model->barcode_product = $barcode_product;
-                    $model->barcode_carton = $barcode_carton;
-                    $model->packing_size = $packing_size;
-                    $model->qty = $qty;
-                    $model->length = $length;
-                    $model->height = $height;
-                    $model->width = $width;
-                    $model->volume = $volume;
-                    $model->weight = $weight;
+                    $normal_price = $this->input->post('normal_price');
+                    $company_before_tax_pcs = $this->input->post('company_before_tax_pcs');
+                    $company_before_tax_ctn = $this->input->post('company_before_tax_ctn');
+                    $company_after_tax_pcs = $this->input->post('company_after_tax_pcs');
+                    $company_after_tax_ctn = $this->input->post('company_after_tax_ctn');
+                    $stock_availibility = $this->input->post('stock_availibility');
+                    $dipo_discount = $this->input->post('dipo_discount');
+                    $dipo_before_tax_pcs = $this->input->post('dipo_before_tax_pcs');
+                    $dipo_before_tax_ctn = $this->input->post('dipo_before_tax_ctn');
+                    $dipo_after_tax_pcs = $this->input->post('dipo_after_tax_pcs');
+                    $dipo_after_tax_ctn = $this->input->post('dipo_after_tax_ctn');
+                    $dipo_after_tax_round_up = $this->input->post('dipo_after_tax_round_up');
+                    $mitra_discount = $this->input->post('mitra_discount');
+                    $mitra_before_tax_pcs = $this->input->post('mitra_before_tax_pcs');
+                    $mitra_before_tax_ctn = $this->input->post('mitra_before_tax_ctn');
+                    $mitra_after_tax_pcs = $this->input->post('mitra_after_tax_pcs');
+                    $mitra_after_tax_ctn = $this->input->post('mitra_after_tax_ctn');
+                    $mitra_after_tax_round_up = $this->input->post('mitra_after_tax_round_up');
+                    $customer_discount = $this->input->post('customer_discount');
+                    $customer_before_tax_pcs = $this->input->post('customer_before_tax_pcs');
+                    $customer_before_tax_ctn = $this->input->post('customer_before_tax_ctn');
+                    $customer_after_tax_pcs = $this->input->post('customer_after_tax_pcs');
+                    $customer_after_tax_ctn = $this->input->post('customer_after_tax_ctn');
+                    $customer_after_tax_round_up = $this->input->post('customer_after_tax_round_up');
+                    $het_round_up_pcs = $this->input->post('het_round_up_pcs');
+                    $het_round_up_ctn = $this->input->post('het_round_up_ctn');
 
-                    $dataProduct = array('name'         => $name,
-                                      'category_id'     => $category_id,
-                                      'product_code'    => $product_code,
-                                      'description'     => $description,
-                                      'feature'         => $feature,
-                                      'barcode_product' => $barcode_product,
-                                      'barcode_carton'  => $barcode_carton,
-                                      'packing_size'    => $packing_size,
-                                      'qty'             => $qty,
-                                      'length'          => $length,
-                                      'height'          => $height,
-                                      'width'           => $width,
-                                      'volume'          => $volume,
-                                      'weight'          => $weight,
-                                      'date_created'    => date('Y-m-d'),
-                                      'time_created'    => date('H:i:s'));
+                    $model = new Pricelist();
+                    $model->product_id = $product_id;
+                    $model->normal_price = $normal_price;
+                    $model->company_before_tax_pcs = $company_before_tax_pcs;
+                    $model->company_before_tax_ctn = $company_before_tax_ctn;
+                    $model->company_after_tax_pcs = $company_after_tax_pcs;
+                    $model->company_after_tax_ctn = $company_after_tax_ctn;
+                    $model->stock_availibility = $stock_availibility;
+                    $model->dipo_discount = $dipo_discount;
+                    $model->dipo_before_tax_pcs = $dipo_before_tax_pcs;
+                    $model->dipo_before_tax_ctn = $dipo_before_tax_ctn;
+                    $model->dipo_after_tax_pcs = $dipo_after_tax_pcs;
+                    $model->dipo_after_tax_ctn = $dipo_after_tax_ctn;
+                    $model->dipo_after_tax_round_up = $dipo_after_tax_round_up;
+                    $model->mitra_discount = $mitra_discount;
+                    $model->mitra_before_tax_pcs = $mitra_before_tax_pcs;
+                    $model->mitra_before_tax_ctn = $mitra_before_tax_ctn;
+                    $model->mitra_after_tax_pcs = $mitra_after_tax_pcs;
+                    $model->mitra_after_tax_ctn = $mitra_after_tax_ctn;
+                    $model->mitra_after_tax_round_up = $mitra_after_tax_round_up;
+                    $model->customer_discount = $customer_discount;
+                    $model->customer_before_tax_pcs = $customer_before_tax_pcs;
+                    $model->customer_before_tax_ctn = $customer_before_tax_ctn;
+                    $model->customer_after_tax_pcs = $customer_after_tax_pcs;
+                    $model->customer_after_tax_ctn = $customer_after_tax_ctn;
+                    $model->customer_after_tax_round_up = $customer_after_tax_round_up;
+                    $model->het_round_up_pcs = $het_round_up_pcs;
+                    $model->het_round_up_ctn = $het_round_up_ctn;
 
-                    $save       = $this->db->insert('m_pricelist', $dataProduct);
-                    $id_pricelist = $this->db->insert_id();
+                    $model->user_created = $user->id;
+                    $model->date_created = date('Y-m-d');
+                    $model->time_created = date('H:i:s');
+                    $save = $model->save();
 
-                    if(!empty($_FILES['upload_Files']['name'])){
-                        $filesCount = count($_FILES['upload_Files']['name']);
-                        for($i = 0; $i < $filesCount; $i++){ 
-                            $_FILES['upload_File']['name']      = $_FILES['upload_Files']['name'][$i]; 
-                            $_FILES['upload_File']['type']      = $_FILES['upload_Files']['type'][$i]; 
-                            $_FILES['upload_File']['tmp_name']  = $_FILES['upload_Files']['tmp_name'][$i]; 
-                            $_FILES['upload_File']['error']     = $_FILES['upload_Files']['error'][$i]; 
-                            $_FILES['upload_File']['size']      = $_FILES['upload_Files']['size'][$i]; 
-                            
-                            // File upload configuration
-                            $uploadPath = 'uploads/images/pricelists/'; 
-                            $config['upload_path'] = $uploadPath; 
-                            $config['allowed_types'] = 'gif|jpg|png'; 
-
-                            // Load and initialize upload library
-                            $this->load->library('upload', $config);
-                            $this->upload->initialize($config);
-
-                            // Upload file to server
-                            if($this->upload->do_upload('upload_File')){
-                                // Uploaded file data
-                                $fileData = $this->upload->data();
-                                $uploadData[$i]['pricelist_id']   = $id_pricelist;
-                                $uploadData[$i]['order']        = $i+1;
-                                $uploadData[$i]['file_name']    = $fileData['file_name'];
-                            
-                                $imageModel = new ProductImage();
-                                $imageModel->pricelist_id = $id_pricelist;
-                                $imageModel->order      = $i+1;
-                                $imageModel->image      = $uploadData[$i]['file_name'];
-    
-                                $imageModel->user_created = $user->id;
-                                $imageModel->date_created = date('Y-m-d');
-                                $imageModel->time_created = date('H:i:s');
-                                $saveImage = $imageModel->save();
-                            }
-                        }
-                    }
+                    $product_name = Product::find($product_id)->name;
 
                     if ($save) {
                         $data_notif = array(
-                            'Name'            => $name,
-                            'Category'        => Product::find($category_id)->name,
-                            'Product Code'    => $product_code,
-                            'Description'     => $description,
-                            'Feature'         => $feature,
-                            'Barcode Product' => $barcode_product,
-                            'Barcode Carton'  => $barcode_carton,
-                            'Packing Size'    => $packing_size,
-                            'Qty'             => $qty,
-                            'Length'          => $length,
-                            'Height'          => $height,
-                            'Width'           => $width,
-                            'Volume'          => $volume,
-                            'Weight'          => $weight,
+                            'Product'                           => $product_name,
+                            'Normal Price'                      => $normal_price,
+                            'Company Before Tax in Pcs'         => $company_before_tax_pcs,
+                            'Company Before Tax in Ctn'         => $company_before_tax_ctn,
+                            'Company After Tax in Pcs'          => $company_after_tax_pcs,
+                            'Company After Tax in Pcs'          => $company_after_tax_ctn,
+                            'Stock Availibility'                => $stock_availibility,
+                            'Dipo Discount'                     => $dipo_discount,
+                            'Dipo Before Tax in Pcs'            => $dipo_before_tax_pcs,
+                            'Dipo Before Tax in Ctn'            => $dipo_before_tax_ctn,
+                            'Dipo After Tax in Pcs'             => $dipo_after_tax_pcs,
+                            'Dipo After Tax in Pcs'             => $dipo_after_tax_ctn,
+                            'Dipo After Tax Round Up in Ctn'    => $dipo_after_tax_round_up,
+                            'Mitra Discount'                    => $mitra_discount,
+                            'Mitra Before Tax in Pcs'           => $mitra_before_tax_pcs,
+                            'Mitra Before Tax in Ctn'           => $mitra_before_tax_ctn,
+                            'Mitra After Tax in Pcs'            => $mitra_after_tax_pcs,
+                            'Mitra After Tax in Pcs'            => $mitra_after_tax_ctn,
+                            'Mitra After Tax Round Up in Ctn'   => $mitra_after_tax_round_up,
+                            'Customer Discount'                 => $customer_discount,
+                            'Customer Before Tax in Pcs'        => $customer_before_tax_pcs,
+                            'Customer Before Tax in Ctn'        => $customer_before_tax_ctn,
+                            'Customer After Tax in Pcs'         => $customer_after_tax_pcs,
+                            'Customer After Tax in Pcs'         => $customer_after_tax_ctn,
+                            'Customer After Tax Round Up in Ctn'=> $customer_after_tax_round_up,
+                            'HET Round Up in Pcs'               => $het_round_up_pcs,
+                            'HET Round Up in Ctn'               => $het_round_up_ctn,
                         );
-                        $message = "Add " . strtolower(lang('pricelist')) . " " . $name . " succesfully by " . $user->full_name;
+                        $message = "Add " . strtolower(lang('pricelist')) . " " . $product_name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 4);
                         $status = array('status' => 'success', 'message' => lang('message_save_success'));
                     } else {
@@ -317,7 +334,7 @@ class Pricelists extends MX_Controller {
                     }
                 }
             } elseif(!empty($id_pricelist)) {
-                $model = Product::find($id_pricelist);
+                $model = Pricelist::find($id_pricelist);
                 $name = ucwords($this->input->post('name'));
                 $category_id = $this->input->post('category_id');
                 $product_code = $this->input->post('product_code');
@@ -352,62 +369,23 @@ class Pricelists extends MX_Controller {
 
                 $model->name            = $name;
                 $model->category_id     = $category_id;
-                $model->product_code             = $product_code;
+                $model->product_code    = $product_code;
                 $model->description     = $description;
                 $model->feature         = $feature;
                 $model->barcode_product = $barcode_product;
                 $model->barcode_carton  = $barcode_carton;
                 $model->packing_size    = $packing_size;
                 $model->qty             = $qty;
-                $model->length     = $length;
-                $model->height     = $height;
-                $model->width     = $width;
-                $model->volume   = $volume;
+                $model->length          = $length;
+                $model->height          = $height;
+                $model->width           = $width;
+                $model->volume          = $volume;
                 $model->weight          = $weight;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
                 $model->time_modified = date('H:i:s');
                 $update = $model->save();
-
-                if(!empty($_FILES['upload_Files']['name'])){
-                    $filesCount = count($_FILES['upload_Files']['name']);
-                    for($i = 0; $i < $filesCount; $i++){ 
-                        $_FILES['upload_File']['name']      = $_FILES['upload_Files']['name'][$i]; 
-                        $_FILES['upload_File']['type']      = $_FILES['upload_Files']['type'][$i]; 
-                        $_FILES['upload_File']['tmp_name']  = $_FILES['upload_Files']['tmp_name'][$i]; 
-                        $_FILES['upload_File']['error']     = $_FILES['upload_Files']['error'][$i]; 
-                        $_FILES['upload_File']['size']      = $_FILES['upload_Files']['size'][$i]; 
-                        
-                        // File upload configuration
-                        $uploadPath = 'uploads/images/pricelists/'; 
-                        $config['upload_path'] = $uploadPath; 
-                        $config['allowed_types'] = 'gif|jpg|png'; 
-
-                        // Load and initialize upload library
-                        $this->load->library('upload', $config);
-                        $this->upload->initialize($config);
-
-                        // Upload file to server
-                        if($this->upload->do_upload('upload_File')){
-                            // Uploaded file data
-                            $fileData = $this->upload->data();
-                            $uploadData[$i]['pricelist_id']   = $id_pricelist;
-                            $uploadData[$i]['order']        = $i+1;
-                            $uploadData[$i]['file_name']    = $fileData['file_name'];
-                        
-                            $imageModel = new ProductImage();
-                            $imageModel->pricelist_id = $id_pricelist;
-                            $imageModel->order      = $i+1;
-                            $imageModel->image      = $uploadData[$i]['file_name'];
-
-                            $imageModel->user_created = $user->id;
-                            $imageModel->date_created = date('Y-m-d');
-                            $imageModel->time_created = date('H:i:s');
-                            $saveImage = $imageModel->save();
-                        }
-                    }
-                }
 
                 if ($update) {
                     $data_new = array(
@@ -534,7 +512,7 @@ class Pricelists extends MX_Controller {
     }
 
     function pdf(){
-        $data['pricelists'] = Product::where('m_pricelist.deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['pricelists'] = Product::where('t_pricelist.deleted', 0)->orderBy('id', 'DESC')->get();
         $html = $this->load->view('pricelist/pricelist/pricelist_pdf', $data, true);
         $this->pdf_generator->generate($html, 'pricelist pdf', $orientation='Portrait');
     }

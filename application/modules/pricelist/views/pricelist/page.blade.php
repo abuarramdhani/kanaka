@@ -189,43 +189,229 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('stock_availibility')?><span class="text-danger">*</span></label>
-            <div class="col-md-7">
-                <select name="stock_availibility" class="form-control">
-                    <option value="0"><?=lang('out_of_stock')?></option>
-                    <option value="1"><?=lang('available')?></option>
-                </select>  
-            </div>  
+            <fieldset>
+                <legend class="text-center">Kanaka</legend>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input oninput="get_kanaka_pricelist()" type="text" class="form-control input-sm" name="company_after_tax_ctn" id="company_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="company_before_tax_pcs" id="company_before_tax_pcs" placeholder="<?=lang('before_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="company_before_tax_ctn" id="company_before_tax_ctn" placeholder="<?=lang('before_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="company_after_tax_pcs" id="company_after_tax_pcs" placeholder="<?=lang('after_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('stock_availibility')?><span class="text-danger">*</span></label>
+                    <div class="col-md-7">
+                        <select name="stock_availibility" class="form-control">
+                            <option value="0"><?=lang('out_of_stock')?></option>
+                            <option value="1"><?=lang('available')?></option>
+                        </select>  
+                    </div>  
+                </div>
+            </fieldset>
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input oninput="get_pricelist()" type="text" class="form-control input-sm" name="company_after_tax_ctn" id="company_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
+            <fieldset>
+                <legend class="text-center"><?=lang('dipo')?></legend>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-2">
+                        <input oninput="get_dipo_pricelist()" type="text" class="form-control input-sm" name="dipo_discount" id="dipo_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                    <label class="col-lg-6">%</label>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="dipo_before_tax_pcs" id="dipo_before_tax_pcs" placeholder="<?=lang('before_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="dipo_before_tax_ctn" id="dipo_before_tax_ctn" placeholder="<?=lang('before_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="dipo_after_tax_pcs" id="dipo_after_tax_pcs" placeholder="<?=lang('after_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="dipo_after_tax_ctn" id="dipo_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('round_up_in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="dipo_after_tax_round_up" id="dipo_after_tax_round_up" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+            </fieldset>
         </div>
 
-        <input type="number" name="company_before_tax_pcs" value="">
-        <input type="number" name="company_before_tax_ctn" value="">
-        <input type="number" name="company_after_tax_pcs" value="">
-        <input type="number" name="dipo_before_tax_pcs" value="">
-        <input type="number" name="dipo_before_tax_ctn" value="">
-        <input type="number" name="dipo_after_tax_pcs" value="">
-        <input type="number" name="dipo_after_tax_ctn" value="">
-        <input type="number" name="dipo_after_tax_round_up" value="">
-        <input type="number" name="mitra_before_tax_pcs" value="">
-        <input type="number" name="mitra_before_tax_ctn" value="">
-        <input type="number" name="mitra_after_tax_pcs" value="">
-        <input type="number" name="mitra_after_tax_ctn" value="">
-        <input type="number" name="mitra_after_tax_round_up" value="">
-        <input type="number" name="customer_before_tax_pcs" value="">
-        <input type="number" name="customer_before_tax_ctn" value="">
-        <input type="number" name="customer_after_tax_pcs" value="">
-        <input type="number" name="customer_after_tax_ctn" value="">
-        <input type="number" name="customer_after_tax_round_up" value="">
-        <input type="number" name="het_round_up_pcs" value="">
-        <input type="number" name="het_round_up_ctn" value="">
+        <div class="form-group form-md-line-input">
+            <fieldset>
+                <legend class="text-center"><?=lang('mitra')?></legend>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-2">
+                        <input oninput="get_mitra_pricelist()" type="text" class="form-control input-sm" name="mitra_discount" id="mitra_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                    <label class="col-lg-6">%</label>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="mitra_before_tax_pcs" id="mitra_before_tax_pcs" placeholder="<?=lang('before_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="mitra_before_tax_ctn" id="mitra_before_tax_ctn" placeholder="<?=lang('before_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="mitra_after_tax_pcs" id="mitra_after_tax_pcs" placeholder="<?=lang('after_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="mitra_after_tax_ctn" id="mitra_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('round_up_in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="mitra_after_tax_round_up" id="mitra_after_tax_round_up" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <fieldset>
+                <legend class="text-center"><?=lang('customer')?></legend>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-2">
+                        <input oninput="get_customer_pricelist()" type="text" class="form-control input-sm" name="customer_discount" id="customer_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                    <label class="col-lg-6">%</label>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="customer_before_tax_pcs" id="customer_before_tax_pcs" placeholder="<?=lang('before_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="customer_before_tax_ctn" id="customer_before_tax_ctn" placeholder="<?=lang('before_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="customer_after_tax_pcs" id="customer_after_tax_pcs" placeholder="<?=lang('after_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="customer_after_tax_ctn" id="customer_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('round_up_in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="customer_after_tax_round_up" id="customer_after_tax_round_up" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('het')?> <?=lang('round_up_in_pcs')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="het_round_up_pcs" id="het_round_up_pcs" placeholder="<?=lang('het')?> <?=lang('round_up_in_pcs')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('het')?> <?=lang('round_up_in_ctn')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="het_round_up_ctn" id="het_round_up_ctn" placeholder="<?=lang('het')?> <?=lang('round_up_in_ctn')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
 
       </div>
       <div class="modal-footer">
@@ -266,37 +452,78 @@
        });
     });
 
-    function get_pricelist(){
-        var company_before_tax_ctn = $('[name="company_after_tax_ctn"]').val()/1.1;
-        $('[name="company_before_tax_ctn"]').val(company_before_tax_ctn);
+    function get_kanaka_pricelist(){
+        var company_after_tax_ctn   = $('[name="company_after_tax_ctn"]').val();
+        var company_before_tax_ctn  = $('[name="company_before_tax_ctn"]').val();
+        var qty                     = $('[name="qty"]').val();
 
-        var company_before_tax_pcs = $('[name="company_before_tax_ctn"]').val()/$('[name="qty"]').val();
-        $('[name="company_before_tax_pcs"]').val(company_before_tax_pcs);
+        var company_before_tax_ctn  = company_after_tax_ctn/1.1;
+        var company_before_tax_pcs  = company_before_tax_ctn/qty;
+        var company_after_tax_pcs   = company_after_tax_ctn/qty;
 
-        var company_after_tax_pcs = $('[name="company_after_tax_ctn"]').val();
-        var dipo_before_tax_pcs = $('[name="company_after_tax_ctn"]').val();
-        var dipo_before_tax_ctn = $('[name="company_after_tax_ctn"]').val();
-        var dipo_after_tax_pcs = $('[name="company_after_tax_ctn"]').val();
-        var dipo_after_tax_ctn = $('[name="company_after_tax_ctn"]').val();
-        var dipo_after_tax_round_up = $('[name="company_after_tax_ctn"]').val();
-        var mitra_before_tax_pcs = $('[name="company_after_tax_ctn"]').val();
-        var mitra_before_tax_ctn = $('[name="company_after_tax_ctn"]').val();
-        var mitra_after_tax_pcs = $('[name="company_after_tax_ctn"]').val();
-        var mitra_after_tax_ctn = $('[name="company_after_tax_ctn"]').val();
-        var mitra_after_tax_round_up = $('[name="company_after_tax_ctn"]').val();
-        var customer_before_tax_pcs = $('[name="company_after_tax_ctn"]').val();
-        var customer_before_tax_ctn = $('[name="company_after_tax_ctn"]').val();
-        var customer_after_tax_pcs = $('[name="company_after_tax_ctn"]').val();
-        var customer_after_tax_ctn = $('[name="company_after_tax_ctn"]').val();
-        var customer_after_tax_round_up = $('[name="company_after_tax_ctn"]').val();
-        var het_round_up_pcs = $('[name="company_after_tax_ctn"]').val();
-        var het_round_up_ctn = $('[name="company_after_tax_ctn"]').val();
+        $('[name="company_before_tax_ctn"]').val(company_before_tax_ctn.toFixed(0));
+        $('[name="company_before_tax_pcs"]').val(company_before_tax_pcs.toFixed(0));
+        $('[name="company_after_tax_pcs"]').val(company_after_tax_pcs.toFixed(0));
+    }
 
-        if(length != '' && height != '' && width != ''){
-            var volume = (length * height * width)/100;
-        }
+    function get_dipo_pricelist(){
+        var dipo_discount           = $('[name="dipo_discount"]').val()/100;
+        var company_after_tax_ctn   = parseInt($('[name="company_after_tax_ctn"]').val());
+        var qty                     = $('[name="qty"]').val();
 
-        $('#volume').val(volume);
+        var dipo_after_tax_ctn      = company_after_tax_ctn+(company_after_tax_ctn*dipo_discount);
+        var dipo_after_tax_pcs      = dipo_after_tax_ctn/qty;
+        var dipo_before_tax_ctn     = dipo_after_tax_ctn/1.1;
+        var dipo_before_tax_pcs     = dipo_before_tax_ctn/qty;
+        var dipo_after_tax_round_up = (~~((dipo_after_tax_ctn + 99) / 100) * 100);
+
+        $('[name="dipo_after_tax_ctn"]').val(dipo_after_tax_ctn.toFixed(0));
+        $('[name="dipo_after_tax_pcs"]').val(dipo_after_tax_pcs.toFixed(0));
+        $('[name="dipo_before_tax_ctn"]').val(dipo_before_tax_ctn.toFixed(0));
+        $('[name="dipo_before_tax_pcs"]').val(dipo_before_tax_pcs.toFixed(0));
+        $('[name="dipo_after_tax_round_up"]').val(dipo_after_tax_round_up.toFixed(0));
+    }
+
+    function get_mitra_pricelist(){
+        var mitra_discount           = $('[name="mitra_discount"]').val()/100;
+        var dipo_after_tax_ctn       = parseInt($('[name="dipo_after_tax_ctn"]').val());
+        var qty                      = $('[name="qty"]').val();
+
+        var mitra_after_tax_ctn      = dipo_after_tax_ctn+(dipo_after_tax_ctn*mitra_discount);
+        var mitra_after_tax_pcs      = mitra_after_tax_ctn/qty;
+        var mitra_before_tax_ctn     = mitra_after_tax_ctn/1.1;
+        var mitra_before_tax_pcs     = mitra_before_tax_ctn/qty;
+        var mitra_after_tax_round_up = (~~((mitra_after_tax_ctn + 99) / 100) * 100);
+
+        $('[name="mitra_after_tax_ctn"]').val(mitra_after_tax_ctn.toFixed(0));
+        $('[name="mitra_after_tax_pcs"]').val(mitra_after_tax_pcs.toFixed(0));
+        $('[name="mitra_before_tax_ctn"]').val(mitra_before_tax_ctn.toFixed(0));
+        $('[name="mitra_before_tax_pcs"]').val(mitra_before_tax_pcs.toFixed(0));
+        $('[name="mitra_after_tax_round_up"]').val(mitra_after_tax_round_up.toFixed(0));
+    }
+
+    function get_customer_pricelist(){
+        var customer_discount           = $('[name="customer_discount"]').val()/100;
+        var mitra_after_tax_ctn         = parseInt($('[name="mitra_after_tax_ctn"]').val());
+        var qty                         = $('[name="qty"]').val();
+
+        var customer_after_tax_ctn      = mitra_after_tax_ctn+(mitra_after_tax_ctn*customer_discount);
+        var customer_after_tax_pcs      = customer_after_tax_ctn/qty;
+        var customer_before_tax_ctn     = customer_after_tax_ctn/1.1;
+        var customer_before_tax_pcs     = customer_before_tax_ctn/qty;
+        var customer_after_tax_round_up = (~~((customer_after_tax_ctn + 99) / 100) * 100);
+        var het_in_pcs                  = customer_after_tax_round_up/qty;
+        var het_round_up_pcs            = (~~((het_in_pcs + 99) / 100) * 100);
+        var het_in_ctn                  = het_round_up_pcs*qty;
+        var het_round_up_ctn            = (~~((het_in_ctn + 99) / 100) * 100);
+
+        $('[name="customer_after_tax_ctn"]').val(customer_after_tax_ctn.toFixed(0));
+        $('[name="customer_after_tax_pcs"]').val(customer_after_tax_pcs.toFixed(0));
+        $('[name="customer_before_tax_ctn"]').val(customer_before_tax_ctn.toFixed(0));
+        $('[name="customer_before_tax_pcs"]').val(customer_before_tax_pcs.toFixed(0));
+        $('[name="customer_after_tax_round_up"]').val(customer_after_tax_round_up.toFixed(0));
+        $('[name="het_round_up_pcs"]').val(het_round_up_pcs.toFixed(0));
+        $('[name="het_round_up_ctn"]').val(het_round_up_ctn.toFixed(0));
     }
 
     function add_pricelist(){

@@ -207,19 +207,19 @@ class Principles extends MX_Controller {
                 $web = $this->input->post('web');
             
                 $data_old = array(
-                    'Code' => $code,
-                    'Name' => $name,
-                    'Address' => $address,
-                    'Product' => $product,
-                    'Brand' => $brand,
-                    'TOP' => $top,
-                    'PIC' => $pic,
-                    'Phone Office' => $phone_office,
-                    'Phone Personal' => $phone_personal,
-                    'Fax' => $fax,
-                    'Email Office' => $email_office,
-                    'Email Persoal' => $email_personal,
-                    'Web' => $web,
+                    'Code' => $model->code,
+                    'Name' => $model->name,
+                    'Address' => $model->address,
+                    'Product' => $model->product,
+                    'Brand' => $model->brand,
+                    'TOP' => $model->top,
+                    'PIC' => $model->pic,
+                    'Phone Office' => $model->phone_office,
+                    'Phone Personal' => $model->phone_personal,
+                    'Fax' => $model->fax,
+                    'Email Office' => $model->email_office,
+                    'Email Persoal' => $model->email_personal,
+                    'Web' => $model->web,
                 );
 
                 $model->code = $code;

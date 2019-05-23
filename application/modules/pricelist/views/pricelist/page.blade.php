@@ -225,7 +225,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('stock_availibility')?><span class="text-danger">*</span></label>
                     <div class="col-md-7">
-                        <select name="stock_availibility" class="form-control">
+                        <select id="stock_availibility" name="stock_availibility" class="form-control">
                             <option value="0"><?=lang('out_of_stock')?></option>
                             <option value="1"><?=lang('available')?></option>
                         </select>  
@@ -240,7 +240,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
                     <div class="col-lg-2">
-                        <input oninput="get_dipo_pricelist()" type="text" class="form-control input-sm" name="dipo_discount" id="dipo_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
+                        <input oninput="get_kanaka_pricelist()"  type="text" class="form-control input-sm" name="dipo_discount" id="dipo_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
                     </div>
                     <label class="col-lg-6">%</label>
@@ -294,7 +294,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
                     <div class="col-lg-2">
-                        <input oninput="get_mitra_pricelist()" type="text" class="form-control input-sm" name="mitra_discount" id="mitra_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
+                        <input oninput="get_kanaka_pricelist()"  type="text" class="form-control input-sm" name="mitra_discount" id="mitra_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
                     </div>
                     <label class="col-lg-6">%</label>
@@ -348,7 +348,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
                     <div class="col-lg-2">
-                        <input oninput="get_customer_pricelist()" type="text" class="form-control input-sm" name="customer_discount" id="customer_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
+                        <input oninput="get_kanaka_pricelist()"  type="text" class="form-control input-sm" name="customer_discount" id="customer_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
                     </div>
                     <label class="col-lg-6">%</label>
@@ -463,66 +463,66 @@
         $('[name="company_before_tax_ctn"]').val(company_before_tax_ctn.toFixed(0));
         $('[name="company_before_tax_pcs"]').val(company_before_tax_pcs.toFixed(0));
         $('[name="company_after_tax_pcs"]').val(company_after_tax_pcs.toFixed(0));
-    }
 
-    function get_dipo_pricelist(){
-        var dipo_discount           = $('[name="dipo_discount"]').val()/100;
-        var company_after_tax_ctn   = parseInt($('[name="company_after_tax_ctn"]').val());
-        var qty                     = $('[name="qty"]').val();
+        if($('[name="dipo_discount"]').val() != ''){
+            var dipo_discount           = $('[name="dipo_discount"]').val()/100;
+            var company_after_tax_ctn   = parseInt($('[name="company_after_tax_ctn"]').val());
+            var qty                     = $('[name="qty"]').val();
 
-        var dipo_after_tax_ctn      = company_after_tax_ctn+(company_after_tax_ctn*dipo_discount);
-        var dipo_after_tax_pcs      = dipo_after_tax_ctn/qty;
-        var dipo_before_tax_ctn     = dipo_after_tax_ctn/1.1;
-        var dipo_before_tax_pcs     = dipo_before_tax_ctn/qty;
-        var dipo_after_tax_round_up = (~~((dipo_after_tax_ctn + 99) / 100) * 100);
+            var dipo_after_tax_ctn      = company_after_tax_ctn+(company_after_tax_ctn*dipo_discount);
+            var dipo_after_tax_pcs      = dipo_after_tax_ctn/qty;
+            var dipo_before_tax_ctn     = dipo_after_tax_ctn/1.1;
+            var dipo_before_tax_pcs     = dipo_before_tax_ctn/qty;
+            var dipo_after_tax_round_up = (~~((dipo_after_tax_ctn + 99) / 100) * 100);
 
-        $('[name="dipo_after_tax_ctn"]').val(dipo_after_tax_ctn.toFixed(0));
-        $('[name="dipo_after_tax_pcs"]').val(dipo_after_tax_pcs.toFixed(0));
-        $('[name="dipo_before_tax_ctn"]').val(dipo_before_tax_ctn.toFixed(0));
-        $('[name="dipo_before_tax_pcs"]').val(dipo_before_tax_pcs.toFixed(0));
-        $('[name="dipo_after_tax_round_up"]').val(dipo_after_tax_round_up.toFixed(0));
-    }
+            $('[name="dipo_after_tax_ctn"]').val(dipo_after_tax_ctn.toFixed(0));
+            $('[name="dipo_after_tax_pcs"]').val(dipo_after_tax_pcs.toFixed(0));
+            $('[name="dipo_before_tax_ctn"]').val(dipo_before_tax_ctn.toFixed(0));
+            $('[name="dipo_before_tax_pcs"]').val(dipo_before_tax_pcs.toFixed(0));
+            $('[name="dipo_after_tax_round_up"]').val(dipo_after_tax_round_up.toFixed(0));
+        }
+       
+        if($('[name="mitra_discount"]').val() != ''){
+            var mitra_discount           = $('[name="mitra_discount"]').val()/100;
+            var dipo_after_tax_ctn       = parseInt($('[name="dipo_after_tax_ctn"]').val());
+            var qty                      = $('[name="qty"]').val();
 
-    function get_mitra_pricelist(){
-        var mitra_discount           = $('[name="mitra_discount"]').val()/100;
-        var dipo_after_tax_ctn       = parseInt($('[name="dipo_after_tax_ctn"]').val());
-        var qty                      = $('[name="qty"]').val();
+            var mitra_after_tax_ctn      = dipo_after_tax_ctn+(dipo_after_tax_ctn*mitra_discount);
+            var mitra_after_tax_pcs      = mitra_after_tax_ctn/qty;
+            var mitra_before_tax_ctn     = mitra_after_tax_ctn/1.1;
+            var mitra_before_tax_pcs     = mitra_before_tax_ctn/qty;
+            var mitra_after_tax_round_up = (~~((mitra_after_tax_ctn + 99) / 100) * 100);
 
-        var mitra_after_tax_ctn      = dipo_after_tax_ctn+(dipo_after_tax_ctn*mitra_discount);
-        var mitra_after_tax_pcs      = mitra_after_tax_ctn/qty;
-        var mitra_before_tax_ctn     = mitra_after_tax_ctn/1.1;
-        var mitra_before_tax_pcs     = mitra_before_tax_ctn/qty;
-        var mitra_after_tax_round_up = (~~((mitra_after_tax_ctn + 99) / 100) * 100);
+            $('[name="mitra_after_tax_ctn"]').val(mitra_after_tax_ctn.toFixed(0));
+            $('[name="mitra_after_tax_pcs"]').val(mitra_after_tax_pcs.toFixed(0));
+            $('[name="mitra_before_tax_ctn"]').val(mitra_before_tax_ctn.toFixed(0));
+            $('[name="mitra_before_tax_pcs"]').val(mitra_before_tax_pcs.toFixed(0));
+            $('[name="mitra_after_tax_round_up"]').val(mitra_after_tax_round_up.toFixed(0));
+        }
+       
+        if($('[name="customer_discount"]').val() != ''){
+            var customer_discount           = $('[name="customer_discount"]').val()/100;
+            var mitra_after_tax_ctn         = parseInt($('[name="mitra_after_tax_ctn"]').val());
+            var qty                         = $('[name="qty"]').val();
 
-        $('[name="mitra_after_tax_ctn"]').val(mitra_after_tax_ctn.toFixed(0));
-        $('[name="mitra_after_tax_pcs"]').val(mitra_after_tax_pcs.toFixed(0));
-        $('[name="mitra_before_tax_ctn"]').val(mitra_before_tax_ctn.toFixed(0));
-        $('[name="mitra_before_tax_pcs"]').val(mitra_before_tax_pcs.toFixed(0));
-        $('[name="mitra_after_tax_round_up"]').val(mitra_after_tax_round_up.toFixed(0));
-    }
+            var customer_after_tax_ctn      = mitra_after_tax_ctn+(mitra_after_tax_ctn*customer_discount);
+            var customer_after_tax_pcs      = customer_after_tax_ctn/qty;
+            var customer_before_tax_ctn     = customer_after_tax_ctn/1.1;
+            var customer_before_tax_pcs     = customer_before_tax_ctn/qty;
+            var customer_after_tax_round_up = (~~((customer_after_tax_ctn + 99) / 100) * 100);
+            var het_in_pcs                  = customer_after_tax_round_up/qty;
+            var het_round_up_pcs            = (~~((het_in_pcs + 99) / 100) * 100);
+            var het_in_ctn                  = het_round_up_pcs*qty;
+            var het_round_up_ctn            = (~~((het_in_ctn + 99) / 100) * 100);
 
-    function get_customer_pricelist(){
-        var customer_discount           = $('[name="customer_discount"]').val()/100;
-        var mitra_after_tax_ctn         = parseInt($('[name="mitra_after_tax_ctn"]').val());
-        var qty                         = $('[name="qty"]').val();
-
-        var customer_after_tax_ctn      = mitra_after_tax_ctn+(mitra_after_tax_ctn*customer_discount);
-        var customer_after_tax_pcs      = customer_after_tax_ctn/qty;
-        var customer_before_tax_ctn     = customer_after_tax_ctn/1.1;
-        var customer_before_tax_pcs     = customer_before_tax_ctn/qty;
-        var customer_after_tax_round_up = (~~((customer_after_tax_ctn + 99) / 100) * 100);
-        var het_in_pcs                  = customer_after_tax_round_up/qty;
-        var het_round_up_pcs            = (~~((het_in_pcs + 99) / 100) * 100);
-        var het_in_ctn                  = het_round_up_pcs*qty;
-        var het_round_up_ctn            = (~~((het_in_ctn + 99) / 100) * 100);
-
-        $('[name="customer_after_tax_ctn"]').val(customer_after_tax_ctn.toFixed(0));
-        $('[name="customer_after_tax_pcs"]').val(customer_after_tax_pcs.toFixed(0));
-        $('[name="customer_before_tax_ctn"]').val(customer_before_tax_ctn.toFixed(0));
-        $('[name="customer_before_tax_pcs"]').val(customer_before_tax_pcs.toFixed(0));
-        $('[name="customer_after_tax_round_up"]').val(customer_after_tax_round_up.toFixed(0));
-        $('[name="het_round_up_pcs"]').val(het_round_up_pcs.toFixed(0));
-        $('[name="het_round_up_ctn"]').val(het_round_up_ctn.toFixed(0));
+            $('[name="customer_after_tax_ctn"]').val(customer_after_tax_ctn.toFixed(0));
+            $('[name="customer_after_tax_pcs"]').val(customer_after_tax_pcs.toFixed(0));
+            $('[name="customer_before_tax_ctn"]').val(customer_before_tax_ctn.toFixed(0));
+            $('[name="customer_before_tax_pcs"]').val(customer_before_tax_pcs.toFixed(0));
+            $('[name="customer_after_tax_round_up"]').val(customer_after_tax_round_up.toFixed(0));
+            $('[name="het_round_up_pcs"]').val(het_round_up_pcs.toFixed(0));
+            $('[name="het_round_up_ctn"]').val(het_round_up_ctn.toFixed(0));
+        }
     }
 
     function add_pricelist(){
@@ -603,7 +603,7 @@
     });
    
     // Menampilkan data pada form
-    function viewData(value){   
+    function viewData(pricelistId, productId){   
         form_validator.resetForm();
         $("html, body").animate({
             scrollTop: 0
@@ -611,35 +611,51 @@
         App.blockUI({
             target: '#form-wrapper'
         });
-        $.getJSON('{{base_url()}}pricelist/pricelists/view', {id: value}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}pricelist/pricelists/view', {pricelistId: pricelistId, productId: productId}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
-                var rowImage = json.image;
+                var rowProduct = json.dataProduct;
                 var i;
                 var html = "";
 
                 $('[name="id"]').val(row.id);
-                $('[name="pricelist_code"]').val(row.pricelist_code);
-                $('[name="barcode_pricelist"]').val(row.barcode_pricelist);
-                $('[name="barcode_carton"]').val(row.barcode_carton);
-                $('[name="name"]').val(row.name);
-                $('[name="packing_size"]').val(row.packing_size);
-                $('[name="qty"]').val(row.qty);
-                $('[name="length"]').val(row.length);
-                $('[name="width"]').val(row.width);
-                $('[name="height"]').val(row.height);
-                $('[name="volume"]').val(row.volume);
-                $('[name="weight"]').val(row.weight);
-                $('[name="category_id"]').val(row.category_id);
-                $('[name="description"]').val(row.description);
-                $('[name="feature"]').val(row.feature);
-
-                for(i=0; i<rowImage.length; i++){
-                    html += '<div class="pricelist-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/pricelists/' + rowImage[i].image + '"></div>';
-                }
-               
-                $('.preview-upload-image').html(html);
-                $('#preview-upload-image-field').show();
+                $('#product_code').val(rowProduct.id);
+                $('[name="barcode_product"]').val(rowProduct.barcode_product);
+                $('[name="barcode_carton"]').val(rowProduct.barcode_carton);
+                $('[name="name"]').val(rowProduct.name);
+                $('[name="packing_size"]').val(rowProduct.packing_size);
+                $('[name="qty"]').val(rowProduct.qty);
+                $('[name="length"]').val(rowProduct.length);
+                $('[name="width"]').val(rowProduct.width);
+                $('[name="height"]').val(rowProduct.height);
+                $('[name="volume"]').val(rowProduct.volume);
+                $('[name="weight"]').val(rowProduct.weight);
+                $('[name="normal_price"]').val(row.normal_price);
+                $('[name="company_before_tax_pcs"]').val(row.company_before_tax_pcs);
+                $('[name="company_before_tax_ctn"]').val(row.company_before_tax_ctn);
+                $('[name="company_after_tax_pcs"]').val(row.company_after_tax_pcs);
+                $('[name="company_after_tax_ctn"]').val(row.company_after_tax_ctn);
+                $('#stock_availibility').val(row.stock_availibility);
+                $('[name="dipo_discount"]').val(row.dipo_discount);
+                $('[name="dipo_before_tax_pcs"]').val(row.dipo_before_tax_pcs);
+                $('[name="dipo_before_tax_ctn"]').val(row.dipo_before_tax_ctn);
+                $('[name="dipo_after_tax_pcs"]').val(row.dipo_after_tax_pcs);
+                $('[name="dipo_after_tax_ctn"]').val(row.dipo_after_tax_ctn);
+                $('[name="dipo_after_tax_round_up"]').val(row.dipo_after_tax_round_up);
+                $('[name="mitra_discount"]').val(row.mitra_discount);
+                $('[name="mitra_before_tax_pcs"]').val(row.mitra_before_tax_pcs);
+                $('[name="mitra_before_tax_ctn"]').val(row.mitra_before_tax_ctn);
+                $('[name="mitra_after_tax_pcs"]').val(row.mitra_after_tax_pcs);
+                $('[name="mitra_after_tax_ctn"]').val(row.mitra_after_tax_ctn);
+                $('[name="mitra_after_tax_round_up"]').val(row.mitra_after_tax_round_up);
+                $('[name="customer_discount"]').val(row.customer_discount);
+                $('[name="customer_before_tax_pcs"]').val(row.customer_before_tax_pcs);
+                $('[name="customer_before_tax_ctn"]').val(row.customer_before_tax_ctn);
+                $('[name="customer_after_tax_pcs"]').val(row.customer_after_tax_pcs);
+                $('[name="customer_after_tax_ctn"]').val(row.customer_after_tax_ctn);
+                $('[name="customer_after_tax_round_up"]').val(row.customer_after_tax_round_up);
+                $('[name="het_round_up_pcs"]').val(row.het_round_up_pcs);
+                $('[name="het_round_up_ctn"]').val(row.het_round_up_ctn);
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_pricelist')?>'); 

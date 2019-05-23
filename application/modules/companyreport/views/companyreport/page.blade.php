@@ -207,7 +207,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('payment_status')?></label>
             <div class="col-lg-7">
-                <select class="form-control input-sm all_select2" name="payment_status" id="payment_status">
+                <select class="form-control input-sm" name="payment_status" id="payment_status">
                     <option value=""><?= lang('select_your_option') ?></option>
                     <option value="0"><?= lang('no') ?></option>
                     <option value="1"><?= lang('yes') ?></option>

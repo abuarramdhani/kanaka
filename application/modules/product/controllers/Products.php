@@ -286,11 +286,11 @@ class Products extends MX_Controller {
                     'Barcode Carton'  => $model->barcode_carton,
                     'Packing Size'    => $model->packing_size,
                     'Qty'             => $model->qty,
-                    'Length'     => $model->length,
-                    'Height'     => $height,
-                    'Width'     => $width,
-                    'Volume'   => $volume,
-                    'Weight'          => $weight,
+                    'Length'          => $model->length,
+                    'Height'          => $model->height,
+                    'Width'           => $model->width,
+                    'Volume'          => $model->volume,
+                    'Weight'          => $model->weight,
                 );
 
                 $model->name            = $name;

@@ -15,6 +15,10 @@ class Companyreports extends MX_Controller {
         $data['add_access'] = $this->user_profile->get_user_access('Created', 'companyreport');
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'companyreport');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'companyreport');
+
+        $data['principles'] = Principle::where('deleted', 0)->get();
+        $data['pricelists'] = Pricelist::select('t_pricelist.id', 'm_product.product_code', 'm_product.name as product_name')->join('m_product', 't_pricelist.product_id', '=' ,'m_product.id')->where('t_pricelist.deleted', 0)->orderBy('m_product.product_code', 'ASC')->get();
+
         $this->load->blade('companyreport.views.companyreport.page', $data);
     }
 
@@ -201,6 +205,17 @@ class Companyreports extends MX_Controller {
         header("Content-Disposition: attachment; filename=companyreport.xls");
         $data['companyreports'] = Zona::where('deleted', 0)->orderBy('id', 'DESC')->get();
         $this->load->view('companyreport/companyreport/companyreport_pdf', $data);
+    }
+
+    function getpricelist(){
+        if ($this->input->is_ajax_request()) {
+            $id = (int)$this->input->get('id');
+            $model = array('status' => 'success', 'data' => Pricelist::find($id));
+        } else {
+            $model = array('status' => 'error', 'message' => lang('data_not_found'));
+        }
+        $data = $model;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
 }

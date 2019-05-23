@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-22 06:01:39
+Date: 2019-05-24 06:08:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,6 +25,10 @@ CREATE TABLE `t_sell_in_company` (
   `receive_date` date NOT NULL,
   `check_status` tinyint(1) NOT NULL,
   `monthly_period` tinyint(2) NOT NULL,
+  `tax_status` tinyint(1) NOT NULL,
+  `tax_no` varchar(50) NOT NULL,
+  `invoice_number_distributor` varchar(50) NOT NULL,
+  `sp_no` varchar(50) NOT NULL,
   `sp_id` varchar(3) NOT NULL,
   `principle_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,

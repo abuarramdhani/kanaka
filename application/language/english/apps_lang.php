@@ -223,7 +223,7 @@ $lang['deleting_partner_successfully'] = 'Deleting data Partner succesfully';
 ## END Partner ##
 
 ## Vendor ##
-$lang['vendor'] = 'Vendor';
+$lang['vendor'] = 'Principle';
 $lang['new_vendor'] = "New Vendor";
 $lang['edit_vendor'] = "Edit Vendor";
 $lang['vendor_name'] = "Vendor Name";
@@ -325,12 +325,18 @@ $lang['deleting_pricelist_successfully'] = 'Deleting data Price List succesfully
 
 ## Company Report ##
 $lang['companyreport'] = 'Company Report';
-$lang['new_companyreport'] = "New Company Report";
+$lang['new_sell_in_company'] = "New Sell In Company";
 $lang['edit_companyreport'] = "Edit Company Report";
 $lang['companyreport_name'] = "Company Name";
 $lang['po_date'] = "PO Date";
 $lang['receive_date'] = "Receive Date";
 $lang['check_status'] = "Check Status";
+$lang['tax_status'] = "Tax Status";
+$lang['pkp'] = "PKP";
+$lang['non_pkp'] = "Non PKP";
+$lang['tax_no'] = "Tax No";
+$lang['invoice_number_distributor'] = "Invoice Number Distributor";
+$lang['sp_no'] = "SP No";
 $lang['price_before_tax_ctn'] = "Price HNA Per Ctn (Before Tax)";
 $lang['price_after_tax_ctn'] = "Price HNA Per Ctn (After Tax)";
 $lang['total_order'] = "Total Order";
@@ -340,6 +346,8 @@ $lang['due_date_invoice'] = "Due Date Invoice";
 $lang['aging_invoice'] = "Aging Invoice";
 $lang['due_date_ar'] = "Due Date AR";
 $lang['payment_status'] = "Payment Status";
+$lang['done'] = "Done";
+$lang['not_yet'] = "Not Yet";
 $lang['payment_value'] = "Payment Value";
 $lang['difference'] = "Difference";
 

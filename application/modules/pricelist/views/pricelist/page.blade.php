@@ -44,10 +44,10 @@
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}master/pricelist/pdf')" class="btn btn-danger btn-sm">
+                            <button onClick="return window.open('{{base_url()}}reports/pricelist/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
-                            <button onClick="return window.open('{{base_url()}}master/pricelist/excel')" class="btn btn-success btn-sm">
+                            <button onClick="return window.open('{{base_url()}}reports/pricelist/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
                             </button>
                         @endif
@@ -66,7 +66,9 @@
                                 <th rowspan="3" class="text-center"><?=lang('weight')?></th>
                                 <th rowspan="3" class="text-center"><?=lang('normal_price')?></th>
                                 <th colspan="5" class="text-center"><?=lang('kanaka')?></th>
-                                <!-- <th colspan="5" class="text-center">DIST-POINT (DIPO)</th> -->
+                                <th colspan="5" class="text-center">DIST-POINT (DIPO)<span class="discount-value"><?=$discount->dipo_discount?>%</span></th>
+                                <th colspan="5" class="text-center"><?=lang('mitra')?><span class="discount-value"><?=$discount->mitra_discount?>%</span></th>
+                                <th colspan="7" class="text-center"><?=lang('customer')?><span class="discount-value"><?=$discount->customer_discount?>%</span></th>
                                 <th rowspan="3" class="text-center"><?=lang('created_date')?></th>
                                 <th rowspan="3" width="13%"><?=lang('options')?></th>
                             </tr>
@@ -80,19 +82,36 @@
                                 <th colspan="2"><?=lang('before_tax')?></th> 
                                 <th colspan="2"><?=lang('after_tax')?></th> 
                                 <th rowspan="2" class="text-center"><?=lang('stock_availibility')?></th>
-                                <!-- <th colspan="2"><?=lang('before_tax')?></th> 
-                                <th colspan="3"><?=lang('after_tax')?></th> -->
+                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                <th colspan="3"><?=lang('after_tax')?></th>
+                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                <th colspan="3"><?=lang('after_tax')?></th>
+                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                <th colspan="3"><?=lang('after_tax')?></th>
+                                <th colspan="2"><?=lang('het')?></th>
                             </tr>
                             <tr>
                                 <th><?=lang('in_pcs')?></th> 
                                 <th><?=lang('in_ctn')?></th> 
                                 <th><?=lang('in_pcs')?></th> 
                                 <th><?=lang('in_ctn')?></th> 
-                                <!-- <th><?=lang('in_pcs')?></th> 
+                                <th><?=lang('in_pcs')?></th> 
                                 <th><?=lang('in_ctn')?></th> 
                                 <th><?=lang('in_pcs')?></th> 
                                 <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('round_up_in_ctn')?></th>  -->
+                                <th><?=lang('round_up_in_ctn')?></th> 
+                                <th><?=lang('in_pcs')?></th> 
+                                <th><?=lang('in_ctn')?></th> 
+                                <th><?=lang('in_pcs')?></th> 
+                                <th><?=lang('in_ctn')?></th> 
+                                <th><?=lang('round_up_in_ctn')?></th> 
+                                <th><?=lang('in_pcs')?></th> 
+                                <th><?=lang('in_ctn')?></th> 
+                                <th><?=lang('in_pcs')?></th> 
+                                <th><?=lang('in_ctn')?></th> 
+                                <th><?=lang('round_up_in_ctn')?></th> 
+                                <th><?=lang('round_up_in_pcs')?></th> 
+                                <th><?=lang('round_up_in_ctn')?></th> 
                             </tr>
                         </thead>
                     </table>
@@ -536,14 +555,16 @@
 
     // Pengaturan Datatable 
     var oTable =$('#table-pricelist').dataTable({
+        responsive: false,
+        "scrollX": true,
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}pricelist/pricelists/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [11]},
-            {"targets": [11], "orderable": false}
+            {"className": "dt-center", "targets": [35]},
+            {"targets": [35], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
@@ -700,6 +721,63 @@
             cancelButtonClass: "btn-success",
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
+    }
+
+    function viewDiscount(){   
+        $.getJSON('{{base_url()}}pricelist/pricelists/viewDiscount', function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data;
+                console.log(row);
+                var rowProduct = json.dataProduct;
+                var i;
+                var html = "";
+
+                $('[name="id"]').val(row.id);
+                $('#product_code').val(rowProduct.id);
+                $('[name="barcode_product"]').val(rowProduct.barcode_product);
+                $('[name="barcode_carton"]').val(rowProduct.barcode_carton);
+                $('[name="name"]').val(rowProduct.name);
+                $('[name="packing_size"]').val(rowProduct.packing_size);
+                $('[name="qty"]').val(rowProduct.qty);
+                $('[name="length"]').val(rowProduct.length);
+                $('[name="width"]').val(rowProduct.width);
+                $('[name="height"]').val(rowProduct.height);
+                $('[name="volume"]').val(rowProduct.volume);
+                $('[name="weight"]').val(rowProduct.weight);
+                $('[name="normal_price"]').val(row.normal_price);
+                $('[name="company_before_tax_pcs"]').val(row.company_before_tax_pcs);
+                $('[name="company_before_tax_ctn"]').val(row.company_before_tax_ctn);
+                $('[name="company_after_tax_pcs"]').val(row.company_after_tax_pcs);
+                $('[name="company_after_tax_ctn"]').val(row.company_after_tax_ctn);
+                $('#stock_availibility').val(row.stock_availibility);
+                $('[name="dipo_discount"]').val(row.dipo_discount);
+                $('[name="dipo_before_tax_pcs"]').val(row.dipo_before_tax_pcs);
+                $('[name="dipo_before_tax_ctn"]').val(row.dipo_before_tax_ctn);
+                $('[name="dipo_after_tax_pcs"]').val(row.dipo_after_tax_pcs);
+                $('[name="dipo_after_tax_ctn"]').val(row.dipo_after_tax_ctn);
+                $('[name="dipo_after_tax_round_up"]').val(row.dipo_after_tax_round_up);
+                $('[name="mitra_discount"]').val(row.mitra_discount);
+                $('[name="mitra_before_tax_pcs"]').val(row.mitra_before_tax_pcs);
+                $('[name="mitra_before_tax_ctn"]').val(row.mitra_before_tax_ctn);
+                $('[name="mitra_after_tax_pcs"]').val(row.mitra_after_tax_pcs);
+                $('[name="mitra_after_tax_ctn"]').val(row.mitra_after_tax_ctn);
+                $('[name="mitra_after_tax_round_up"]').val(row.mitra_after_tax_round_up);
+                $('[name="customer_discount"]').val(row.customer_discount);
+                $('[name="customer_before_tax_pcs"]').val(row.customer_before_tax_pcs);
+                $('[name="customer_before_tax_ctn"]').val(row.customer_before_tax_ctn);
+                $('[name="customer_after_tax_pcs"]').val(row.customer_after_tax_pcs);
+                $('[name="customer_after_tax_ctn"]').val(row.customer_after_tax_ctn);
+                $('[name="customer_after_tax_round_up"]').val(row.customer_after_tax_round_up);
+                $('[name="het_round_up_pcs"]').val(row.het_round_up_pcs);
+                $('[name="het_round_up_ctn"]').val(row.het_round_up_ctn);
+
+                $('#modal_form').modal('show');
+                $('.modal-title').text('<?=lang('edit_pricelist')?>'); 
+            }else if(json.status == "error"){
+                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+            }
+            App.unblockUI('#form-wrapper');
+       });
     }
 
 </script>

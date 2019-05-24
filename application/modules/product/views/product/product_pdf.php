@@ -58,7 +58,6 @@
     $i=0;
     if(count($products) > 0){
 	   foreach($products as $product){
-		   print_r($products);exit;
 	   $i++;
    	?>
 					
@@ -75,7 +74,7 @@
 		<td><?=$product->height?></td>
 		<td><?=$product->volume?></td>
 		<td><?=$product->weight?></td>
-		<td><?=$product->category_id?></td>
+		<td><?=$product->category_name?></td>
 		<td><?=$product->view_total?></td>
 		<td><?=$product->description?></td>
 		<td><?=$product->feature?></td>

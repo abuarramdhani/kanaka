@@ -18,6 +18,14 @@ class Pricelists extends MX_Controller {
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'pricelist');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'pricelist');
         $data['products'] = Product::where('deleted', '0')->get();
+
+        $discount = $this->db->select('*')
+                  ->order_by('id', 'DESC')
+                  ->get_where('t_pricelist', array('deleted' => 0))
+                  ->row();
+        
+        $data['discount'] = $discount;
+
         $this->load->blade('pricelist.views.pricelist.page', $data);
     }
 
@@ -77,6 +85,7 @@ class Pricelists extends MX_Controller {
             'width',
             'volume',
             'weight',
+            'normal_price',
             'company_before_tax_pcs',
             'company_before_tax_ctn',
             'company_after_tax_pcs',
@@ -201,25 +210,25 @@ class Pricelists extends MX_Controller {
             }
             $row_value[] = $stock;
             // $row_value[] = $row->dipo_discount;
-            // $row_value[] = $row->dipo_before_tax_pcs;
-            // $row_value[] = $row->dipo_before_tax_ctn;
-            // $row_value[] = $row->dipo_after_tax_pcs;
-            // $row_value[] = $row->dipo_after_tax_ctn;
-            // $row_value[] = $row->dipo_after_tax_round_up;
+            $row_value[] = $row->dipo_before_tax_pcs;
+            $row_value[] = $row->dipo_before_tax_ctn;
+            $row_value[] = $row->dipo_after_tax_pcs;
+            $row_value[] = $row->dipo_after_tax_ctn;
+            $row_value[] = $row->dipo_after_tax_round_up;
             // $row_value[] = $row->mitra_discount;
-            // $row_value[] = $row->mitra_before_tax_pcs;
-            // $row_value[] = $row->mitra_before_tax_ctn;
-            // $row_value[] = $row->mitra_after_tax_pcs;
-            // $row_value[] = $row->mitra_after_tax_ctn;
-            // $row_value[] = $row->mitra_after_tax_round_up;
+            $row_value[] = $row->mitra_before_tax_pcs;
+            $row_value[] = $row->mitra_before_tax_ctn;
+            $row_value[] = $row->mitra_after_tax_pcs;
+            $row_value[] = $row->mitra_after_tax_ctn;
+            $row_value[] = $row->mitra_after_tax_round_up;
             // $row_value[] = $row->customer_discount;
-            // $row_value[] = $row->customer_before_tax_pcs;
-            // $row_value[] = $row->customer_before_tax_ctn;
-            // $row_value[] = $row->customer_after_tax_pcs;
-            // $row_value[] = $row->customer_after_tax_ctn;
-            // $row_value[] = $row->customer_after_tax_round_up;
-            // $row_value[] = $row->het_round_up_pcs;
-            // $row_value[] = $row->het_round_up_ctn;
+            $row_value[] = $row->customer_before_tax_pcs;
+            $row_value[] = $row->customer_before_tax_ctn;
+            $row_value[] = $row->customer_after_tax_pcs;
+            $row_value[] = $row->customer_after_tax_ctn;
+            $row_value[] = $row->customer_after_tax_round_up;
+            $row_value[] = $row->het_round_up_pcs;
+            $row_value[] = $row->het_round_up_ctn;
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             
@@ -579,7 +588,7 @@ class Pricelists extends MX_Controller {
     }
 
     function pdf(){
-        $data['pricelists'] = Product::where('t_pricelist.deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['pricelists'] = Pricelist::join('m_product', 'm_product.id = t_pricelist.product_id', 'inner')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->orderBy('t_pricelist.id', 'DESC')->get();
         $html = $this->load->view('pricelist/pricelist/pricelist_pdf', $data, true);
         $this->pdf_generator->generate($html, 'pricelist pdf', $orientation='Portrait');
     }
@@ -587,7 +596,15 @@ class Pricelists extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=pricelist.xls");
-        $data['pricelists'] = Product::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->orderBy('t_pricelist.id', 'DESC')->get();
+
+        $discount = $this->db->select('*')
+                  ->order_by('id', 'DESC')
+                  ->get_where('t_pricelist', array('deleted' => 0))
+                  ->row();
+        
+        $data['discount'] = $discount;
+        
         $this->load->view('pricelist/pricelist/pricelist_pdf', $data);
     }
 

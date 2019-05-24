@@ -109,3 +109,7 @@ tr.details .details-control {
 .form-group.form-md-line-input .form-inline .form-control.input-sm {
     width: 24%;
 }
+
+.discount-value {
+    float: right;
+}

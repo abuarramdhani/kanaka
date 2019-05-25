@@ -131,17 +131,27 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('invoice_number_distributor')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('invoice_no')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm" name="invoice_number_distributor" id="invoice_number_distributor" placeholder="<?=lang('invoice_number_distributor')?>" maxlength="50" />
+                        <select class="form-control input-sm all_select2" name="invoice_id" id="invoice_id" style="width: 100%;">
+                            <option value=""><?= lang('select_your_option') ?></option>
+                            @foreach($invoices as $invoice)
+                                <option value="{{ $invoice->id }}">{{ $invoice->invoice_no }}</option>
+                            @endforeach
+                        </select>
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
-
+                
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('sp_no')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm" name="sp_no" id="sp_no" placeholder="<?=lang('sp_no')?>" maxlength="50" />
+                        <select class="form-control input-sm all_select2" name="sp_id" id="sp_id" style="width: 100%;">
+                            <option value=""><?= lang('select_your_option') ?></option>
+                            @foreach($invoices as $invoice)
+                                <option value="{{ $invoice->id }}">{{ $invoice->invoice_no }}</option>
+                            @endforeach
+                        </select>
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
@@ -164,8 +174,8 @@
                     <div class="col-lg-7">
                         <select class="form-control input-sm all_select2" name="product_id" id="product_id" style="width: 100%;">
                             <option value=""><?= lang('select_your_option') ?></option>
-                            @foreach($pricelists as $pricelist)
-                                <option value="{{ $pricelist->id }}">{{ $pricelist->product_code . ' - ' . $pricelist->product_name }}</option>
+                            @foreach($products as $product)
+                                <option value="{{ $product->id }}">{{ $product->product_code . ' - ' . $product->product_name }}</option>
                             @endforeach
                         </select>
                         <div class="form-control-focus"> </div>
@@ -173,9 +183,9 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('total_order')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('total_order_in_ctn')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm currency" name="total_order" id="total_order" placeholder="<?=lang('total_order')?>" />
+                        <input type="text" class="form-control input-sm number" name="total_order_in_ctn" id="total_order_in_ctn" placeholder="<?=lang('total_order_in_ctn')?>" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
@@ -194,17 +204,17 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('price_before_tax_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_before_tax')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm currency" name="price_before_tax_ctn" id="price_before_tax_ctn" placeholder="<?=lang('price_before_tax_ctn')?>" readonly="readonly" />
+                        <input type="text" class="form-control input-sm currency" name="price_hna_per_ctn_before_tax" id="price_hna_per_ctn_before_tax" placeholder="<?=lang('price_hna_per_ctn_before_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
                 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('price_after_tax_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_after_tax')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm currency" name="price_after_tax_ctn" id="price_after_tax_ctn" placeholder="<?=lang('price_after_tax_ctn')?>" readonly="readonly" />
+                        <input type="text" class="form-control input-sm currency" name="price_hna_per_ctn_after_tax" id="price_hna_per_ctn_after_tax" placeholder="<?=lang('price_hna_per_ctn_after_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
@@ -436,17 +446,7 @@
             if(json.status == "success"){
                 var row = json.data;
 
-                $('[name="price_before_tax_ctn"]').val(row.company_before_tax_ctn);
-                $('[name="price_after_tax_ctn"]').val(row.company_before_tax_ctn);
-                $('[name="name"]').val(row.company_before_tax_ctn);
-                $('[name="total_value_order_before_tax_ctn"]').val(row.company_before_tax_ctn);
-                $('[name="total_value_order_after_tax_ctn"]').val(row.company_before_tax_ctn);
-                $('[name="top"]').val(row.company_before_tax_ctn);
-                $('[name="due_date_invoice"]').val(row.company_before_tax_ctn);
-                $('[name="aging_invoice"]').val(row.company_before_tax_ctn);
-                $('[name="due_date_ar"]').val(row.company_before_tax_ctn);
-                $('[name="payment_value"]').val(row.company_before_tax_ctn);
-                $('[name="difference"]').val(row.company_before_tax_ctn);
+                $('[name="price_hna_per_ctn_after_tax"]').val(row.company_after_tax_ctn);
 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');

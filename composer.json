@@ -34,7 +34,8 @@
             "application/modules/zona/models",
             "application/modules/principle/models",
             "application/modules/pricelist/models",
-            "application/modules/partner/models"
+            "application/modules/partner/models",
+            "application/modules/invoice/models"
         ]
     }
 }

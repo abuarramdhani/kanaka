@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Companyreports extends MX_Controller {
+class Invoices extends MX_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -12,15 +12,10 @@ class Companyreports extends MX_Controller {
     }
 
     public function index() {
-        $data['add_access'] = $this->user_profile->get_user_access('Created', 'companyreport');
-        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'companyreport');
-        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'companyreport');
-
-        $data['invoices'] = Invoice::where('deleted', 0)->get();
-        $data['principles'] = Principle::where('deleted', 0)->get();
-        $data['products'] = Product::select('m_product.id', 'm_product.product_code', 'm_product.name as product_name')->where('m_product.deleted', 0)->orderBy('m_product.product_code', 'ASC')->get();
-
-        $this->load->blade('companyreport.views.companyreport.page', $data);
+        $data['add_access'] = $this->user_profile->get_user_access('Created', 'zona');
+        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'zona');
+        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'zona');
+        $this->load->blade('zona.views.zona.page', $data);
     }
 
     public function fetch_data() {
@@ -37,7 +32,7 @@ class Companyreports extends MX_Controller {
             'date_created',
         );
 
-        $from = "m_companyreport";
+        $from = "m_zona";
         $where = "deleted = 0";
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
         
@@ -66,10 +61,10 @@ class Companyreports extends MX_Controller {
             $row_value = array();
 
             $btn_action = '';
-            if($this->user_profile->get_user_access('Updated', 'companyreport')){
+            if($this->user_profile->get_user_access('Updated', 'zona')){
                 $btn_action .= '<a href="javascript:void()" onclick="viewData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
             }
-            if($this->user_profile->get_user_access('Deleted', 'companyreport')){
+            if($this->user_profile->get_user_access('Deleted', 'zona')){
                 $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
 
@@ -88,10 +83,10 @@ class Companyreports extends MX_Controller {
     public function save() {
         if ($this->input->is_ajax_request()) {
             $user = $this->ion_auth->user()->row();
-            $id_companyreport = $this->input->post('id');
-            $get_companyreport = Zona::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
-            if (empty($id_companyreport)) {
-                if (!empty($get_companyreport->name)) {
+            $id_zona = $this->input->post('id');
+            $get_zona = Zona::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
+            if (empty($id_zona)) {
+                if (!empty($get_zona->name)) {
                     $status = array('status' => 'unique', 'message' => lang('already_exist'));
                 }else{
                     $name = ucwords($this->input->post('name'));
@@ -110,15 +105,15 @@ class Companyreports extends MX_Controller {
                             'Name' => $name,
                             'Description' => $description,
                         );
-                        $message = "Add " . strtolower(lang('companyreport')) . " " . $name . " succesfully by " . $user->full_name;
+                        $message = "Add " . strtolower(lang('zona')) . " " . $name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 8);
                         $status = array('status' => 'success', 'message' => lang('message_save_success'));
                     } else {
                         $status = array('status' => 'error', 'message' => lang('message_save_failed'));
                     }
                 }
-            } elseif(!empty($id_companyreport)) {
-                $model = Zona::find($id_companyreport);
+            } elseif(!empty($id_zona)) {
+                $model = Zona::find($id_zona);
                 $name = ucwords($this->input->post('name'));
                 $description = $this->input->post('description');
 
@@ -141,7 +136,7 @@ class Companyreports extends MX_Controller {
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
-                    $message = "Update " . strtolower(lang('companyreport')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                    $message = "Update " . strtolower(lang('zona')) . " " .  $model->name . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 8);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
@@ -182,7 +177,7 @@ class Companyreports extends MX_Controller {
                     'Name' => $model->name,
                     'Description' => $model->description,
                 );
-                $message = "Delete " . strtolower(lang('companyreport')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                $message = "Delete " . strtolower(lang('zona')) . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 8);
                 $status = array('status' => 'success');
             } else {
@@ -196,27 +191,16 @@ class Companyreports extends MX_Controller {
     }
 
     function pdf(){
-        $data['companyreports'] = Zona::where('deleted', 0)->orderBy('id', 'DESC')->get();
-        $html = $this->load->view('companyreport/companyreport/companyreport_pdf', $data, true);
-        $this->pdf_generator->generate($html, 'companyreport pdf', $orientation='Portrait');
+        $data['zonas'] = Zona::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $html = $this->load->view('zona/zona/zona_pdf', $data, true);
+        $this->pdf_generator->generate($html, 'zona pdf', $orientation='Portrait');
     }
 
     function excel(){
         header("Content-type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=companyreport.xls");
-        $data['companyreports'] = Zona::where('deleted', 0)->orderBy('id', 'DESC')->get();
-        $this->load->view('companyreport/companyreport/companyreport_pdf', $data);
-    }
-
-    function getpricelist(){
-        if ($this->input->is_ajax_request()) {
-            $id = (int)$this->input->get('id');
-            $model = array('status' => 'success', 'data' => Pricelist::where('product_id',$id)->orderBy('id', 'DESC')->get());
-        } else {
-            $model = array('status' => 'error', 'message' => lang('data_not_found'));
-        }
-        $data = $model;
-        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+        header("Content-Disposition: attachment; filename=zona.xls");
+        $data['zonas'] = Zona::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $this->load->view('zona/zona/zona_pdf', $data);
     }
 
 }

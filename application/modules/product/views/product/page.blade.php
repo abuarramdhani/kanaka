@@ -222,10 +222,10 @@
         var volume = 0;
 
         if(length != '' && height != '' && width != ''){
-            var volume = (length * height * width)/100;
+            var volume = (length * height * width)/1000000;
         }
 
-        $('#volume').val(volume);
+        $('#volume').val(volume.toFixed(2));
     }
 
     function add_product(){

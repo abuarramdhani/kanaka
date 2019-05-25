@@ -189,3 +189,10 @@ $route['reports/partner/excel']	= 'partner/partners/excel';
 $route['reports/customer'] = 'customer/customers/index';
 $route['reports/customer/pdf']	= 'customer/customers/pdf';
 $route['reports/customer/excel']	= 'customer/customers/excel';
+
+/**
+* SURAT PESANAN
+*/
+$route['reports/suratpesanan'] = 'suratpesanan/suratpesanans/index';
+$route['reports/suratpesanan/pdf'] = 'suratpesanan/suratpesanans/pdf';
+$route['reports/suratpesanan/excel'] = 'suratpesanan/pricelists/excel';

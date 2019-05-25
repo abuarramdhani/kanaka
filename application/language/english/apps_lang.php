@@ -364,3 +364,18 @@ $lang['remark'] = "Remark";
 $lang['saving_companyreport_successfully'] = 'Saving data Company Report succesfully';
 $lang['deleting_companyreport_successfully'] = 'Deleting data Company Report succesfully';
 ## END Company Report ##
+
+## Surat Pesanan ##
+$lang['surat_pesanan'] = 'Surat Pesanan';
+$lang['tambah_surat_pesanan'] = "Tambah Surat Pesanan";
+$lang['ubah_surat_pesanan'] = "Ubah Surat Pesanan";
+$lang['saving_data_successfully'] = 'Saving data succesfully';
+$lang['deleting_data_successfully'] = 'Deleting data succesfully';
+$lang['no_sp'] = 'No SP';
+$lang['principle_code'] = 'Principle Code';
+$lang['principle_address'] = 'Principle Address';
+$lang['principle_pic'] = 'Principle PIC';
+$lang['dipo_name'] = 'Dipo Name';
+$lang['dipo_address'] = 'Dipo Address';
+$lang['sp_date'] = 'SP Date';
+## END Surat Pesanan ##

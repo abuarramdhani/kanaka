@@ -35,6 +35,7 @@
             "application/modules/principle/models",
             "application/modules/pricelist/models",
             "application/modules/partner/models",
+            "application/modules/suratpesanan/models",
             "application/modules/invoice/models"
         ]
     }

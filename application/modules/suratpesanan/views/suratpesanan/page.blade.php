@@ -1,6 +1,6 @@
 @extends('default.views.layouts.default')
 
-@section('title') {{lang('product')}} @stop
+@section('title') {{lang('surat_pesanan')}} @stop
 
 @section('body')
 <style type="text/css">
@@ -19,14 +19,14 @@
                 <i class="fa fa-circle"></i>
             </li>
             <li>
-                <span>{{lang('product')}}</span>
+                <span>{{lang('surat_pesanan')}}</span>
             </li>
         </ul>
         
     </div>
     <!-- END PAGE BAR -->
     <!-- BEGIN PAGE TITLE-->
-    <h3 class="page-title"> {{lang('product')}} </h3>
+    <h3 class="page-title"> {{lang('surat_pesanan')}} </h3>
     <!-- END PAGE TITLE-->
     <!-- END PAGE HEADERs-->
     <div class="row">
@@ -36,11 +36,11 @@
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="icon-grid font-dark"></i>
-                        <span class="caption-subject">{{lang('product')}}</span>
+                        <span class="caption-subject">{{lang('surat_pesanan')}}</span>
                     </div>
                     <div class="tools">
                         @if($add_access == 1)
-                            <button onclick="add_product()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('new_product')}}</button>
+                            <button onclick="add_product()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('tambah_surat_pesanan')}}</button>
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
@@ -54,30 +54,18 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <table id="table-product" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+                    <table id="table-pesanan" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
-                                <th rowspan="2" class="text-center"><?=lang('product_code')?></th>
-                                <th colspan="2" class="text-center"><?=lang('barcode')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('product_name')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('packing_size')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('qty_per_ctn')?></th>
-                                <th colspan="4" class="text-center"><?=lang('carton_dimension')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('weight')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('category')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('view_total')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('description')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('feature')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('created_date')?></th>
-                                <th rowspan="2" width="13%"><?=lang('options')?></th>
-                            </tr>
-                            <tr>
-                                <th><?=lang('product')?></th>
-                                <th><?=lang('carton')?></th> 
-                                <th>L</th> 
-                                <th>W</th> 
-                                <th>H</th> 
-                                <th>Vol (m<sup>3</sup>)</th> 
+                                <th class="text-center"><?=lang('no_sp')?></th>
+                                <th class="text-center"><?=lang('principle_code')?></th>
+                                <th class="text-center"><?=lang('principle_address')?></th>
+                                <th class="text-center"><?=lang('principle_pic')?></th>
+                                <th class="text-center"><?=lang('dipo_name')?></th>
+                                <th class="text-center"><?=lang('dipo_address')?></th>
+                                <th class="text-center"><?=lang('sp_date')?></th>
+                                <th class="text-center"><?=lang('created_date')?></th>
+                                <th width="13%"><?=lang('options')?></th>
                             </tr>
                         </thead>
                     </table>
@@ -238,15 +226,15 @@
     toastr.options = { "positionClass": "toast-top-right", };
 
     // Pengaturan Datatable 
-    var oTable =$('#table-product').dataTable({
+    var oTable =$('#table-pesanan').dataTable({
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,
         "sServerMethod": "GET",
-        "sAjaxSource": "{{ base_url() }}product/products/fetch_data",
+        "sAjaxSource": "{{ base_url() }}suratpesanan/suratpesanans/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [11]},
-            {"targets": [11], "orderable": false}
+            {"className": "dt-center", "targets": [5]},
+            {"targets": [5], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);

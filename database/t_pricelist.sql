@@ -1,35 +1,26 @@
--- phpMyAdmin SQL Dump
--- version 4.8.5
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: May 23, 2019 at 12:14 AM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.1.28
+/*
+Navicat MySQL Data Transfer
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
+Source Server         : PHPMyAdmin
+Source Server Version : 50611
+Source Host           : 127.0.0.1:3306
+Source Database       : db_kanaka
 
+Target Server Type    : MYSQL
+Target Server Version : 50611
+File Encoding         : 65001
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+Date: 2019-05-25 08:08:10
+*/
 
---
--- Database: `db_kanaka`
---
+SET FOREIGN_KEY_CHECKS=0;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `t_pricelist`
---
-
+-- ----------------------------
+-- Table structure for t_pricelist
+-- ----------------------------
+DROP TABLE IF EXISTS `t_pricelist`;
 CREATE TABLE `t_pricelist` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `normal_price` float NOT NULL,
   `company_before_tax_pcs` float NOT NULL,
@@ -70,37 +61,11 @@ CREATE TABLE `t_pricelist` (
   `deleted` tinyint(4) NOT NULL DEFAULT '0',
   `user_deleted` int(11) NOT NULL DEFAULT '0',
   `date_deleted` date NOT NULL DEFAULT '1901-01-01',
-  `time_deleted` time NOT NULL DEFAULT '00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `time_deleted` time NOT NULL DEFAULT '00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `t_pricelist`
---
-
-INSERT INTO `t_pricelist` (`id`, `product_id`, `normal_price`, `company_before_tax_pcs`, `company_before_tax_ctn`, `company_after_tax_pcs`, `company_after_tax_ctn`, `stock_availibility`, `dipo_discount`, `dipo_before_tax_pcs`, `dipo_before_tax_ctn`, `dipo_after_tax_pcs`, `dipo_after_tax_ctn`, `dipo_after_tax_round_up`, `mitra_discount`, `mitra_before_tax_pcs`, `mitra_before_tax_ctn`, `mitra_after_tax_pcs`, `mitra_after_tax_ctn`, `mitra_after_tax_round_up`, `customer_discount`, `customer_before_tax_pcs`, `customer_before_tax_ctn`, `customer_after_tax_pcs`, `customer_after_tax_ctn`, `customer_after_tax_round_up`, `het_round_up_pcs`, `het_round_up_ctn`, `printed`, `user_printed`, `date_printed`, `time_printed`, `user_created`, `date_created`, `time_created`, `user_modified`, `date_modified`, `time_modified`, `deleted`, `user_deleted`, `date_deleted`, `time_deleted`) VALUES
-(1, 1, 106000, 1742, 83636, 1917, 92000, 1, 2, 1777, 85309, 1955, 93840, 93900, 2, 1813, 87015, 1994, 95717, 95800, 4, 1885, 90496, 2074, 99546, 99600, 2100, 100800, 0, 0, '1901-01-01', '00:00:00', 1, '2019-05-23', '05:08:24', 0, '1901-01-01', '00:00:00', 0, 0, '1901-01-01', '00:00:00');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `t_pricelist`
---
-ALTER TABLE `t_pricelist`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `t_pricelist`
---
-ALTER TABLE `t_pricelist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- ----------------------------
+-- Records of t_pricelist
+-- ----------------------------
+INSERT INTO `t_pricelist` VALUES ('1', '1', '138000', '10455', '125455', '11500', '138000', '1', '2', '10909', '130909', '12000', '144000', '144000', '2', '11364', '136364', '12500', '150000', '150000', '4', '11818', '141818', '13000', '156000', '156000', '13000', '156000', '0', '0', '1901-01-01', '00:00:00', '1', '2019-05-23', '05:08:24', '0', '1901-01-01', '00:00:00', '0', '0', '1901-01-01', '00:00:00');

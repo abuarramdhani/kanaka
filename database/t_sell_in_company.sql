@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-05-24 06:08:30
+Date: 2019-05-25 08:07:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,11 +32,16 @@ CREATE TABLE `t_sell_in_company` (
   `sp_id` varchar(3) NOT NULL,
   `principle_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `price_before_tax_ctn` float NOT NULL,
-  `price_after_tax_ctn` float NOT NULL,
-  `total_order` int(11) NOT NULL,
-  `total_value_order_before_tax_ctn` float NOT NULL,
-  `total_value_order_after_tax_ctn` float NOT NULL,
+  `price_hna_per_ctn_before_tax` float NOT NULL,
+  `price_hna_per_ctn_after_tax` float NOT NULL,
+  `total_order_in_ctn` int(11) NOT NULL,
+  `discount` int(3) NOT NULL,
+  `discount_value` float NOT NULL,
+  `ppn` float NOT NULL,
+  `net_price_in_ctn_before_tax` float NOT NULL,
+  `net_price_in_ctn_after_tax` float NOT NULL,
+  `total_value_order_in_ctn_before_tax` float NOT NULL,
+  `total_value_order_in_ctn_after_tax` float NOT NULL,
   `top` varchar(50) NOT NULL,
   `due_date_invoice` date NOT NULL,
   `aging_invoice` int(11) NOT NULL,
@@ -44,6 +49,12 @@ CREATE TABLE `t_sell_in_company` (
   `payment_status` tinyint(1) NOT NULL,
   `payment_value` float NOT NULL,
   `difference` float NOT NULL,
+  `selling_price` float NOT NULL,
+  `margin_percented` float NOT NULL,
+  `margin_value` float NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `margin_contibution` float NOT NULL,
+  `remark` varchar(150) NOT NULL,
   `printed` tinyint(4) NOT NULL DEFAULT '0',
   `user_printed` int(11) NOT NULL DEFAULT '0',
   `date_printed` date NOT NULL DEFAULT '1901-01-01',
@@ -61,7 +72,7 @@ CREATE TABLE `t_sell_in_company` (
   PRIMARY KEY (`id`),
   KEY `rowID` (`id`),
   KEY `deleted` (`deleted`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of t_sell_in_company

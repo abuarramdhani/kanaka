@@ -190,6 +190,7 @@ class Products extends MX_Controller {
                                       'width'           => $width,
                                       'volume'          => $volume,
                                       'weight'          => $weight,
+                                      'user_created'    => $user->id,
                                       'date_created'    => date('Y-m-d'),
                                       'time_created'    => date('H:i:s'));
 

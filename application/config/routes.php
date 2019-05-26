@@ -168,6 +168,7 @@ $route['reports/pricelist/excel'] = 'pricelist/pricelists/excel';
 $route['reports/companyreport'] = 'companyreport/companyreports/index';
 $route['reports/companyreport/pdf']	= 'companyreport/companyreports/pdf';
 $route['reports/companyreport/excel']	= 'companyreport/companyreports/excel';
+$route['reports/companyreport/excel_out']	= 'companyreport/companyreports/excel_out';
 
 /**
 * DIPO REPORT

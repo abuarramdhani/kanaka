@@ -197,7 +197,7 @@ class Suratpesanans extends MX_Controller {
                             'sp_date'         => $sp_date,
                         );
                         $message = "Add " . strtolower(lang('suratpesanan')) . " " . $no_sp . " succesfully by " . $user->full_name;
-                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 12);
+                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 13);
                         $status = array('status' => 'success', 'message' => lang('message_save_success'));
                     } else {
                         $status = array('status' => 'error', 'message' => lang('message_save_failed'));
@@ -316,7 +316,7 @@ class Suratpesanans extends MX_Controller {
 
                     $data_change = array_diff_assoc($data_new, $data_old);
                     $message = "Update " . strtolower(lang('suratpesanan')) . " " .  $model->name . " succesfully by " . $user->full_name;
-                    $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 12);
+                    $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 13);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
                     $status = array('status' => 'error', 'message' => lang('message_save_failed'));
@@ -407,7 +407,7 @@ class Suratpesanans extends MX_Controller {
                     'Weight'          => $weight,
                 );
                 $message = "Delete " . strtolower(lang('suratpesanan')) . " " .  $model->name . " succesfully by " . $user->full_name;
-                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 12);
+                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 13);
                 $status = array('status' => 'success');
             } else {
                 $status = array('status' => 'error');

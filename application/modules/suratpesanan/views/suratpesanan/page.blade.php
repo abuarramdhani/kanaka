@@ -40,14 +40,14 @@
                     </div>
                     <div class="tools">
                         @if($add_access == 1)
-                            <button onclick="add_product()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('tambah_surat_pesanan')}}</button>
+                            <button onclick="add_suratpesanan()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('tambah_surat_pesanan')}}</button>
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}master/product/pdf')" class="btn btn-danger btn-sm">
+                            <button onClick="return window.open('{{base_url()}}master/suratpesanan/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
-                            <button onClick="return window.open('{{base_url()}}master/product/excel')" class="btn btn-success btn-sm">
+                            <button onClick="return window.open('{{base_url()}}master/suratpesanan/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
                             </button>
                         @endif
@@ -65,7 +65,7 @@
                                 <th class="text-center"><?=lang('dipo_address')?></th>
                                 <th class="text-center"><?=lang('sp_date')?></th>
                                 <th class="text-center"><?=lang('created_date')?></th>
-                                <th width="13%"><?=lang('options')?></th>
+                                <th width="25%"><?=lang('options')?></th>
                             </tr>
                         </thead>
                     </table>
@@ -75,119 +75,80 @@
         </div>
     </div>
 </div>
- <div class="modal fade" id="modal_form" role="dialog">
+<div class="modal fade" id="modal_form" role="dialog">
   <div class="modal-dialog" style="width:50%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title"><?=lang('new_product')?></h3>
+        <h3><?=lang('new_data')?></h3>
       </div>
-      {{ form_open(null,array('id' => 'form-product', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      {{ form_open(null,array('id' => 'form-suratpesanan', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
         <input type="hidden" name="id" value="">
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('product_code')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label">Kepada<span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="product_code" id="product_code" placeholder="<?=lang('product_code')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('barcode')?></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="barcode_product" id="barcode_product" placeholder="<?=lang('product')?>" maxlength="50" />
-                <input type="text" class="form-control input-sm" name="barcode_carton" id="barcode_carton" placeholder="<?=lang('carton')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('product_name')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('packing_size')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="packing_size" id="packing_size" placeholder="<?=lang('packing_size')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('qty_per_ctn')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="number" class="form-control input-sm" name="qty" id="qty" placeholder="<?=lang('qty_per_ctn')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('carton_dimension')?></label>
-            <div class="col-lg-7 form-inline">
-                <input oninput="get_volume()" type="number" class="form-control input-sm" name="length" id="length" placeholder="Length" maxlength="20" />
-                <input oninput="get_volume()" type="number" class="form-control input-sm" name="width" id="width" placeholder="Width" maxlength="20" />
-                <input oninput="get_volume()" type="number" class="form-control input-sm" name="height" id="height" placeholder="Height" maxlength="20" />
-                <input type="number" class="form-control input-sm" name="volume" id="volume" placeholder="Volume" maxlength="20" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('weight')?></label>
-            <div class="col-lg-7">
-                <input type="number" class="form-control input-sm" name="weight" id="weight" placeholder="<?=lang('weight')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('category')?><span class="text-danger">*</span></label>
-            <div class="col-md-7">
-                <select name="category_id" class="form-control">
-                <?php
-                    if (!empty($categories)) {
-                        foreach ($categories as $c) { ?>
-                        <option value="<?=$c->id?>"><?=ucfirst($c->name)?></option>
-                <?php } } ?>
+                <select id="principle_id" name="principle_id" class="form-control">
+                    <option selected disabled value=""><?=lang('select')?> <?=lang('principle_code')?></option>
+                    <?php
+                        if (!empty($principles)) {
+                            foreach ($principles as $c) { ?>
+                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
+                    <?php } } ?>
                 </select>  
-            </div>  
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('description')?></label>
-            <div class="col-lg-7">
-                <textarea rows="4" cols="50" class="form-control input-sm" name="description" id="description" placeholder="<?=lang('description')?>"></textarea>
+                <input type="text" class="form-control input-sm" name="principle_address" id="principle_address" placeholder="<?=lang('principle_address')?>" />
+                <input type="text" class="form-control input-sm" name="principle_pic" id="principle_pic" placeholder="<?=lang('principle_pic')?>" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('feature')?></label>
+            <label class="col-lg-4 control-label"><?=lang('no_sp')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <textarea rows="4" cols="50" class="form-control input-sm" name="feature" id="feature" placeholder="<?=lang('feature')?>"></textarea>
-                <div class="form-control-focus"> </div>
+                <input type="text" class="form-control input-sm" name="no_sp" id="no_sp" placeholder="<?=lang('no_sp')?>" maxlength="50" />
+               <div class="form-control-focus"> </div>
             </div>
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('image')?></label>
+            <label class="col-lg-4 control-label"><?=lang('ship_to')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-            <input type="file" class="form-control" name="upload_Files[]" multiple/>
-                <div class="form-control-focus"> </div>
+               <select id="dipo_partner_id" name="dipo_partner_id" class="form-control">
+                    <option selected disabled value=""><?=lang('select')?> <?=lang('dipo_code')?></option>
+                    <?php
+                        if (!empty($dipos)) {
+                            foreach ($dipos as $c) { ?>
+                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
+                    <?php } } ?>
+                </select>  
+                <input type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" />
             </div>
         </div>
 
-        <div class="form-group form-md-line-input" id="preview-upload-image-field">
-            <div class="col-md-12">
-                <div class="product-image preview-upload-image text-center"></div>
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Alamat</label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
+               <div class="form-control-focus"> </div>
             </div>
         </div>
 
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Tanggal<span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="sp_date" id="sp_date" placeholder="<?=lang('sp_date')?>" maxlength="50" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Metode Pembayaran</label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="metode_pembayaran" id="metode_pembayaran" placeholder="Metode Pembayaran" maxlength="50" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
       </div>
       <div class="modal-footer">
         <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
@@ -197,29 +158,134 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade" id="modal_detail" role="dialog">
+  <div class="modal-dialog" style="width:50%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3><?=lang('surat_pesanan')?></h3>
+      </div>
+      {{ form_open(null,array('id' => 'form-suratpesanan', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      <div class="modal-body">
+        <input type="hidden" name="id_pesanan" value="">
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Kepada</label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="principle_code" id="principle_code" placeholder="<?=lang('principle_code')?>" maxlength="50" />
+                <input type="text" class="form-control input-sm" name="principle_address" id="principle_address" placeholder="<?=lang('principle_address')?>" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('no_sp')?></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="no_sp" id="no_sp" placeholder="<?=lang('no_sp')?>" maxlength="50" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('ship_to')?></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" maxlength="50" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Alamat</label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Tanggal</label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="sp_date" id="sp_date" placeholder="<?=lang('sp_date')?>" maxlength="50" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Metode Pembayaran</label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="metode_pembayaran" id="metode_pembayaran" placeholder="Metode Pembayaran" maxlength="50" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <table id="table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+            <thead>
+                <tr>
+                    <!-- <th class="text-center" width="5%" height="20px">No</th> -->
+                    <th class="text-center">Kode Produk</th>
+                    <th class="text-center">Nama Produk</th>
+                    <th class="text-center">Jumlah Pesanan (Per Karton)</th>
+                    <th class="text-center">Harga Pesanan (Per Karton) Before Tax</th>
+                    <th class="text-center">Harga Pesanan (Per Karton) After Tax</th>
+                    <!-- <th class="text-center">Jumlah Pesanan After Tax</th> -->
+                </tr>
+            </thead>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+      </div>
+      {{ form_close() }}
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @stop
 
 @section('scripts')
 <script type="text/javascript">
-    $('#preview-upload-image-field').hide();
 
-    function get_volume(){
-        var length = $('#length').val();
-        var height = $('#height').val();
-        var width  = $('#width').val();
-        var volume = 0;
+    $('#sp_date').datepicker();
 
-        if(length != '' && height != '' && width != ''){
-            var volume = (length * height * width)/1000000;
-        }
+    $('#principle_id').change(function(){
+        $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getPrinciple', {id: $('#principle_id').val()}, function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data;
+                var i;
+                var html = "";
 
-        $('#volume').val(volume.toFixed(2));
-    }
+                $('[name="principle_address"]').val(row.address);
+                $('[name="principle_pic"]').val(row.pic);
+                $('[name="no_sp"]').focus();
 
-    function add_product(){
-        $('#form-product')[0].reset(); 
+            }else if(json.status == "error"){
+                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+            }
+            App.unblockUI('#form-wrapper');
+       });
+    });
+
+    $('#dipo_partner_id').change(function(){
+        $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getDipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data;
+                var i;
+                var html = "";
+
+                $('[name="dipo_name"]').val(row.name);
+                $('[name="dipo_address"]').val(row.address);
+                $('[name="sp_date"]').focus();
+
+            }else if(json.status == "error"){
+                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+            }
+            App.unblockUI('#form-wrapper');
+       });
+    });
+
+    function add_suratpesanan(){
+        $('#form-suratpesanan')[0].reset(); 
         $('#modal_form').modal('show'); 
-        $('.modal-title').text('<?=lang('new_product')?>'); 
+        $('.modal-title').text('<?=lang('new_suratpesanan')?>'); 
 
         $('[name="id"]').val('');
     }
@@ -240,21 +306,21 @@
     }).fnSetFilteringDelay(1000);
 
     // Pengaturan Form Validation 
-    var form_validator = $("#form-product").validate({
+    var form_validator = $("#form-suratpesanan").validate({
         errorPlacement: function(error, element) {
             $(element).parent().closest('.form-group').append(error);
         },
         errorElement: "span",
         rules: {
             name: "required",
-            product_code: "required",
+            suratpesanan_code: "required",
             packing_size: "required",
             qty: "required",
             category_id: "required",
         },
         messages: {
-            name: "{{lang('product_name')}}" + " {{lang('not_empty')}}",
-            product_code: "{{lang('product_code')}}" + " {{lang('not_empty')}}",
+            name: "{{lang('suratpesanan_name')}}" + " {{lang('not_empty')}}",
+            suratpesanan_code: "{{lang('suratpesanan_code')}}" + " {{lang('not_empty')}}",
             packing_size: "{{lang('packing_size')}}" + " {{lang('not_empty')}}",
             qty: "{{lang('qty_per_ctn')}}" + " {{lang('not_empty')}}",
             category_id: "{{lang('category')}}" + " {{lang('not_empty')}}",
@@ -266,7 +332,7 @@
             $(form).ajaxSubmit({  
                 beforeSubmit:  showRequest,  
                 success:       showResponse,
-                url:       '{{base_url()}}product/products/save',      
+                url:       '{{base_url()}}suratpesanan/suratpesanans/save',      
                 type:      'POST',       
                 clearForm: true ,       
                 resetForm: true ,  
@@ -302,7 +368,7 @@
         App.blockUI({
             target: '#form-wrapper'
         });
-        $.getJSON('{{base_url()}}product/products/view', {id: value}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}suratpesanan/suratpesanans/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
                 var rowImage = json.image;
@@ -310,8 +376,8 @@
                 var html = "";
 
                 $('[name="id"]').val(row.id);
-                $('[name="product_code"]').val(row.product_code);
-                $('[name="barcode_product"]').val(row.barcode_product);
+                $('[name="suratpesanan_code"]').val(row.suratpesanan_code);
+                $('[name="barcode_suratpesanan"]').val(row.barcode_suratpesanan);
                 $('[name="barcode_carton"]').val(row.barcode_carton);
                 $('[name="name"]').val(row.name);
                 $('[name="packing_size"]').val(row.packing_size);
@@ -326,19 +392,63 @@
                 $('[name="feature"]').val(row.feature);
 
                 for(i=0; i<rowImage.length; i++){
-                    html += '<div class="product-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/' + rowImage[i].image + '"></div>';
+                    html += '<div class="suratpesanan-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/suratpesanans/' + rowImage[i].image + '"></div>';
                 }
                
                 $('.preview-upload-image').html(html);
                 $('#preview-upload-image-field').show();
 
                 $('#modal_form').modal('show');
-                $('.modal-title').text('<?=lang('edit_product')?>'); 
+                $('.modal-title').text('<?=lang('edit_suratpesanan')?>'); 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
             App.unblockUI('#form-wrapper');
        });
+    }
+
+    // Menampilkan detail data pesanan
+    function viewDetail(value){   
+        form_validator.resetForm();
+        $("html, body").animate({
+            scrollTop: 0
+        }, 500);
+        App.blockUI({
+            target: '#form-wrapper'
+        });
+        $.getJSON('{{base_url()}}suratpesanan/suratpesanans/viewDetail', {id: value}, function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data[0];
+                var i;
+                var html = "";
+
+                $('[name="id_pesanan"]').val(row.id);
+                $('[name="principle_code"]').val(row.principle_code);
+                $('[name="principle_address"]').val(row.principle_address);
+                $('[name="no_sp"]').val(row.sp_no);
+                $('[name="dipo_name"]').val(row.dipo_name);
+                $('[name="dipo_address"]').val(row.dipo_address);
+                $('[name="sp_date"]').val(row.sp_date);
+
+                $('#modal_detail').modal('show');
+                $('.modal-title').text('<?=lang('edit_suratpesanan')?>'); 
+            }else if(json.status == "error"){
+                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+            }
+            App.unblockUI('#form-wrapper');
+       });
+
+        //Pengaturan Datatable 
+        var oTable =$('#table-surat').dataTable({
+            "paging": false,
+            "searching": false,
+            "bProcessing": true,
+            "bServerSide": true,
+            "bLengthChange": true,
+            "sServerMethod": "GET",
+            "sAjaxSource": "{{ base_url() }}suratpesanan/suratpesanans/fetch_data_pesanan/?id="+value,
+            "order": [0,"asc"],
+        }).fnSetFilteringDelay(1000);
     }
 
     // Proses hapus data
@@ -355,7 +465,7 @@
                 App.blockUI({
                     target: '#table-wrapper'
                 });
-                $.getJSON('{{base_url()}}product/products/delete', {id: value}, function(json, textStatus) {
+                $.getJSON('{{base_url()}}suratpesanan/suratpesanans/delete', {id: value}, function(json, textStatus) {
                     if(json.status == "success"){
                         toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
                     }else if(json.status == "error"){
@@ -391,7 +501,7 @@
                 App.blockUI({
                     target: '#table-wrapper'
                 });
-                $.getJSON('{{base_url()}}product/products/deleteImage', {id: value}, function(json, textStatus) {
+                $.getJSON('{{base_url()}}suratpesanan/suratpesanans/deleteImage', {id: value}, function(json, textStatus) {
                     if(json.status == "success"){
                         toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
                     }else if(json.status == "error"){

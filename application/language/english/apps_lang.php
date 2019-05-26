@@ -377,5 +377,7 @@ $lang['principle_address'] = 'Principle Address';
 $lang['principle_pic'] = 'Principle PIC';
 $lang['dipo_name'] = 'Dipo Name';
 $lang['dipo_address'] = 'Dipo Address';
+$lang['dipo_code'] = 'Dipo Code';
 $lang['sp_date'] = 'SP Date';
+$lang['ship_to'] = 'Ship to';
 ## END Surat Pesanan ##

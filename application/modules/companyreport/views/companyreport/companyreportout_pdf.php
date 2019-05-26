@@ -26,24 +26,19 @@
 </style>
 
 <div id="header">
-    <h2><?php echo lang('sell_in') . ' - ' . lang('companyreport'); ?></h2>
+    <h2><?php echo lang('sell_out') . ' - ' . lang('companyreport'); ?></h2>
 </div>
 
 <div id="content" style="text-align:center;">
 <table width="100%" border="1" cellpadding="1" cellspacing="0">
 	<tr >
 		<th align="center" width="5%" height="20px">No</th>
-		<th align="center"><?=lang('po_date')?></th>
 		<th align="center"><?=lang('receive_date')?></th>
-		<th align="center"><?=lang('check_status')?></th>
 		<th align="center"><?=lang('monthly_period')?></th>
 		<th align="center"><?=lang('tax_status')?></th>
 		<th align="center"><?=lang('tax_no')?></th>
 		<th align="center"><?=lang('invoice_no')?></th>
-		<th align="center"><?=lang('sp_no')?></th>
-		<th align="center"><?=lang('sp_id')?></th>
-		<th align="center"><?=lang('principle_code')?></th>
-		<th align="center"><?=lang('principle_name')?></th>
+		<th align="center"><?=lang('invoice_id')?></th>
 		<th align="center"><?=lang('product_code')?></th>
 		<th align="center"><?=lang('product_name')?></th>
 		<th align="center"><?=lang('customer_code')?></th>
@@ -65,10 +60,6 @@
 		<th align="center"><?=lang('payment_status')?></th>
 		<th align="center"><?=lang('payment_value')?></th>
 		<th align="center"><?=lang('difference')?></th>
-		<th align="center"><?=lang('selling_price')?></th>
-		<th align="center"><?=lang('margin_percented')?></th>
-		<th align="center"><?=lang('margin_value')?></th>
-		<th align="center"><?=lang('margin_contibution')?></th>
 		<th align="center"><?=lang('remark')?></th>
 	</tr>
 	<?php 
@@ -76,33 +67,22 @@
 	$indonesian_month = array( "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 	
     if(count($companyreports) > 0){
-        $total_margin_value = 0;
-		foreach($companyreports as $companyreport){
-            $total_margin_value += $companyreport->margin_value;	   
-		}
-
 		foreach($companyreports as $companyreport){
 			$i++;
 
 			$aging_invoice = round((strtotime(date('Y-m-d')) - strtotime($companyreport->due_date_invoice)) / (60 * 60 * 24));
 			$due_date_ar = $companyreport->top - $aging_invoice;
-			$margin_contibution = $companyreport->margin_value / $total_margin_value;
 
    	?>
 					
 	<tr style="font-size:9px">
 		<td align="center"><?php echo $i;?></td>
-		<td><?= date('d-m-Y', strtotime($companyreport->po_date)) ?></td>
 		<td><?= date('d-m-Y', strtotime($companyreport->receive_date)) ?></td>
-		<td><?= $companyreport->check_status == "0" ? lang('no') : lang('yes') ?></td>
 		<td><?= $indonesian_month[(int) $companyreport->monthly_period - 1] ?></td>
 		<td><?= $companyreport->tax_status == "0" ? lang('non_pkp') : lang('pkp') ?></td>
 		<td><?= $companyreport->tax_no ?></td>
 		<td><?= $companyreport->invoice_no ?></td>
-		<td><?= $companyreport->sp_no ?></td>
-		<td><?= substr($companyreport->sp_no,0,3) ?></td>
-		<td><?= $companyreport->principle_code ?></td>
-		<td><?= $companyreport->principle_name ?></td>
+		<td><?= substr($companyreport->invoice_no, 0, 3) ?></td>
 		<td><?= $companyreport->product_code ?></td>
 		<td><?= $companyreport->product_name ?></td>
 		<td><?= $companyreport->customer_code ?></td>
@@ -124,10 +104,6 @@
 		<td><?= $companyreport->payment_status == "0" ? lang('not_yet') : lang('done') ?></td>
 		<td><?= number_format($companyreport->payment_value, 0) ?></td>
 		<td><?= number_format($companyreport->difference, 0) ?></td>
-		<td><?= number_format($companyreport->selling_price, 0) ?></td>
-		<td><?= number_format($companyreport->margin_percented, 0) ?></td>
-		<td><?= number_format($companyreport->margin_value, 0) ?></td>
-		<td><?= $margin_contibution ?></td>
 		<td><?= $companyreport->remark ?></td>
 	</tr>
 	<?php 
@@ -136,7 +112,7 @@
     else{
     ?>
         <tr style="font-size:9px">
-		  <td align="center" colspan="40"><?= lang('no_data_available') ?></td>
+		  <td align="center" colspan="29"><?= lang('no_data_available') ?></td>
         </tr>
     <?php
     }

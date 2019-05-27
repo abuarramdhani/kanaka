@@ -21,7 +21,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `t_sp_detail`;
 CREATE TABLE `t_sp_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sj_id` int(11) NOT NULL,
+  `sp_id` int(11) NOT NULL,
   `pricelist_id` int(11) NOT NULL,
   `order_amount_in_ctn` int(11) NOT NULL,
   `printed` tinyint(4) NOT NULL DEFAULT '0',

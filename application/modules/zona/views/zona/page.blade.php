@@ -123,6 +123,8 @@
 
     // Pengaturan Datatable 
     var oTable =$('#table-zona').dataTable({
+        responsive: false,
+        "scrollX": true,
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,

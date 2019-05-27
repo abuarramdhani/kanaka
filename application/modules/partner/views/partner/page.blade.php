@@ -236,6 +236,8 @@
 
     // Pengaturan Datatable 
     var oTable =$('#table-partner').dataTable({
+        responsive: false,
+        "scrollX": true,
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,

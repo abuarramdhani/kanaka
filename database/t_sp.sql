@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `t_sp`
 --
-
+DROP TABLE IF EXISTS `t_sp`;
 CREATE TABLE `t_sp` (
   `id` int(11) NOT NULL,
   `principle_id` int(11) NOT NULL,

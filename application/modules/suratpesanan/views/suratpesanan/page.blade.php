@@ -410,8 +410,7 @@
 
     // Pengaturan Datatable 
     var oTable =$('#table-pesanan').dataTable({
-        responsive: false,
-        "scrollX": true,
+        "responsive": false,
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,
@@ -544,6 +543,7 @@
 
         //Pengaturan Datatable 
         var oTable =$('#table-surat').dataTable({
+            "responsive": false,
             "paging": false,
             "searching": false,
             "bProcessing": true,

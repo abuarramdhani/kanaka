@@ -32,6 +32,8 @@ class Invoices extends MX_Controller {
             't_sp.sp_date',
             'm_dipo_partner.name as dipo_name',
             'm_dipo_partner.address as dipo_address',
+            'm_dipo_partner.top as top',
+            't_invoice.due_date',
             't_invoice.date_created',
         );
 
@@ -39,9 +41,12 @@ class Invoices extends MX_Controller {
             't_invoice.invoice_no',
             't_sj.sj_no',
             't_sp.sp_no',
+            'm_dipo_partner.name',
+            'm_dipo_partner.address',
+            'm_dipo_partner.top',
             't_sp.sp_date',
-            'm_dipo_partner.name as dipo_name',
-            'm_dipo_partner.address as dipo_address',
+            't_sp.sp_date',
+            't_invoice.due_date',
             't_invoice.date_created',
         );
 
@@ -61,14 +66,17 @@ class Invoices extends MX_Controller {
             $where .= "t_invoice.invoice_no LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_sj.sj_no LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_sp.sp_no LIKE '%" . $sSearch . "%' OR ";
-            $where .= "t_sp.sp_date LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.address LIKE '%" . $sSearch . "%' OR ";
-            $where .= "t_sp.sp_date LIKE '%" . $sSearch . "%'";
+            $where .= "m_dipo_partner.top LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_sp.sp_date LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_sp.sp_date LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_invoice.due_date LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_invoice.date_created LIKE '%" . $sSearch . "%'";
             $where .= ")";
         }
 
-        $this->datatables->set_index('t_sj.id');
+        $this->datatables->set_index('t_invoice.id');
         $this->datatables->config('database_columns', $database_columns);
         $this->datatables->config('from', $from);
         $this->datatables->config('join', $join);
@@ -90,11 +98,15 @@ class Invoices extends MX_Controller {
                 $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
         
+            $row_value[] = $row->invoice_no;
             $row_value[] = $row->sj_no;
             $row_value[] = $row->sp_no;
             $row_value[] = $row->dipo_name;
             $row_value[] = $row->dipo_address;
+            $row_value[] = $row->top;
             $row_value[] = date('d-m-Y',strtotime($row->sp_date));
+            $row_value[] = date('d-m-Y',strtotime($row->sp_date));
+            $row_value[] = date('d-m-Y',strtotime($row->due_date));
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             

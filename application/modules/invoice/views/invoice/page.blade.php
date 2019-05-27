@@ -57,11 +57,15 @@
                     <table id="table-pesanan" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
+                                <th class="text-center"><?=lang('invoice_no')?></th>
                                 <th class="text-center"><?=lang('sj_no')?></th>
                                 <th class="text-center"><?=lang('sp_no')?></th>
-                                <th class="text-center"><?=lang('dipo_name')?></th>
-                                <th class="text-center"><?=lang('dipo_address')?></th>
+                                <th class="text-center"><?=lang('customer_name')?></th>
+                                <th class="text-center"><?=lang('address')?></th>
+                                <th class="text-center"><?=lang('payment_method')?></th>
                                 <th class="text-center"><?=lang('issue_date')?></th>
+                                <th class="text-center"><?=lang('receive_date')?></th>
+                                <th class="text-center"><?=lang('due_date_invoice')?></th>
                                 <th class="text-center"><?=lang('created_date')?></th>
                                 <th class="text-center"><?=lang('options')?></th>
                             </tr>
@@ -386,14 +390,16 @@
 
     // Pengaturan Datatable 
     var oTable =$('#table-pesanan').dataTable({
+        "responsive": false,
+        // "scrollX": true,
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}invoice/invoices/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [6]},
-            {"targets": [6], "orderable": false}
+            {"className": "dt-center", "targets": [10]},
+            {"targets": [10], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);

@@ -28,18 +28,23 @@ class Suratjalans extends MX_Controller {
             't_sj.id',
             't_sj.sj_no',
             't_sp.sp_no',
-            't_sp.sp_date',
             'm_dipo_partner.name as dipo_name',
             'm_dipo_partner.address as dipo_address',
+            'm_dipo_partner.pic',
+            'm_dipo_partner.phone',
+            't_sp.sp_date',
             't_sj.date_created',
         );
 
         $header_columns = array(
             't_sj.sj_no',
             't_sp.sp_no',
+            'm_dipo_partner.name',
+            'm_dipo_partner.address',
+            'm_dipo_partner.pic',
+            'm_dipo_partner.phone',
             't_sp.sp_date',
-            'm_dipo_partner.name as dipo_name',
-            'm_dipo_partner.address as dipo_address',
+            't_sp.sp_date',
             't_sj.date_created',
         );
 
@@ -60,7 +65,7 @@ class Suratjalans extends MX_Controller {
             $where .= "t_sp.sp_date LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.address LIKE '%" . $sSearch . "%' OR ";
-            $where .= "t_sp.sp_date LIKE '%" . $sSearch . "%'";
+            $where .= "t_sj.date_created LIKE '%" . $sSearch . "%'";
             $where .= ")";
         }
 
@@ -90,6 +95,9 @@ class Suratjalans extends MX_Controller {
             $row_value[] = $row->sp_no;
             $row_value[] = $row->dipo_name;
             $row_value[] = $row->dipo_address;
+            $row_value[] = $row->pic;
+            $row_value[] = $row->phone;
+            $row_value[] = date('d-m-Y',strtotime($row->sp_date));
             $row_value[] = date('d-m-Y',strtotime($row->sp_date));
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;

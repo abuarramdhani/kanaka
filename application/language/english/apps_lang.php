@@ -332,7 +332,7 @@ $lang['edit_sell_in_company'] = "Edit Sell In Company";
 $lang['edit_sell_out_company'] = "Edit Sell Out Company";
 $lang['companyreport_name'] = "Company Name";
 $lang['po_date'] = "PO Date";
-$lang['receive_date'] = "Receive Date";
+$lang['receive_date'] = "Received Date";
 $lang['check_status'] = "Check Status";
 $lang['monthly_period'] = "Monthly Period";
 $lang['tax_status'] = "Tax Status";
@@ -404,4 +404,5 @@ $lang['issue_date'] = 'Issue Date';
 $lang['invoice'] = 'Invoice';
 $lang['tambah_invoice'] = "Tambah Invoice";
 $lang['ubah_invoice'] = "Ubah Invoice";
+$lang['payment_method'] = "Payment Method";
 ## END INVOICE ##

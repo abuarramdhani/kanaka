@@ -59,9 +59,12 @@
                             <tr>
                                 <th class="text-center"><?=lang('sj_no')?></th>
                                 <th class="text-center"><?=lang('sp_no')?></th>
-                                <th class="text-center"><?=lang('dipo_name')?></th>
-                                <th class="text-center"><?=lang('dipo_address')?></th>
+                                <th class="text-center"><?=lang('customer_name')?></th>
+                                <th class="text-center"><?=lang('address')?></th>
+                                <th class="text-center"><?=lang('pic')?></th>
+                                <th class="text-center"><?=lang('phone')?></th>
                                 <th class="text-center"><?=lang('issue_date')?></th>
+                                <th class="text-center"><?=lang('receive_date')?></th>
                                 <th class="text-center"><?=lang('created_date')?></th>
                                 <th class="text-center"><?=lang('options')?></th>
                             </tr>
@@ -386,14 +389,15 @@
 
     // Pengaturan Datatable 
     var oTable =$('#table-pesanan').dataTable({
+        "responsive": false,
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}suratjalan/suratjalans/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [6]},
-            {"targets": [6], "orderable": false}
+            {"className": "dt-center", "targets": [9]},
+            {"targets": [9], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);

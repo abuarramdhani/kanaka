@@ -230,7 +230,7 @@
         $('[name="id"]').val('');
         $('[name="dipo_id"]').val('').change();
         $('[name="zona_id"]').val('').change();
-        $('[name="code"').attr('readonly',false);
+        // $('[name="code"').attr('readonly',false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
 
@@ -339,7 +339,7 @@
                 $('[name="pic"]').val(row.pic);
                 $('[name="top"]').val(row.top);
 
-                $('[name="code"').attr('readonly',true);
+                // $('[name="code"').attr('readonly',true);
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_partner')?>'); 

@@ -1,6 +1,6 @@
 @extends('default.views.layouts.default')
 
-@section('title') {{lang('invoice')}} @stop
+@section('title') {{lang('surat_jalan')}} @stop
 
 @section('body')
 <style type="text/css">
@@ -19,14 +19,14 @@
                 <i class="fa fa-circle"></i>
             </li>
             <li>
-                <span>{{lang('invoice')}}</span>
+                <span>{{lang('surat_jalan')}}</span>
             </li>
         </ul>
         
     </div>
     <!-- END PAGE BAR -->
     <!-- BEGIN PAGE TITLE-->
-    <h3 class="page-title"> {{lang('invoice')}} </h3>
+    <h3 class="page-title"> {{lang('surat_jalan')}} </h3>
     <!-- END PAGE TITLE-->
     <!-- END PAGE HEADERs-->
     <div class="row">
@@ -36,18 +36,18 @@
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="icon-grid font-dark"></i>
-                        <span class="caption-subject">{{lang('invoice')}}</span>
+                        <span class="caption-subject">{{lang('surat_jalan')}}</span>
                     </div>
                     <div class="tools">
                         @if($add_access == 1)
-                            <button onclick="add_invoice()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('tambah_invoice')}}</button>
+                            <button onclick="add_suratjalan()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('tambah_surat_jalan')}}</button>
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}master/invoice/pdf')" class="btn btn-danger btn-sm">
+                            <button onClick="return window.open('{{base_url()}}master/suratjalan/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
-                            <button onClick="return window.open('{{base_url()}}master/invoice/excel')" class="btn btn-success btn-sm">
+                            <button onClick="return window.open('{{base_url()}}master/suratjalan/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
                             </button>
                         @endif
@@ -80,7 +80,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3><?=lang('new_data')?></h3>
       </div>
-      {{ form_open(null,array('id' => 'form-invoice', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      {{ form_open(null,array('id' => 'form-suratjalan', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
         <input type="hidden" name="id" value="">
         <div class="form-group form-md-line-input">
@@ -190,9 +190,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3><?=lang('invoice')?></h3>
+        <h3><?=lang('surat_jalan')?></h3>
       </div>
-      {{ form_open(null,array('id' => 'form-invoice', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      {{ form_open(null,array('id' => 'form-suratjalan', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
         <input type="hidden" name="id_pesanan" value="">
         <div class="form-group form-md-line-input">
@@ -272,7 +272,7 @@
     $('#sp_date').datepicker();
 
     $('#pricelist_id').change(function(){
-        $.getJSON('{{base_url()}}invoice/invoices/getPricelist', {id: $('#pricelist_id').val()}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}suratjalan/suratjalans/getPricelist', {id: $('#pricelist_id').val()}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data[0];
                 var i;
@@ -319,7 +319,7 @@
     }
 
     function getProduct(x){
-        $.getJSON('{{base_url()}}invoice/invoices/getPricelist', {id: $('#pricelist_id_'+x).val()}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}suratjalan/suratjalans/getPricelist', {id: $('#pricelist_id_'+x).val()}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data[0];
                 var i;
@@ -340,7 +340,7 @@
     }
 
     $('#principle_id').change(function(){
-        $.getJSON('{{base_url()}}invoice/invoices/getPrinciple', {id: $('#principle_id').val()}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}suratjalan/suratjalans/getPrinciple', {id: $('#principle_id').val()}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
                 var i;
@@ -358,7 +358,7 @@
     });
 
     $('#dipo_partner_id').change(function(){
-        $.getJSON('{{base_url()}}invoice/invoices/getDipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}suratjalan/suratjalans/getDipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
                 var i;
@@ -375,10 +375,10 @@
        });
     });
 
-    function add_invoice(){
-        $('#form-invoice')[0].reset(); 
+    function add_suratjalan(){
+        $('#form-suratjalan')[0].reset(); 
         $('#modal_form').modal('show'); 
-        $('.modal-title').text('<?=lang('new_invoice')?>'); 
+        $('.modal-title').text('<?=lang('new_suratjalan')?>'); 
 
         $('[name="id"]').val('');
     }
@@ -390,7 +390,7 @@
         "bServerSide": true,
         "bLengthChange": true,
         "sServerMethod": "GET",
-        "sAjaxSource": "{{ base_url() }}invoice/invoices/fetch_data",
+        "sAjaxSource": "{{ base_url() }}suratjalan/suratjalans/fetch_data",
         "columnDefs": [
             {"className": "dt-center", "targets": [6]},
             {"targets": [6], "orderable": false}
@@ -399,21 +399,21 @@
     }).fnSetFilteringDelay(1000);
 
     // Pengaturan Form Validation 
-    var form_validator = $("#form-invoice").validate({
+    var form_validator = $("#form-suratjalan").validate({
         errorPlacement: function(error, element) {
             $(element).parent().closest('.form-group').append(error);
         },
         errorElement: "span",
         rules: {
             name: "required",
-            invoice_code: "required",
+            suratjalan_code: "required",
             packing_size: "required",
             qty: "required",
             category_id: "required",
         },
         messages: {
-            name: "{{lang('invoice_name')}}" + " {{lang('not_empty')}}",
-            invoice_code: "{{lang('invoice_code')}}" + " {{lang('not_empty')}}",
+            name: "{{lang('suratjalan_name')}}" + " {{lang('not_empty')}}",
+            suratjalan_code: "{{lang('suratjalan_code')}}" + " {{lang('not_empty')}}",
             packing_size: "{{lang('packing_size')}}" + " {{lang('not_empty')}}",
             qty: "{{lang('qty_per_ctn')}}" + " {{lang('not_empty')}}",
             category_id: "{{lang('category')}}" + " {{lang('not_empty')}}",
@@ -425,7 +425,7 @@
             $(form).ajaxSubmit({  
                 beforeSubmit:  showRequest,  
                 success:       showResponse,
-                url:       '{{base_url()}}invoice/invoices/save',      
+                url:       '{{base_url()}}suratjalan/suratjalans/save',      
                 type:      'POST',       
                 clearForm: true ,       
                 resetForm: true ,  
@@ -461,7 +461,7 @@
         App.blockUI({
             target: '#form-wrapper'
         });
-        $.getJSON('{{base_url()}}invoice/invoices/view', {id: value}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}suratjalan/suratjalans/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
                 var rowImage = json.image;
@@ -469,8 +469,8 @@
                 var html = "";
 
                 $('[name="id"]').val(row.id);
-                $('[name="invoice_code"]').val(row.invoice_code);
-                $('[name="barcode_invoice"]').val(row.barcode_invoice);
+                $('[name="suratjalan_code"]').val(row.suratjalan_code);
+                $('[name="barcode_suratjalan"]').val(row.barcode_suratjalan);
                 $('[name="barcode_carton"]').val(row.barcode_carton);
                 $('[name="name"]').val(row.name);
                 $('[name="packing_size"]').val(row.packing_size);
@@ -485,14 +485,14 @@
                 $('[name="feature"]').val(row.feature);
 
                 for(i=0; i<rowImage.length; i++){
-                    html += '<div class="invoice-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/invoices/' + rowImage[i].image + '"></div>';
+                    html += '<div class="suratjalan-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/suratjalans/' + rowImage[i].image + '"></div>';
                 }
                
                 $('.preview-upload-image').html(html);
                 $('#preview-upload-image-field').show();
 
                 $('#modal_form').modal('show');
-                $('.modal-title').text('<?=lang('edit_invoice')?>'); 
+                $('.modal-title').text('<?=lang('edit_suratjalan')?>'); 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -509,7 +509,7 @@
         App.blockUI({
             target: '#form-wrapper'
         });
-        $.getJSON('{{base_url()}}invoice/invoices/viewDetail', {id: value}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}suratjalan/suratjalans/viewDetail', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data[0];
                 var i;
@@ -524,7 +524,7 @@
                 $('[name="sp_date"]').val(row.sp_date);
 
                 $('#modal_detail').modal('show');
-                $('.modal-title').text('<?=lang('edit_invoice')?>'); 
+                $('.modal-title').text('<?=lang('edit_suratjalan')?>'); 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -539,7 +539,7 @@
             "bServerSide": true,
             "bLengthChange": true,
             "sServerMethod": "GET",
-            "sAjaxSource": "{{ base_url() }}invoice/invoices/fetch_data_pesanan/?id="+value,
+            "sAjaxSource": "{{ base_url() }}suratjalan/suratjalans/fetch_data_pesanan/?id="+value,
             "order": [0,"asc"],
         }).fnSetFilteringDelay(1000);
     }
@@ -558,7 +558,7 @@
                 App.blockUI({
                     target: '#table-wrapper'
                 });
-                $.getJSON('{{base_url()}}invoice/invoices/delete', {id: value}, function(json, textStatus) {
+                $.getJSON('{{base_url()}}suratjalan/suratjalans/delete', {id: value}, function(json, textStatus) {
                     if(json.status == "success"){
                         toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
                     }else if(json.status == "error"){
@@ -594,7 +594,7 @@
                 App.blockUI({
                     target: '#table-wrapper'
                 });
-                $.getJSON('{{base_url()}}invoice/invoices/deleteImage', {id: value}, function(json, textStatus) {
+                $.getJSON('{{base_url()}}suratjalan/suratjalans/deleteImage', {id: value}, function(json, textStatus) {
                     if(json.status == "success"){
                         toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
                     }else if(json.status == "error"){

@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Invoices extends MX_Controller {
+class Suratjalans extends MX_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -10,47 +10,44 @@ class Invoices extends MX_Controller {
             redirect('login', 'refresh');
         }
 
-        $this->load->model('invoice');
+        $this->load->model('suratjalan');
     }
 
     public function index() {
-        $data['add_access'] = $this->user_profile->get_user_access('Created', 'invoice');
-        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'invoice');
-        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'invoice');
+        $data['add_access'] = $this->user_profile->get_user_access('Created', 'suratjalan');
+        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'suratjalan');
+        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'suratjalan');
         $data['principles'] = Principle::where('deleted', '0')->get();
         $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', '0')->where('m_product.deleted', '0')->get();
         $data['dipos'] = Dipo::where('deleted', '0')->get();
-        $this->load->blade('invoice.views.invoice.page', $data);
+        $this->load->blade('suratjalan.views.suratjalan.page', $data);
     }
 
     public function fetch_data() {
         $database_columns = array(
-            't_invoice.id',
-            't_invoice.invoice_no',
+            't_sj.id',
             't_sj.sj_no',
             't_sp.sp_no',
             't_sp.sp_date',
             'm_dipo_partner.name as dipo_name',
             'm_dipo_partner.address as dipo_address',
-            't_invoice.date_created',
+            't_sj.date_created',
         );
 
         $header_columns = array(
-            't_invoice.invoice_no',
             't_sj.sj_no',
             't_sp.sp_no',
             't_sp.sp_date',
             'm_dipo_partner.name as dipo_name',
             'm_dipo_partner.address as dipo_address',
-            't_invoice.date_created',
+            't_sj.date_created',
         );
 
-        $from = "t_invoice";
-        $where = "t_invoice.deleted = 0";
+        $from = "t_sj";
+        $where = "t_sj.deleted = 0";
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
-        $join[] = array('t_sj', 't_sj.id = t_invoice.sj_id', 'inner');
         $join[] = array('t_sp', 't_sp.id = t_sj.sp_id', 'inner');
-        $join[] = array('m_dipo_partner', 'm_dipo_partner.id = t_invoice.dipo_partner_id', 'inner');
+        $join[] = array('m_dipo_partner', 'm_dipo_partner.id = t_sj.dipo_partner_id', 'inner');
 
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
@@ -58,7 +55,6 @@ class Invoices extends MX_Controller {
                 $sSearch = date('Y-m-d',strtotime($sSearch));
             }
             $where .= " AND (";
-            $where .= "t_invoice.invoice_no LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_sj.sj_no LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_sp.sp_no LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_sp.sp_date LIKE '%" . $sSearch . "%' OR ";
@@ -83,10 +79,10 @@ class Invoices extends MX_Controller {
 
             $btn_action = '';
             $btn_action .= '<a href="javascript:void()" onclick="viewDetail(\'' . uri_encrypt($row->id) . '\')" class="btn btn-primary btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('view') . '"><i class="fa fa-eye"></i> </a>';
-            if($this->user_profile->get_user_access('Updated', 'invoice')){
+            if($this->user_profile->get_user_access('Updated', 'suratjalan')){
                 $btn_action .= '<a href="javascript:void()" onclick="viewData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
             }
-            if($this->user_profile->get_user_access('Deleted', 'invoice')){
+            if($this->user_profile->get_user_access('Deleted', 'suratjalan')){
                 $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
         
@@ -164,10 +160,10 @@ class Invoices extends MX_Controller {
     public function save() {
         if ($this->input->is_ajax_request()) {
             $user = $this->ion_auth->user()->row();
-            $id_invoice = $this->input->post('id');
-            // $get_invoice = Product::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
-            if (empty($id_invoice)) {
-                // if (!empty($get_invoice->name)) {
+            $id_suratjalan = $this->input->post('id');
+            // $get_suratjalan = Product::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
+            if (empty($id_suratjalan)) {
+                // if (!empty($get_suratjalan->name)) {
                 //     $status = array('status' => 'unique', 'message' => lang('already_exist'));
                 // }else{
                     
@@ -205,21 +201,21 @@ class Invoices extends MX_Controller {
                             'DIPO'            => Dipo::find($dipo_partner_id)->name,
                             'sp_date'         => $sp_date,
                         );
-                        $message = "Add " . strtolower(lang('invoice')) . " " . $no_sp . " succesfully by " . $user->full_name;
+                        $message = "Add " . strtolower(lang('suratjalan')) . " " . $no_sp . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 13);
                         $status = array('status' => 'success', 'message' => lang('message_save_success'));
                     } else {
                         $status = array('status' => 'error', 'message' => lang('message_save_failed'));
                     }
                 // }
-            } elseif(!empty($id_invoice)) {
-                $model = Product::find($id_invoice);
+            } elseif(!empty($id_suratjalan)) {
+                $model = Product::find($id_suratjalan);
                 $name = ucwords($this->input->post('name'));
                 $category_id = $this->input->post('category_id');
-                $invoice_code = $this->input->post('invoice_code');
+                $suratjalan_code = $this->input->post('suratjalan_code');
                 $description = $this->input->post('description');
                 $feature = $this->input->post('feature');
-                $barcode_invoice = $this->input->post('barcode_invoice');
+                $barcode_suratjalan = $this->input->post('barcode_suratjalan');
                 $barcode_carton = $this->input->post('barcode_carton');
                 $packing_size = $this->input->post('packing_size');
                 $qty = $this->input->post('qty');
@@ -232,10 +228,10 @@ class Invoices extends MX_Controller {
                 $data_old = array(
                     'Name'            => $model->name,
                     'Category'        => $model->category_id,
-                    'Product Code'    => $model->invoice_code,
+                    'Product Code'    => $model->suratjalan_code,
                     'Description'     => $model->description,
                     'Feature'         => $model->feature,
-                    'Barcode Product' => $model->barcode_invoice,
+                    'Barcode Product' => $model->barcode_suratjalan,
                     'Barcode Carton'  => $model->barcode_carton,
                     'Packing Size'    => $model->packing_size,
                     'Qty'             => $model->qty,
@@ -248,10 +244,10 @@ class Invoices extends MX_Controller {
 
                 $model->name            = $name;
                 $model->category_id     = $category_id;
-                $model->invoice_code             = $invoice_code;
+                $model->suratjalan_code             = $suratjalan_code;
                 $model->description     = $description;
                 $model->feature         = $feature;
-                $model->barcode_invoice = $barcode_invoice;
+                $model->barcode_suratjalan = $barcode_suratjalan;
                 $model->barcode_carton  = $barcode_carton;
                 $model->packing_size    = $packing_size;
                 $model->qty             = $qty;
@@ -276,7 +272,7 @@ class Invoices extends MX_Controller {
                         $_FILES['upload_File']['size']      = $_FILES['upload_Files']['size'][$i]; 
                         
                         // File upload configuration
-                        $uploadPath = 'uploads/images/invoices/'; 
+                        $uploadPath = 'uploads/images/suratjalans/'; 
                         $config['upload_path'] = $uploadPath; 
                         $config['allowed_types'] = 'gif|jpg|png'; 
 
@@ -288,12 +284,12 @@ class Invoices extends MX_Controller {
                         if($this->upload->do_upload('upload_File')){
                             // Uploaded file data
                             $fileData = $this->upload->data();
-                            $uploadData[$i]['invoice_id']   = $id_invoice;
+                            $uploadData[$i]['suratjalan_id']   = $id_suratjalan;
                             $uploadData[$i]['order']        = $i+1;
                             $uploadData[$i]['file_name']    = $fileData['file_name'];
                         
                             $imageModel = new ProductImage();
-                            $imageModel->invoice_id = $id_invoice;
+                            $imageModel->suratjalan_id = $id_suratjalan;
                             $imageModel->order      = $i+1;
                             $imageModel->image      = $uploadData[$i]['file_name'];
 
@@ -309,10 +305,10 @@ class Invoices extends MX_Controller {
                     $data_new = array(
                         'Name'            => $name,
                         'Category'        => $category_id,
-                        'Product Code'    => $invoice_code,
+                        'Product Code'    => $suratjalan_code,
                         'Description'     => $description,
                         'Feature'         => $feature,
-                        'Barcode Product' => $barcode_invoice,
+                        'Barcode Product' => $barcode_suratjalan,
                         'Barcode Carton'  => $barcode_carton,
                         'Packing Size'    => $packing_size,
                         'Qty'             => $qty,
@@ -324,7 +320,7 @@ class Invoices extends MX_Controller {
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
-                    $message = "Update " . strtolower(lang('invoice')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                    $message = "Update " . strtolower(lang('suratjalan')) . " " .  $model->name . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 13);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
@@ -341,7 +337,7 @@ class Invoices extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $model = array('status' => 'success', 'data' => Product::find($id), 'image' => ProductImage::where('invoice_id', $id)->where('deleted', '0')->get());
+            $model = array('status' => 'success', 'data' => Product::find($id), 'image' => ProductImage::where('suratjalan_id', $id)->where('deleted', '0')->get());
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }
@@ -413,10 +409,10 @@ class Invoices extends MX_Controller {
                 $data_notif = array(
                     'Name'            => $model->name,
                     'Category'        => Category::find($category_id)->name,
-                    'Product Code'    => $model->invoice_code,
+                    'Product Code'    => $model->suratjalan_code,
                     'Description'     => $model->description,
                     'Feature'         => $model->feature,
-                    'Barcode Product' => $barcode_invoice,
+                    'Barcode Product' => $barcode_suratjalan,
                     'Barcode Carton'  => $barcode_carton,
                     'Packing Size'    => $packing_size,
                     'Qty'             => $qty,
@@ -426,7 +422,7 @@ class Invoices extends MX_Controller {
                     'Volume'          => $volume,
                     'Weight'          => $weight,
                 );
-                $message = "Delete " . strtolower(lang('invoice')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                $message = "Delete " . strtolower(lang('suratjalan')) . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 13);
                 $status = array('status' => 'success');
             } else {
@@ -440,16 +436,16 @@ class Invoices extends MX_Controller {
     }
 
     function pdf(){
-        $data['invoices'] = Product::join('m_category', 't_sp.category_id', '=', 'm_category.id')->where('t_sp.deleted', 0)->where('m_category.deleted', 0)->orderBy('t_sp.id', 'DESC')->get();
-        $html = $this->load->view('invoice/invoice/invoice_pdf', $data, true);
-        $this->pdf_generator->generate($html, 'invoice pdf', $orientation='Portrait');
+        $data['suratjalans'] = Product::join('m_category', 't_sp.category_id', '=', 'm_category.id')->where('t_sp.deleted', 0)->where('m_category.deleted', 0)->orderBy('t_sp.id', 'DESC')->get();
+        $html = $this->load->view('suratjalan/suratjalan/suratjalan_pdf', $data, true);
+        $this->pdf_generator->generate($html, 'suratjalan pdf', $orientation='Portrait');
     }
 
     function excel(){
         header("Content-type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=invoice.xls");
-        $data['invoices'] = Product::join('m_category', 't_sp.category_id', '=', 'm_category.id')->where('t_sp.deleted', 0)->where('m_category.deleted', 0)->orderBy('t_sp.id', 'DESC')->get();
-        $this->load->view('invoice/invoice/invoice_pdf', $data);
+        header("Content-Disposition: attachment; filename=suratjalan.xls");
+        $data['suratjalans'] = Product::join('m_category', 't_sp.category_id', '=', 'm_category.id')->where('t_sp.deleted', 0)->where('m_category.deleted', 0)->orderBy('t_sp.id', 'DESC')->get();
+        $this->load->view('suratjalan/suratjalan/suratjalan_pdf', $data);
     }
 
 }

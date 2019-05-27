@@ -197,3 +197,17 @@ $route['reports/customer/excel']	= 'customer/customers/excel';
 $route['reports/suratpesanan'] = 'suratpesanan/suratpesanans/index';
 $route['reports/suratpesanan/pdf'] = 'suratpesanan/suratpesanans/pdf';
 $route['reports/suratpesanan/excel'] = 'suratpesanan/pricelists/excel';
+
+/**
+* SURAT JALAN
+*/
+$route['reports/suratjalan'] = 'suratjalan/suratjalans/index';
+$route['reports/suratjalan/pdf'] = 'suratjalan/suratjalans/pdf';
+$route['reports/suratjalan/excel'] = 'suratjalan/suratjalans/excel';
+
+/**
+* INVOICE
+*/
+$route['reports/invoice'] = 'invoice/invoices/index';
+$route['reports/invoice/pdf'] = 'invoice/invoices/pdf';
+$route['reports/invoice/excel'] = 'invoice/invoices/excel';

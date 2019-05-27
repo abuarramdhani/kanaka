@@ -390,3 +390,18 @@ $lang['dipo_code'] = 'Dipo Code';
 $lang['sp_date'] = 'SP Date';
 $lang['ship_to'] = 'Ship to';
 ## END Surat Pesanan ##
+
+## Surat Jalan ##
+$lang['surat_jalan'] = 'Surat Jalan';
+$lang['tambah_surat_jalan'] = "Tambah Surat Jalan";
+$lang['ubah_surat_jalan'] = "Ubah Surat Jalan";
+$lang['sp_no'] = 'SP No';
+$lang['sj_no'] = 'SJ No';
+$lang['issue_date'] = 'Issue Date';
+## END Surat Jalan ##
+
+## INVOICE ##
+$lang['invoice'] = 'Invoice';
+$lang['tambah_invoice'] = "Tambah Invoice";
+$lang['ubah_invoice'] = "Ubah Invoice";
+## END INVOICE ##

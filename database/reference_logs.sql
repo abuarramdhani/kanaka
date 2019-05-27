@@ -1,22 +1,24 @@
 /*
-Navicat MySQL Data Transfer
+ Navicat Premium Data Transfer
 
-Source Server         : PHPMyAdmin
-Source Server Version : 50611
-Source Host           : 127.0.0.1:3306
-Source Database       : db_kanaka
+ Source Server         : PHPMyAdmin
+ Source Server Type    : MySQL
+ Source Server Version : 50505
+ Source Host           : localhost
+ Source Database       : db_kanaka
 
-Target Server Type    : MYSQL
-Target Server Version : 50611
-File Encoding         : 65001
+ Target Server Type    : MySQL
+ Target Server Version : 50505
+ File Encoding         : utf-8
 
-Date: 2019-05-27 05:12:46
+ Date: 05/27/2019 15:08:00 PM
 */
 
-SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8;
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for reference_logs
+--  Table structure for `reference_logs`
 -- ----------------------------
 DROP TABLE IF EXISTS `reference_logs`;
 CREATE TABLE `reference_logs` (
@@ -24,21 +26,13 @@ CREATE TABLE `reference_logs` (
   `code` int(11) NOT NULL,
   `menu` varchar(50) NOT NULL,
   PRIMARY KEY (`rowID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Records of reference_logs
+--  Records of `reference_logs`
 -- ----------------------------
-INSERT INTO `reference_logs` VALUES ('1', '1', 'Menu');
-INSERT INTO `reference_logs` VALUES ('2', '2', 'User');
-INSERT INTO `reference_logs` VALUES ('3', '3', 'User Menus');
-INSERT INTO `reference_logs` VALUES ('4', '4', 'Product');
-INSERT INTO `reference_logs` VALUES ('5', '5', 'Category');
-INSERT INTO `reference_logs` VALUES ('6', '6', 'DIPO');
-INSERT INTO `reference_logs` VALUES ('7', '7', 'Partner');
-INSERT INTO `reference_logs` VALUES ('8', '8', 'Zona');
-INSERT INTO `reference_logs` VALUES ('9', '9', 'Sell In Company');
-INSERT INTO `reference_logs` VALUES ('10', '10', 'Principle');
-INSERT INTO `reference_logs` VALUES ('11', '11', 'Price List');
-INSERT INTO `reference_logs` VALUES ('12', '12', 'Sell Out Company');
-INSERT INTO `reference_logs` VALUES ('13', '13', 'Surat Pesanan');
+BEGIN;
+INSERT INTO `reference_logs` VALUES ('1', '1', 'Menu'), ('2', '2', 'User'), ('3', '3', 'User Menus'), ('4', '4', 'Product'), ('5', '5', 'Category'), ('6', '6', 'DIPO'), ('7', '7', 'Partner'), ('8', '8', 'Zona'), ('9', '9', 'Sell In Company'), ('10', '10', 'Principle'), ('11', '11', 'Price List'), ('12', '12', 'Sell Out Company'), ('13', '13', 'Surat Pesanan'), ('14', '14', 'Surat Jalan'), ('15', '15', 'Invoice');
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;

@@ -206,6 +206,8 @@
 
     // Pengaturan Datatable 
     var oTable =$('#table-principle').dataTable({
+        responsive: false,
+        "scrollX": true,
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,

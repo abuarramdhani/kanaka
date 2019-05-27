@@ -321,6 +321,7 @@ class Dipos extends MX_Controller {
 
     function pdf(){
         $data['dipos'] = Dipo::select('m_dipo_partner.*', 'm_zona.name as zona_name')->join('m_zona', 'm_dipo_partner.zona_id', '=' ,'m_zona.id')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['quote'] = "";
         $html = $this->load->view('dipo/dipo/dipo_pdf', $data, true);
         $this->pdf_generator->generate($html, 'dipo pdf', $orientation='Landscape');
     }
@@ -329,6 +330,7 @@ class Dipos extends MX_Controller {
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=dipo.xls");
         $data['dipos'] = Dipo::select('m_dipo_partner.*', 'm_zona.name as zona_name')->join('m_zona', 'm_dipo_partner.zona_id', '=' ,'m_zona.id')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['quote'] = "'";
         $this->load->view('dipo/dipo/dipo_pdf', $data);
     }
 

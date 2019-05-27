@@ -335,6 +335,7 @@ class Partners extends MX_Controller {
 
     function pdf(){
         $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name', 'm_zona.name as zona_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->join('m_zona', 'm_dipo_partner.zona_id', '=' ,'m_zona.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['quote'] = "";
         $html = $this->load->view('partner/partner/partner_pdf', $data, true);
         $this->pdf_generator->generate($html, 'partner pdf', $orientation='Landscape');
     }
@@ -343,6 +344,7 @@ class Partners extends MX_Controller {
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=partner.xls");
         $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name', 'm_zona.name as zona_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->join('m_zona', 'm_dipo_partner.zona_id', '=' ,'m_zona.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['quote'] = "'";
         $this->load->view('partner/partner/partner_pdf', $data);
     }
 

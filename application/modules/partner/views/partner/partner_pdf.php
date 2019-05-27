@@ -56,7 +56,7 @@
 					<td><?= $partner->name ?></td>
 					<td><?= $partner->dipo_name ?></td>
 					<td><?= $partner->address ?></td>
-					<td><?= $partner->phone ?></td>
+					<td><?= $quote.$partner->phone ?></td>
 					<td><?= $partner->email ?></td>
 					<td><?= $partner->city ?></td>
 					<td><?= $partner->subdistrict ?></td>

@@ -63,9 +63,9 @@
 					<td><?= $principle->brand ?></td>
 					<td><?= $principle->top ?></td>
 					<td><?= $principle->pic ?></td>
-					<td><?= $principle->phone_office ?></td>
-					<td><?= $principle->phone_personal?></td>
-					<td><?= $principle->fax ?></td>
+					<td><?= $principle->phone_office == "" ? "-" : $quote.$principle->phone_office ?></td>
+					<td><?= $principle->phone_personal == "" ? "-" : $quote.$principle->phone_personal?></td>
+					<td><?= $principle->fax == "" ? "-" : $quote.$principle->fax ?></td>
 					<td><?= $principle->email_office ?></td>
 					<td><?= $principle->email_personal?></td>
 					<td><?= $principle->web?></td>

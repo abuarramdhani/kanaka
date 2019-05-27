@@ -325,6 +325,7 @@ class Principles extends MX_Controller {
 
     function pdf(){
         $data['principles'] = Principle::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['quote'] = "";
         $html = $this->load->view('principle/principle/principle_pdf', $data, true);
         $this->pdf_generator->generate($html, 'principle pdf', $orientation='Portrait');
     }
@@ -333,6 +334,7 @@ class Principles extends MX_Controller {
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=principle.xls");
         $data['principles'] = Principle::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $data['quote'] = "'";
         $this->load->view('principle/principle/principle_pdf', $data);
     }
 

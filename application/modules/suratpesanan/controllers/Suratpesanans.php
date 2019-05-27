@@ -173,13 +173,21 @@ class Suratpesanans extends MX_Controller {
                     $no_sp = $this->input->post('no_sp');
                     $dipo_partner_id = $this->input->post('dipo_partner_id');
                     $sp_date = $this->input->post('sp_date');
+                    $total_order_amount_in_ctn = $this->input->post('total_order_amount_in_ctn');
+                    $total_order_price_before_tax = $this->input->post('total_order_price_before_tax');
+                    $total_order_price_after_tax = $this->input->post('total_order_price_after_tax');
+                    $total_order_amount_after_tax = $this->input->post('total_order_amount_after_tax');
 
-                    $dataPesanan = array('principle_id' => $principle_id,
-                                      'sp_no'           => $no_sp,
-                                      'dipo_partner_id' => $dipo_partner_id,
-                                      'sp_date'         => date('Y-m-d',strtotime($sp_date)),
-                                      'date_created'    => date('Y-m-d'),
-                                      'time_created'    => date('H:i:s'));
+                    $dataPesanan = array('principle_id'                 => $principle_id,
+                                      'sp_no'                           => $no_sp,
+                                      'dipo_partner_id'                 => $dipo_partner_id,
+                                      'total_order_amount_in_ctn'       => $total_order_amount_in_ctn,
+                                      'total_order_price_before_tax'    => $total_order_price_before_tax,
+                                      'total_order_price_after_tax'     => $total_order_price_after_tax,
+                                      'total_order_amount_after_tax'    => $total_order_amount_after_tax,
+                                      'sp_date'                         => date('Y-m-d',strtotime($sp_date)),
+                                      'date_created'                    => date('Y-m-d'),
+                                      'time_created'                    => date('H:i:s'));
 
                     $save            = $this->db->insert('t_sp', $dataPesanan);
                     $id_sp           = $this->db->insert_id();
@@ -187,11 +195,14 @@ class Suratpesanans extends MX_Controller {
                     if(!empty($this->input->post('product_name'))){
                         $productCount = count($this->input->post('product_name'));
                         for($i = 0; $i < $productCount; $i++){ 
-                            $dataDetail = array('sp_id'               => $id_sp,
-                                                'pricelist_id'        => $this->input->post('pricelist_id')[$i],
-                                                'order_amount_in_ctn' => $this->input->post('order_amount_in_ctn')[$i],
-                                                'date_created'        => date('Y-m-d'),
-                                                'time_created'        => date('H:i:s'));
+                            $dataDetail = array('sp_id'                  => $id_sp,
+                                                'pricelist_id'           => $this->input->post('pricelist_id')[$i],
+                                                'order_amount_in_ctn'    => $this->input->post('order_amount_in_ctn')[$i],
+                                                'order_price_before_tax' => $this->input->post('order_price_before_tax')[$i],
+                                                'order_price_after_tax'  => $this->input->post('order_price_after_tax')[$i],
+                                                'order_amount_after_tax' => $this->input->post('order_amount_after_tax')[$i],
+                                                'date_created'           => date('Y-m-d'),
+                                                'time_created'           => date('H:i:s'));
                             $saveDetail = $this->db->insert('t_sp_detail', $dataDetail);
                         }
                     }
@@ -339,7 +350,12 @@ class Suratpesanans extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $model = array('status' => 'success', 'data' => Product::find($id), 'image' => ProductImage::where('suratpesanan_id', $id)->where('deleted', '0')->get());
+            $dataPesanan = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.address as dipo_address')
+                                        ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
+                                        ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
+                                        ->where('t_sp.id', $id)
+                                        ->where('t_sp.deleted', 0)->get();
+            $model = array('status' => 'success', 'data' => $dataPesanan);
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }

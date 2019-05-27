@@ -76,7 +76,7 @@
     </div>
 </div>
 <div class="modal fade" id="modal_form" role="dialog">
-  <div class="modal-dialog" style="width:50%;">
+  <div class="modal-dialog" style="width:70%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -165,7 +165,13 @@
             <tbody>
             </tbody>
             <tfoot>
-                
+                <tr>
+                    <th colspan="2" class="text-center">Jumlah</th>
+                    <th class="text-center"><input type="text" class="form-control input-sm" name="total_order_amount_in_ctn" id="total_order_amount_in_ctn"/></th>
+                    <th class="text-center"><input type="text" class="form-control input-sm" name="total_order_price_before_tax" id="total_order_price_before_tax"/></th>
+                    <th class="text-center"><input type="text" class="form-control input-sm" name="total_order_price_after_tax" id="total_order_price_after_tax"/></th>
+                    <th class="text-center"><input type="text" class="form-control input-sm" name="total_order_amount_after_tax" id="total_order_amount_after_tax"/></th>
+                </tr>
             </tfoot>
         </table>
       </div>
@@ -188,7 +194,7 @@
 </select> 
 
 <div class="modal fade" id="modal_detail" role="dialog">
-  <div class="modal-dialog" style="width:50%;">
+  <div class="modal-dialog" style="width:70%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -301,7 +307,7 @@
                     '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
                 '</td>' +
                 '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
-                '<td class="text-center"><input onkeyup="get_total('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'" oninput="get_total()"/></td>' +
+                '<td class="text-center"><input onchange="get_total('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
                 '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
                 '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'"/></td>' +
                 '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
@@ -318,6 +324,22 @@
         var total = amount*price;
 
         $('#order_amount_after_tax_'+x).val(total);
+        
+        var total_order_amount_in_ctn = 0;
+        var total_order_price_before_tax = 0;
+        var total_order_price_after_tax = 0;
+        var total_order_amount_after_tax = 0;
+        for (var y = 1; y < i; y++) {
+            total_order_amount_in_ctn = parseInt($('#order_amount_in_ctn_'+y).val()) + parseInt(total_order_amount_in_ctn);
+            total_order_price_before_tax = parseInt($('#order_price_before_tax_'+y).val()) + parseInt(total_order_price_before_tax);
+            total_order_price_after_tax = parseInt($('#order_price_after_tax_'+y).val()) + parseInt(total_order_price_after_tax);
+            total_order_amount_after_tax = parseInt($('#order_amount_after_tax_'+y).val()) + parseInt(total_order_amount_after_tax);
+        } 
+
+        $('#total_order_amount_in_ctn').val(total_order_amount_in_ctn);
+        $('#total_order_price_before_tax').val(total_order_price_before_tax);
+        $('#total_order_price_after_tax').val(total_order_price_after_tax);
+        $('#total_order_amount_after_tax').val(total_order_amount_after_tax);
     }
 
     function getProduct(x){
@@ -465,36 +487,21 @@
         });
         $.getJSON('{{base_url()}}suratpesanan/suratpesanans/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
-                var row = json.data;
-                var rowImage = json.image;
+                var row = json.data[0];
                 var i;
                 var html = "";
 
-                $('[name="id"]').val(row.id);
-                $('[name="suratpesanan_code"]').val(row.suratpesanan_code);
-                $('[name="barcode_suratpesanan"]').val(row.barcode_suratpesanan);
-                $('[name="barcode_carton"]').val(row.barcode_carton);
-                $('[name="name"]').val(row.name);
-                $('[name="packing_size"]').val(row.packing_size);
-                $('[name="qty"]').val(row.qty);
-                $('[name="length"]').val(row.length);
-                $('[name="width"]').val(row.width);
-                $('[name="height"]').val(row.height);
-                $('[name="volume"]').val(row.volume);
-                $('[name="weight"]').val(row.weight);
-                $('[name="category_id"]').val(row.category_id);
-                $('[name="description"]').val(row.description);
-                $('[name="feature"]').val(row.feature);
-
-                for(i=0; i<rowImage.length; i++){
-                    html += '<div class="suratpesanan-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/suratpesanans/' + rowImage[i].image + '"></div>';
-                }
-               
-                $('.preview-upload-image').html(html);
-                $('#preview-upload-image-field').show();
+                $('[name="id_pesanan"]').val(row.id);
+                $('[name="principle_code"]').val(row.principle_code);
+                $('[name="principle_address"]').val(row.principle_address);
+                $('[name="no_sp"]').val(row.sp_no);
+                $('[name="dipo_name"]').val(row.dipo_name);
+                $('[name="dipo_address"]').val(row.dipo_address);
+                $('[name="sp_date"]').val(row.sp_date);
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_suratpesanan')?>'); 
+
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -535,8 +542,8 @@
 
         //Pengaturan Datatable 
         var oTable =$('#table-surat').dataTable({
-            "paging": false,
-            "searching": false,
+            // "paging": false,
+            // "searching": false,
             "bProcessing": true,
             "bServerSide": true,
             "bLengthChange": true,
@@ -581,58 +588,5 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
-
-    // Proses hapus image
-    function deleteImage(value){
-        form_validator.resetForm();
-        $("html, body").animate({
-            scrollTop: 0
-        }, 500);
-        $.confirm({
-            content : "{{ lang('delete_this_data') }}",
-            title : "{{ lang('are_you_sure') }}",
-            confirm: function() {
-
-                App.blockUI({
-                    target: '#table-wrapper'
-                });
-                $.getJSON('{{base_url()}}suratpesanan/suratpesanans/deleteImage', {id: value}, function(json, textStatus) {
-                    if(json.status == "success"){
-                        toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
-                    }else if(json.status == "error"){
-                        toastr.error('{{lang("deleted_unsuccesfully")}}','{{ lang("notification") }}');
-                    }
-                    setTimeout(function(){
-                        window.location.reload()
-                    },1000);
-               });
-            },
-            cancel: function(button) {
-                // nothing to do
-            },
-            confirmButton: "Yes",
-            cancelButton: "No",
-            confirmButtonClass: "btn-danger",
-            cancelButtonClass: "btn-success",
-            dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
-        });
-    }
-
-    // Preview image in browser
-    var imagesPreview = function(input, placeToInsertImagePreview) {
-        if (input.files) {
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                $($.parseHTML('<img width="100" style="padding: 10px;">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-            }
-            reader.readAsDataURL(input.files);
-        }
-    };
-
-    $('#image').on('change', function() {
-        $('.preview-upload-image').html('');
-        imagesPreview(this, 'div.preview-upload-image');
-        $('#preview-upload-image-field').show();
-    });
 </script>
 @stop

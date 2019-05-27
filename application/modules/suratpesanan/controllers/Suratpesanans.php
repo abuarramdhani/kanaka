@@ -123,9 +123,9 @@ class Suratpesanans extends MX_Controller {
             );
     
             $from = "t_sp_detail";
-            $where = "t_sp_detail.deleted = 0 AND sj_id =".$id;
+            $where = "t_sp_detail.deleted = 0 AND sp_id =".$id;
             $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
-            $join[] = array('t_sj', 't_sj.id = t_sp_detail.sj_id', 'inner');
+            $join[] = array('t_sp', 't_sp.id = t_sp_detail.sp_id', 'inner');
             $join[] = array('t_pricelist', 't_pricelist.id = t_sp_detail.pricelist_id', 'inner');
             $join[] = array('m_product', 'm_product.id = t_pricelist.product_id', 'inner');
     

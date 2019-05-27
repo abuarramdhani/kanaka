@@ -149,15 +149,43 @@
             </div>
         </div>
         
+        <button type="button" class="btn_add_row"><i class="fa fa-plus"></i>Add Row</button>
+        <table id="add-table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+            <thead>
+                <tr>
+                    <!-- <th class="text-center">Option</th> -->
+                    <th class="text-center">Kode Produk</th>
+                    <th class="text-center">Nama Produk</th>
+                    <th class="text-center">Jumlah Pesanan (Per Karton)</th>
+                    <th class="text-center">Harga Pesanan (Per Karton) Before Tax</th>
+                    <th class="text-center">Harga Pesanan (Per Karton) After Tax</th>
+                    <th class="text-center">Jumlah Pesanan After Tax</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                
+            </tfoot>
+        </table>
       </div>
       <div class="modal-footer">
-        <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
+        <button type="submit" id="btnSave" class="btn btn-primary">{{ lang('save') }}</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">{{ lang('close') }}</button>
       </div>
       {{ form_close() }}
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<select id="pricelist_id_tmp" name="pricelist_id_tmp" class="form-control" style="display:none;">
+    <option selected disabled value=""><?=lang('select')?> <?=lang('product_code')?></option>
+    <?php
+        if (!empty($pricelists)) {
+            foreach ($pricelists as $c) { ?>
+            <option value="<?=$c->id?>"><?=ucfirst($c->product_code)?></option>
+    <?php } } ?>
+</select> 
 
 <div class="modal fade" id="modal_detail" role="dialog">
   <div class="modal-dialog" style="width:50%;">
@@ -221,7 +249,6 @@
         <table id="table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
             <thead>
                 <tr>
-                    <!-- <th class="text-center" width="5%" height="20px">No</th> -->
                     <th class="text-center">Kode Produk</th>
                     <th class="text-center">Nama Produk</th>
                     <th class="text-center">Jumlah Pesanan (Per Karton)</th>
@@ -245,6 +272,74 @@
 <script type="text/javascript">
 
     $('#sp_date').datepicker();
+
+    $('#pricelist_id').change(function(){
+        $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getPricelist', {id: $('#pricelist_id').val()}, function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data[0];
+                var i;
+                var html = "";
+
+                $('[name="product_name"]').val(row.name);
+                $('[name="order_price_before_tax"]').val(row.company_before_tax_ctn);
+                $('[name="order_price_after_tax"]').val(row.company_after_tax_ctn);
+                $('[name="order_amount_in_ctn"]').focus();
+
+            }else if(json.status == "error"){
+                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+            }
+            App.unblockUI('#form-wrapper');
+       });
+    });
+    var i = 1;
+
+    $('.btn_add_row').click(function(){
+        $("#add-table-surat tbody").append(
+            '<tr>' +
+                // '<td class="text-center"><input type="button" class="btn_add_row fa fa-plus"></td>' +
+                '<td class="text-center">'+
+                    '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
+                '</td>' +
+                '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
+                '<td class="text-center"><input onkeyup="get_total('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'" oninput="get_total()"/></td>' +
+                '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
+                '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'"/></td>' +
+                '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
+            '</tr>'
+        );
+        $('#pricelist_id_'+i).html($('#pricelist_id_tmp').html());
+        i++;
+    });
+
+    function get_total(x){
+        var amount = $('#order_amount_in_ctn_'+x).val();
+        var price = $('#order_price_after_tax_'+x).val();
+
+        var total = amount*price;
+
+        $('#order_amount_after_tax_'+x).val(total);
+    }
+
+    function getProduct(x){
+        $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getPricelist', {id: $('#pricelist_id_'+x).val()}, function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data[0];
+                var i;
+                var html = "";
+
+                console.log(row);
+
+                $('#product_name_'+x).val(row.name);
+                $('#order_price_before_tax_'+x).val(row.company_before_tax_ctn);
+                $('#order_price_after_tax_'+x).val(row.company_after_tax_ctn);
+                $('#order_amount_in_ctn_'+x).focus();
+
+            }else if(json.status == "error"){
+                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+            }
+            App.unblockUI('#form-wrapper');
+       });
+    }
 
     $('#principle_id').change(function(){
         $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getPrinciple', {id: $('#principle_id').val()}, function(json, textStatus) {
@@ -352,7 +447,7 @@
 
                 App.unblockUI('#form-wrapper');
                 setTimeout(function(){
-                    window.location.reload()
+                    // window.location.reload()
                 },1000);
             } 
             return false;

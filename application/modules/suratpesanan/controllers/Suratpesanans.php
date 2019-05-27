@@ -18,6 +18,7 @@ class Suratpesanans extends MX_Controller {
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'suratpesanan');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'suratpesanan');
         $data['principles'] = Principle::where('deleted', '0')->get();
+        $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', '0')->where('m_product.deleted', '0')->get();
         $data['dipos'] = Dipo::where('deleted', '0')->get();
         $this->load->blade('suratpesanan.views.suratpesanan.page', $data);
     }
@@ -172,12 +173,6 @@ class Suratpesanans extends MX_Controller {
                     $no_sp = $this->input->post('no_sp');
                     $dipo_partner_id = $this->input->post('dipo_partner_id');
                     $sp_date = $this->input->post('sp_date');
-                    
-                    // $model = new Suratpesanan();
-                    // $model->principle_id = $principle_id;
-                    // $model->sp_no = $no_sp;
-                    // $model->dipo_partner_id = $dipo_partner_id;
-                    // $model->sp_date = $sp_date;
 
                     $dataPesanan = array('principle_id' => $principle_id,
                                       'sp_no'           => $no_sp,
@@ -188,6 +183,18 @@ class Suratpesanans extends MX_Controller {
 
                     $save            = $this->db->insert('t_sp', $dataPesanan);
                     $id_sp           = $this->db->insert_id();
+
+                    if(!empty($this->input->post('product_name'))){
+                        $productCount = count($this->input->post('product_name'));
+                        for($i = 0; $i < $productCount; $i++){ 
+                            $dataDetail = array('sp_id'               => $id_sp,
+                                                'pricelist_id'        => $this->input->post('pricelist_id')[$i],
+                                                'order_amount_in_ctn' => $this->input->post('order_amount_in_ctn')[$i],
+                                                'date_created'        => date('Y-m-d'),
+                                                'time_created'        => date('H:i:s'));
+                            $saveDetail = $this->db->insert('t_sp_detail', $dataDetail);
+                        }
+                    }
 
                     if ($save) {
                         $data_notif = array(
@@ -360,6 +367,17 @@ class Suratpesanans extends MX_Controller {
         if ($this->input->is_ajax_request()) {
             $id = (int)$this->input->get('id');
             $model = array('status' => 'success', 'data' => Principle::find($id));
+        } else {
+            $model = array('status' => 'error', 'message' => 'Not Found.');
+        }
+        $data = $model;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    public function getPricelist() {
+        if ($this->input->is_ajax_request()) {
+            $id = (int)$this->input->get('id');
+            $model = array('status' => 'success', 'data' => Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', '0')->where('m_product.deleted', '0')->where('t_pricelist.id', $id)->get());
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }

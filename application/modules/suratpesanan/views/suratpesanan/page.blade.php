@@ -84,7 +84,7 @@
       </div>
       {{ form_open(null,array('id' => 'form-suratpesanan', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
-        <input type="hidden" name="id" value="">
+        <input type="text" name="id" value="">
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label">Kepada<span class="text-danger">*</span></label>
             <div class="col-lg-7">
@@ -150,6 +150,7 @@
         </div>
         
         <button type="button" class="btn_add_row"><i class="fa fa-plus"></i>Add Row</button>
+        <button type="button" class="btn_add_row_edit"><i class="fa fa-plus"></i>Add Row</button>
         <table id="add-table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
             <thead>
                 <tr>
@@ -297,12 +298,14 @@
             App.unblockUI('#form-wrapper');
        });
     });
+
     var i = 1;
 
+    $('.btn_add_row').show();
+    $('.btn_add_row_edit').hide();
     $('.btn_add_row').click(function(){
         $("#add-table-surat tbody").append(
             '<tr>' +
-                // '<td class="text-center"><input type="button" class="btn_add_row fa fa-plus"></td>' +
                 '<td class="text-center">'+
                     '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
                 '</td>' +
@@ -348,8 +351,6 @@
                 var row = json.data[0];
                 var i;
                 var html = "";
-
-                console.log(row);
 
                 $('#product_name_'+x).val(row.name);
                 $('#order_price_before_tax_'+x).val(row.company_before_tax_ctn);
@@ -478,6 +479,32 @@
             return false;
         }
     });
+
+    function get_total_edit(x){
+        var amount = $('#order_amount_in_ctn_'+x).val();
+        var price = $('#order_price_after_tax_'+x).val();
+
+        var total = amount*price;
+
+        $('#order_amount_after_tax_'+x).val(total);
+        
+        var total_order_amount_in_ctn = 0;
+        var total_order_price_before_tax = 0;
+        var total_order_price_after_tax = 0;
+        var total_order_amount_after_tax = 0;
+        
+        for (var y = 1; y < x+1; y++) {
+            total_order_amount_in_ctn = parseInt($('#order_amount_in_ctn_'+y).val()) + parseInt(total_order_amount_in_ctn);
+            total_order_price_before_tax = parseInt($('#order_price_before_tax_'+y).val()) + parseInt(total_order_price_before_tax);
+            total_order_price_after_tax = parseInt($('#order_price_after_tax_'+y).val()) + parseInt(total_order_price_after_tax);
+            total_order_amount_after_tax = parseInt($('#order_amount_after_tax_'+y).val()) + parseInt(total_order_amount_after_tax);
+        } 
+
+        $('#total_order_amount_in_ctn').val(total_order_amount_in_ctn);
+        $('#total_order_price_before_tax').val(total_order_price_before_tax);
+        $('#total_order_price_after_tax').val(total_order_price_after_tax);
+        $('#total_order_amount_after_tax').val(total_order_amount_after_tax);
+    }
    
     // Menampilkan data pada form
     function viewData(value){   
@@ -491,16 +518,69 @@
         $.getJSON('{{base_url()}}suratpesanan/suratpesanans/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data[0];
+                var rowDetail = json.dataDetail;
                 var i;
                 var html = "";
+                var dataLength = rowDetail.length;
 
                 $('[name="id_pesanan"]').val(row.id);
+                $('#principle_id').val(row.principle_id);
+                $('#dipo_partner_id').val(row.dipo_id);
                 $('[name="principle_code"]').val(row.principle_code);
                 $('[name="principle_address"]').val(row.principle_address);
+                $('[name="principle_pic"]').val(row.principle_pic);
                 $('[name="no_sp"]').val(row.sp_no);
                 $('[name="dipo_name"]').val(row.dipo_name);
                 $('[name="dipo_address"]').val(row.dipo_address);
                 $('[name="sp_date"]').val(row.sp_date);
+
+                for(i=1; i<=dataLength; i++){
+                    $("#add-table-surat tbody").append(
+                        '<tr>' +
+                            '<td class="text-center">'+
+                                '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
+                            '</td>' +
+                            '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
+                            '<td class="text-center"><input onchange="get_total_edit('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
+                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
+                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'"/></td>' +
+                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
+                        '</tr>'
+                    );
+                    $('#pricelist_id_'+i).html($('#pricelist_id_tmp').html());
+
+                    $('#product_name_'+i).val(rowDetail[i-1].name);
+                    $('#order_price_before_tax_'+i).val(rowDetail[i-1].company_before_tax_ctn);
+                    $('#order_price_after_tax_'+i).val(rowDetail[i-1].company_after_tax_ctn);
+                    $('#order_amount_in_ctn_'+i).val(rowDetail[i-1].order_amount_in_ctn);
+                    $('#order_amount_after_tax_'+i).val(rowDetail[i-1].order_amount_after_tax);
+                    $('#pricelist_id_'+i).val(rowDetail[i-1].pricelist_id);
+                    $('#total_order_amount_in_ctn').val(row.total_order_amount_in_ctn);
+                    $('#total_order_price_before_tax').val(row.total_order_price_before_tax);
+                    $('#total_order_price_after_tax').val(row.total_order_price_after_tax);
+                    $('#total_order_amount_after_tax').val(row.total_order_amount_after_tax);
+                }
+
+                $('.btn_add_row_edit').show();
+                $('.btn_add_row').hide();
+                var z = dataLength+1;
+
+                $('.btn_add_row_edit').click(function(){
+                    $("#add-table-surat tbody").append(
+                        '<tr>' +
+                            '<td class="text-center">'+
+                                '<select onchange="getProduct('+z+')" id="pricelist_id_'+z+'" name="pricelist_id[]" class="form-control"></select> '+
+                            '</td>' +
+                            '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+z+'"/></td>' +
+                            '<td class="text-center"><input onchange="get_total_edit('+z+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+z+'"/></td>' +
+                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+z+'"/>' +
+                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+z+'"/></td>' +
+                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+z+'"/></td>' +
+                        '</tr>'
+                    );
+                    $('#pricelist_id_'+z).html($('#pricelist_id_tmp').html());
+                    z++;
+                });
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_suratpesanan')?>'); 

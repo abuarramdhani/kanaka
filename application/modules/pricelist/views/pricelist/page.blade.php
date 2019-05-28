@@ -156,7 +156,7 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('product_name')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('product_name')?></label>
             <div class="col-lg-7">
                 <input disabled="disabled" type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
                 <div class="form-control-focus"> </div>
@@ -164,7 +164,7 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('packing_size')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('packing_size')?></label>
             <div class="col-lg-7">
                 <input disabled="disabled" type="text" class="form-control input-sm" name="packing_size" id="packing_size" placeholder="<?=lang('packing_size')?>" maxlength="50" />
                 <div class="form-control-focus"> </div>
@@ -172,7 +172,7 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('qty_per_ctn')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('qty_per_ctn')?></label>
             <div class="col-lg-7">
                 <input disabled="disabled" type="number" class="form-control input-sm" name="qty" id="qty" placeholder="<?=lang('qty_per_ctn')?>" maxlength="50" />
                 <div class="form-control-focus"> </div>
@@ -218,7 +218,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="company_before_tax_pcs" id="company_before_tax_pcs" placeholder="<?=lang('before_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -226,7 +226,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="company_before_tax_ctn" id="company_before_tax_ctn" placeholder="<?=lang('before_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -234,7 +234,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="company_after_tax_pcs" id="company_after_tax_pcs" placeholder="<?=lang('after_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -266,7 +266,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="dipo_before_tax_pcs" id="dipo_before_tax_pcs" placeholder="<?=lang('before_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -274,7 +274,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="dipo_before_tax_ctn" id="dipo_before_tax_ctn" placeholder="<?=lang('before_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -282,7 +282,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="dipo_after_tax_pcs" id="dipo_after_tax_pcs" placeholder="<?=lang('after_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -290,7 +290,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="dipo_after_tax_ctn" id="dipo_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -298,7 +298,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('round_up_in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('round_up_in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="dipo_after_tax_round_up" id="dipo_after_tax_round_up" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -320,7 +320,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="mitra_before_tax_pcs" id="mitra_before_tax_pcs" placeholder="<?=lang('before_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -328,7 +328,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="mitra_before_tax_ctn" id="mitra_before_tax_ctn" placeholder="<?=lang('before_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -336,7 +336,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="mitra_after_tax_pcs" id="mitra_after_tax_pcs" placeholder="<?=lang('after_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -344,7 +344,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="mitra_after_tax_ctn" id="mitra_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -352,7 +352,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('round_up_in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('round_up_in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="mitra_after_tax_round_up" id="mitra_after_tax_round_up" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -374,7 +374,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_pcs')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="customer_before_tax_pcs" id="customer_before_tax_pcs" placeholder="<?=lang('before_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -382,7 +382,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('before_tax')?> <?=lang('in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="customer_before_tax_ctn" id="customer_before_tax_ctn" placeholder="<?=lang('before_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -390,7 +390,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_pcs')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="customer_after_tax_pcs" id="customer_after_tax_pcs" placeholder="<?=lang('after_tax')?> <?=lang('in_pcs')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -398,7 +398,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="customer_after_tax_ctn" id="customer_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -406,7 +406,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('round_up_in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('round_up_in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="customer_after_tax_round_up" id="customer_after_tax_round_up" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -414,7 +414,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('het')?> <?=lang('round_up_in_pcs')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('het')?> <?=lang('round_up_in_pcs')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="het_round_up_pcs" id="het_round_up_pcs" placeholder="<?=lang('het')?> <?=lang('round_up_in_pcs')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -422,7 +422,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('het')?> <?=lang('round_up_in_ctn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('het')?> <?=lang('round_up_in_ctn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="het_round_up_ctn" id="het_round_up_ctn" placeholder="<?=lang('het')?> <?=lang('round_up_in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
@@ -575,18 +575,22 @@
         },
         errorElement: "span",
         rules: {
-            name: "required",
-            pricelist_code: "required",
-            packing_size: "required",
-            qty: "required",
-            category_id: "required",
+            product_id: "required",
+            normal_price: "required",
+            company_after_tax_ctn: "required",
+            stock_availibility: "required",
+            dipo_discount: "required",
+            mitra_discount: "required",
+            customer_discount: "required",
         },
         messages: {
-            name: "{{lang('pricelist_name')}}" + " {{lang('not_empty')}}",
-            pricelist_code: "{{lang('pricelist_code')}}" + " {{lang('not_empty')}}",
-            packing_size: "{{lang('packing_size')}}" + " {{lang('not_empty')}}",
-            qty: "{{lang('qty_per_ctn')}}" + " {{lang('not_empty')}}",
-            category_id: "{{lang('category')}}" + " {{lang('not_empty')}}",
+            product_id: "{{lang('product_code')}}" + " {{lang('not_empty')}}",
+            normal_price: "{{lang('normal_price')}}" + " {{lang('not_empty')}}",
+            company_after_tax_ctn: "{{lang('company_after_tax_ctn')}}" + " {{lang('not_empty')}}",
+            stock_availibility: "{{lang('stock_availibility_per_ctn')}}" + " {{lang('not_empty')}}",
+            dipo_discount: "{{lang('dipo_discount')}}" + " {{lang('not_empty')}}",
+            mitra_discount: "{{lang('mitra_discount')}}" + " {{lang('not_empty')}}",
+            customer_discount: "{{lang('customer_discount')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({

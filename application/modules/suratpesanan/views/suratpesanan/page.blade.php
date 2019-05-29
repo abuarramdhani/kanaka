@@ -84,7 +84,7 @@
       </div>
       {{ form_open(null,array('id' => 'form-suratpesanan', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
-        <input type="text" name="id" value="">
+        <input type="hidden" name="sp_id" value="">
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label">Kepada<span class="text-danger">*</span></label>
             <div class="col-lg-7">
@@ -96,8 +96,8 @@
                             <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
                     <?php } } ?>
                 </select>  
-                <input type="text" class="form-control input-sm" name="principle_address" id="principle_address" placeholder="<?=lang('principle_address')?>" />
-                <input type="text" class="form-control input-sm" name="principle_pic" id="principle_pic" placeholder="<?=lang('principle_pic')?>" />
+                <input readonly type="text" class="form-control input-sm" name="principle_address" id="principle_address" placeholder="<?=lang('principle_address')?>" />
+                <input readonly type="text" class="form-control input-sm" name="principle_pic" id="principle_pic" placeholder="<?=lang('principle_pic')?>" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -121,14 +121,14 @@
                             <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
                     <?php } } ?>
                 </select>  
-                <input type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" />
+                <input readonly type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" />
             </div>
         </div>
 
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label">Alamat</label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
+                <input readonly type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -168,10 +168,10 @@
             <tfoot>
                 <tr>
                     <th colspan="2" class="text-center">Jumlah</th>
-                    <th class="text-center"><input type="text" class="form-control input-sm" name="total_order_amount_in_ctn" id="total_order_amount_in_ctn"/></th>
-                    <th class="text-center"><input type="text" class="form-control input-sm" name="total_order_price_before_tax" id="total_order_price_before_tax"/></th>
-                    <th class="text-center"><input type="text" class="form-control input-sm" name="total_order_price_after_tax" id="total_order_price_after_tax"/></th>
-                    <th class="text-center"><input type="text" class="form-control input-sm" name="total_order_amount_after_tax" id="total_order_amount_after_tax"/></th>
+                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_amount_in_ctn" id="total_order_amount_in_ctn"/></th>
+                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_price_before_tax" id="total_order_price_before_tax"/></th>
+                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_price_after_tax" id="total_order_price_after_tax"/></th>
+                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_amount_after_tax" id="total_order_amount_after_tax"/></th>
                 </tr>
             </tfoot>
         </table>
@@ -201,7 +201,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3><?=lang('surat_pesanan')?></h3>
       </div>
-      {{ form_open(null,array('id' => 'form-suratpesanan', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      {{ form_open(null,array('id' => 'form-suratpesanan-view', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
         <input type="hidden" name="id_pesanan" value="">
         <div class="form-group form-md-line-input">
@@ -309,11 +309,11 @@
                 '<td class="text-center">'+
                     '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
                 '</td>' +
-                '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
+                '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
                 '<td class="text-center"><input onchange="get_total('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
-                '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
-                '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'"/></td>' +
-                '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
+                '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
+                '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'"/></td>' +
+                '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
             '</tr>'
         );
         $('#pricelist_id_'+i).html($('#pricelist_id_tmp').html());
@@ -391,7 +391,7 @@
 
                 $('[name="dipo_name"]').val(row.name);
                 $('[name="dipo_address"]').val(row.address);
-                $('[name="sp_date"]').focus();
+                // $('[name="sp_date"]').focus();
 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
@@ -523,7 +523,7 @@
                 var html = "";
                 var dataLength = rowDetail.length;
 
-                $('[name="id_pesanan"]').val(row.id);
+                $('[name="sp_id"]').val(row.id);
                 $('#principle_id').val(row.principle_id);
                 $('#dipo_partner_id').val(row.dipo_id);
                 $('[name="principle_code"]').val(row.principle_code);

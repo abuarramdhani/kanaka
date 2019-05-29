@@ -162,12 +162,11 @@ class Suratpesanans extends MX_Controller {
     public function save() {
         if ($this->input->is_ajax_request()) {
             $user = $this->ion_auth->user()->row();
-            $id_suratpesanan = $this->input->post('id');
+            $id_suratpesanan = $this->input->post('sp_id');
 
-            print_r($id_suratpesanan);exit;
             $get_suratpesanan = Suratpesanan::where('sp_no' , $this->input->post('no_sp'))->where('deleted', 0)->first();
             if (empty($id_suratpesanan)) {
-                if (!empty($get_suratpesanan->no_sp)) {
+                if (!empty($get_suratpesanan->sp_no)) {
                     $status = array('status' => 'unique', 'message' => lang('already_exist'));
                 }else{
                     $principle_id = $this->input->post('principle_id');
@@ -241,13 +240,13 @@ class Suratpesanans extends MX_Controller {
                 );
 
                 $model->principle_id                    = $principle_id;
-                $model->sp_no                           = $sp_no;
+                $model->sp_no                           = $no_sp;
                 $model->dipo_partner_id                 = $dipo_partner_id;
                 $model->total_order_amount_in_ctn       = $total_order_amount_in_ctn;
                 $model->total_order_price_before_tax    = $total_order_price_before_tax;
                 $model->total_order_price_after_tax     = $total_order_price_after_tax;
                 $model->total_order_amount_after_tax    = $total_order_amount_after_tax;
-                $model->sp_date                         = $sp_date;
+                $model->sp_date                         = date('Y-m-d',strtotime($sp_date));
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');

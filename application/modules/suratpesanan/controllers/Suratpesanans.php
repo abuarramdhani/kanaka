@@ -253,41 +253,47 @@ class Suratpesanans extends MX_Controller {
                 $model->time_modified = date('H:i:s');
                 $update = $model->save();
 
-                // if(!empty($this->input->post('product_name'))){
-                //     $productCount = count($this->input->post('product_name'));
-                //     for($i = 0; $i < $productCount; $i++){ 
-                //         $dataDetail = array('sp_id'                  => $id_sp,
-                //                             'pricelist_id'           => $this->input->post('pricelist_id')[$i],
-                //                             'order_amount_in_ctn'    => $this->input->post('order_amount_in_ctn')[$i],
-                //                             'order_price_before_tax' => $this->input->post('order_price_before_tax')[$i],
-                //                             'order_price_after_tax'  => $this->input->post('order_price_after_tax')[$i],
-                //                             'order_amount_after_tax' => $this->input->post('order_amount_after_tax')[$i],
-                //                             'date_created'           => date('Y-m-d'),
-                //                             'time_created'           => date('H:i:s'));
-                //         $saveDetail = $this->db->insert('t_sp_detail', $dataDetail);
-                //     }
-                // }
+                if(!empty($this->input->post('product_name'))){
+                    $productCount = count($this->input->post('product_name'));
+                    for($i = 0; $i < $productCount; $i++){ 
+                        $get_detail = Spdetail::where('id' , $this->input->post('sp_detail_id')[$i])->where('deleted', 0)->first();
+                        if (empty($get_detail)) {
+                            $dataDetail = array('sp_id'                  => $id_suratpesanan,
+                                                'pricelist_id'           => $this->input->post('pricelist_id')[$i],
+                                                'order_amount_in_ctn'    => $this->input->post('order_amount_in_ctn')[$i],
+                                                'order_price_before_tax' => $this->input->post('order_price_before_tax')[$i],
+                                                'order_price_after_tax'  => $this->input->post('order_price_after_tax')[$i],
+                                                'order_amount_after_tax' => $this->input->post('order_amount_after_tax')[$i],
+                                                'date_created'           => date('Y-m-d'),
+                                                'time_created'           => date('H:i:s'));
+                            $saveDetail = $this->db->insert('t_sp_detail', $dataDetail);
+                        }else{
+                            $modelDetail                                  = Spdetail::find($this->input->post('sp_detail_id')[$i]);
+                            $modelDetail->sp_id                           = $id_suratpesanan;
+                            $modelDetail->pricelist_id                    = $this->input->post('pricelist_id')[$i];
+                            $modelDetail->order_amount_in_ctn             = $this->input->post('order_amount_in_ctn')[$i];
+                            $modelDetail->order_price_before_tax          = $this->input->post('order_price_before_tax')[$i];
+                            $modelDetail->order_price_after_tax           = $this->input->post('order_price_after_tax')[$i];
+                            $modelDetail->order_amount_after_tax          = $this->input->post('order_amount_after_tax')[$i];
+
+                            $modelDetail->user_modified = $user->id;
+                            $modelDetail->date_modified = date('Y-m-d');
+                            $modelDetail->time_modified = date('H:i:s');
+                            $updateDetail = $modelDetail->save();
+                        }
+                    }
+                }
 
                 if ($update) {
                     $data_new = array(
-                        'Name'            => $name,
-                        'Category'        => $category_id,
-                        'Product Code'    => $suratpesanan_code,
-                        'Description'     => $description,
-                        'Feature'         => $feature,
-                        'Barcode Product' => $barcode_suratpesanan,
-                        'Barcode Carton'  => $barcode_carton,
-                        'Packing Size'    => $packing_size,
-                        'Qty'             => $qty,
-                        'Length'          => $length,
-                        'Height'          => $height,
-                        'Width'           => $width,
-                        'Volume'          => $volume,
-                        'Weight'          => $weight,
+                        'Principle'       => Principle::find($principle_id)->code,
+                        'No SP'           => $no_sp,
+                        'DIPO'            => Dipo::find($dipo_partner_id)->name,
+                        'sp_date'         => $sp_date,
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
-                    $message = "Update " . strtolower(lang('suratpesanan')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                    $message = "Update " . strtolower(lang('suratpesanan')) . " " .  $model->sp_no . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 13);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
@@ -309,7 +315,8 @@ class Suratpesanans extends MX_Controller {
                                         ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                         ->where('t_sp.id', $id)
                                         ->where('t_sp.deleted', 0)->get();
-            $dataDetail = Spdetail::join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
+            $dataDetail = Spdetail::select('t_sp.*', 't_pricelist.*', 'm_product.*', 't_sp_detail.*', 't_sp_detail.id as spdetail_id')
+                                    ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
                                     ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
                                     ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
                                     ->where('t_sp_detail.sp_id', $id)
@@ -378,7 +385,7 @@ class Suratpesanans extends MX_Controller {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
             $user = $this->ion_auth->user()->row();
-            $model = Product::find($id);
+            $model = Suratpesanan::find($id);
             if (!empty($model)) {
                 $model->deleted = 1;
                 $model->user_deleted = $user->id;
@@ -386,21 +393,23 @@ class Suratpesanans extends MX_Controller {
                 $model->time_deleted = date('H:i:s');
                 $delete = $model->save();
 
+                $modelDetail = Spdetail::where('sp_id', $id)->get();
+                if (!empty($modelDetail)) {
+                    $dataDetail = array( 
+                        'deleted'       =>  1, 
+                        'user_deleted'  => $user->id, 
+                        'date_deleted'  => date('Y-m-d'),
+                        'time_deleted'  => date('H:i:s'),
+                    );
+                    $this->db->where('sp_id', $id);
+                    $this->db->update('t_sp_detail', $dataDetail);
+                }
+
                 $data_notif = array(
-                    'Name'            => $model->name,
-                    'Category'        => Category::find($category_id)->name,
-                    'Product Code'    => $model->suratpesanan_code,
-                    'Description'     => $model->description,
-                    'Feature'         => $model->feature,
-                    'Barcode Product' => $barcode_suratpesanan,
-                    'Barcode Carton'  => $barcode_carton,
-                    'Packing Size'    => $packing_size,
-                    'Qty'             => $qty,
-                    'Length'          => $length,
-                    'Height'          => $height,
-                    'Width'           => $width,
-                    'Volume'          => $volume,
-                    'Weight'          => $weight,
+                    'Principle'       => Principle::find($model->principle_id)->code,
+                    'No SP'           => $model->sp_no,
+                    'DIPO'            => Dipo::find($model->dipo_partner_id)->name,
+                    'sp_date'         => $model->sp_date,
                 );
                 $message = "Delete " . strtolower(lang('suratpesanan')) . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 13);

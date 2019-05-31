@@ -473,7 +473,7 @@
 
                 App.unblockUI('#form-wrapper');
                 setTimeout(function(){
-                    // window.location.reload()
+                    window.location.reload()
                 },1000);
             } 
             return false;
@@ -538,6 +538,7 @@
                     $("#add-table-surat tbody").append(
                         '<tr>' +
                             '<td class="text-center">'+
+                                '<input type="text" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
                                 '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
                             '</td>' +
                             '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
@@ -549,6 +550,7 @@
                     );
                     $('#pricelist_id_'+i).html($('#pricelist_id_tmp').html());
 
+                    $('#sp_detail_id_'+i).val(rowDetail[i-1].spdetail_id);
                     $('#product_name_'+i).val(rowDetail[i-1].name);
                     $('#order_price_before_tax_'+i).val(rowDetail[i-1].company_before_tax_ctn);
                     $('#order_price_after_tax_'+i).val(rowDetail[i-1].company_after_tax_ctn);

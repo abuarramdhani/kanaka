@@ -538,7 +538,7 @@
                     $("#add-table-surat tbody").append(
                         '<tr>' +
                             '<td class="text-center">'+
-                                '<input type="text" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
+                                '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
                                 '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
                             '</td>' +
                             '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
@@ -571,6 +571,7 @@
                     $("#add-table-surat tbody").append(
                         '<tr>' +
                             '<td class="text-center">'+
+                                '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
                                 '<select onchange="getProduct('+z+')" id="pricelist_id_'+z+'" name="pricelist_id[]" class="form-control"></select> '+
                             '</td>' +
                             '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+z+'"/></td>' +

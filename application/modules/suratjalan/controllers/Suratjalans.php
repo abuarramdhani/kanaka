@@ -168,24 +168,32 @@ class Suratjalans extends MX_Controller {
     public function save() {
         if ($this->input->is_ajax_request()) {
             $user = $this->ion_auth->user()->row();
-            $id_suratjalan = $this->input->post('id');
-            // $get_suratjalan = Product::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
+            $id_suratjalan = $this->input->post('sp_id');
+
+            $get_suratjalan = Suratjalan::where('sp_no' , $this->input->post('no_sp'))->where('deleted', 0)->first();
             if (empty($id_suratjalan)) {
-                // if (!empty($get_suratjalan->name)) {
-                //     $status = array('status' => 'unique', 'message' => lang('already_exist'));
-                // }else{
-                    
+                if (!empty($get_suratjalan->sp_no)) {
+                    $status = array('status' => 'unique', 'message' => lang('already_exist'));
+                }else{
                     $principle_id = $this->input->post('principle_id');
                     $no_sp = $this->input->post('no_sp');
                     $dipo_partner_id = $this->input->post('dipo_partner_id');
                     $sp_date = $this->input->post('sp_date');
+                    $total_order_amount_in_ctn = $this->input->post('total_order_amount_in_ctn');
+                    $total_order_price_before_tax = $this->input->post('total_order_price_before_tax');
+                    $total_order_price_after_tax = $this->input->post('total_order_price_after_tax');
+                    $total_order_amount_after_tax = $this->input->post('total_order_amount_after_tax');
 
-                    $dataPesanan = array('principle_id' => $principle_id,
-                                      'sp_no'           => $no_sp,
-                                      'dipo_partner_id' => $dipo_partner_id,
-                                      'sp_date'         => date('Y-m-d',strtotime($sp_date)),
-                                      'date_created'    => date('Y-m-d'),
-                                      'time_created'    => date('H:i:s'));
+                    $dataPesanan = array('principle_id'                 => $principle_id,
+                                      'sp_no'                           => $no_sp,
+                                      'dipo_partner_id'                 => $dipo_partner_id,
+                                      'total_order_amount_in_ctn'       => $total_order_amount_in_ctn,
+                                      'total_order_price_before_tax'    => $total_order_price_before_tax,
+                                      'total_order_price_after_tax'     => $total_order_price_after_tax,
+                                      'total_order_amount_after_tax'    => $total_order_amount_after_tax,
+                                      'sp_date'                         => date('Y-m-d',strtotime($sp_date)),
+                                      'date_created'                    => date('Y-m-d'),
+                                      'time_created'                    => date('H:i:s'));
 
                     $save            = $this->db->insert('t_sp', $dataPesanan);
                     $id_sp           = $this->db->insert_id();
@@ -193,11 +201,14 @@ class Suratjalans extends MX_Controller {
                     if(!empty($this->input->post('product_name'))){
                         $productCount = count($this->input->post('product_name'));
                         for($i = 0; $i < $productCount; $i++){ 
-                            $dataDetail = array('sp_id'               => $id_sp,
-                                                'pricelist_id'        => $this->input->post('pricelist_id')[$i],
-                                                'order_amount_in_ctn' => $this->input->post('order_amount_in_ctn')[$i],
-                                                'date_created'        => date('Y-m-d'),
-                                                'time_created'        => date('H:i:s'));
+                            $dataDetail = array('sp_id'                  => $id_sp,
+                                                'pricelist_id'           => $this->input->post('pricelist_id')[$i],
+                                                'order_amount_in_ctn'    => $this->input->post('order_amount_in_ctn')[$i],
+                                                'order_price_before_tax' => $this->input->post('order_price_before_tax')[$i],
+                                                'order_price_after_tax'  => $this->input->post('order_price_after_tax')[$i],
+                                                'order_amount_after_tax' => $this->input->post('order_amount_after_tax')[$i],
+                                                'date_created'           => date('Y-m-d'),
+                                                'time_created'           => date('H:i:s'));
                             $saveDetail = $this->db->insert('t_sp_detail', $dataDetail);
                         }
                     }
@@ -215,120 +226,80 @@ class Suratjalans extends MX_Controller {
                     } else {
                         $status = array('status' => 'error', 'message' => lang('message_save_failed'));
                     }
-                // }
+                }
             } elseif(!empty($id_suratjalan)) {
-                $model = Product::find($id_suratjalan);
-                $name = ucwords($this->input->post('name'));
-                $category_id = $this->input->post('category_id');
-                $suratjalan_code = $this->input->post('suratjalan_code');
-                $description = $this->input->post('description');
-                $feature = $this->input->post('feature');
-                $barcode_suratjalan = $this->input->post('barcode_suratjalan');
-                $barcode_carton = $this->input->post('barcode_carton');
-                $packing_size = $this->input->post('packing_size');
-                $qty = $this->input->post('qty');
-                $weight = $this->input->post('weight');
-                $length = $this->input->post('length');
-                $width = $this->input->post('width');
-                $height = $this->input->post('height');
-                $volume = $this->input->post('volume');
+                $model = Suratjalan::find($id_suratjalan);
+                $principle_id = $this->input->post('principle_id');
+                $no_sp = $this->input->post('no_sp');
+                $dipo_partner_id = $this->input->post('dipo_partner_id');
+                $sp_date = $this->input->post('sp_date');
+                $total_order_amount_in_ctn = $this->input->post('total_order_amount_in_ctn');
+                $total_order_price_before_tax = $this->input->post('total_order_price_before_tax');
+                $total_order_price_after_tax = $this->input->post('total_order_price_after_tax');
+                $total_order_amount_after_tax = $this->input->post('total_order_amount_after_tax');
             
                 $data_old = array(
-                    'Name'            => $model->name,
-                    'Category'        => $model->category_id,
-                    'Product Code'    => $model->suratjalan_code,
-                    'Description'     => $model->description,
-                    'Feature'         => $model->feature,
-                    'Barcode Product' => $model->barcode_suratjalan,
-                    'Barcode Carton'  => $model->barcode_carton,
-                    'Packing Size'    => $model->packing_size,
-                    'Qty'             => $model->qty,
-                    'Length'          => $model->length,
-                    'Height'          => $model->height,
-                    'Width'           => $model->width,
-                    'Volume'          => $model->volume,
-                    'Weight'          => $model->weight,
+                    'Principle'       => Principle::find($model->principle_id)->code,
+                    'No SP'           => $model->sp_no,
+                    'DIPO'            => Dipo::find($model->dipo_partner_id)->name,
+                    'sp_date'         => $model->sp_date,
                 );
 
-                $model->name            = $name;
-                $model->category_id     = $category_id;
-                $model->suratjalan_code             = $suratjalan_code;
-                $model->description     = $description;
-                $model->feature         = $feature;
-                $model->barcode_suratjalan = $barcode_suratjalan;
-                $model->barcode_carton  = $barcode_carton;
-                $model->packing_size    = $packing_size;
-                $model->qty             = $qty;
-                $model->length     = $length;
-                $model->height     = $height;
-                $model->width     = $width;
-                $model->volume   = $volume;
-                $model->weight          = $weight;
+                $model->principle_id                    = $principle_id;
+                $model->sp_no                           = $no_sp;
+                $model->dipo_partner_id                 = $dipo_partner_id;
+                $model->total_order_amount_in_ctn       = $total_order_amount_in_ctn;
+                $model->total_order_price_before_tax    = $total_order_price_before_tax;
+                $model->total_order_price_after_tax     = $total_order_price_after_tax;
+                $model->total_order_amount_after_tax    = $total_order_amount_after_tax;
+                $model->sp_date                         = date('Y-m-d',strtotime($sp_date));
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
                 $model->time_modified = date('H:i:s');
                 $update = $model->save();
 
-                if(!empty($_FILES['upload_Files']['name'])){
-                    $filesCount = count($_FILES['upload_Files']['name']);
-                    for($i = 0; $i < $filesCount; $i++){ 
-                        $_FILES['upload_File']['name']      = $_FILES['upload_Files']['name'][$i]; 
-                        $_FILES['upload_File']['type']      = $_FILES['upload_Files']['type'][$i]; 
-                        $_FILES['upload_File']['tmp_name']  = $_FILES['upload_Files']['tmp_name'][$i]; 
-                        $_FILES['upload_File']['error']     = $_FILES['upload_Files']['error'][$i]; 
-                        $_FILES['upload_File']['size']      = $_FILES['upload_Files']['size'][$i]; 
-                        
-                        // File upload configuration
-                        $uploadPath = 'uploads/images/suratjalans/'; 
-                        $config['upload_path'] = $uploadPath; 
-                        $config['allowed_types'] = 'gif|jpg|png'; 
+                if(!empty($this->input->post('product_name'))){
+                    $productCount = count($this->input->post('product_name'));
+                    for($i = 0; $i < $productCount; $i++){ 
+                        $get_detail = Spdetail::where('id' , $this->input->post('sp_detail_id')[$i])->where('deleted', 0)->first();
+                        if (empty($get_detail)) {
+                            $dataDetail = array('sp_id'                  => $id_suratjalan,
+                                                'pricelist_id'           => $this->input->post('pricelist_id')[$i],
+                                                'order_amount_in_ctn'    => $this->input->post('order_amount_in_ctn')[$i],
+                                                'order_price_before_tax' => $this->input->post('order_price_before_tax')[$i],
+                                                'order_price_after_tax'  => $this->input->post('order_price_after_tax')[$i],
+                                                'order_amount_after_tax' => $this->input->post('order_amount_after_tax')[$i],
+                                                'date_created'           => date('Y-m-d'),
+                                                'time_created'           => date('H:i:s'));
+                            $saveDetail = $this->db->insert('t_sp_detail', $dataDetail);
+                        }else{
+                            $modelDetail                                  = Spdetail::find($this->input->post('sp_detail_id')[$i]);
+                            $modelDetail->sp_id                           = $id_suratjalan;
+                            $modelDetail->pricelist_id                    = $this->input->post('pricelist_id')[$i];
+                            $modelDetail->order_amount_in_ctn             = $this->input->post('order_amount_in_ctn')[$i];
+                            $modelDetail->order_price_before_tax          = $this->input->post('order_price_before_tax')[$i];
+                            $modelDetail->order_price_after_tax           = $this->input->post('order_price_after_tax')[$i];
+                            $modelDetail->order_amount_after_tax          = $this->input->post('order_amount_after_tax')[$i];
 
-                        // Load and initialize upload library
-                        $this->load->library('upload', $config);
-                        $this->upload->initialize($config);
-
-                        // Upload file to server
-                        if($this->upload->do_upload('upload_File')){
-                            // Uploaded file data
-                            $fileData = $this->upload->data();
-                            $uploadData[$i]['suratjalan_id']   = $id_suratjalan;
-                            $uploadData[$i]['order']        = $i+1;
-                            $uploadData[$i]['file_name']    = $fileData['file_name'];
-                        
-                            $imageModel = new ProductImage();
-                            $imageModel->suratjalan_id = $id_suratjalan;
-                            $imageModel->order      = $i+1;
-                            $imageModel->image      = $uploadData[$i]['file_name'];
-
-                            $imageModel->user_created = $user->id;
-                            $imageModel->date_created = date('Y-m-d');
-                            $imageModel->time_created = date('H:i:s');
-                            $saveImage = $imageModel->save();
+                            $modelDetail->user_modified = $user->id;
+                            $modelDetail->date_modified = date('Y-m-d');
+                            $modelDetail->time_modified = date('H:i:s');
+                            $updateDetail = $modelDetail->save();
                         }
                     }
                 }
 
                 if ($update) {
                     $data_new = array(
-                        'Name'            => $name,
-                        'Category'        => $category_id,
-                        'Product Code'    => $suratjalan_code,
-                        'Description'     => $description,
-                        'Feature'         => $feature,
-                        'Barcode Product' => $barcode_suratjalan,
-                        'Barcode Carton'  => $barcode_carton,
-                        'Packing Size'    => $packing_size,
-                        'Qty'             => $qty,
-                        'Length'          => $length,
-                        'Height'          => $height,
-                        'Width'           => $width,
-                        'Volume'          => $volume,
-                        'Weight'          => $weight,
+                        'Principle'       => Principle::find($principle_id)->code,
+                        'No SP'           => $no_sp,
+                        'DIPO'            => Dipo::find($dipo_partner_id)->name,
+                        'sp_date'         => $sp_date,
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
-                    $message = "Update " . strtolower(lang('suratjalan')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                    $message = "Update " . strtolower(lang('suratjalan')) . " " .  $model->sp_no . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 13);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
@@ -345,7 +316,21 @@ class Suratjalans extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $model = array('status' => 'success', 'data' => Product::find($id), 'image' => ProductImage::where('suratjalan_id', $id)->where('deleted', '0')->get());
+            $dataPesanan = Suratjalan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_principle.pic as principle_pic', 'm_principle.id as principle_id', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.id as dipo_id')
+                                        ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
+                                        ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
+                                        ->where('t_sp.id', $id)
+                                        ->where('t_sp.deleted', 0)->get();
+            $dataDetail = Spdetail::select('t_sp.*', 't_pricelist.*', 'm_product.*', 't_sp_detail.*', 't_sp_detail.id as spdetail_id')
+                                    ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
+                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->where('t_sp_detail.sp_id', $id)
+                                    ->where('t_sp_detail.deleted', 0)
+                                    ->where('t_sp.deleted', 0)
+                                    ->where('t_pricelist.deleted', 0)
+                                    ->where('m_product.deleted', 0)->get();
+            $model = array('status' => 'success', 'data' => $dataPesanan, 'dataDetail' => $dataDetail);
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }
@@ -402,11 +387,33 @@ class Suratjalans extends MX_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
+    public function getspbydipo() {
+        if ($this->input->is_ajax_request()) {
+            $id = (int)$this->input->get('id');
+            $model = array('status' => 'success', 'data' => Suratpesanan::where('dipo_partner_id', $id)->where('deleted', 0)->get());
+        } else {
+            $model = array('status' => 'error', 'message' => 'Not Found.');
+        }
+        $data = $model;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    public function getspbyid() {
+        if ($this->input->is_ajax_request()) {
+            $id = (int)$this->input->get('id');
+            $model = array('status' => 'success', 'data' => Suratpesanan::find($id));
+        } else {
+            $model = array('status' => 'error', 'message' => 'Not Found.');
+        }
+        $data = $model;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
     public function delete() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
             $user = $this->ion_auth->user()->row();
-            $model = Product::find($id);
+            $model = Suratjalan::find($id);
             if (!empty($model)) {
                 $model->deleted = 1;
                 $model->user_deleted = $user->id;
@@ -414,21 +421,23 @@ class Suratjalans extends MX_Controller {
                 $model->time_deleted = date('H:i:s');
                 $delete = $model->save();
 
+                $modelDetail = Spdetail::where('sp_id', $id)->get();
+                if (!empty($modelDetail)) {
+                    $dataDetail = array( 
+                        'deleted'       =>  1, 
+                        'user_deleted'  => $user->id, 
+                        'date_deleted'  => date('Y-m-d'),
+                        'time_deleted'  => date('H:i:s'),
+                    );
+                    $this->db->where('sp_id', $id);
+                    $this->db->update('t_sp_detail', $dataDetail);
+                }
+
                 $data_notif = array(
-                    'Name'            => $model->name,
-                    'Category'        => Category::find($category_id)->name,
-                    'Product Code'    => $model->suratjalan_code,
-                    'Description'     => $model->description,
-                    'Feature'         => $model->feature,
-                    'Barcode Product' => $barcode_suratjalan,
-                    'Barcode Carton'  => $barcode_carton,
-                    'Packing Size'    => $packing_size,
-                    'Qty'             => $qty,
-                    'Length'          => $length,
-                    'Height'          => $height,
-                    'Width'           => $width,
-                    'Volume'          => $volume,
-                    'Weight'          => $weight,
+                    'Principle'       => Principle::find($model->principle_id)->code,
+                    'No SP'           => $model->sp_no,
+                    'DIPO'            => Dipo::find($model->dipo_partner_id)->name,
+                    'sp_date'         => $model->sp_date,
                 );
                 $message = "Delete " . strtolower(lang('suratjalan')) . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 13);

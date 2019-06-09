@@ -398,6 +398,12 @@ $lang['ubah_surat_jalan'] = "Ubah Surat Jalan";
 $lang['sp_no'] = 'SP No';
 $lang['sj_no'] = 'SJ No';
 $lang['issue_date'] = 'Issue Date';
+$lang['account'] = 'Account';
+$lang['customer_name'] = 'Customer Name';
+$lang['delivery_to'] = 'Delivery to';
+$lang['volume_m3'] = 'Volume (m3)';
+$lang['weight_kg'] = 'Weight (KG)';
+$lang['total'] = 'Total';
 ## END Surat Jalan ##
 
 ## INVOICE ##

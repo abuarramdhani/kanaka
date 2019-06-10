@@ -167,7 +167,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="2" class="text-center">Jumlah</th>
+                    <th colspan="2" class="text-center">Total</th>
                     <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_amount_in_ctn" id="total_order_amount_in_ctn"/></th>
                     <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_price_before_tax" id="total_order_price_before_tax"/></th>
                     <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_price_after_tax" id="total_order_price_after_tax"/></th>
@@ -256,15 +256,75 @@
         <table id="table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
             <thead>
                 <tr>
+                    <th class="text-center">No</th>
                     <th class="text-center">Kode Produk</th>
                     <th class="text-center">Nama Produk</th>
                     <th class="text-center">Jumlah Pesanan (Per Karton)</th>
                     <th class="text-center">Harga Pesanan (Per Karton) Before Tax</th>
                     <th class="text-center">Harga Pesanan (Per Karton) After Tax</th>
-                    <!-- <th class="text-center">Jumlah Pesanan After Tax</th> -->
+                    <th class="text-center">Jumlah Pesanan After Tax</th>
                 </tr>
             </thead>
+            <tfoot>
+                <tr>
+                    <th colspan="3" class="text-center">Total</th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_amount_in_ctn" id="view_total_order_amount_in_ctn"/></th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_price_before_tax" id="view_total_order_price_before_tax"/></th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_price_after_tax" id="view_total_order_price_after_tax"/></th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_amount_after_tax" id="view_total_order_amount_after_tax"/></th>
+                </tr>
+            </tfoot>
         </table>
+        
+        <div class="row view-detail-row">
+            <div class="col-md-5">
+                <table id="view-detail" class="table dt-responsive">
+                    <tbody>
+                        <tr>
+                            <th>Tanggal permintaan pengiriman barang :</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" id="tanggal_pengiriman" class="text-right"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-5">
+                <table id="total-value" class="table dt-responsive">
+                    <tr>
+                        <th colspan="2">Total Value</th>
+                        <th id="total_value" class="text-right"></th>
+                    </tr>
+                    <tr class="text-discount">
+                        <th>Reg Disc</th>
+                        <th id="reg_disc" class="text-right">0%</th>
+                        <th id="reg_disc_total" class="text-right">0</th>
+                    </tr>
+                    <tr class="border-none text-discount">
+                        <th>Add Disc 1</th>
+                        <th id="add_disc_1" class="text-right">0%</th>
+                        <th id="add_disc_1_total" class="text-right">0</th>
+                    </tr>
+                    <tr class="border-none text-discount">
+                        <th>Add Disc 2</th>
+                        <th id="add_disc_2" class="text-right">0%</th>
+                        <th id="add_disc_2_total" class="text-right">0</th>
+                    </tr>
+                    <tr class="border-none text-discount">
+                        <th>BTW Disc</th>
+                        <th id="btw_disc" class="text-right">0%</th>
+                        <th id="btw_disc_total" class="text-right">0</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Total NIV</th>
+                        <th id="total_niv" class="text-right"></th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
 
       </div>
       <div class="modal-footer">
@@ -595,6 +655,26 @@
        });
     }
 
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [day, month, year].join('/');
+    }
+
+    $('#modal_detail').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+
+    $('#modal_form').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+
     // Menampilkan detail data pesanan
     function viewDetail(value){   
         form_validator.resetForm();
@@ -616,7 +696,14 @@
                 $('[name="no_sp"]').val(row.sp_no);
                 $('[name="dipo_name"]').val(row.dipo_name);
                 $('[name="dipo_address"]').val(row.dipo_address);
-                $('[name="sp_date"]').val(row.sp_date);
+                $('[name="sp_date"]').val(formatDate(row.sp_date));
+                $('[name="view_total_order_amount_in_ctn"]').val(row.total_order_amount_in_ctn);
+                $('[name="view_total_order_price_before_tax"]').val(row.total_order_price_before_tax);
+                $('[name="view_total_order_price_after_tax"]').val(row.total_order_price_after_tax);
+                $('[name="view_total_order_amount_after_tax"]').val(row.total_order_amount_after_tax);
+                $('#tanggal_pengiriman').text(formatDate(row.sp_date))
+                $('#total_value').text(row.total_order_amount_after_tax)
+                $('#total_niv').text(row.total_niv)
 
                 $('#modal_detail').modal('show');
                 $('.modal-title').text('<?=lang('edit_suratpesanan')?>'); 
@@ -637,6 +724,9 @@
             "sServerMethod": "GET",
             "sAjaxSource": "{{ base_url() }}suratpesanan/suratpesanans/fetch_data_pesanan/?id="+value,
             "order": [0,"asc"],
+            "columnDefs": [
+            {"className": "dt-center", "targets": [0, 3, 4, 5, 6]}
+            ],
         }).fnSetFilteringDelay(1000);
     }
 

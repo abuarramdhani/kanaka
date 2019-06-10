@@ -113,6 +113,9 @@ class Suratpesanans extends MX_Controller {
                 'order_amount_in_ctn',
                 'company_before_tax_ctn',
                 'company_after_tax_ctn',
+                'order_price_before_tax',
+                'order_price_after_tax',
+                'order_amount_after_tax',
             );
     
             $header_columns = array(
@@ -139,15 +142,18 @@ class Suratpesanans extends MX_Controller {
             $selected_data = $this->datatables->get_select_data();
             $aa_data = $selected_data['aaData'];
             $new_aa_data = array();
+            $no = 1;
             
             foreach ($aa_data as $row) {
                 $row_value = array();
     
+                $row_value[] = $no++;
                 $row_value[] = $row->product_code;
                 $row_value[] = $row->product_name;
                 $row_value[] = $row->order_amount_in_ctn;
-                $row_value[] = $row->company_before_tax_ctn;
-                $row_value[] = $row->company_after_tax_ctn;
+                $row_value[] = $row->order_price_before_tax;
+                $row_value[] = $row->order_price_after_tax;
+                $row_value[] = $row->order_amount_after_tax;
                 
                 $new_aa_data[] = $row_value;
             }

@@ -113,3 +113,20 @@ tr.details .details-control {
 .discount-value {
     float: right;
 }
+
+.view-detail-row {
+    margin-top: 20px;
+}
+
+#view-detail th {
+    border-top: none;
+    padding: 0px;
+}
+
+tr.border-none th {
+    border-top: none !important;
+}
+
+tr.text-discount th {
+    font-weight: unset;
+}

@@ -196,7 +196,7 @@ $route['reports/customer/excel']	= 'customer/customers/excel';
 */
 $route['reports/suratpesanan'] = 'suratpesanan/suratpesanans/index';
 $route['reports/suratpesanan/pdf'] = 'suratpesanan/suratpesanans/pdf';
-$route['reports/suratpesanan/excel'] = 'suratpesanan/pricelists/excel';
+$route['reports/suratpesanan/excel'] = 'suratpesanan/suratpesanans/excel';
 
 /**
 * SURAT JALAN

@@ -327,7 +327,7 @@ class Principles extends MX_Controller {
         $data['principles'] = Principle::where('deleted', 0)->orderBy('id', 'DESC')->get();
         $data['quote'] = "";
         $html = $this->load->view('principle/principle/principle_pdf', $data, true);
-        $this->pdf_generator->generate($html, 'principle pdf', $orientation='Portrait');
+        $this->pdf_generator->generate($html, 'principle pdf', $orientation='Landscape');
     }
 
     function excel(){

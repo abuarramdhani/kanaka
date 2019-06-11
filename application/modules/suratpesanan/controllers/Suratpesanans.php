@@ -341,7 +341,7 @@ class Suratpesanans extends MX_Controller {
     public function viewDetail() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $dataPesanan = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.address as dipo_address')
+            $dataPesanan = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address')
                                         ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                         ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                         ->where('t_sp.id', $id)
@@ -431,15 +431,39 @@ class Suratpesanans extends MX_Controller {
     }
 
     function pdf(){
-        $data['suratpesanans'] = Product::join('m_category', 't_sp.category_id', '=', 'm_category.id')->where('t_sp.deleted', 0)->where('m_category.deleted', 0)->orderBy('t_sp.id', 'DESC')->get();
+        $id = (int) $this->input->get('id');
+        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
+                                    ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
+                                    ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
+                                    ->where('t_sp.id', $id)
+                                    ->where('t_sp.deleted', 0)->get();
+        $data['detailpesanans'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
+                                    ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
+                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->where('sp_id', $id)
+                                    ->where('t_sp_detail.deleted', 0)
+                                    ->where('t_sp.deleted', 0)->get();
         $html = $this->load->view('suratpesanan/suratpesanan/suratpesanan_pdf', $data, true);
-        $this->pdf_generator->generate($html, 'suratpesanan pdf', $orientation='Portrait');
+        $this->pdf_generator->generate($html, 'suratpesanan pdf', $orientation='Landscape');
     }
 
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=suratpesanan.xls");
-        $data['suratpesanans'] = Product::join('m_category', 't_sp.category_id', '=', 'm_category.id')->where('t_sp.deleted', 0)->where('m_category.deleted', 0)->orderBy('t_sp.id', 'DESC')->get();
+        $id = (int) $this->input->get('id');
+        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
+                                    ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
+                                    ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
+                                    ->where('t_sp.id', $id)
+                                    ->where('t_sp.deleted', 0)->get();
+        $data['detailpesanans'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
+                                    ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
+                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->where('sp_id', $id)
+                                    ->where('t_sp_detail.deleted', 0)
+                                    ->where('t_sp.deleted', 0)->get();
         $this->load->view('suratpesanan/suratpesanan/suratpesanan_pdf', $data);
     }
 

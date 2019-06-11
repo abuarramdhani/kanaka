@@ -44,9 +44,9 @@
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}reports/pricelist/pdf')" class="btn btn-danger btn-sm">
+                            <!-- <button onClick="return window.open('{{base_url()}}reports/pricelist/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
-                            </button>
+                            </button> -->
                             <button onClick="return window.open('{{base_url()}}reports/pricelist/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
                             </button>

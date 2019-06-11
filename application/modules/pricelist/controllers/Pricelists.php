@@ -588,9 +588,16 @@ class Pricelists extends MX_Controller {
     }
 
     function pdf(){
-        $data['pricelists'] = Pricelist::join('m_product', 'm_product.id = t_pricelist.product_id', 'inner')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->orderBy('t_pricelist.id', 'DESC')->get();
+        $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->orderBy('t_pricelist.id', 'DESC')->get();
+        $discount = $this->db->select('*')
+                  ->order_by('id', 'DESC')
+                  ->get_where('t_pricelist', array('deleted' => 0))
+                  ->row();
+        
+        $data['discount'] = $discount;
+
         $html = $this->load->view('pricelist/pricelist/pricelist_pdf', $data, true);
-        $this->pdf_generator->generate($html, 'pricelist pdf', $orientation='Portrait');
+        $this->pdf_generator->generate($html, 'pricelist pdf', $orientation='Landscape');
     }
 
     function excel(){

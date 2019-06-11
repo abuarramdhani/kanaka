@@ -44,12 +44,12 @@
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}master/suratpesanan/pdf')" class="btn btn-danger btn-sm">
+                            <!-- <button onClick="return window.open('{{base_url()}}master/suratpesanan/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
                             <button onClick="return window.open('{{base_url()}}master/suratpesanan/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
-                            </button>
+                            </button> -->
                         @endif
                     </div>
                 </div>
@@ -200,6 +200,12 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3><?=lang('surat_pesanan')?></h3>
+        <button onClick="printPdf()" class="btn btn-danger btn-sm">
+            <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
+        </button>
+        <button onClick="printExcel()" class="btn btn-success btn-sm">
+            <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
+        </button> 
       </div>
       {{ form_open(null,array('id' => 'form-suratpesanan-view', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
@@ -209,6 +215,7 @@
             <div class="col-lg-7">
                 <input type="text" class="form-control input-sm" name="principle_code" id="principle_code" placeholder="<?=lang('principle_code')?>" maxlength="50" />
                 <input type="text" class="form-control input-sm" name="principle_address" id="principle_address" placeholder="<?=lang('principle_address')?>" />
+                <input type="text" class="form-control input-sm" name="principle_pic" id="principle_pic" placeholder="<?=lang('pic')?>" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -223,8 +230,12 @@
 
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('ship_to')?></label>
-            <div class="col-lg-7">
+            <div class="col-lg-5">
                 <input type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" maxlength="50" />
+               <div class="form-control-focus"> </div>
+            </div>
+            <div class="col-lg-2">
+                <input type="text" class="form-control input-sm" name="dipo_code" id="dipo_code" placeholder="<?=lang('dipo_code')?>" maxlength="50" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -337,6 +348,14 @@
 
 @section('scripts')
 <script type="text/javascript">
+
+    function printPdf(){
+        return window.open('{{base_url()}}reports/suratpesanan/pdf/?id='+$('[name="id_pesanan"]').val())
+    }
+
+    function printExcel(){
+        return window.open('{{base_url()}}reports/suratpesanan/excel/?id='+$('[name="id_pesanan"]').val())
+    }
 
     $('#sp_date').datepicker();
 
@@ -696,6 +715,8 @@
                 $('[name="no_sp"]').val(row.sp_no);
                 $('[name="dipo_name"]').val(row.dipo_name);
                 $('[name="dipo_address"]').val(row.dipo_address);
+                $('[name="dipo_code"]').val(row.dipo_code);
+                $('[name="principle_pic"]').val(row.principle_pic);
                 $('[name="sp_date"]').val(formatDate(row.sp_date));
                 $('[name="view_total_order_amount_in_ctn"]').val(row.total_order_amount_in_ctn);
                 $('[name="view_total_order_price_before_tax"]').val(row.total_order_price_before_tax);

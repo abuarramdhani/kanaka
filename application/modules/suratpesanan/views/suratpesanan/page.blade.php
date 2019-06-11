@@ -80,7 +80,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3><?=lang('new_data')?></h3>
+        <h3 class="modal-title"><?=lang('new_suratpesanan')?></h3>
       </div>
       {{ form_open(null,array('id' => 'form-suratpesanan', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">

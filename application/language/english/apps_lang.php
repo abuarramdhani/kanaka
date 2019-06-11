@@ -376,6 +376,8 @@ $lang['deleting_companyreport_successfully'] = 'Deleting data Company Report suc
 
 ## Surat Pesanan ##
 $lang['surat_pesanan'] = 'Surat Pesanan';
+$lang['new_suratpesanan'] = 'Surat Pesanan Baru';
+$lang['edit_suratpesanan'] = 'Edit Surat Pesanan';
 $lang['tambah_surat_pesanan'] = "Tambah Surat Pesanan";
 $lang['ubah_surat_pesanan'] = "Ubah Surat Pesanan";
 $lang['saving_data_successfully'] = 'Saving data succesfully';

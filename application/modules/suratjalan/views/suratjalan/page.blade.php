@@ -44,12 +44,12 @@
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}master/suratjalan/pdf')" class="btn btn-danger btn-sm">
+                            <!-- <button onClick="return window.open('{{base_url()}}master/suratjalan/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
                             <button onClick="return window.open('{{base_url()}}master/suratjalan/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
-                            </button>
+                            </button> -->
                         @endif
                     </div>
                 </div>
@@ -81,11 +81,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3><?=lang('tambah_surat_jalan')?></h3>
+        <h3 class="modal-title"><?=lang('tambah_surat_jalan')?></h3>
       </div>
       {{ form_open(null,array('id' => 'form-surat-jalan', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
-        <input type="hidden" name="sp_id" value="">
+        <input type="hidden" name="sj_id" value="">
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('account')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
@@ -111,7 +111,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('sp_no')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-               <select id="sp_no" name="sp_no" class="form-control">
+               <select id="sp_id" name="sp_id" class="form-control">
                     <option selected disabled value=""><?=lang('select_your_option')?></option>
                 </select>  
             </div>
@@ -157,12 +157,10 @@
             </div>
         </div>
         
-        <button type="button" class="btn_add_row"><i class="fa fa-plus"></i>Add Row</button>
-        <button type="button" class="btn_add_row_edit"><i class="fa fa-plus"></i>Add Row</button>
         <table id="add-table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
             <thead>
                 <tr>
-                    <th class="text-center">{{ lang('product_code') }</th>
+                    <th class="text-center">{{ lang('product_code') }}</th>
                     <th class="text-center">{{ lang('product_name') }}</th>
                     <th class="text-center">{{ lang('total_order_in_ctn') }}</th>
                     <th class="text-center">{{ lang('volume_m3') }}</th>
@@ -174,8 +172,8 @@
                 <tr>
                     <th colspan="2" class="text-center">{{ lang('total') }}</th>
                     <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_amount_in_ctn" id="total_order_amount_in_ctn"/></th>
-                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_volume" id="total_volume"/></th>
-                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_weight" id="total_weight"/></th>
+                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_volume" id="total_order_volume"/></th>
+                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_weight" id="total_order_weight"/></th>
                 </tr>
             </tfoot>
         </table>
@@ -189,70 +187,81 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<select id="pricelist_id_tmp" name="pricelist_id_tmp" class="form-control" style="display:none;">
-    <option selected disabled value="">{{ lang('select_your_option') }}</option>
-    @if (!empty($pricelists))
-        @foreach ($pricelists as $c) {
-            <option value="{{ $c->id }}">{{ ucfirst($c->product_code) }}</option>
-        @endforeach
-    @endif
-</select> 
-
 <div class="modal fade" id="modal_detail" role="dialog">
   <div class="modal-dialog" style="width:70%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3><?=lang('surat_jalan')?></h3>
+        <h3 class="modal-title"><?=lang('surat_jalan')?></h3>
+        <button onClick="printPdf()" class="btn btn-danger btn-sm">
+            <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
+        </button>
+        <button onClick="printExcel()" class="btn btn-success btn-sm">
+            <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
+        </button> 
       </div>
-      {{ form_open(null,array('id' => 'form-surat-jalan-view', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      {{ form_open(null,array('id' => 'form-suratpesanan-view', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
-        <input type="hidden" name="id_pesanan" value="">
+        <input type="hidden" name="sj_id" value="">
+        
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Kepada</label>
+            <label class="col-lg-4 control-label"><?=lang('account')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="principle_code" id="principle_code" placeholder="<?=lang('principle_code')?>" maxlength="50" />
-                <input type="text" class="form-control input-sm" name="principle_address" id="principle_address" placeholder="<?=lang('principle_address')?>" />
-               <div class="form-control-focus"> </div>
+                <input readonly type="text" class="form-control input-sm" name="dipo_code" id="dipo_code" placeholder="<?=lang('dipo_code')?>" />
             </div>
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('sp_no')?></label>
+            <label class="col-lg-4 control-label"><?=lang('sj_no')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="sp_no" id="sp_no" placeholder="<?=lang('sp_no')?>" maxlength="50" />
+                <input readonly type="text" class="form-control input-sm" name="sj_no" id="sj_no" placeholder="<?=lang('sj_no')?>" maxlength="50" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('ship_to')?></label>
+            <label class="col-lg-4 control-label"><?=lang('sp_no')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" maxlength="50" />
+                <input readonly type="text" class="form-control input-sm" name="sp_no" id="sp_no" placeholder="<?=lang('sp_no')?>" maxlength="50" />
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('customer_name') }}</label>
+            <div class="col-lg-7">
+                <input readonly type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('delivery_to') }}</label>
+            <div class="col-lg-7">
+                <input readonly type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Alamat</label>
+            <label class="col-lg-4 control-label">{{ lang('pic') }}</label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
+                <input readonly type="text" class="form-control input-sm" name="dipo_pic" id="dipo_pic" placeholder="<?=lang('pic')?>" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Tanggal</label>
+            <label class="col-lg-4 control-label">{{ lang('phone') }}</label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="sp_date" id="sp_date" placeholder="<?=lang('sp_date')?>" maxlength="10" />
+                <input readonly type="text" class="form-control input-sm" name="dipo_phone" id="dipo_phone" placeholder="<?=lang('phone')?>" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Metode Pembayaran</label>
+            <label class="col-lg-4 control-label">Tanggal<span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="metode_pembayaran" id="metode_pembayaran" placeholder="Metode Pembayaran" maxlength="50" />
+                <input type="text" class="form-control input-sm" name="sp_date" id="sp_date" placeholder="<?=lang('sp_date')?>" readonly="readonly" maxlength="10" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -260,18 +269,47 @@
         <table id="table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
             <thead>
                 <tr>
-                    <th class="text-center">Kode Produk</th>
-                    <th class="text-center">Nama Produk</th>
-                    <th class="text-center">Jumlah Pesanan (Per Karton)</th>
-                    <th class="text-center">Harga Pesanan (Per Karton) Before Tax</th>
-                    <th class="text-center">Harga Pesanan (Per Karton) After Tax</th>
-                    <!-- <th class="text-center">Jumlah Pesanan After Tax</th> -->
+                    <th class="text-center">{{ lang('no') }}</th>
+                    <th class="text-center">{{ lang('product_code') }}</th>
+                    <th class="text-center">{{ lang('product_name') }}</th>
+                    <th class="text-center">{{ lang('total_order_in_ctn') }}</th>
+                    <th class="text-center">{{ lang('volume_m3') }}</th>
+                    <th class="text-center">{{ lang('weight_kg') }}</th>
                 </tr>
             </thead>
+            <tfoot>
+                <tr>
+                    <th colspan="3" class="text-center">Total</th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_amount_in_ctn" id="view_total_order_amount_in_ctn"/></th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_volume" id="view_total_order_volume"/></th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_weight" id="view_total_order_weight"/></th>
+                </tr>
+            </tfoot>
         </table>
-
+        
+        <div class="row view-detail-row">
+            <div class="col-md-5">
+                <table id="view-detail" class="table dt-responsive">
+                    <tbody>
+                        <tr>
+                            <th>Tanggal permintaan pengiriman barang :</th>
+                        </tr>
+                        <tr>
+                            <th id="tanggal_pengiriman" class="text-right"></th>
+                        </tr>
+                        <tr>
+                            <th>Tanggal penerimaan barang :</th>
+                        </tr>
+                        <tr>
+                            <th id="tanggal_penerimaan" class="text-right"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
       </div>
       <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">{{ lang('close') }}</button>
       </div>
       {{ form_close() }}
     </div><!-- /.modal-content -->
@@ -282,88 +320,7 @@
 @section('scripts')
 <script type="text/javascript">
 
-    // $('#pricelist_id').change(function(){
-    //     $.getJSON('{{base_url()}}suratjalan/suratjalans/getPricelist', {id: $('#pricelist_id').val()}, function(json, textStatus) {
-    //         if(json.status == "success"){
-    //             var row = json.data[0];
-    //             var i;
-    //             var html = "";
-
-    //             $('[name="product_name"]').val(row.name);
-    //             $('[name="order_price_before_tax"]').val(row.company_before_tax_ctn);
-    //             $('[name="order_price_after_tax"]').val(row.company_after_tax_ctn);
-    //             $('[name="order_amount_in_ctn"]').focus();
-
-    //         }else if(json.status == "error"){
-    //             toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-    //         }
-    //         App.unblockUI('#form-wrapper');
-    //    });
-    // });
-
     var i = 1;
-
-    $('.btn_add_row').show();
-    $('.btn_add_row_edit').hide();
-    $('.btn_add_row').click(function(){
-        $("#add-table-surat tbody").append(
-            '<tr>' +
-                '<td class="text-center">'+
-                    '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
-                '</td>' +
-                '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
-                '<td class="text-center"><input onchange="get_total('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
-                '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_volume[]" id="order_volume_'+i+'"/>' +
-                '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_weight[]" id="order_weight_'+i+'"/></td>' +
-            '</tr>'
-        );
-        $('#pricelist_id_'+i).html($('#pricelist_id_tmp').html());
-        i++;
-    });
-
-    function get_total(x){
-        var amount = $('#order_amount_in_ctn_'+x).val();
-        var volume = $('#order_volume_'+x).val();
-
-        var voume_total = amount*volume;
-
-        $('#order_volume_'+x).val(voume_total);
-        
-        var total_order_amount_in_ctn = 0;
-        var total_order_price_before_tax = 0;
-        var total_order_price_after_tax = 0;
-        var total_order_amount_after_tax = 0;
-        for (var y = 1; y < i; y++) {
-            total_order_amount_in_ctn = parseInt($('#order_amount_in_ctn_'+y).val()) + parseInt(total_order_amount_in_ctn);
-            total_order_price_before_tax = parseInt($('#order_price_before_tax_'+y).val()) + parseInt(total_order_price_before_tax);
-            total_order_price_after_tax = parseInt($('#order_price_after_tax_'+y).val()) + parseInt(total_order_price_after_tax);
-            total_order_amount_after_tax = parseInt($('#order_amount_after_tax_'+y).val()) + parseInt(total_order_amount_after_tax);
-        } 
-
-        $('#total_order_amount_in_ctn').val(total_order_amount_in_ctn);
-        $('#total_order_price_before_tax').val(total_order_price_before_tax);
-        $('#total_order_price_after_tax').val(total_order_price_after_tax);
-        $('#total_order_amount_after_tax').val(total_order_amount_after_tax);
-    }
-
-    function getProduct(x){
-        $.getJSON('{{base_url()}}suratjalan/suratjalans/getPricelist', {id: $('#pricelist_id_'+x).val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data[0];
-                var i;
-                var html = "";
-
-                $('#product_name_'+x).val(row.name);
-                $('#order_price_before_tax_'+x).val(row.company_before_tax_ctn);
-                $('#order_price_after_tax_'+x).val(row.company_after_tax_ctn);
-                $('#order_amount_in_ctn_'+x).focus();
-
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-       });
-    }
 
     $('#dipo_partner_id').change(function(){
         $.getJSON('{{base_url()}}suratjalan/suratjalans/getDipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
@@ -403,7 +360,7 @@
                     html += '<option value="' + val_id + '">' + val_text + '</option>';
                 });
 
-                $('#sp_no').html(html);
+                $('#sp_id').html(html);
 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
@@ -412,20 +369,76 @@
         });
     });
 
-    $('#sp_no').change(function(){
-        $.getJSON('{{base_url()}}suratjalan/suratjalans/getspbyid', {id: $('#sp_no').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data;
-                var i;
-                var html = "";
+    $('#sp_id').change(function(){
+        if($('#sp_id').val() != ""){
+            $.getJSON('{{base_url()}}suratjalan/suratjalans/getspbyid', {id: $('#sp_id').val()}, function(json, textStatus) {
+                if(json.status == "success"){
+                    var row = json.data;
+                    var i;
+                    var html = "";
 
-                $('[name="sp_date"]').val(row.sp_date);
+                    $('[name="sp_date"]').val(formatDate(row.sp_date));
 
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-        });
+
+                    $.getJSON('{{base_url()}}suratjalan/suratjalans/viewdetailsp', {id: $('#sp_id').val()}, function(json, textStatus) {
+                        if(json.status == "success"){
+                            var rowDetail = json.dataDetail;
+                            var i;
+                            var html = "";
+                            var dataLength = rowDetail.length;
+                            var total_order = 0;
+                            var total_volume = 0;
+                            var total_weight = 0;
+
+                            $("#add-table-surat tbody").html('');
+
+                            for(i=1; i<=dataLength; i++){
+                                $("#add-table-surat tbody").append(
+                                    '<tr>' +
+                                        '<td class="text-center">'+
+                                            '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
+                                            '<input type="hidden" class="form-control input-sm" name="pricelist_id[]" id="pricelist_id_'+i+'"/>'+
+                                            '<input type="text" class="form-control input-sm" name="product_code[]" id="product_code_'+i+'" readonly/>'+
+                                        '</td>' +
+                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'" readonly/></td>' +
+                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'" readonly/></td>' +
+                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="order_volume[]" id="order_volume_'+i+'" readonly/>' +
+                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="order_weight[]" id="order_weight_'+i+'" readonly/></td>' +
+                                    '</tr>'
+                                );
+
+                                var order = rowDetail[i-1].order_amount_in_ctn;
+                                var volume = order * rowDetail[i-1].volume;
+                                var weight = volume * rowDetail[i-1].weight;
+                                $('#sp_detail_id_'+i).val(rowDetail[i-1].spdetail_id);
+                                $('#pricelist_id_'+i).val(rowDetail[i-1].pricelist_id);
+                                $('#product_code_'+i).val(rowDetail[i-1].product_code);
+                                $('#product_name_'+i).val(rowDetail[i-1].name);
+                                $('#order_amount_in_ctn_'+i).val(order);
+                                $('#order_volume_'+i).val(volume.toFixed(2));
+                                $('#order_weight_'+i).val(weight.toFixed(2));
+
+                                total_order = total_order + order;
+                                total_volume = total_volume + volume;
+                                total_weight = total_weight + weight;
+                            }
+
+                            $('#total_order_amount_in_ctn').val(total_order);
+                            $('#total_order_volume').val(total_volume.toFixed(2));
+                            $('#total_order_weight').val(total_weight.toFixed(2));
+
+                        }else if(json.status == "error"){
+                            toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                        }
+                        App.unblockUI('#form-wrapper');
+                    });
+
+                }else if(json.status == "error"){
+                    toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
     });
 
     function add_surat_jalan(){
@@ -434,6 +447,7 @@
         $('.modal-title').text('<?=lang('tambah_surat_jalan')?>'); 
 
         $('[name="id"]').val('');
+        $('[name="sj_no"]').attr('readonly', false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
 
@@ -459,14 +473,16 @@
         },
         errorElement: "span",
         rules: {
-            sp_no: "required",
+            sj_no: "required",
+            sp_id: "required",
             dipo_partner_id: "required",
             sp_date: "required",
             pricelist_id: "required",
             order_amount_in_ctn: "required",
         },
         messages: {
-            sp_no: "{{lang('sp_no')}}" + " {{lang('not_empty')}}",
+            sj_no: "{{lang('sj_no')}}" + " {{lang('not_empty')}}",
+            sp_id: "{{lang('sp_no')}}" + " {{lang('not_empty')}}",
             dipo_partner_id: "{{lang('dipo')}}" + " {{lang('not_empty')}}",
             sp_date: "{{lang('sp_date')}}" + " {{lang('not_empty')}}",
             pricelist_id: "{{lang('product_code')}}" + " {{lang('not_empty')}}",
@@ -506,34 +522,111 @@
         }
     });
 
-    function get_total_edit(x){
-        var amount = $('#order_amount_in_ctn_'+x).val();
-        var price = $('#order_price_after_tax_'+x).val();
-
-        var total = amount*price;
-
-        $('#order_amount_after_tax_'+x).val(total);
-        
-        var total_order_amount_in_ctn = 0;
-        var total_order_price_before_tax = 0;
-        var total_order_price_after_tax = 0;
-        var total_order_amount_after_tax = 0;
-        
-        for (var y = 1; y < x+1; y++) {
-            total_order_amount_in_ctn = parseInt($('#order_amount_in_ctn_'+y).val()) + parseInt(total_order_amount_in_ctn);
-            total_order_price_before_tax = parseInt($('#order_price_before_tax_'+y).val()) + parseInt(total_order_price_before_tax);
-            total_order_price_after_tax = parseInt($('#order_price_after_tax_'+y).val()) + parseInt(total_order_price_after_tax);
-            total_order_amount_after_tax = parseInt($('#order_amount_after_tax_'+y).val()) + parseInt(total_order_amount_after_tax);
-        } 
-
-        $('#total_order_amount_in_ctn').val(total_order_amount_in_ctn);
-        $('#total_order_price_before_tax').val(total_order_price_before_tax);
-        $('#total_order_price_after_tax').val(total_order_price_after_tax);
-        $('#total_order_amount_after_tax').val(total_order_amount_after_tax);
-    }
-   
     // Menampilkan data pada form
     function viewData(value){   
+        form_validator.resetForm();
+        $("html, body").animate({
+            scrollTop: 0
+        }, 500);
+        App.blockUI({
+            target: '#form-wrapper'
+        });
+
+        $.getJSON('{{base_url()}}suratjalan/suratjalans/view', {id: value}, function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data[0];
+                var i;
+                var html = "";
+
+                $('[name="sj_id"]').val(row.id);
+                $('#dipo_partner_id').val(row.dipo_id).change();
+                $('[name="sj_no"]').val(row.sj_no);
+                $('[name="dipo_name"]').val(row.dipo_name);
+                $('[name="dipo_address"]').val(row.dipo_address);
+                $('[name="dipo_pic"]').val(row.dipo_pic);
+                $('[name="dipo_phone"]').val(row.dipo_phone);
+
+                $.getJSON('{{base_url()}}suratjalan/suratjalans/getspbyid', {id: row.sp_id}, function(json, textStatus) {
+                    if(json.status == "success"){
+                        var row_sp = json.data;
+                        var i;
+                        var html = "";
+
+                        $('[name="sp_id"]').val(row.sp_id);
+                        $('[name="sp_date"]').val(formatDate(row_sp.sp_date));
+
+                        $.getJSON('{{base_url()}}suratjalan/suratjalans/viewdetailsp', {id: row.sp_id}, function(json, textStatus) {
+                            if(json.status == "success"){
+                                var rowDetail = json.dataDetail;
+                                var i;
+                                var html = "";
+                                var dataLength = rowDetail.length;
+                                var total_order = 0;
+                                var total_volume = 0;
+                                var total_weight = 0;
+
+                                $("#add-table-surat tbody").html('');
+
+                                for(i=1; i<=dataLength; i++){
+                                    $("#add-table-surat tbody").append(
+                                        '<tr>' +
+                                            '<td class="text-center">'+
+                                                '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
+                                                '<input type="hidden" class="form-control input-sm" name="pricelist_id[]" id="pricelist_id_'+i+'"/>'+
+                                                '<input type="text" class="form-control input-sm" name="product_code[]" id="product_code_'+i+'" readonly/>'+
+                                            '</td>' +
+                                            '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'" readonly/></td>' +
+                                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'" readonly/></td>' +
+                                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_volume[]" id="order_volume_'+i+'" readonly/>' +
+                                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_weight[]" id="order_weight_'+i+'" readonly/></td>' +
+                                        '</tr>'
+                                    );
+
+                                    var order = rowDetail[i-1].order_amount_in_ctn;
+                                    var volume = order * rowDetail[i-1].volume;
+                                    var weight = volume * rowDetail[i-1].weight;
+                                    $('#sp_detail_id_'+i).val(rowDetail[i-1].spdetail_id);
+                                    $('#pricelist_id_'+i).val(rowDetail[i-1].pricelist_id);
+                                    $('#product_code_'+i).val(rowDetail[i-1].product_code);
+                                    $('#product_name_'+i).val(rowDetail[i-1].name);
+                                    $('#order_amount_in_ctn_'+i).val(order);
+                                    $('#order_volume_'+i).val(volume.toFixed(2));
+                                    $('#order_weight_'+i).val(weight.toFixed(2));
+
+                                    total_order = total_order + order;
+                                    total_volume = total_volume + volume;
+                                    total_weight = total_weight + weight;
+                                }
+
+                                $('#total_order_amount_in_ctn').val(total_order);
+                                $('#total_order_volume').val(total_volume.toFixed(2));
+                                $('#total_order_weight').val(total_weight.toFixed(2));
+
+                            }else if(json.status == "error"){
+                                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                            }
+                            App.unblockUI('#form-wrapper');
+                        });
+
+                    }else if(json.status == "error"){
+                        toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                    }
+                    App.unblockUI('#form-wrapper');
+                });
+                
+                $('[name="sj_no"]').attr('readonly', true);
+                $('#modal_form').modal('show');
+                $('.modal-title').text('<?=lang('ubah_surat_jalan')?>'); 
+
+            }else if(json.status == "error"){
+                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+            }
+            App.unblockUI('#form-wrapper');
+       });
+    }
+
+    // Menampilkan detail data jalan
+    function viewDetail(value){   
         form_validator.resetForm();
         $("html, body").animate({
             scrollTop: 0
@@ -544,107 +637,28 @@
         $.getJSON('{{base_url()}}suratjalan/suratjalans/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data[0];
-                var rowDetail = json.dataDetail;
-                var i;
-                var html = "";
-                var dataLength = rowDetail.length;
-
-                $('[name="sp_id"]').val(row.id);
-                $('#dipo_partner_id').val(row.dipo_id);
-                $('[name="principle_code"]').val(row.principle_code);
-                $('[name="principle_address"]').val(row.principle_address);
-                $('[name="principle_pic"]').val(row.principle_pic);
-                $('[name="sp_no"]').val(row.sp_no);
-                $('[name="dipo_name"]').val(row.dipo_name);
-                $('[name="dipo_address"]').val(row.dipo_address);
-                $('[name="sp_date"]').val(row.sp_date);
-
-                for(i=1; i<=dataLength; i++){
-                    $("#add-table-surat tbody").append(
-                        '<tr>' +
-                            '<td class="text-center">'+
-                                '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
-                                '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
-                            '</td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
-                            '<td class="text-center"><input onchange="get_total_edit('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'"/></td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
-                        '</tr>'
-                    );
-                    $('#pricelist_id_'+i).html($('#pricelist_id_tmp').html());
-
-                    $('#sp_detail_id_'+i).val(rowDetail[i-1].spdetail_id);
-                    $('#product_name_'+i).val(rowDetail[i-1].name);
-                    $('#order_price_before_tax_'+i).val(rowDetail[i-1].company_before_tax_ctn);
-                    $('#order_price_after_tax_'+i).val(rowDetail[i-1].company_after_tax_ctn);
-                    $('#order_amount_in_ctn_'+i).val(rowDetail[i-1].order_amount_in_ctn);
-                    $('#order_amount_after_tax_'+i).val(rowDetail[i-1].order_amount_after_tax);
-                    $('#pricelist_id_'+i).val(rowDetail[i-1].pricelist_id);
-                    $('#total_order_amount_in_ctn').val(row.total_order_amount_in_ctn);
-                    $('#total_order_price_before_tax').val(row.total_order_price_before_tax);
-                    $('#total_order_price_after_tax').val(row.total_order_price_after_tax);
-                    $('#total_order_amount_after_tax').val(row.total_order_amount_after_tax);
-                }
-
-                $('.btn_add_row_edit').show();
-                $('.btn_add_row').hide();
-                var z = dataLength+1;
-
-                $('.btn_add_row_edit').click(function(){
-                    $("#add-table-surat tbody").append(
-                        '<tr>' +
-                            '<td class="text-center">'+
-                                '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
-                                '<select onchange="getProduct('+z+')" id="pricelist_id_'+z+'" name="pricelist_id[]" class="form-control"></select> '+
-                            '</td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+z+'"/></td>' +
-                            '<td class="text-center"><input onchange="get_total_edit('+z+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+z+'"/></td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+z+'"/>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+z+'"/></td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+z+'"/></td>' +
-                        '</tr>'
-                    );
-                    $('#pricelist_id_'+z).html($('#pricelist_id_tmp').html());
-                    z++;
-                });
-
-                $('#modal_form').modal('show');
-                $('.modal-title').text('<?=lang('edit_suratjalan')?>'); 
-
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-       });
-    }
-
-    // Menampilkan detail data pesanan
-    function viewDetail(value){   
-        form_validator.resetForm();
-        $("html, body").animate({
-            scrollTop: 0
-        }, 500);
-        App.blockUI({
-            target: '#form-wrapper'
-        });
-        $.getJSON('{{base_url()}}suratjalan/suratjalans/viewDetail', {id: value}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data[0];
                 var i;
                 var html = "";
 
-                $('[name="id_pesanan"]').val(row.id);
-                $('[name="principle_code"]').val(row.principle_code);
-                $('[name="principle_address"]').val(row.principle_address);
+                $('[name="sj_id"]').val(row.id);
+                $('[name="sj_no"]').val(row.sj_no);
                 $('[name="sp_no"]').val(row.sp_no);
+                $('[name="dipo_code"]').val(row.dipo_code);
                 $('[name="dipo_name"]').val(row.dipo_name);
                 $('[name="dipo_address"]').val(row.dipo_address);
-                $('[name="sp_date"]').val(row.sp_date);
+                $('[name="dipo_pic"]').val(row.dipo_pic);
+                $('[name="dipo_phone"]').val(row.dipo_phone);
+                $('[name="sp_date"]').val(formatDate(row.sp_date));
 
+                $('[name="view_total_order_amount_in_ctn"]').val(row.total_order_amount_in_ctn);
+                $('[name="view_total_order_volume"]').val(row.total_order_volume.toFixed(2));
+                $('[name="view_total_order_weight"]').val(row.total_order_weight.toFixed(2));
+                $('#tanggal_pengiriman').text(formatDate(row.sp_date))
+                $('#tanggal_penerimaan').text(formatDate(row.sp_date))
+
+                $('[name="sj_no"]').attr('readonly', true);
                 $('#modal_detail').modal('show');
-                $('.modal-title').text('<?=lang('edit_suratjalan')?>'); 
+                $('.modal-title').text('<?=lang('surat_jalan')?>'); 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -653,6 +667,7 @@
 
         //Pengaturan Datatable 
         var oTable =$('#table-surat').dataTable({
+            "destroy": true,
             "responsive": false,
             "paging": false,
             "searching": false,
@@ -660,9 +675,25 @@
             "bServerSide": true,
             "bLengthChange": true,
             "sServerMethod": "GET",
-            "sAjaxSource": "{{ base_url() }}suratjalan/suratjalans/fetch_data_pesanan/?id="+value,
-            "order": [0,"asc"],
+            "sAjaxSource": "{{ base_url() }}suratjalan/suratjalans/fetch_data_jalan/?id="+value,
+            "order": [1,"asc"],
+            "columnDefs": [
+                {"className": "dt-center", "targets": [0, 3, 4, 5]},
+                {"targets": [0], "orderable": false}
+            ],
         }).fnSetFilteringDelay(1000);
+    }
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [day, month, year].join('/');
     }
 
     // Proses hapus data
@@ -700,5 +731,14 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
+    
+    function printPdf(){
+        return window.open('{{base_url()}}reports/suratjalan/pdf/?id='+$('[name="sj_id"]').val())
+    }
+
+    function printExcel(){
+        return window.open('{{base_url()}}reports/suratjalan/excel/?id='+$('[name="sj_id"]').val())
+    }
+
 </script>
 @stop

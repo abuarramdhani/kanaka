@@ -211,6 +211,7 @@
         <script type="text/javascript">    
             $(function() {
                 $("input[type='search']").focus();
+                $('.select2').select2();
                 $('.number').mask('000000000000000');
                 $(".currency").inputmask("999,999,999",{numericInput:!0,rightAlignNumerics:!1,greedy:!1});
                 $(".currency_decimal").inputmask("999,999,999.99",{numericInput:!0,rightAlignNumerics:!1,greedy:!1});

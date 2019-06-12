@@ -413,13 +413,19 @@ $lang['invoice'] = 'Invoice';
 $lang['tambah_invoice'] = "Tambah Invoice";
 $lang['ubah_invoice'] = "Ubah Invoice";
 $lang['payment_method'] = "Payment Method";
+$lang['to'] = "To";
+$lang['date_issued'] = "Date Issued";
+$lang['price_of_orders_per_ctn_before_tax'] = "Price of Orders (Per Carton) Before Tax";
+$lang['price_of_orders_per_ctn_after_tax'] = "Price of Orders (Per Carton) After Tax";
+$lang['order_amount_after_tax'] = "Order Amount (After Tax)";
+$lang['note'] = "Note";
 ## END INVOICE ##
 
-## INVOICE ##
+## CHART OF ACCOUNT ##
 $lang['chartofaccount'] = 'Chart Of Accounts';
 $lang['new_chartofaccount'] = "New Chart Of Account";
 $lang['edit_chartofaccount'] = "Edit Chart Of Account";
-## END INVOICE ##
+## END CHART OF ACCOUNT ##
 
 ## JURNAL ##
 $lang['jurnal'] = 'Jurnal';
@@ -429,3 +435,4 @@ $lang['month'] = "Month";
 $lang['debet'] = "Debet";
 $lang['kredit'] = "Kredit";
 ## END JURNAL ##
+

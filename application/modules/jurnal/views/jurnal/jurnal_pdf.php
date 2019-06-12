@@ -75,6 +75,9 @@
 					?>
 					<td><?= date('d-m-Y',strtotime($row->date_created)) ?></td>
 				</tr>
+			<?php 
+				}
+			?>
 				<tfoot>
 					<tr>
 						<td align="right" colspan="8">Total &nbsp; </td>
@@ -83,8 +86,7 @@
 						<td>&nbsp;</td>
 					</tr>
 				</tfoot>
-			<?php 
-				}
+			<?php
 			}
 			else{
 			?>

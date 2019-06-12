@@ -59,7 +59,7 @@
                             <tr>
                                 <th class="text-center"><?=lang('no_sp')?></th>
                                 <th class="text-center"><?=lang('principle_code')?></th>
-                                <th class="text-center"><?=lang('principle_address')?></th>
+                                <th class="text-center"><?=lang('principle_name')?></th>
                                 <th class="text-center"><?=lang('principle_pic')?></th>
                                 <th class="text-center"><?=lang('dipo_name')?></th>
                                 <th class="text-center"><?=lang('dipo_address')?></th>
@@ -96,7 +96,7 @@
                             <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
                     <?php } } ?>
                 </select>  
-                <input readonly type="text" class="form-control input-sm" name="principle_address" id="principle_address" placeholder="<?=lang('principle_address')?>" />
+                <input readonly type="text" class="form-control input-sm" name="principle_name" id="principle_name" placeholder="<?=lang('principle_name')?>" />
                 <input readonly type="text" class="form-control input-sm" name="principle_pic" id="principle_pic" placeholder="<?=lang('principle_pic')?>" />
                 <div class="form-control-focus"> </div>
             </div>
@@ -144,7 +144,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label">Metode Pembayaran</label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="metode_pembayaran" id="metode_pembayaran" placeholder="Metode Pembayaran" maxlength="50" />
+                <input readonly type="text" class="form-control input-sm" name="metode_pembayaran" id="metode_pembayaran" placeholder="Metode Pembayaran" maxlength="50" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -214,7 +214,7 @@
             <label class="col-lg-4 control-label">Kepada</label>
             <div class="col-lg-7">
                 <input type="text" class="form-control input-sm" name="principle_code" id="principle_code" placeholder="<?=lang('principle_code')?>" maxlength="50" />
-                <input type="text" class="form-control input-sm" name="principle_address" id="principle_address" placeholder="<?=lang('principle_address')?>" />
+                <input type="text" class="form-control input-sm" name="principle_name" id="principle_name" placeholder="<?=lang('principle_name')?>" />
                 <input type="text" class="form-control input-sm" name="principle_pic" id="principle_pic" placeholder="<?=lang('pic')?>" />
                <div class="form-control-focus"> </div>
             </div>
@@ -450,8 +450,9 @@
                 var i;
                 var html = "";
 
-                $('[name="principle_address"]').val(row.address);
+                $('[name="principle_name"]').val(row.name);
                 $('[name="principle_pic"]').val(row.pic);
+                $('[name="metode_pembayaran"]').val(row.top);
                 $('[name="no_sp"]').focus();
 
             }else if(json.status == "error"){
@@ -606,8 +607,9 @@
                 $('#principle_id').val(row.principle_id);
                 $('#dipo_partner_id').val(row.dipo_id);
                 $('[name="principle_code"]').val(row.principle_code);
-                $('[name="principle_address"]').val(row.principle_address);
+                $('[name="principle_name"]').val(row.principle_name);
                 $('[name="principle_pic"]').val(row.principle_pic);
+                $('[name="metode_pembayaran"]').val(row.metode_pembayaran);
                 $('[name="no_sp"]').val(row.sp_no);
                 $('[name="dipo_name"]').val(row.dipo_name);
                 $('[name="dipo_address"]').val(row.dipo_address);
@@ -711,7 +713,8 @@
 
                 $('[name="id_pesanan"]').val(row.id);
                 $('[name="principle_code"]').val(row.principle_code);
-                $('[name="principle_address"]').val(row.principle_address);
+                $('[name="principle_name"]').val(row.principle_name);
+                $('[name="metode_pembayaran"]').val(row.metode_pembayaran);
                 $('[name="no_sp"]').val(row.sp_no);
                 $('[name="dipo_name"]').val(row.dipo_name);
                 $('[name="dipo_address"]').val(row.dipo_address);

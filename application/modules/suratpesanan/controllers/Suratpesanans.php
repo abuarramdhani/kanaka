@@ -27,7 +27,7 @@ class Suratpesanans extends MX_Controller {
         $database_columns = array(
             't_sp.id',
             'm_principle.code as principle_code',
-            'm_principle.address as principle_address',
+            'm_principle.name as principle_name',
             'm_principle.pic as principle_pic',
             't_sp.sp_no',
             'm_dipo_partner.name as dipo_name',
@@ -88,7 +88,7 @@ class Suratpesanans extends MX_Controller {
         
             $row_value[] = $row->sp_no;
             $row_value[] = $row->principle_code;
-            $row_value[] = $row->principle_address;
+            $row_value[] = $row->principle_name;
             $row_value[] = $row->principle_pic;
             $row_value[] = $row->dipo_name;
             $row_value[] = $row->dipo_address;
@@ -319,7 +319,7 @@ class Suratpesanans extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $dataPesanan = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_principle.pic as principle_pic', 'm_principle.id as principle_id', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.id as dipo_id')
+            $dataPesanan = Suratpesanan::select('t_sp.*','m_principle.top as metode_pembayaran', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_principle.id as principle_id', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.id as dipo_id')
                                         ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                         ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                         ->where('t_sp.id', $id)
@@ -344,7 +344,7 @@ class Suratpesanans extends MX_Controller {
     public function viewDetail() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $dataPesanan = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address')
+            $dataPesanan = Suratpesanan::select('t_sp.*', 'm_principle.top as metode_pembayaran', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address')
                                         ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                         ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                         ->where('t_sp.id', $id)
@@ -435,7 +435,7 @@ class Suratpesanans extends MX_Controller {
 
     function pdf(){
         $id = (int) $this->input->get('id');
-        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
+        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
                                     ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                     ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                     ->where('t_sp.id', $id)
@@ -455,7 +455,7 @@ class Suratpesanans extends MX_Controller {
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=suratpesanan.xls");
         $id = (int) $this->input->get('id');
-        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
+        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
                                     ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                     ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                     ->where('t_sp.id', $id)

@@ -33,7 +33,7 @@
 				<th align="left" colspan="2" style="border-bottom: 1px solid black"><?= $suratpesanan->principle_code ?></th>
 			</tr>
 			<tr style="font-size:12px">
-				<th colspan="2" align="left" style="border-bottom: 1px solid black"><?= $suratpesanan->principle_address ?></th>
+				<th colspan="2" align="left" style="border-bottom: 1px solid black"><?= $suratpesanan->principle_name ?></th>
 			</tr>
 			<tr style="font-size:12px">
 				<th colspan="2" align="left" style="border-bottom: 1px solid black"><?= $suratpesanan->principle_pic ?></th>

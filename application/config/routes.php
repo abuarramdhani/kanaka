@@ -211,3 +211,17 @@ $route['reports/suratjalan/excel'] = 'suratjalan/suratjalans/excel';
 $route['reports/invoice'] = 'invoice/invoices/index';
 $route['reports/invoice/pdf'] = 'invoice/invoices/pdf';
 $route['reports/invoice/excel'] = 'invoice/invoices/excel';
+
+/**
+* CHART OF ACCOUNTS
+*/
+$route['master/chartofaccount'] = 'chartofaccount/chartofaccounts/index';
+$route['master/chartofaccount/pdf'] = 'chartofaccount/chartofaccounts/pdf';
+$route['master/chartofaccount/excel'] = 'chartofaccount/chartofaccounts/excel';
+
+/**
+* JURNAL
+*/
+$route['reports/jurnal'] = 'jurnal/jurnals/index';
+$route['reports/jurnal/pdf'] = 'jurnal/jurnals/pdf';
+$route['reports/jurnal/excel'] = 'jurnal/jurnals/excel';

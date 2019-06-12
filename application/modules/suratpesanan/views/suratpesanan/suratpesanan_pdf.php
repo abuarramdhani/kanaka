@@ -57,7 +57,7 @@
 			</tr>
 			<tr style="font-size:12px">
 				<th align="left">Metode Pembayaran</th>
-				<th colspan="2" align="left" style="border-bottom: 1px solid black">-</th>
+				<th colspan="2" align="left" style="border-bottom: 1px solid black"><?= $suratpesanan->principle_top ?></th>
 			</tr>
 			<tr>
 				<th colspan="3">&nbsp;</th>

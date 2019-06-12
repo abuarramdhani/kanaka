@@ -435,7 +435,7 @@ class Suratpesanans extends MX_Controller {
 
     function pdf(){
         $id = (int) $this->input->get('id');
-        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
+        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.top as principle_top', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
                                     ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                     ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                     ->where('t_sp.id', $id)
@@ -455,7 +455,7 @@ class Suratpesanans extends MX_Controller {
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=suratpesanan.xls");
         $id = (int) $this->input->get('id');
-        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
+        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.top as principle_top', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
                                     ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                     ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                     ->where('t_sp.id', $id)

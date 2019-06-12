@@ -420,3 +420,19 @@ $lang['price_of_orders_per_ctn_after_tax'] = "Price of Orders (Per Carton) After
 $lang['order_amount_after_tax'] = "Order Amount (After Tax)";
 $lang['note'] = "Note";
 ## END INVOICE ##
+
+## CHART OF ACCOUNT ##
+$lang['chartofaccount'] = 'Chart Of Accounts';
+$lang['new_chartofaccount'] = "New Chart Of Account";
+$lang['edit_chartofaccount'] = "Edit Chart Of Account";
+## END CHART OF ACCOUNT ##
+
+## JURNAL ##
+$lang['jurnal'] = 'Jurnal';
+$lang['new_jurnal'] = "New Jurnal";
+$lang['edit_jurnal'] = "Edit Jurnal";
+$lang['month'] = "Month";
+$lang['debet'] = "Debet";
+$lang['kredit'] = "Kredit";
+## END JURNAL ##
+

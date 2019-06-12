@@ -89,7 +89,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('account')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-               <select id="dipo_partner_id" name="dipo_partner_id" class="form-control">
+               <select id="dipo_partner_id" name="dipo_partner_id" class="form-control select2">
                     <option selected disabled value=""><?=lang('select_your_option')?></option>
                     <?php
                         if (!empty($dipos)) {
@@ -150,9 +150,9 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Tanggal<span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label">{{ lang('date_issued') }}<span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="sp_date" id="sp_date" placeholder="<?=lang('sp_date')?>" readonly="readonly" maxlength="10" />
+                <input type="text" class="form-control input-sm" name="sp_date" id="sp_date" placeholder="<?=lang('date_issued')?>" readonly="readonly" maxlength="10" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -259,9 +259,9 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Tanggal<span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label">{{ lang('date_issued') }}<span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="sp_date" id="sp_date" placeholder="<?=lang('sp_date')?>" readonly="readonly" maxlength="10" />
+                <input type="text" class="form-control input-sm" name="sp_date" id="sp_date" placeholder="<?=lang('date_issued')?>" readonly="readonly" maxlength="10" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -446,7 +446,7 @@
         $('#modal_form').modal('show'); 
         $('.modal-title').text('<?=lang('tambah_surat_jalan')?>'); 
 
-        $('[name="id"]').val('');
+        $('[name="sj_id"]').val('');
         $('[name="sj_no"]').attr('readonly', false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
@@ -460,7 +460,6 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}suratjalan/suratjalans/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [5]},
             {"targets": [9], "orderable": false}
         ],
         "order": [0,"asc"],
@@ -477,16 +476,12 @@
             sp_id: "required",
             dipo_partner_id: "required",
             sp_date: "required",
-            pricelist_id: "required",
-            order_amount_in_ctn: "required",
         },
         messages: {
             sj_no: "{{lang('sj_no')}}" + " {{lang('not_empty')}}",
             sp_id: "{{lang('sp_no')}}" + " {{lang('not_empty')}}",
-            dipo_partner_id: "{{lang('dipo')}}" + " {{lang('not_empty')}}",
-            sp_date: "{{lang('sp_date')}}" + " {{lang('not_empty')}}",
-            pricelist_id: "{{lang('product_code')}}" + " {{lang('not_empty')}}",
-            order_amount_in_ctn: "Jumlah Pesanan (Per Karton)" + " {{lang('not_empty')}}",
+            dipo_partner_id: "{{lang('account')}}" + " {{lang('not_empty')}}",
+            sp_date: "{{lang('date_issued')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({

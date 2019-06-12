@@ -17,9 +17,8 @@ class Invoices extends MX_Controller {
         $data['add_access'] = $this->user_profile->get_user_access('Created', 'invoice');
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'invoice');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'invoice');
-        $data['principles'] = Principle::where('deleted', '0')->get();
-        $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', '0')->where('m_product.deleted', '0')->get();
         $data['dipos'] = Dipo::where('deleted', '0')->get();
+
         $this->load->blade('invoice.views.invoice.page', $data);
     }
 
@@ -55,7 +54,7 @@ class Invoices extends MX_Controller {
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
         $join[] = array('t_sj', 't_sj.id = t_invoice.sj_id', 'inner');
         $join[] = array('t_sp', 't_sp.id = t_sj.sp_id', 'inner');
-        $join[] = array('m_dipo_partner', 'm_dipo_partner.id = t_invoice.dipo_partner_id', 'inner');
+        $join[] = array('m_dipo_partner', 'm_dipo_partner.id = t_sp.dipo_partner_id', 'inner');
 
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
@@ -117,7 +116,7 @@ class Invoices extends MX_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($selected_data));
     }
 
-    public function fetch_data_pesanan() {
+    public function fetch_data_jalan() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($_GET['id']);
             $database_columns = array(
@@ -125,20 +124,21 @@ class Invoices extends MX_Controller {
                 'product_code',
                 'm_product.name as product_name',
                 'order_amount_in_ctn',
-                'company_before_tax_ctn',
-                'company_after_tax_ctn',
+                'order_volume',
+                'order_weight',
             );
     
             $header_columns = array(
+                'id',
                 'product_code',
                 'product_name',
                 'order_amount_in_ctn',
-                'company_before_tax_ctn',
-                'company_after_tax_ctn',
+                'order_volume',
+                'order_weight',
             );
     
             $from = "t_sp_detail";
-            $where = "t_sp_detail.deleted = 0 AND sp_id =".$id;
+            $where = "t_sp_detail.deleted = 0 AND sp_id =".Invoice::find($id)->sp_id;
             $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
             $join[] = array('t_sp', 't_sp.id = t_sp_detail.sp_id', 'inner');
             $join[] = array('t_pricelist', 't_pricelist.id = t_sp_detail.pricelist_id', 'inner');
@@ -153,15 +153,17 @@ class Invoices extends MX_Controller {
             $selected_data = $this->datatables->get_select_data();
             $aa_data = $selected_data['aaData'];
             $new_aa_data = array();
+            $no = 1;
             
             foreach ($aa_data as $row) {
                 $row_value = array();
-    
+                
+                $row_value[] = $no++;    
                 $row_value[] = $row->product_code;
                 $row_value[] = $row->product_name;
                 $row_value[] = $row->order_amount_in_ctn;
-                $row_value[] = $row->company_before_tax_ctn;
-                $row_value[] = $row->company_after_tax_ctn;
+                $row_value[] = $row->order_volume;
+                $row_value[] = $row->order_weight;
                 
                 $new_aa_data[] = $row_value;
             }
@@ -176,168 +178,134 @@ class Invoices extends MX_Controller {
     public function save() {
         if ($this->input->is_ajax_request()) {
             $user = $this->ion_auth->user()->row();
-            $id_invoice = $this->input->post('id');
-            // $get_invoice = Product::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
+            $id_invoice = $this->input->post('invoice_id');
+
+            $get_invoice = Invoice::where('invoice_no' , $this->input->post('invoice_no'))->where('deleted', 0)->first();
             if (empty($id_invoice)) {
-                // if (!empty($get_invoice->name)) {
-                //     $status = array('status' => 'unique', 'message' => lang('already_exist'));
-                // }else{
-                    
-                    $principle_id = $this->input->post('principle_id');
-                    $no_sp = $this->input->post('no_sp');
+                if (!empty($get_invoice->invoice_no)) {
+                    $status = array('status' => 'unique', 'message' => lang('already_exist'));
+                }else{
                     $dipo_partner_id = $this->input->post('dipo_partner_id');
-                    $sp_date = $this->input->post('sp_date');
+                    $invoice_no = $this->input->post('invoice_no');
+                    $sj_id = $this->input->post('sj_id');
+                    $due_date = date('Y-m-d', strtotime(str_replace('/','-',$this->input->post('due_date'))));
+                    $note = $this->input->post('note');
+                    $total_niv = $this->input->post('total_order_amount_after_tax');
+                    
+                    $sj_data = array(
+                        'invoice_no'    => $invoice_no,
+                        'sj_id'         => $sj_id,
+                        'due_date'      => $due_date,
+                        'note'          => $note,
+                        'total_niv'     => $total_niv,
+                        'user_created'  => $user->id,
+                        'date_created'  => date('Y-m-d'),
+                        'time_created'  => date('H:i:s')
+                    );
 
-                    $dataPesanan = array('principle_id' => $principle_id,
-                                      'sp_no'           => $no_sp,
-                                      'dipo_partner_id' => $dipo_partner_id,
-                                      'sp_date'         => date('Y-m-d',strtotime($sp_date)),
-                                      'date_created'    => date('Y-m-d'),
-                                      'time_created'    => date('H:i:s'));
+                    $save   = $this->db->insert('t_invoice', $sj_data);
 
-                    $save            = $this->db->insert('t_sp', $dataPesanan);
-                    $id_sp           = $this->db->insert_id();
-
-                    if(!empty($this->input->post('product_name'))){
-                        $productCount = count($this->input->post('product_name'));
-                        for($i = 0; $i < $productCount; $i++){ 
-                            $dataDetail = array('sp_id'               => $id_sp,
-                                                'pricelist_id'        => $this->input->post('pricelist_id')[$i],
-                                                'order_amount_in_ctn' => $this->input->post('order_amount_in_ctn')[$i],
-                                                'date_created'        => date('Y-m-d'),
-                                                'time_created'        => date('H:i:s'));
-                            $saveDetail = $this->db->insert('t_sp_detail', $dataDetail);
+                    if(!empty($this->input->post('sp_detail_id'))){
+                        $sp_detail_data = count($this->input->post('sp_detail_id'));
+                        for($i = 0; $i < $sp_detail_data; $i++){ 
+                            $dataDetail = array(
+                                'order_price_dipo_before_tax'   => $this->input->post('order_price_before_tax')[$i],
+                                'order_price_dipo_after_tax'    => $this->input->post('order_price_after_tax')[$i],
+                                'order_amount_dipo_after_tax'   => $this->input->post('order_amount_after_tax')[$i],
+                                'user_modified' => $user->id,
+                                'date_modified' => date('Y-m-d'),
+                                'time_modified' => date('H:i:s')
+                            );
+                            $this->db->where('id', $this->input->post('sp_detail_id')[$i]);
+                            $saveDetail = $this->db->update('t_sp_detail', $dataDetail);
                         }
                     }
 
                     if ($save) {
                         $data_notif = array(
-                            'Principle'       => Principle::find($principle_id)->code,
-                            'No SP'           => $no_sp,
-                            'DIPO'            => Dipo::find($dipo_partner_id)->name,
-                            'sp_date'         => $sp_date,
+                            'Invoice No'    => $invoice_no,
+                            'SJ No'         => Suratjalan::find($sj_id)->sj_no,
+                            'SP No'         => Suratpesanan::find(Suratjalan::find($sj_id)->sp_id)->sp_no,
+                            'Account'       => Dipo::find($dipo_partner_id)->name,
+                            'Due Date'      => date('d-m-Y', strtotime($due_date)),
+                            'Note'          => $note == '' ? '-' : $note,
                         );
-                        $message = "Add " . strtolower(lang('invoice')) . " " . $no_sp . " succesfully by " . $user->full_name;
-                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 13);
+                        $message = "Add " . strtolower(lang('invoice')) . " " . $invoice_no . " succesfully by " . $user->full_name;
+                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 15);
                         $status = array('status' => 'success', 'message' => lang('message_save_success'));
                     } else {
                         $status = array('status' => 'error', 'message' => lang('message_save_failed'));
                     }
-                // }
+                }
             } elseif(!empty($id_invoice)) {
-                $model = Product::find($id_invoice);
-                $name = ucwords($this->input->post('name'));
-                $category_id = $this->input->post('category_id');
-                $invoice_code = $this->input->post('invoice_code');
-                $description = $this->input->post('description');
-                $feature = $this->input->post('feature');
-                $barcode_invoice = $this->input->post('barcode_invoice');
-                $barcode_carton = $this->input->post('barcode_carton');
-                $packing_size = $this->input->post('packing_size');
-                $qty = $this->input->post('qty');
-                $weight = $this->input->post('weight');
-                $length = $this->input->post('length');
-                $width = $this->input->post('width');
-                $height = $this->input->post('height');
-                $volume = $this->input->post('volume');
+                $model = Invoice::find($id_invoice);
+                $dipo_partner_id = $this->input->post('dipo_partner_id');
+                $invoice_no = $this->input->post('invoice_no');
+                $sj_id = $this->input->post('sj_id');
+                $due_date = date('Y-m-d', strtotime(str_replace('/','-',$this->input->post('due_date'))));
+                $note = $this->input->post('note');
+                $total_niv = $this->input->post('total_order_amount_after_tax');
             
                 $data_old = array(
-                    'Name'            => $model->name,
-                    'Category'        => $model->category_id,
-                    'Product Code'    => $model->invoice_code,
-                    'Description'     => $model->description,
-                    'Feature'         => $model->feature,
-                    'Barcode Product' => $model->barcode_invoice,
-                    'Barcode Carton'  => $model->barcode_carton,
-                    'Packing Size'    => $model->packing_size,
-                    'Qty'             => $model->qty,
-                    'Length'          => $model->length,
-                    'Height'          => $model->height,
-                    'Width'           => $model->width,
-                    'Volume'          => $model->volume,
-                    'Weight'          => $model->weight,
+                    'Invoice No'    => $model->invoice_no,
+                    'SJ No'         => Suratjalan::find($model->sj_id)->sj_no,
+                    'SP No'         => Suratpesanan::find(Suratjalan::find($model->sj_id)->sp_id)->sp_no,
+                    'Account'       => Dipo::find(Suratpesanan::find(Suratjalan::find($model->sj_id)->sp_id)->dipo_partner_id)->name,
+                    'Due Date'      => date('d-m-Y', strtotime($model->due_date)),
+                    'Note'          => $model->note == '' ? '-' : $model->note,
                 );
 
-                $model->name            = $name;
-                $model->category_id     = $category_id;
-                $model->invoice_code             = $invoice_code;
-                $model->description     = $description;
-                $model->feature         = $feature;
-                $model->barcode_invoice = $barcode_invoice;
-                $model->barcode_carton  = $barcode_carton;
-                $model->packing_size    = $packing_size;
-                $model->qty             = $qty;
-                $model->length     = $length;
-                $model->height     = $height;
-                $model->width     = $width;
-                $model->volume   = $volume;
-                $model->weight          = $weight;
+                $dataDetail_old = array(
+                    'order_price_dipo_before_tax'   => 0,
+                    'order_price_dipo_after_tax'    => 0,
+                    'order_amount_dipo_after_tax'   => 0,
+                    'user_modified'                 => $user->id,
+                    'date_modified'                 => date('Y-m-d'),
+                    'time_modified'                 => date('H:i:s')
+                );
+                $this->db->where('sp_id', Suratjalan::find($model->sj_id)->sp_id);
+                $this->db->update('t_sp_detail', $dataDetail_old);
+
+                $model->invoice_no  = $invoice_no;
+                $model->sj_id       = $sj_id;
+                $model->due_date    = $due_date;
+                $model->note        = $note;
+                $model->total_niv   = $total_niv;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
                 $model->time_modified = date('H:i:s');
                 $update = $model->save();
 
-                if(!empty($_FILES['upload_Files']['name'])){
-                    $filesCount = count($_FILES['upload_Files']['name']);
-                    for($i = 0; $i < $filesCount; $i++){ 
-                        $_FILES['upload_File']['name']      = $_FILES['upload_Files']['name'][$i]; 
-                        $_FILES['upload_File']['type']      = $_FILES['upload_Files']['type'][$i]; 
-                        $_FILES['upload_File']['tmp_name']  = $_FILES['upload_Files']['tmp_name'][$i]; 
-                        $_FILES['upload_File']['error']     = $_FILES['upload_Files']['error'][$i]; 
-                        $_FILES['upload_File']['size']      = $_FILES['upload_Files']['size'][$i]; 
-                        
-                        // File upload configuration
-                        $uploadPath = 'uploads/images/invoices/'; 
-                        $config['upload_path'] = $uploadPath; 
-                        $config['allowed_types'] = 'gif|jpg|png'; 
-
-                        // Load and initialize upload library
-                        $this->load->library('upload', $config);
-                        $this->upload->initialize($config);
-
-                        // Upload file to server
-                        if($this->upload->do_upload('upload_File')){
-                            // Uploaded file data
-                            $fileData = $this->upload->data();
-                            $uploadData[$i]['invoice_id']   = $id_invoice;
-                            $uploadData[$i]['order']        = $i+1;
-                            $uploadData[$i]['file_name']    = $fileData['file_name'];
-                        
-                            $imageModel = new ProductImage();
-                            $imageModel->invoice_id = $id_invoice;
-                            $imageModel->order      = $i+1;
-                            $imageModel->image      = $uploadData[$i]['file_name'];
-
-                            $imageModel->user_created = $user->id;
-                            $imageModel->date_created = date('Y-m-d');
-                            $imageModel->time_created = date('H:i:s');
-                            $saveImage = $imageModel->save();
-                        }
+                if(!empty($this->input->post('sp_detail_id'))){
+                    $sp_detail_data = count($this->input->post('sp_detail_id'));
+                    for($i = 0; $i < $sp_detail_data; $i++){ 
+                        $dataDetail = array(
+                            'order_price_dipo_before_tax'   => $this->input->post('order_price_before_tax')[$i],
+                            'order_price_dipo_after_tax'    => $this->input->post('order_price_after_tax')[$i],
+                            'order_amount_dipo_after_tax'   => $this->input->post('order_amount_after_tax')[$i],
+                            'user_modified' => $user->id,
+                            'date_modified' => date('Y-m-d'),
+                            'time_modified' => date('H:i:s')
+                        );
+                        $this->db->where('id', $this->input->post('sp_detail_id')[$i]);
+                        $saveDetail = $this->db->update('t_sp_detail', $dataDetail);
                     }
                 }
 
                 if ($update) {
                     $data_new = array(
-                        'Name'            => $name,
-                        'Category'        => $category_id,
-                        'Product Code'    => $invoice_code,
-                        'Description'     => $description,
-                        'Feature'         => $feature,
-                        'Barcode Product' => $barcode_invoice,
-                        'Barcode Carton'  => $barcode_carton,
-                        'Packing Size'    => $packing_size,
-                        'Qty'             => $qty,
-                        'Length'          => $length,
-                        'Height'          => $height,
-                        'Width'           => $width,
-                        'Volume'          => $volume,
-                        'Weight'          => $weight,
+                        'Invoice No'    => $invoice_no,
+                        'SJ No'         => Suratjalan::find($sj_id)->sj_no,
+                        'SP No'         => Suratpesanan::find(Suratjalan::find($sj_id)->sp_id)->sp_no,
+                        'Account'       => Dipo::find($dipo_partner_id)->name,
+                        'Due Date'      => date('d-m-Y', strtotime($due_date)),
+                        'Note'          => $note == '' ? '-' : $note,
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
-                    $message = "Update " . strtolower(lang('invoice')) . " " .  $model->name . " succesfully by " . $user->full_name;
-                    $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 13);
+                    $message = "Update " . strtolower(lang('invoice')) . " " .  $model->invoice_no . " succesfully by " . $user->full_name;
+                    $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 15);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
                     $status = array('status' => 'error', 'message' => lang('message_save_failed'));
@@ -353,23 +321,14 @@ class Invoices extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $model = array('status' => 'success', 'data' => Product::find($id), 'image' => ProductImage::where('invoice_id', $id)->where('deleted', '0')->get());
-        } else {
-            $model = array('status' => 'error', 'message' => 'Not Found.');
-        }
-        $data = $model;
-        $this->output->set_content_type('application/json')->set_output(json_encode($data));
-    }
-
-    public function viewDetail() {
-        if ($this->input->is_ajax_request()) {
-            $id = (int) uri_decrypt($this->input->get('id'));
-            $dataPesanan = Suratjalan::select('t_sp.*', 'm_principle.code as principle_code', 'm_principle.address as principle_address', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.address as dipo_address')
-                                        ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
+            $sj_data = Invoice::select('t_invoice.*', 't_sp.sp_no', 't_sp.sp_date', 'm_dipo_partner.id as dipo_id', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.phone as dipo_phone', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.pic as dipo_pic', 'm_dipo_partner.top as dipo_top')
+                                        ->join('t_sj', 't_sj.id', '=', 't_invoice.sj_id')
+                                        ->join('t_sp', 't_sp.id', '=', 't_sj.sp_id')
                                         ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
-                                        ->where('t_sp.id', $id)
-                                        ->where('t_sp.deleted', 0)->get();
-            $model = array('status' => 'success', 'data' => $dataPesanan);
+                                        ->where('t_invoice.id', $id)
+                                        ->where('t_invoice.deleted', 0)->get();
+
+            $model = array('status' => 'success', 'data' => $sj_data);
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }
@@ -377,21 +336,20 @@ class Invoices extends MX_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
-    public function getPrinciple() {
+    public function viewdetailsj() {
         if ($this->input->is_ajax_request()) {
-            $id = (int)$this->input->get('id');
-            $model = array('status' => 'success', 'data' => Principle::find($id));
-        } else {
-            $model = array('status' => 'error', 'message' => 'Not Found.');
-        }
-        $data = $model;
-        $this->output->set_content_type('application/json')->set_output(json_encode($data));
-    }
-
-    public function getPricelist() {
-        if ($this->input->is_ajax_request()) {
-            $id = (int)$this->input->get('id');
-            $model = array('status' => 'success', 'data' => Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', '0')->where('m_product.deleted', '0')->where('t_pricelist.id', $id)->get());
+            $id = (int) $this->input->get('id');
+            $dataDetail = Spdetail::select('t_sp.*', 't_sp_detail.*', 't_sp_detail.id as spdetail_id', 'm_product.*', 't_pricelist.dipo_after_tax_ctn as price_after_tax')
+                                    ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
+                                    ->join('t_sj', 't_sj.sp_id', '=', 't_sp.id')
+                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->where('t_sj.id', $id)
+                                    ->where('t_sp_detail.deleted', 0)
+                                    ->where('t_sp.deleted', 0)
+                                    ->where('t_pricelist.deleted', 0)
+                                    ->where('m_product.deleted', 0)->get();
+            $model = array('status' => 'success', 'dataDetail' => $dataDetail);
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }
@@ -410,11 +368,33 @@ class Invoices extends MX_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
+    public function getsjbydipo() {
+        if ($this->input->is_ajax_request()) {
+            $id = (int)$this->input->get('id');
+            $model = array('status' => 'success', 'data' => Suratjalan::select('t_sj.*')->join('t_sp', 't_sp.id', '=', 't_sj.sp_id')->where('t_sp.dipo_partner_id', $id)->where('t_sj.deleted', 0)->where('t_sp.deleted', 0)->get());
+        } else {
+            $model = array('status' => 'error', 'message' => 'Not Found.');
+        }
+        $data = $model;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    public function getsjbyid() {
+        if ($this->input->is_ajax_request()) {
+            $id = (int)$this->input->get('id');
+            $model = array('status' => 'success', 'data' => Suratjalan::select('t_sp.*')->join('t_sp', 't_sp.id', '=', 't_sj.sp_id')->where('t_sj.id', $id)->where('t_sj.deleted', 0)->where('t_sp.deleted', 0)->first());
+        } else {
+            $model = array('status' => 'error', 'message' => 'Not Found.');
+        }
+        $data = $model;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
     public function delete() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
             $user = $this->ion_auth->user()->row();
-            $model = Product::find($id);
+            $model = Invoice::find($id);
             if (!empty($model)) {
                 $model->deleted = 1;
                 $model->user_deleted = $user->id;
@@ -422,24 +402,30 @@ class Invoices extends MX_Controller {
                 $model->time_deleted = date('H:i:s');
                 $delete = $model->save();
 
+                $modelDetail = Spdetail::where('sp_id', $id)->get();
+                if (!empty($modelDetail)) {
+                    $dataDetail = array( 
+                        'order_price_dipo_before_tax'   => 0,
+                        'order_price_dipo_after_tax'    => 0,
+                        'order_amount_dipo_after_tax'   => 0,
+                        'user_modified'                 => $user->id,
+                        'date_modified'                 => date('Y-m-d'),
+                        'time_modified'                 => date('H:i:s')
+                    );
+                    $this->db->where('sp_id', Suratjalan::find($model->sj_id)->sp_id);
+                    $this->db->update('t_sp_detail', $dataDetail);
+                }
+
                 $data_notif = array(
-                    'Name'            => $model->name,
-                    'Category'        => Category::find($category_id)->name,
-                    'Product Code'    => $model->invoice_code,
-                    'Description'     => $model->description,
-                    'Feature'         => $model->feature,
-                    'Barcode Product' => $barcode_invoice,
-                    'Barcode Carton'  => $barcode_carton,
-                    'Packing Size'    => $packing_size,
-                    'Qty'             => $qty,
-                    'Length'          => $length,
-                    'Height'          => $height,
-                    'Width'           => $width,
-                    'Volume'          => $volume,
-                    'Weight'          => $weight,
+                    'Invoice No'    => $model->invoice_no,
+                    'SJ No'         => Suratjalan::find($model->sj_id)->sj_no,
+                    'SP No'         => Suratpesanan::find(Suratjalan::find($model->sj_id)->sp_id)->sp_no,
+                    'Account'       => Dipo::find(Suratpesanan::find(Suratjalan::find($model->sj_id)->sp_id)->dipo_partner_id)->name,
+                    'Due Date'      => date('d-m-Y', strtotime($model->due_date)),
+                    'Note'          => $model->note == '' ? '-' : $model->note,
                 );
-                $message = "Delete " . strtolower(lang('invoice')) . " " .  $model->name . " succesfully by " . $user->full_name;
-                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 13);
+                $message = "Delete " . strtolower(lang('invoice')) . " " .  $model->invoice_no . " succesfully by " . $user->full_name;
+                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 15);
                 $status = array('status' => 'success');
             } else {
                 $status = array('status' => 'error');
@@ -452,15 +438,39 @@ class Invoices extends MX_Controller {
     }
 
     function pdf(){
-        $data['invoices'] = Product::join('m_category', 't_sp.category_id', '=', 'm_category.id')->where('t_sp.deleted', 0)->where('m_category.deleted', 0)->orderBy('t_sp.id', 'DESC')->get();
+        $id = (int) $this->input->get('id');
+        $data['row'] = Invoice::select('t_sj.*', 't_sp.sp_no', 't_sp.sp_date', 'm_dipo_partner.id as dipo_id', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.phone as dipo_phone', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.pic as dipo_pic')
+                                    ->join('t_sp', 't_sp.id', '=', 't_sj.sp_id')
+                                    ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
+                                    ->where('t_sj.id', $id)
+                                    ->where('t_sj.deleted', 0)->first();
+        $data['datadetails'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
+                                    ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
+                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->where('sp_id', $data['row']->sp_id)
+                                    ->where('t_sp_detail.deleted', 0)
+                                    ->where('t_sp.deleted', 0)->get();
         $html = $this->load->view('invoice/invoice/invoice_pdf', $data, true);
-        $this->pdf_generator->generate($html, 'invoice pdf', $orientation='Portrait');
+        $this->pdf_generator->generate($html, 'invoice pdf', $orientation='Landscape');
     }
 
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=invoice.xls");
-        $data['invoices'] = Product::join('m_category', 't_sp.category_id', '=', 'm_category.id')->where('t_sp.deleted', 0)->where('m_category.deleted', 0)->orderBy('t_sp.id', 'DESC')->get();
+        $id = (int) $this->input->get('id');
+        $data['row'] = Invoice::select('t_sj.*', 't_sp.sp_no', 't_sp.sp_date', 'm_dipo_partner.id as dipo_id', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.phone as dipo_phone', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.pic as dipo_pic')
+                                    ->join('t_sp', 't_sp.id', '=', 't_sj.sp_id')
+                                    ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
+                                    ->where('t_sj.id', $id)
+                                    ->where('t_sj.deleted', 0)->first();
+        $data['datadetails'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
+                                    ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
+                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->where('sp_id', $data['row']->sp_id)
+                                    ->where('t_sp_detail.deleted', 0)
+                                    ->where('t_sp.deleted', 0)->get();
         $this->load->view('invoice/invoice/invoice_pdf', $data);
     }
 

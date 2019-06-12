@@ -44,17 +44,17 @@
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}master/invoice/pdf')" class="btn btn-danger btn-sm">
+                            <!-- <button onClick="return window.open('{{base_url()}}master/invoice/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
                             <button onClick="return window.open('{{base_url()}}master/invoice/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
-                            </button>
+                            </button> -->
                         @endif
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <table id="table-pesanan" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+                    <table id="table-invoice" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
                                 <th class="text-center"><?=lang('invoice_no')?></th>
@@ -78,96 +78,131 @@
     </div>
 </div>
 <div class="modal fade" id="modal_form" role="dialog">
-  <div class="modal-dialog" style="width:50%;">
+  <div class="modal-dialog" style="width:70%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3><?=lang('new_data')?></h3>
+        <h3 class="modal-title"><?=lang('tambah_invoice')?></h3>
       </div>
       {{ form_open(null,array('id' => 'form-invoice', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
-        <input type="hidden" name="id" value="">
+        <input type="hidden" name="invoice_id" value="">
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Kepada<span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('to')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <select id="principle_id" name="principle_id" class="form-control">
-                    <option selected disabled value=""><?=lang('select')?> <?=lang('principle_code')?></option>
-                    <?php
-                        if (!empty($principles)) {
-                            foreach ($principles as $c) { ?>
-                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
-                    <?php } } ?>
-                </select>  
-                <input type="text" class="form-control input-sm" name="principle_address" id="principle_address" placeholder="<?=lang('principle_address')?>" />
-                <input type="text" class="form-control input-sm" name="principle_pic" id="principle_pic" placeholder="<?=lang('principle_pic')?>" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('no_sp')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="no_sp" id="no_sp" placeholder="<?=lang('no_sp')?>" maxlength="50" />
-               <div class="form-control-focus"> </div>
-            </div>
-        </div>
-
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('ship_to')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-               <select id="dipo_partner_id" name="dipo_partner_id" class="form-control">
-                    <option selected disabled value=""><?=lang('select')?> <?=lang('dipo_code')?></option>
+               <select id="dipo_partner_id" name="dipo_partner_id" class="form-control select2">
+                    <option selected disabled value=""><?=lang('select_your_option')?></option>
                     <?php
                         if (!empty($dipos)) {
                             foreach ($dipos as $c) { ?>
                             <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
                     <?php } } ?>
                 </select>  
-                <input type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" />
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('invoice_no')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="invoice_no" id="invoice_no" placeholder="<?=lang('invoice_no')?>" maxlength="50" />
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('sj_no')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <select id="sj_id" name="sj_id" class="form-control">
+                    <option selected disabled value=""><?=lang('select_your_option')?></option>
+                </select>  
+                <div class="form-control-focus"> </div>
             </div>
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Alamat</label>
+            <label class="col-lg-4 control-label"><?=lang('sp_no')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
+                <input readonly type="text" class="form-control input-sm" name="sp_no" id="sp_no" placeholder="<?=lang('sp_no')?>" maxlength="50" />
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('ship_to') }}</label>
+            <div class="col-lg-7">
+                <input readonly type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('delivery_to') }}</label>
+            <div class="col-lg-7">
+                <input readonly type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Tanggal<span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label">{{ lang('date_issued') }}</label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="sp_date" id="sp_date" placeholder="<?=lang('sp_date')?>" maxlength="50" />
-               <div class="form-control-focus"> </div>
-            </div>
-        </div>
-
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Metode Pembayaran</label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="metode_pembayaran" id="metode_pembayaran" placeholder="Metode Pembayaran" maxlength="50" />
+                <input type="text" class="form-control input-sm" name="date_issued" id="date_issued" placeholder="<?=lang('date_issued')?>" readonly="readonly" maxlength="10" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
         
-        <button type="button" class="btn_add_row"><i class="fa fa-plus"></i>Add Row</button>
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('receive_date') }}</label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="receive_date" id="receive_date" placeholder="<?=lang('receive_date')?>" readonly="readonly" maxlength="10" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('payment_method') }}</label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="dipo_top" id="dipo_top" placeholder="<?=lang('payment_method')?>" readonly="readonly" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('due_date_invoice') }}<span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="due_date" id="due_date" placeholder="<?=lang('due_date_invoice')?>" readonly="readonly" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('note') }}</label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="note" id="note" placeholder="<?=lang('note')?>" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <hr/>
+        
         <table id="add-table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
             <thead>
                 <tr>
-                    <!-- <th class="text-center">Option</th> -->
-                    <th class="text-center">Kode Produk</th>
-                    <th class="text-center">Nama Produk</th>
-                    <th class="text-center">Jumlah Pesanan (Per Karton)</th>
-                    <th class="text-center">Harga Pesanan (Per Karton) Before Tax</th>
-                    <th class="text-center">Harga Pesanan (Per Karton) After Tax</th>
-                    <th class="text-center">Jumlah Pesanan After Tax</th>
+                    <th class="text-center">{{ lang('product_code') }}</th>
+                    <th class="text-center">{{ lang('product_name') }}</th>
+                    <th class="text-center">{{ lang('total_order_in_ctn') }}</th>
+                    <th class="text-center">{{ lang('price_of_orders_per_ctn_before_tax') }}</th>
+                    <th class="text-center">{{ lang('price_of_orders_per_ctn_after_tax') }}</th>
+                    <th class="text-center">{{ lang('order_amount_after_tax') }}</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
+            <tbody></tbody>
             <tfoot>
-                
+                <tr>
+                    <th colspan="2" class="text-center">{{ lang('total') }}</th>
+                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_amount_in_ctn" id="total_order_amount_in_ctn"/></th>
+                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_price_before_tax" id="total_order_price_before_tax"/></th>
+                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_price_after_tax" id="total_order_price_after_tax"/></th>
+                    <th class="text-center"><input readonly type="text" class="form-control input-sm" name="total_order_amount_after_tax" id="total_order_amount_after_tax"/></th>
+                </tr>
             </tfoot>
         </table>
       </div>
@@ -180,89 +215,123 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<select id="pricelist_id_tmp" name="pricelist_id_tmp" class="form-control" style="display:none;">
-    <option selected disabled value=""><?=lang('select')?> <?=lang('product_code')?></option>
-    <?php
-        if (!empty($pricelists)) {
-            foreach ($pricelists as $c) { ?>
-            <option value="<?=$c->id?>"><?=ucfirst($c->product_code)?></option>
-    <?php } } ?>
-</select> 
-
 <div class="modal fade" id="modal_detail" role="dialog">
-  <div class="modal-dialog" style="width:50%;">
+  <div class="modal-dialog" style="width:70%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3><?=lang('invoice')?></h3>
+        <h3 class="modal-title"><?=lang('invoice')?></h3>
+        <button onClick="printPdf()" class="btn btn-danger btn-sm">
+            <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
+        </button>
+        <button onClick="printExcel()" class="btn btn-success btn-sm">
+            <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
+        </button> 
       </div>
-      {{ form_open(null,array('id' => 'form-invoice', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      {{ form_open(null,array('id' => 'form-suratpesanan-view', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
-        <input type="hidden" name="id_pesanan" value="">
+        <input type="hidden" name="invoice_id" value="">
+        
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Kepada</label>
+            <label class="col-lg-4 control-label"><?=lang('account')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="principle_code" id="principle_code" placeholder="<?=lang('principle_code')?>" maxlength="50" />
-                <input type="text" class="form-control input-sm" name="principle_address" id="principle_address" placeholder="<?=lang('principle_address')?>" />
-               <div class="form-control-focus"> </div>
+                <input readonly type="text" class="form-control input-sm" name="dipo_code" id="dipo_code" placeholder="<?=lang('dipo_code')?>" />
             </div>
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('no_sp')?></label>
+            <label class="col-lg-4 control-label"><?=lang('sj_no')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="no_sp" id="no_sp" placeholder="<?=lang('no_sp')?>" maxlength="50" />
+                <input readonly type="text" class="form-control input-sm" name="sj_no" id="sj_no" placeholder="<?=lang('sj_no')?>" maxlength="50" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('ship_to')?></label>
+            <label class="col-lg-4 control-label"><?=lang('sp_no')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" maxlength="50" />
+                <input readonly type="text" class="form-control input-sm" name="sp_no" id="sp_no" placeholder="<?=lang('sp_no')?>" maxlength="50" />
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('customer_name') }}</label>
+            <div class="col-lg-7">
+                <input readonly type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('delivery_to') }}</label>
+            <div class="col-lg-7">
+                <input readonly type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
 
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Alamat</label>
+            <label class="col-lg-4 control-label">{{ lang('date_issued') }}</label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
-               <div class="form-control-focus"> </div>
+                <input type="text" class="form-control input-sm" name="date_issued" id="date_issued" placeholder="<?=lang('date_issued')?>" readonly="readonly" maxlength="10" />
+            <div class="form-control-focus"> </div>
             </div>
         </div>
-
+        
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Tanggal</label>
+            <label class="col-lg-4 control-label">{{ lang('receive_date') }}</label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="sp_date" id="sp_date" placeholder="<?=lang('sp_date')?>" maxlength="50" />
-               <div class="form-control-focus"> </div>
+                <input type="text" class="form-control input-sm" name="receive_date" id="receive_date" placeholder="<?=lang('receive_date')?>" readonly="readonly" maxlength="10" />
+            <div class="form-control-focus"> </div>
             </div>
         </div>
-
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Metode Pembayaran</label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="metode_pembayaran" id="metode_pembayaran" placeholder="Metode Pembayaran" maxlength="50" />
-               <div class="form-control-focus"> </div>
-            </div>
-        </div>
+        
+        <hr/>
 
         <table id="table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
             <thead>
                 <tr>
-                    <th class="text-center">Kode Produk</th>
-                    <th class="text-center">Nama Produk</th>
-                    <th class="text-center">Jumlah Pesanan (Per Karton)</th>
-                    <th class="text-center">Harga Pesanan (Per Karton) Before Tax</th>
-                    <th class="text-center">Harga Pesanan (Per Karton) After Tax</th>
-                    <!-- <th class="text-center">Jumlah Pesanan After Tax</th> -->
+                    <th class="text-center">{{ lang('no') }}</th>
+                    <th class="text-center">{{ lang('product_code') }}</th>
+                    <th class="text-center">{{ lang('product_name') }}</th>
+                    <th class="text-center">{{ lang('total_order_in_ctn') }}</th>
+                    <th class="text-center">{{ lang('volume_m3') }}</th>
+                    <th class="text-center">{{ lang('weight_kg') }}</th>
                 </tr>
             </thead>
+            <tfoot>
+                <tr>
+                    <th colspan="3" class="text-center">Total</th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_amount_in_ctn" id="view_total_order_amount_in_ctn"/></th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_volume" id="view_total_order_volume"/></th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_weight" id="view_total_order_weight"/></th>
+                </tr>
+            </tfoot>
         </table>
-
+        
+        <div class="row view-detail-row">
+            <div class="col-md-5">
+                <table id="view-detail" class="table dt-responsive">
+                    <tbody>
+                        <tr>
+                            <th>Tanggal permintaan pengiriman barang :</th>
+                        </tr>
+                        <tr>
+                            <th id="tanggal_pengiriman" class="text-right"></th>
+                        </tr>
+                        <tr>
+                            <th>Tanggal penerimaan barang :</th>
+                        </tr>
+                        <tr>
+                            <th id="tanggal_penerimaan" class="text-right"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
       </div>
       <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">{{ lang('close') }}</button>
       </div>
       {{ form_close() }}
     </div><!-- /.modal-content -->
@@ -273,93 +342,7 @@
 @section('scripts')
 <script type="text/javascript">
 
-    $('#sp_date').datepicker();
-
-    $('#pricelist_id').change(function(){
-        $.getJSON('{{base_url()}}invoice/invoices/getPricelist', {id: $('#pricelist_id').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data[0];
-                var i;
-                var html = "";
-
-                $('[name="product_name"]').val(row.name);
-                $('[name="order_price_before_tax"]').val(row.company_before_tax_ctn);
-                $('[name="order_price_after_tax"]').val(row.company_after_tax_ctn);
-                $('[name="order_amount_in_ctn"]').focus();
-
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-       });
-    });
     var i = 1;
-
-    $('.btn_add_row').click(function(){
-        $("#add-table-surat tbody").append(
-            '<tr>' +
-                // '<td class="text-center"><input type="button" class="btn_add_row fa fa-plus"></td>' +
-                '<td class="text-center">'+
-                    '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
-                '</td>' +
-                '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
-                '<td class="text-center"><input onkeyup="get_total('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'" oninput="get_total()"/></td>' +
-                '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
-                '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'"/></td>' +
-                '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
-            '</tr>'
-        );
-        $('#pricelist_id_'+i).html($('#pricelist_id_tmp').html());
-        i++;
-    });
-
-    function get_total(x){
-        var amount = $('#order_amount_in_ctn_'+x).val();
-        var price = $('#order_price_after_tax_'+x).val();
-
-        var total = amount*price;
-
-        $('#order_amount_after_tax_'+x).val(total);
-    }
-
-    function getProduct(x){
-        $.getJSON('{{base_url()}}invoice/invoices/getPricelist', {id: $('#pricelist_id_'+x).val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data[0];
-                var i;
-                var html = "";
-
-                console.log(row);
-
-                $('#product_name_'+x).val(row.name);
-                $('#order_price_before_tax_'+x).val(row.company_before_tax_ctn);
-                $('#order_price_after_tax_'+x).val(row.company_after_tax_ctn);
-                $('#order_amount_in_ctn_'+x).focus();
-
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-       });
-    }
-
-    $('#principle_id').change(function(){
-        $.getJSON('{{base_url()}}invoice/invoices/getPrinciple', {id: $('#principle_id').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data;
-                var i;
-                var html = "";
-
-                $('[name="principle_address"]').val(row.address);
-                $('[name="principle_pic"]').val(row.pic);
-                $('[name="no_sp"]').focus();
-
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-       });
-    });
 
     $('#dipo_partner_id').change(function(){
         $.getJSON('{{base_url()}}invoice/invoices/getDipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
@@ -370,35 +353,142 @@
 
                 $('[name="dipo_name"]').val(row.name);
                 $('[name="dipo_address"]').val(row.address);
-                $('[name="sp_date"]').focus();
+                $('[name="dipo_top"]').val(row.top);
+                
+            }else if(json.status == "error"){
+                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+            }
+            App.unblockUI('#form-wrapper');
+        });
+
+        $.getJSON('{{base_url()}}invoice/invoices/getsjbydipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data;
+                var html = '<option value=""><?= lang('select_your_option') ?></option>';
+
+                $.each(row, function(){
+                    var val_id = '';
+                    var val_text = '';
+                    $.each(this, function(name, value){
+                        if(name == 'id')
+                            val_id = value;
+
+                        if(name == 'sj_no')
+                            val_text = value;
+    
+                    });
+                    html += '<option value="' + val_id + '">' + val_text + '</option>';
+                });
+
+                $('#sj_id').html(html);
 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
             App.unblockUI('#form-wrapper');
-       });
+        });
+    });
+
+    $('#sj_id').change(function(){
+        if($('#sj_id').val() != ""){
+            $.getJSON('{{base_url()}}invoice/invoices/getsjbyid', {id: $('#sj_id').val()}, function(json, textStatus) {
+                if(json.status == "success"){
+                    var row = json.data;
+                    var i;
+                    var html = "";
+
+                    $('[name="sp_no"]').val(row.sp_no);
+                    $('[name="date_issued"]').val(formatDate(row.sp_date));
+                    $('[name="receive_date"]').val(formatDate(row.sp_date));
+                    $('[name="due_date"]').val(addDays(row.sp_date, parseInt($('#dipo_top').val())));
+
+                    $.getJSON('{{base_url()}}invoice/invoices/viewdetailsj', {id: $('#sj_id').val()}, function(json, textStatus) {
+                        if(json.status == "success"){
+                            var rowDetail = json.dataDetail;
+                            var i;
+                            var html = "";
+                            var dataLength = rowDetail.length;
+                            var total_order = 0;
+                            var total_price_before_tax = 0;
+                            var total_price_after_tax = 0;
+                            var total_amount_after_tax = 0;
+
+                            $("#add-table-surat tbody").html('');
+
+                            for(i=1; i<=dataLength; i++){
+                                $("#add-table-surat tbody").append(
+                                    '<tr>' +
+                                        '<td class="text-center">'+
+                                            '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
+                                            '<input type="hidden" class="form-control input-sm" name="pricelist_id[]" id="pricelist_id_'+i+'"/>'+
+                                            '<input type="text" class="form-control input-sm" name="product_code[]" id="product_code_'+i+'" readonly/>'+
+                                        '</td>' +
+                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'" readonly/></td>' +
+                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'" readonly/></td>' +
+                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'" readonly/>' +
+                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'" readonly/></td>' +
+                                        '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
+                                    '</tr>'
+                                );
+
+                                var order = rowDetail[i-1].order_amount_in_ctn;
+                                var price_after_tax = rowDetail[i-1].price_after_tax;
+                                var price_before_tax = price_after_tax / 1.1;
+                                var amount_after_tax = order * price_after_tax;
+                                
+                                $('#sp_detail_id_'+i).val(rowDetail[i-1].spdetail_id);
+                                $('#pricelist_id_'+i).val(rowDetail[i-1].pricelist_id);
+                                $('#product_code_'+i).val(rowDetail[i-1].product_code);
+                                $('#product_name_'+i).val(rowDetail[i-1].name);
+                                $('#order_amount_in_ctn_'+i).val(order);
+                                $('#order_price_before_tax_'+i).val(price_before_tax.toFixed(0));
+                                $('#order_price_after_tax_'+i).val(price_after_tax.toFixed(0));
+                                $('#order_amount_after_tax_'+i).val(amount_after_tax.toFixed(0));
+
+                                total_order = total_order + order;
+                                total_price_before_tax = total_price_before_tax + price_before_tax;
+                                total_price_after_tax = total_price_after_tax + price_after_tax;
+                                total_amount_after_tax = total_amount_after_tax + amount_after_tax;
+                            }
+
+                            $('#total_order_amount_in_ctn').val(total_order);
+                            $('#total_order_price_before_tax').val(total_price_before_tax.toFixed(0));
+                            $('#total_order_price_after_tax').val(total_price_after_tax.toFixed(0));
+                            $('#total_order_amount_after_tax').val(total_amount_after_tax.toFixed(0));
+
+                        }else if(json.status == "error"){
+                            toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                        }
+                        App.unblockUI('#form-wrapper');
+                    });
+
+                }else if(json.status == "error"){
+                    toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
     });
 
     function add_invoice(){
         $('#form-invoice')[0].reset(); 
         $('#modal_form').modal('show'); 
-        $('.modal-title').text('<?=lang('new_invoice')?>'); 
+        $('.modal-title').text('<?=lang('tambah_invoice')?>'); 
 
-        $('[name="id"]').val('');
+        $('[name="invoice_id"]').val('');
+        $('[name="invoice_no"]').attr('readonly', false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
 
     // Pengaturan Datatable 
-    var oTable =$('#table-pesanan').dataTable({
+    var oTable =$('#table-invoice').dataTable({
         "responsive": false,
-        // "scrollX": true,
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}invoice/invoices/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [10]},
             {"targets": [10], "orderable": false}
         ],
         "order": [0,"asc"],
@@ -411,18 +501,16 @@
         },
         errorElement: "span",
         rules: {
-            name: "required",
-            invoice_code: "required",
-            packing_size: "required",
-            qty: "required",
-            category_id: "required",
+            invoice_no: "required",
+            sj_id: "required",
+            dipo_partner_id: "required",
+            due_date: "required",
         },
         messages: {
-            name: "{{lang('invoice_name')}}" + " {{lang('not_empty')}}",
-            invoice_code: "{{lang('invoice_code')}}" + " {{lang('not_empty')}}",
-            packing_size: "{{lang('packing_size')}}" + " {{lang('not_empty')}}",
-            qty: "{{lang('qty_per_ctn')}}" + " {{lang('not_empty')}}",
-            category_id: "{{lang('category')}}" + " {{lang('not_empty')}}",
+            invoice_no: "{{lang('invoice_no')}}" + " {{lang('not_empty')}}",
+            sj_id: "{{lang('sj_no')}}" + " {{lang('not_empty')}}",
+            dipo_partner_id: "{{lang('to')}}" + " {{lang('not_empty')}}",
+            due_date: "{{lang('due_date_invoice')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -451,13 +539,13 @@
 
                 App.unblockUI('#form-wrapper');
                 setTimeout(function(){
-                    // window.location.reload()
+                    window.location.reload()
                 },1000);
             } 
             return false;
         }
     });
-   
+
     // Menampilkan data pada form
     function viewData(value){   
         form_validator.resetForm();
@@ -467,38 +555,104 @@
         App.blockUI({
             target: '#form-wrapper'
         });
+
         $.getJSON('{{base_url()}}invoice/invoices/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
-                var row = json.data;
-                var rowImage = json.image;
+                var row = json.data[0];
                 var i;
                 var html = "";
 
-                $('[name="id"]').val(row.id);
-                $('[name="invoice_code"]').val(row.invoice_code);
-                $('[name="barcode_invoice"]').val(row.barcode_invoice);
-                $('[name="barcode_carton"]').val(row.barcode_carton);
-                $('[name="name"]').val(row.name);
-                $('[name="packing_size"]').val(row.packing_size);
-                $('[name="qty"]').val(row.qty);
-                $('[name="length"]').val(row.length);
-                $('[name="width"]').val(row.width);
-                $('[name="height"]').val(row.height);
-                $('[name="volume"]').val(row.volume);
-                $('[name="weight"]').val(row.weight);
-                $('[name="category_id"]').val(row.category_id);
-                $('[name="description"]').val(row.description);
-                $('[name="feature"]').val(row.feature);
+                $('[name="invoice_id"]').val(row.id);
+                $('#dipo_partner_id').val(row.dipo_id).change();
+                $('[name="invoice_no"]').val(row.invoice_no);
+                $('[name="due_date"]').val(formatDate(row.due_date));
+                $('[name="note"]').val(row.note);
+                $('[name="dipo_name"]').val(row.dipo_name);
+                $('[name="dipo_address"]').val(row.dipo_address);
+                $('[name="dipo_top"]').val(row.dipo_top);
 
-                for(i=0; i<rowImage.length; i++){
-                    html += '<div class="invoice-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/invoices/' + rowImage[i].image + '"></div>';
-                }
-               
-                $('.preview-upload-image').html(html);
-                $('#preview-upload-image-field').show();
-
+                $.getJSON('{{base_url()}}invoice/invoices/getsjbyid', {id: row.sj_id}, function(json, textStatus) {
+                    if(json.status == "success"){
+                        var row_sj = json.data;
+                        var i;
+                        var html = "";
+    
+                        $('[name="sj_id"]').val(row.sj_id);
+                        $('[name="sp_no"]').val(row_sj.sp_no);
+                        $('[name="date_issued"]').val(formatDate(row_sj.sp_date));
+                        $('[name="receive_date"]').val(formatDate(row_sj.sp_date));
+                        $('[name="due_date"]').val(addDays(row_sj.sp_date, parseInt($('#dipo_top').val())));
+    
+                        $.getJSON('{{base_url()}}invoice/invoices/viewdetailsj', {id: row.sj_id}, function(json, textStatus) {
+                            if(json.status == "success"){
+                                var rowDetail = json.dataDetail;
+                                var i;
+                                var html = "";
+                                var dataLength = rowDetail.length;
+                                var total_order = 0;
+                                var total_price_before_tax = 0;
+                                var total_price_after_tax = 0;
+                                var total_amount_after_tax = 0;
+    
+                                $("#add-table-surat tbody").html('');
+    
+                                for(i=1; i<=dataLength; i++){
+                                    $("#add-table-surat tbody").append(
+                                        '<tr>' +
+                                            '<td class="text-center">'+
+                                                '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
+                                                '<input type="hidden" class="form-control input-sm" name="pricelist_id[]" id="pricelist_id_'+i+'"/>'+
+                                                '<input type="text" class="form-control input-sm" name="product_code[]" id="product_code_'+i+'" readonly/>'+
+                                            '</td>' +
+                                            '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'" readonly/></td>' +
+                                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'" readonly/></td>' +
+                                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'" readonly/>' +
+                                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'" readonly/></td>' +
+                                            '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
+                                        '</tr>'
+                                    );
+    
+                                    var order = rowDetail[i-1].order_amount_in_ctn;
+                                    var price_after_tax = rowDetail[i-1].price_after_tax;
+                                    var price_before_tax = price_after_tax / 1.1;
+                                    var amount_after_tax = order * price_after_tax;
+                                    
+                                    $('#sp_detail_id_'+i).val(rowDetail[i-1].spdetail_id);
+                                    $('#pricelist_id_'+i).val(rowDetail[i-1].pricelist_id);
+                                    $('#product_code_'+i).val(rowDetail[i-1].product_code);
+                                    $('#product_name_'+i).val(rowDetail[i-1].name);
+                                    $('#order_amount_in_ctn_'+i).val(order);
+                                    $('#order_price_before_tax_'+i).val(price_before_tax.toFixed(0));
+                                    $('#order_price_after_tax_'+i).val(price_after_tax.toFixed(0));
+                                    $('#order_amount_after_tax_'+i).val(amount_after_tax.toFixed(0));
+    
+                                    total_order = total_order + order;
+                                    total_price_before_tax = total_price_before_tax + price_before_tax;
+                                    total_price_after_tax = total_price_after_tax + price_after_tax;
+                                    total_amount_after_tax = total_amount_after_tax + amount_after_tax;
+                                }
+    
+                                $('#total_order_amount_in_ctn').val(total_order);
+                                $('#total_order_price_before_tax').val(total_price_before_tax.toFixed(0));
+                                $('#total_order_price_after_tax').val(total_price_after_tax.toFixed(0));
+                                $('#total_order_amount_after_tax').val(total_amount_after_tax.toFixed(0));
+    
+                            }else if(json.status == "error"){
+                                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                            }
+                            App.unblockUI('#form-wrapper');
+                        });
+    
+                    }else if(json.status == "error"){
+                        toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                    }
+                    App.unblockUI('#form-wrapper');
+                });
+                
+                $('[name="invoice_no"]').attr('readonly', true);
                 $('#modal_form').modal('show');
-                $('.modal-title').text('<?=lang('edit_invoice')?>'); 
+                $('.modal-title').text('<?=lang('ubah_invoice')?>'); 
+
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -506,7 +660,7 @@
        });
     }
 
-    // Menampilkan detail data pesanan
+    // Menampilkan detail data jalan
     function viewDetail(value){   
         form_validator.resetForm();
         $("html, body").animate({
@@ -515,22 +669,30 @@
         App.blockUI({
             target: '#form-wrapper'
         });
-        $.getJSON('{{base_url()}}invoice/invoices/viewDetail', {id: value}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}invoice/invoices/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data[0];
                 var i;
                 var html = "";
 
-                $('[name="id_pesanan"]').val(row.id);
-                $('[name="principle_code"]').val(row.principle_code);
-                $('[name="principle_address"]').val(row.principle_address);
-                $('[name="no_sp"]').val(row.sp_no);
+                $('[name="sj_id"]').val(row.id);
+                $('[name="sj_no"]').val(row.sj_no);
+                $('[name="sp_no"]').val(row.sp_no);
+                $('[name="dipo_code"]').val(row.dipo_code);
                 $('[name="dipo_name"]').val(row.dipo_name);
                 $('[name="dipo_address"]').val(row.dipo_address);
-                $('[name="sp_date"]').val(row.sp_date);
+                $('[name="date_issued"]').val(formatDate(row.sp_date));
+                $('[name="receive_date"]').val(formatDate(row.sp_date));
 
+                $('[name="view_total_order_amount_in_ctn"]').val(row.total_order_amount_in_ctn);
+                $('[name="view_total_order_volume"]').val(row.total_order_volume.toFixed(2));
+                $('[name="view_total_order_weight"]').val(row.total_order_weight.toFixed(2));
+                $('#tanggal_pengiriman').text(formatDate(row.sp_date))
+                $('#tanggal_penerimaan').text(formatDate(row.sp_date))
+
+                $('[name="sj_no"]').attr('readonly', true);
                 $('#modal_detail').modal('show');
-                $('.modal-title').text('<?=lang('edit_invoice')?>'); 
+                $('.modal-title').text('<?=lang('invoice')?>'); 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -539,17 +701,63 @@
 
         //Pengaturan Datatable 
         var oTable =$('#table-surat').dataTable({
+            "destroy": true,
+            "responsive": false,
             "paging": false,
             "searching": false,
             "bProcessing": true,
             "bServerSide": true,
             "bLengthChange": true,
             "sServerMethod": "GET",
-            "sAjaxSource": "{{ base_url() }}invoice/invoices/fetch_data_pesanan/?id="+value,
-            "order": [0,"asc"],
+            "sAjaxSource": "{{ base_url() }}invoice/invoices/fetch_data_jalan/?id="+value,
+            "order": [1,"asc"],
+            "columnDefs": [
+                {"className": "dt-center", "targets": [0, 3, 4, 5]},
+                {"targets": [0], "orderable": false}
+            ],
         }).fnSetFilteringDelay(1000);
     }
 
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [day, month, year].join('/');
+    }
+
+    function formatDate2(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [month, day, year].join('/');
+    }
+
+    function addDays(val_date, val_days){
+        var tt = formatDate2(val_date);
+
+        var date = new Date(tt);
+        var newdate = new Date(date);
+
+        newdate.setDate(newdate.getDate() + val_days);
+        
+        var dd = newdate.getDate();
+        var mm = newdate.getMonth() + 1;
+        var y = newdate.getFullYear();
+
+        var someFormattedDate = dd + '/' + mm + '/' + y;
+
+        return someFormattedDate;
+    }
     // Proses hapus data
     function deleteData(value){
         form_validator.resetForm();
@@ -585,58 +793,14 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
-
-    // Proses hapus image
-    function deleteImage(value){
-        form_validator.resetForm();
-        $("html, body").animate({
-            scrollTop: 0
-        }, 500);
-        $.confirm({
-            content : "{{ lang('delete_this_data') }}",
-            title : "{{ lang('are_you_sure') }}",
-            confirm: function() {
-
-                App.blockUI({
-                    target: '#table-wrapper'
-                });
-                $.getJSON('{{base_url()}}invoice/invoices/deleteImage', {id: value}, function(json, textStatus) {
-                    if(json.status == "success"){
-                        toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
-                    }else if(json.status == "error"){
-                        toastr.error('{{lang("deleted_unsuccesfully")}}','{{ lang("notification") }}');
-                    }
-                    setTimeout(function(){
-                        window.location.reload()
-                    },1000);
-               });
-            },
-            cancel: function(button) {
-                // nothing to do
-            },
-            confirmButton: "Yes",
-            cancelButton: "No",
-            confirmButtonClass: "btn-danger",
-            cancelButtonClass: "btn-success",
-            dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
-        });
+    
+    function printPdf(){
+        return window.open('{{base_url()}}reports/invoice/pdf/?id='+$('[name="sj_id"]').val())
     }
 
-    // Preview image in browser
-    var imagesPreview = function(input, placeToInsertImagePreview) {
-        if (input.files) {
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                $($.parseHTML('<img width="100" style="padding: 10px;">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-            }
-            reader.readAsDataURL(input.files);
-        }
-    };
+    function printExcel(){
+        return window.open('{{base_url()}}reports/invoice/excel/?id='+$('[name="sj_id"]').val())
+    }
 
-    $('#image').on('change', function() {
-        $('.preview-upload-image').html('');
-        imagesPreview(this, 'div.preview-upload-image');
-        $('#preview-upload-image-field').show();
-    });
 </script>
 @stop

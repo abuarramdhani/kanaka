@@ -130,3 +130,6 @@ tr.border-none th {
 tr.text-discount th {
     font-weight: unset;
 }
+.select2{
+    width: 100% !important;
+}

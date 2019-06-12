@@ -33,9 +33,9 @@
 <table width="100%" border="1" cellpadding="1" cellspacing="0">
 	<tr >
 		<th  align="center" width="5%" height="20px">No</th>
-		<th  align="center"><?=lang('code')?></th>
+		<th  align="center" width="15%"><?=lang('code')?></th>
 		<th  align="center"><?=lang('description')?></th>
-		<th  align="center"><?=lang('created_date')?></th>
+		<th  align="center" width="15%"><?=lang('created_date')?></th>
 	</tr>
 	<?php 
     $i=0;
@@ -46,8 +46,8 @@
 					
 	<tr style="font-size:9px">
 		<td align="center"><?php echo $i;?></td>
-		<td><?=$chartofaccount->description?></td>
 		<td><?=$chartofaccount->code?></td>
+		<td><?=$chartofaccount->description?></td>
 		<td><?=date('d-m-Y',strtotime($chartofaccount->date_created))?></td>
 	</tr>
 	<?php 

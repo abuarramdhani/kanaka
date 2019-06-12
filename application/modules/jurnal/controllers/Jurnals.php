@@ -26,9 +26,9 @@ class Jurnals extends MX_Controller {
             'jurnal_date',
             'month',
             'reff',
+            'm_chart_of_accounts.code as coa_code',
             't_jurnal.description as jurnal_description',
             'd_k',
-            'm_chart_of_accounts.code as coa_code',
             'pic',
             'total',
             't_jurnal.date_created',
@@ -38,10 +38,11 @@ class Jurnals extends MX_Controller {
             'jurnal_date',
             'month',
             'reff',
-            't_jurnal.description as jurnal_description',
+            'm_chart_of_accounts.code',
+            't_jurnal.description',
             'd_k',
-            'm_chart_of_accounts.code as coa_code',
             'pic',
+            'total',
             'total',
             't_jurnal.date_created',
         );
@@ -95,16 +96,16 @@ class Jurnals extends MX_Controller {
             $row_value[] = date('d-m-Y',strtotime($row->jurnal_date));
             $row_value[] = $row->month;
             $row_value[] = $row->reff;
+            $row_value[] = $row->coa_code;
             $row_value[] = $row->jurnal_description;
             $row_value[] = $row->d_k;
-            $row_value[] = $row->coa_code;
             $row_value[] = $row->pic;
             if($row->d_k == 'D'){
-                $row_value[] = $row->total;
+                $row_value[] = number_format($row->total, 0);
                 $row_value[] = 0;
             }elseif($row->d_k == 'K'){
                 $row_value[] = 0;
-                $row_value[] = $row->total;
+                $row_value[] = number_format($row->total, 0);
             }
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
@@ -273,8 +274,7 @@ class Jurnals extends MX_Controller {
     }
 
     function pdf(){
-        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_dipo.name as dipo_name', 'm_zona.name as zona_name')->join('t_jurnal as m_dipo', 't_jurnal.dipo_id', '=' ,'m_dipo.id')->join('m_zona', 't_jurnal.zona_id', '=' ,'m_zona.id')->where('t_jurnal.type', 'jurnal')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
-        $data['quote'] = "";
+        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
         $html = $this->load->view('jurnal/jurnal/jurnal_pdf', $data, true);
         $this->pdf_generator->generate($html, 'jurnal pdf', $orientation='Landscape');
     }
@@ -282,8 +282,7 @@ class Jurnals extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=jurnal.xls");
-        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_dipo.name as dipo_name', 'm_zona.name as zona_name')->join('t_jurnal as m_dipo', 't_jurnal.dipo_id', '=' ,'m_dipo.id')->join('m_zona', 't_jurnal.zona_id', '=' ,'m_zona.id')->where('t_jurnal.type', 'jurnal')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
-        $data['quote'] = "'";
+        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
         $this->load->view('jurnal/jurnal/jurnal_pdf', $data);
     }
 

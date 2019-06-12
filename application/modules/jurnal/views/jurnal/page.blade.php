@@ -43,12 +43,12 @@
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <!-- <button onClick="return window.open('{{base_url()}}master/jurnal/pdf')" class="btn btn-danger btn-sm">
+                            <button onClick="return window.open('{{base_url()}}reports/jurnal/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
-                            <button onClick="return window.open('{{base_url()}}master/jurnal/excel')" class="btn btn-success btn-sm">
+                            <button onClick="return window.open('{{base_url()}}reports/jurnal/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
-                            </button> -->
+                            </button>
                         @endif
                     </div>
                 </div>
@@ -59,9 +59,9 @@
                                 <th>Tanggal</th>
                                 <th>Bulan</th>
                                 <th>Reff</th>
+                                <th>Code</th>
                                 <th>Keterangan</th>
                                 <th>D/K</th>
-                                <th>Reff</th>
                                 <th><?=lang('pic')?></th>
                                 <th><?=lang('debet')?></th>
                                 <th><?=lang('kredit')?></th>
@@ -218,8 +218,9 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}jurnal/jurnals/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [7, 8, 4, 9]},
-            {"targets": [9], "orderable": false}
+            {"className": "dt-center", "targets": [3, 5]},
+            {"className": "dt-right", "targets": [7, 8]},
+            {"targets": [10], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);

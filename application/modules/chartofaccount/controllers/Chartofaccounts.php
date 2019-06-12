@@ -75,8 +75,8 @@ class Chartofaccounts extends MX_Controller {
                 $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
 
-            $row_value[] = $row->description;
             $row_value[] = $row->code;
+            $row_value[] = $row->description;
             // if($row->d_k == 'D'){
             //     $row_value[] = $row->total;
             //     $row_value[] = 0;
@@ -206,12 +206,14 @@ class Chartofaccounts extends MX_Controller {
     }
 
     function pdf(){
-        $data['chartofaccounts'] = Chartofaccount::select('m_chart_of_accounts.id as coa_id', 'code', 'd_k', 'm_chart_of_accounts.description', 'm_chart_of_accounts.date_created', 'sum(t_jurnal.total) as total')
-                                                ->join('t_jurnal', 't_jurnal.coa_id', '=', 'm_chart_of_accounts.id')
-                                                ->where('m_chart_of_accounts.deleted', 0)
-                                                ->where('t_jurnal.deleted', 0)
-                                                ->groupBy('t_jurnal.coa_id')
-                                                ->orderBy('id', 'DESC')->get();
+        // $data['chartofaccounts'] = Chartofaccount::select('m_chart_of_accounts.id as coa_id', 'code', 'd_k', 'm_chart_of_accounts.description', 'm_chart_of_accounts.date_created', 'sum(t_jurnal.total) as total')
+        //                                         ->join('t_jurnal', 't_jurnal.coa_id', '=', 'm_chart_of_accounts.id')
+        //                                         ->where('m_chart_of_accounts.deleted', 0)
+        //                                         ->where('t_jurnal.deleted', 0)
+        //                                         ->groupBy('t_jurnal.coa_id')
+        //                                         ->orderBy('id', 'DESC')->get();
+        $data['chartofaccounts'] = Chartofaccount::where('deleted', 0)->orderBy('code', 'ASC')->get();
+
         $html = $this->load->view('chartofaccount/chartofaccount/chartofaccount_pdf', $data, true);
         $this->pdf_generator->generate($html, 'chartofaccount pdf', $orientation='Portrait');
     }
@@ -226,9 +228,11 @@ class Chartofaccounts extends MX_Controller {
         //                                         ->groupBy('t_jurnal.coa_id')
         //                                         ->orderBy('m_chart_of_accounts.id', 'DESC')->get();
 
-        $this->db->select('id, SUM(total) AS total', FALSE);
-        $query = $this->db->get('t_jurnal');
-        print_r($query);exit;
+        // $this->db->select('id, SUM(total) AS total', FALSE);
+        // $query = $this->db->get('t_jurnal');
+        // print_r($query);exit;
+        $data['chartofaccounts'] = Chartofaccount::where('deleted', 0)->orderBy('code', 'ASC')->get();
+
         $this->load->view('chartofaccount/chartofaccount/chartofaccount_pdf', $data);
     }
 

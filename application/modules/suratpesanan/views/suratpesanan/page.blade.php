@@ -190,7 +190,7 @@
     <?php
         if (!empty($pricelists)) {
             foreach ($pricelists as $c) { ?>
-            <option value="<?=$c->id?>"><?=ucfirst($c->product_code)?></option>
+            <option value="<?=$c->pricelist_id?>"><?=ucfirst($c->product_code)?></option>
     <?php } } ?>
 </select> 
 

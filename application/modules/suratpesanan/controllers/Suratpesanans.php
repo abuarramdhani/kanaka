@@ -18,7 +18,7 @@ class Suratpesanans extends MX_Controller {
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'suratpesanan');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'suratpesanan');
         $data['principles'] = Principle::where('deleted', '0')->get();
-        $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', '0')->where('m_product.deleted', '0')->get();
+        $data['pricelists'] = Pricelist::select('t_pricelist.id as pricelist_id', 't_pricelist.*', 'm_product.*')->join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', '0')->where('m_product.deleted', '0')->get();
         $data['dipos'] = Dipo::where('deleted', '0')->get();
         $this->load->blade('suratpesanan.views.suratpesanan.page', $data);
     }
@@ -193,7 +193,8 @@ class Suratpesanans extends MX_Controller {
                                       'total_order_amount_after_tax'    => $total_order_amount_after_tax,
                                       'sp_date'                         => date('Y-m-d',strtotime($sp_date)),
                                       'date_created'                    => date('Y-m-d'),
-                                      'time_created'                    => date('H:i:s'));
+                                      'time_created'                    => date('H:i:s'),
+                                      'user_created'                    => $user->id);
 
                     $save            = $this->db->insert('t_sp', $dataPesanan);
                     $id_sp           = $this->db->insert_id();
@@ -208,7 +209,8 @@ class Suratpesanans extends MX_Controller {
                                                 'order_price_after_tax'  => $this->input->post('order_price_after_tax')[$i],
                                                 'order_amount_after_tax' => $this->input->post('order_amount_after_tax')[$i],
                                                 'date_created'           => date('Y-m-d'),
-                                                'time_created'           => date('H:i:s'));
+                                                'time_created'           => date('H:i:s'),
+                                                'user_created'           => $user->id);
                             $saveDetail = $this->db->insert('t_sp_detail', $dataDetail);
                         }
                     }
@@ -271,7 +273,8 @@ class Suratpesanans extends MX_Controller {
                                                 'order_price_after_tax'  => $this->input->post('order_price_after_tax')[$i],
                                                 'order_amount_after_tax' => $this->input->post('order_amount_after_tax')[$i],
                                                 'date_created'           => date('Y-m-d'),
-                                                'time_created'           => date('H:i:s'));
+                                                'time_created'           => date('H:i:s'),
+                                                'user_created'           => $user->id);
                             $saveDetail = $this->db->insert('t_sp_detail', $dataDetail);
                         }else{
                             $modelDetail                                  = Spdetail::find($this->input->post('sp_detail_id')[$i]);

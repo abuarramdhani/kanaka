@@ -414,3 +414,18 @@ $lang['tambah_invoice'] = "Tambah Invoice";
 $lang['ubah_invoice'] = "Ubah Invoice";
 $lang['payment_method'] = "Payment Method";
 ## END INVOICE ##
+
+## INVOICE ##
+$lang['chartofaccount'] = 'Chart Of Accounts';
+$lang['new_chartofaccount'] = "New Chart Of Account";
+$lang['edit_chartofaccount'] = "Edit Chart Of Account";
+## END INVOICE ##
+
+## JURNAL ##
+$lang['jurnal'] = 'Jurnal';
+$lang['new_jurnal'] = "New Jurnal";
+$lang['edit_jurnal'] = "Edit Jurnal";
+$lang['month'] = "Month";
+$lang['debet'] = "Debet";
+$lang['kredit'] = "Kredit";
+## END JURNAL ##

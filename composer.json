@@ -37,7 +37,9 @@
             "application/modules/partner/models",
             "application/modules/suratpesanan/models",
             "application/modules/invoice/models",
-            "application/modules/companyreport/models"
+            "application/modules/companyreport/models",
+            "application/modules/chartofaccount/models",
+            "application/modules/jurnal/models"
         ]
     }
 }

@@ -116,7 +116,7 @@ class Invoices extends MX_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($selected_data));
     }
 
-    public function fetch_data_jalan() {
+    public function fetch_data_invoice() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($_GET['id']);
             $database_columns = array(
@@ -124,8 +124,9 @@ class Invoices extends MX_Controller {
                 'product_code',
                 'm_product.name as product_name',
                 'order_amount_in_ctn',
-                'order_volume',
-                'order_weight',
+                'order_price_dipo_before_tax',
+                'order_price_dipo_after_tax',
+                'order_amount_dipo_after_tax',
             );
     
             $header_columns = array(
@@ -133,12 +134,13 @@ class Invoices extends MX_Controller {
                 'product_code',
                 'product_name',
                 'order_amount_in_ctn',
-                'order_volume',
-                'order_weight',
+                'order_price_dipo_before_tax',
+                'order_price_dipo_after_tax',
+                'order_amount_dipo_after_tax',
             );
     
             $from = "t_sp_detail";
-            $where = "t_sp_detail.deleted = 0 AND sp_id =".Invoice::find($id)->sp_id;
+            $where = "t_sp_detail.deleted = 0 AND sp_id =".Suratjalan::find(Invoice::find($id)->sj_id)->sp_id;
             $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
             $join[] = array('t_sp', 't_sp.id = t_sp_detail.sp_id', 'inner');
             $join[] = array('t_pricelist', 't_pricelist.id = t_sp_detail.pricelist_id', 'inner');
@@ -162,8 +164,9 @@ class Invoices extends MX_Controller {
                 $row_value[] = $row->product_code;
                 $row_value[] = $row->product_name;
                 $row_value[] = $row->order_amount_in_ctn;
-                $row_value[] = $row->order_volume;
-                $row_value[] = $row->order_weight;
+                $row_value[] = $row->order_price_dipo_before_tax;
+                $row_value[] = $row->order_price_dipo_after_tax;
+                $row_value[] = $row->order_amount_dipo_after_tax;
                 
                 $new_aa_data[] = $row_value;
             }
@@ -190,14 +193,20 @@ class Invoices extends MX_Controller {
                     $sj_id = $this->input->post('sj_id');
                     $due_date = date('Y-m-d', strtotime(str_replace('/','-',$this->input->post('due_date'))));
                     $note = $this->input->post('note');
-                    $total_niv = $this->input->post('total_order_amount_after_tax');
+                    $total_order_amount_in_ctn = $this->input->post('total_order_amount_in_ctn');
+                    $total_order_price_before_tax = $this->input->post('total_order_price_before_tax');
+                    $total_order_price_after_tax = $this->input->post('total_order_price_after_tax');
+                    $total_order_amount_after_tax = $this->input->post('total_order_amount_after_tax');
                     
                     $sj_data = array(
                         'invoice_no'    => $invoice_no,
                         'sj_id'         => $sj_id,
                         'due_date'      => $due_date,
                         'note'          => $note,
-                        'total_niv'     => $total_niv,
+                        'total_order_amount_in_ctn'     => $total_order_amount_in_ctn,
+                        'total_order_price_before_tax'  => $total_order_price_before_tax,
+                        'total_order_price_after_tax'   => $total_order_price_after_tax,
+                        'total_order_amount_after_tax'  => $total_order_amount_after_tax,
                         'user_created'  => $user->id,
                         'date_created'  => date('Y-m-d'),
                         'time_created'  => date('H:i:s')
@@ -244,7 +253,10 @@ class Invoices extends MX_Controller {
                 $sj_id = $this->input->post('sj_id');
                 $due_date = date('Y-m-d', strtotime(str_replace('/','-',$this->input->post('due_date'))));
                 $note = $this->input->post('note');
-                $total_niv = $this->input->post('total_order_amount_after_tax');
+                $total_order_amount_in_ctn = $this->input->post('total_order_amount_in_ctn');
+                $total_order_price_before_tax = $this->input->post('total_order_price_before_tax');
+                $total_order_price_after_tax = $this->input->post('total_order_price_after_tax');
+                $total_order_amount_after_tax = $this->input->post('total_order_amount_after_tax');
             
                 $data_old = array(
                     'Invoice No'    => $model->invoice_no,
@@ -270,7 +282,10 @@ class Invoices extends MX_Controller {
                 $model->sj_id       = $sj_id;
                 $model->due_date    = $due_date;
                 $model->note        = $note;
-                $model->total_niv   = $total_niv;
+                $model->total_order_amount_in_ctn   = $total_order_amount_in_ctn;
+                $model->total_order_price_before_tax   = $total_order_price_before_tax;
+                $model->total_order_price_after_tax   = $total_order_price_after_tax;
+                $model->total_order_amount_after_tax   = $total_order_amount_after_tax;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
@@ -321,7 +336,7 @@ class Invoices extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $sj_data = Invoice::select('t_invoice.*', 't_sp.sp_no', 't_sp.sp_date', 'm_dipo_partner.id as dipo_id', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.phone as dipo_phone', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.pic as dipo_pic', 'm_dipo_partner.top as dipo_top')
+            $sj_data = Invoice::select('t_invoice.*', 't_sj.sj_no', 't_sp.sp_no', 't_sp.sp_date', 'm_dipo_partner.id as dipo_id', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.phone as dipo_phone', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.pic as dipo_pic', 'm_dipo_partner.top as dipo_top')
                                         ->join('t_sj', 't_sj.id', '=', 't_invoice.sj_id')
                                         ->join('t_sp', 't_sp.id', '=', 't_sj.sp_id')
                                         ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
@@ -439,11 +454,13 @@ class Invoices extends MX_Controller {
 
     function pdf(){
         $id = (int) $this->input->get('id');
-        $data['row'] = Invoice::select('t_sj.*', 't_sp.sp_no', 't_sp.sp_date', 'm_dipo_partner.id as dipo_id', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.phone as dipo_phone', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.pic as dipo_pic')
+        $data['row'] = Invoice::select('t_invoice.*', 't_sj.sp_id', 't_sj.sj_no', 't_sp.sp_no', 't_sp.sp_date', 'm_dipo_partner.id as dipo_id', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.phone as dipo_phone', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.pic as dipo_pic', 'm_dipo_partner.top as dipo_top')
+                                    ->join('t_sj', 't_sj.id', '=', 't_invoice.sj_id')
                                     ->join('t_sp', 't_sp.id', '=', 't_sj.sp_id')
                                     ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
-                                    ->where('t_sj.id', $id)
-                                    ->where('t_sj.deleted', 0)->first();
+                                    ->where('t_invoice.id', $id)
+                                    ->where('t_invoice.deleted', 0)->first();
+        
         $data['datadetails'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
                                     ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
@@ -459,11 +476,13 @@ class Invoices extends MX_Controller {
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=invoice.xls");
         $id = (int) $this->input->get('id');
-        $data['row'] = Invoice::select('t_sj.*', 't_sp.sp_no', 't_sp.sp_date', 'm_dipo_partner.id as dipo_id', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.phone as dipo_phone', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.pic as dipo_pic')
+        $data['row'] = Invoice::select('t_invoice.*', 't_sj.sp_id', 't_sj.sj_no', 't_sp.sp_no', 't_sp.sp_date', 'm_dipo_partner.id as dipo_id', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.phone as dipo_phone', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.pic as dipo_pic', 'm_dipo_partner.top as dipo_top')
+                                    ->join('t_sj', 't_sj.id', '=', 't_invoice.sj_id')
                                     ->join('t_sp', 't_sp.id', '=', 't_sj.sp_id')
                                     ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
-                                    ->where('t_sj.id', $id)
-                                    ->where('t_sj.deleted', 0)->first();
+                                    ->where('t_invoice.id', $id)
+                                    ->where('t_invoice.deleted', 0)->first();
+
         $data['datadetails'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
                                     ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')

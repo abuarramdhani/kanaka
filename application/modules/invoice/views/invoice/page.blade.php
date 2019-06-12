@@ -233,12 +233,22 @@
         <input type="hidden" name="invoice_id" value="">
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('account')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('to')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input readonly type="text" class="form-control input-sm" name="dipo_code" id="dipo_code" placeholder="<?=lang('dipo_code')?>" />
+                <input readonly type="text" class="form-control input-sm" name="dipo_code" id="dipo_code" placeholder="<?=lang('dipo_code')?>" /><br/>
+                <input readonly type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" /><br/>
+                <input readonly type="text" class="form-control input-sm" name="dipo_pic" id="dipo_pic" placeholder="<?=lang('dipo_pic')?>" />
             </div>
         </div>
         
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('invoice_no')?><span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input readonly type="text" class="form-control input-sm" name="invoice_no" id="invoice_no" placeholder="<?=lang('invoice_no')?>" maxlength="50" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('sj_no')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
@@ -286,6 +296,22 @@
             </div>
         </div>
         
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('payment_method') }}</label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="dipo_top" id="dipo_top" placeholder="<?=lang('payment_method')?>" readonly="readonly" />
+            <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('due_date_invoice') }}<span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="text" class="form-control input-sm" name="due_date" id="due_date" placeholder="<?=lang('due_date_invoice')?>" readonly="readonly" />
+            <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
         <hr/>
 
         <table id="table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
@@ -295,16 +321,18 @@
                     <th class="text-center">{{ lang('product_code') }}</th>
                     <th class="text-center">{{ lang('product_name') }}</th>
                     <th class="text-center">{{ lang('total_order_in_ctn') }}</th>
-                    <th class="text-center">{{ lang('volume_m3') }}</th>
-                    <th class="text-center">{{ lang('weight_kg') }}</th>
+                    <th class="text-center">{{ lang('price_of_orders_per_ctn_before_tax') }}</th>
+                    <th class="text-center">{{ lang('price_of_orders_per_ctn_after_tax') }}</th>
+                    <th class="text-center">{{ lang('order_amount_after_tax') }}</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th colspan="3" class="text-center">Total</th>
                     <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_amount_in_ctn" id="view_total_order_amount_in_ctn"/></th>
-                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_volume" id="view_total_order_volume"/></th>
-                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_weight" id="view_total_order_weight"/></th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_price_before_tax" id="view_total_order_price_before_tax"/></th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_price_after_tax" id="view_total_order_price_after_tax"/></th>
+                    <th><input readonly type="text" class="form-control input-sm text-center" name="view_total_order_amount_after_tax" id="view_total_order_amount_after_tax"/></th>
                 </tr>
             </tfoot>
         </table>
@@ -314,18 +342,46 @@
                 <table id="view-detail" class="table dt-responsive">
                     <tbody>
                         <tr>
-                            <th>Tanggal permintaan pengiriman barang :</th>
+                            <th>{{ lang('note') }} :</th>
                         </tr>
                         <tr>
-                            <th id="tanggal_pengiriman" class="text-right"></th>
+                            <td id="txt_note" class="text-left"></td>
                         </tr>
-                        <tr>
-                            <th>Tanggal penerimaan barang :</th>
-                        </tr>
-                        <tr>
-                            <th id="tanggal_penerimaan" class="text-right"></th>
-                        </tr>
+                        
                     </tbody>
+                </table>
+            </div>
+            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-5">
+                <table id="total-value" class="table dt-responsive">
+                    <tr>
+                        <th colspan="2">Total Value</th>
+                        <th id="total_value" class="text-right"></th>
+                    </tr>
+                    <tr class="text-discount">
+                        <th>Reg Disc</th>
+                        <th id="reg_disc" class="text-right">0%</th>
+                        <th id="reg_disc_total" class="text-right">0</th>
+                    </tr>
+                    <tr class="border-none text-discount">
+                        <th>Add Disc 1</th>
+                        <th id="add_disc_1" class="text-right">0%</th>
+                        <th id="add_disc_1_total" class="text-right">0</th>
+                    </tr>
+                    <tr class="border-none text-discount">
+                        <th>Add Disc 2</th>
+                        <th id="add_disc_2" class="text-right">0%</th>
+                        <th id="add_disc_2_total" class="text-right">0</th>
+                    </tr>
+                    <tr class="border-none text-discount">
+                        <th>BTW Disc</th>
+                        <th id="btw_disc" class="text-right">0%</th>
+                        <th id="btw_disc_total" class="text-right">0</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Total NIV</th>
+                        <th id="total_niv" class="text-right"></th>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -675,22 +731,29 @@
                 var i;
                 var html = "";
 
-                $('[name="sj_id"]').val(row.id);
+                $('[name="invoice_id"]').val(row.id);
+                $('[name="invoice_no"]').val(row.invoice_no);
                 $('[name="sj_no"]').val(row.sj_no);
                 $('[name="sp_no"]').val(row.sp_no);
+                $('[name="date_issued"]').val(formatDate(row.sp_date));
+                $('[name="receive_date"]').val(formatDate(row.sp_date));
+                $('[name="due_date"]').val(formatDate(row.due_date));
                 $('[name="dipo_code"]').val(row.dipo_code);
                 $('[name="dipo_name"]').val(row.dipo_name);
                 $('[name="dipo_address"]').val(row.dipo_address);
-                $('[name="date_issued"]').val(formatDate(row.sp_date));
-                $('[name="receive_date"]').val(formatDate(row.sp_date));
+                $('[name="dipo_top"]').val(row.dipo_top);
+                $('[name="dipo_pic"]').val(row.dipo_pic);
+                $('#txt_note').text(row.note)
 
                 $('[name="view_total_order_amount_in_ctn"]').val(row.total_order_amount_in_ctn);
-                $('[name="view_total_order_volume"]').val(row.total_order_volume.toFixed(2));
-                $('[name="view_total_order_weight"]').val(row.total_order_weight.toFixed(2));
-                $('#tanggal_pengiriman').text(formatDate(row.sp_date))
-                $('#tanggal_penerimaan').text(formatDate(row.sp_date))
+                $('[name="view_total_order_price_before_tax"]').val(row.total_order_price_before_tax.toFixed(0));
+                $('[name="view_total_order_price_after_tax"]').val(row.total_order_price_after_tax.toFixed(0));
+                $('[name="view_total_order_amount_after_tax"]').val(row.total_order_amount_after_tax.toFixed(0));
+                
+                $('#total_value').text(row.total_order_amount_after_tax.toFixed(0));
+                $('#total_niv').text(row.total_order_amount_after_tax.toFixed(0));
 
-                $('[name="sj_no"]').attr('readonly', true);
+                $('[name="invoice_no"]').attr('readonly', true);
                 $('#modal_detail').modal('show');
                 $('.modal-title').text('<?=lang('invoice')?>'); 
             }else if(json.status == "error"){
@@ -709,10 +772,10 @@
             "bServerSide": true,
             "bLengthChange": true,
             "sServerMethod": "GET",
-            "sAjaxSource": "{{ base_url() }}invoice/invoices/fetch_data_jalan/?id="+value,
+            "sAjaxSource": "{{ base_url() }}invoice/invoices/fetch_data_invoice/?id="+value,
             "order": [1,"asc"],
             "columnDefs": [
-                {"className": "dt-center", "targets": [0, 3, 4, 5]},
+                {"className": "dt-center", "targets": [0, 3, 4, 5, 6]},
                 {"targets": [0], "orderable": false}
             ],
         }).fnSetFilteringDelay(1000);
@@ -795,11 +858,11 @@
     }
     
     function printPdf(){
-        return window.open('{{base_url()}}reports/invoice/pdf/?id='+$('[name="sj_id"]').val())
+        return window.open('{{base_url()}}reports/invoice/pdf/?id='+$('[name="invoice_id"]').val());
     }
 
     function printExcel(){
-        return window.open('{{base_url()}}reports/invoice/excel/?id='+$('[name="sj_id"]').val())
+        return window.open('{{base_url()}}reports/invoice/excel/?id='+$('[name="invoice_id"]').val());
     }
 
 </script>

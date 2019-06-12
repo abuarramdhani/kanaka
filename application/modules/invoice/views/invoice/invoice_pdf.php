@@ -25,8 +25,16 @@
 
 		<table width="50%" cellpadding="1" cellspacing="0">
 			<tr style="font-size:12px">
-				<th align="left"><?=lang('account')?></th>
-				<th align="left" style="border-bottom: 1px solid black"><?= $row->dipo_code ?></th>
+				<th align="left"><?=lang('to')?></th>
+				<th align="left" style="border-bottom: 1px solid black">
+					<?= $row->dipo_code ?><br/>
+					<?= $row->dipo_name ?><br/>
+					<?= $row->dipo_pic ?>
+				</th>
+			</tr>
+			<tr style="font-size:12px">
+				<th align="left"><?=lang('invoice_no')?></th>
+				<th align="left" style="border-bottom: 1px solid black"><?= $row->invoice_no ?></th>
 			</tr>
 			<tr style="font-size:12px">
 				<th align="left"><?=lang('sj_no')?></th>
@@ -45,16 +53,20 @@
 				<th align="left" style="border-bottom: 1px solid black"><?= $row->dipo_address ?></th>
 			</tr>
 			<tr style="font-size:12px">
-				<th align="left"><?=lang('pic')?></th>
-				<th align="left" style="border-bottom: 1px solid black"><?= $row->dipo_pic ?></th>
+				<th align="left"><?=lang('date_issued')?></th>
+				<th align="left" style="border-bottom: 1px solid black"><?= date('d/m/Y',strtotime($row->sp_date)) ?></th>
 			</tr>
 			<tr style="font-size:12px">
-				<th align="left"><?=lang('phone')?></th>
-				<th align="left" style="border-bottom: 1px solid black"><?= $row->dipo_phone ?></th>
-			</tr>
-			<tr style="font-size:12px">
-				<th align="left">Tanggal</th>
+				<th align="left"><?=lang('receive_date')?></th>
 				<th align="left" style="border-bottom: 1px solid black"><?=date('d/m/Y',strtotime($row->sp_date))?></th>
+			</tr>
+			<tr style="font-size:12px">
+				<th align="left"><?=lang('payment_method')?></th>
+				<th align="left" style="border-bottom: 1px solid black"><?= $row->dipo_top ?></th>
+			</tr>
+			<tr style="font-size:12px">
+				<th align="left"><?=lang('due_date_invoice')?></th>
+				<th align="left" style="border-bottom: 1px solid black"><?= $row->due_date ?></th>
 			</tr>
 			<tr>
 				<th colspan="2">&nbsp;</th>
@@ -67,8 +79,9 @@
 				<th align="center"><?= lang('product_code') ?></th>
 				<th align="center"><?= lang('product_name') ?></th>
 				<th align="center"><?= lang('total_order_in_ctn') ?></th>
-				<th align="center"><?= lang('volume_m3') ?></th>
-				<th align="center"><?= lang('weight_kg') ?></th>
+				<th align="center"><?= lang('price_of_orders_per_ctn_before_tax') ?></th>
+				<th align="center"><?= lang('price_of_orders_per_ctn_after_tax') ?></th>
+				<th align="center"><?= lang('order_amount_after_tax') ?></th>
 			</tr>
 			<?php 
 			$i = 0;
@@ -82,24 +95,26 @@
 					<td align="center"><?= $rowdetail->product_code ?></td>
 					<td><?= $rowdetail->product_name ?></td>
 					<td align="center"><?= $rowdetail->order_amount_in_ctn ?></td>
-					<td align="center"><?= number_format($rowdetail->order_volume,2) ?></td>
-					<td align="center"><?= number_format($rowdetail->order_weight,2) ?></td>
+					<td align="center"><?= number_format($rowdetail->order_price_dipo_before_tax,0) ?></td>
+					<td align="center"><?= number_format($rowdetail->order_price_dipo_after_tax,0) ?></td>
+					<td align="center"><?= number_format($rowdetail->order_amount_dipo_after_tax,0) ?></td>
 				</tr>
 			<?php 
 				}
 			?>
 				<tr style="font-size:11px">
 					<th colspan="3">Total</th>
-					<th><?= $row->total_order_amount_in_ctn ?></th>
-					<th><?= number_format($row->total_order_volume,2) ?></th>
-					<th><?= number_format($row->total_order_weight,2) ?></th>
+					<th><?= number_format($row->total_order_amount_in_ctn,0) ?></th>
+					<th><?= number_format($row->total_order_price_before_tax,0) ?></th>
+					<th><?= number_format($row->total_order_price_after_tax,0) ?></th>
+					<th><?= number_format($row->total_order_amount_after_tax,0) ?></th>
 				</tr>
 			<?php
 			}
 			else{
 			?>
 				<tr style="font-size:9px">
-					<td align="center" colspan="6"><?= lang('no_data_available') ?></td>
+					<td align="center" colspan="7"><?= lang('no_data_available') ?></td>
 				</tr>
 			<?php
 			}
@@ -109,13 +124,50 @@
 		<br/>
 
 		<table width="100%" cellpadding="1" cellspacing="0">
-			<tr style="font-size:12px">
-				<th align="left" width="25%">Tanggal permintaan pengiriman barang :</th>
-				<th align="left"><?= date('d/m/Y',strtotime($row->sp_date)) ?></th>
+			<tr>
+				<th colspan="7">&nbsp;</th>
 			</tr>
 			<tr style="font-size:12px">
-				<th align="left" width="25%">Tanggal penerimaan barang :</th>
-				<th align="left"><?= date('d/m/Y',strtotime($row->sp_date)) ?></th>
+				<th colspan="2" align="left" width="25%"><?= lang('note') ?> :</th>
+				<th align="left">&nbsp;</th>
+				<th>&nbsp;</th>
+				<th align="left" colspan="2" width="20%" style="border-top:1px solid black">Total Value</th>
+				<th style="border-top:1px solid black"><?= number_format($row->total_order_amount_after_tax,0) ?></th>
+			</tr>
+			<tr style="font-size:12px">
+				<th colspan="2" rowspan="5">&nbsp;</th>
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+				<th align="left" style="border-top:1px solid black">Reg Disc</th>
+				<th style="border-top:1px solid black">0%</th>
+				<th style="border-top:1px solid black">0</th>
+			</tr>
+			<tr style="font-size:12px">
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+				<th align="left">Add Disc 1</th>
+				<th>0%</th>
+				<th>0</th>
+			</tr>
+			<tr style="font-size:12px">
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+				<th align="left">Add Disc 2</th>
+				<th>0%</th>
+				<th>0</th>
+			</tr>
+			<tr style="font-size:12px">
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+				<th align="left">BTW Disc</th>
+				<th>0%</th>
+				<th>0</th>
+			</tr>
+			<tr style="font-size:12px">
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+				<th align="left" colspan="2" style="border-top:1px solid black">Total NIV</th>
+				<th style="border-top:1px solid black"><?= number_format($row->total_order_amount_after_tax,0) ?></th>
 			</tr>
 		</table>
 

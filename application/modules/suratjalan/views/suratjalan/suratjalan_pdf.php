@@ -90,7 +90,7 @@
 			?>
 				<tr style="font-size:11px">
 					<th colspan="3">Total</th>
-					<th><?= $row->total_order_amount_in_ctn ?></th>
+					<th><?= number_format($row->total_order_amount_in_ctn,0) ?></th>
 					<th><?= number_format($row->total_order_volume,2) ?></th>
 					<th><?= number_format($row->total_order_weight,2) ?></th>
 				</tr>

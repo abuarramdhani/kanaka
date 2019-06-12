@@ -58,9 +58,9 @@
                             <tr>
                                 <th><?=lang('description')?></th>
                                 <th><?=lang('code')?></th>
-                                <th>D</th>
+                                <!-- <th>D</th>
                                 <th>K</th>
-                                <th><?=lang('total')?></th>
+                                <th><?=lang('total')?></th> -->
                                 <th><?=lang('created_date')?></th>
                                 <th width="13%"><?=lang('options')?></th>
                             </tr>
@@ -133,8 +133,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}chartofaccount/chartofaccounts/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [2, 3, 4, 6]},
-            {"targets": [6], "orderable": false}
+            {"className": "dt-center", "targets": [3]},
+            {"targets": [3], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);

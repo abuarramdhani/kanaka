@@ -22,10 +22,10 @@ class Chartofaccounts extends MX_Controller {
         $database_columns = array(
             'm_chart_of_accounts.id as coa_id',
             'code',
-            'd_k',
+            // 'd_k',
             'm_chart_of_accounts.description',
             'm_chart_of_accounts.date_created',
-            'sum(t_jurnal.total) as total',
+            // 'sum(t_jurnal.total) as total',
         );
 
         $header_columns = array(
@@ -35,10 +35,11 @@ class Chartofaccounts extends MX_Controller {
         );
 
         $from = "m_chart_of_accounts";
-        $where = "m_chart_of_accounts.deleted = 0 AND t_jurnal.deleted = 0";
-        $group_by = "t_jurnal.coa_id";
+        $where = "m_chart_of_accounts.deleted = 0";
+        // $where = "m_chart_of_accounts.deleted = 0 AND t_jurnal.deleted = 0";
+        // $group_by = "t_jurnal.coa_id";
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
-        $join[] = array('t_jurnal', 't_jurnal.coa_id = m_chart_of_accounts.id', 'inner');
+        // $join[] = array('t_jurnal', 't_jurnal.coa_id = m_chart_of_accounts.id', 'left');
         
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
@@ -52,12 +53,12 @@ class Chartofaccounts extends MX_Controller {
             $where .= ")";
         }
 
-        $this->datatables->set_index('coa_id');
+        $this->datatables->set_index('id');
         $this->datatables->config('database_columns', $database_columns);
         $this->datatables->config('from', $from);
-        $this->datatables->config('join', $join);
+        // $this->datatables->config('join', $join);
         $this->datatables->config('where', $where);
-        $this->datatables->config('group_by', $group_by);
+        // $this->datatables->config('group_by', $group_by);
         $this->datatables->config('order_by', $order_by);
         $selected_data = $this->datatables->get_select_data();
         $aa_data = $selected_data['aaData'];
@@ -68,22 +69,22 @@ class Chartofaccounts extends MX_Controller {
 
             $btn_action = '';
             if($this->user_profile->get_user_access('Updated', 'chartofaccount')){
-                $btn_action .= '<a href="javascript:void()" onclick="viewData(\'' . uri_encrypt($row->coa_id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
+                $btn_action .= '<a href="javascript:void()" onclick="viewData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
             }
             if($this->user_profile->get_user_access('Deleted', 'chartofaccount')){
-                $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->coa_id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
+                $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
 
             $row_value[] = $row->description;
             $row_value[] = $row->code;
-            if($row->d_k == 'D'){
-                $row_value[] = $row->total;
-                $row_value[] = 0;
-            }elseif($row->d_k == 'K'){
-                $row_value[] = 0;
-                $row_value[] = $row->total;
-            }
-            $row_value[] = $row->total;
+            // if($row->d_k == 'D'){
+            //     $row_value[] = $row->total;
+            //     $row_value[] = 0;
+            // }elseif($row->d_k == 'K'){
+            //     $row_value[] = 0;
+            //     $row_value[] = $row->total;
+            // }
+            // $row_value[] = $row->total;
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             

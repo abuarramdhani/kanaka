@@ -30,6 +30,7 @@ class Pricelists extends MX_Controller {
     }
 
     public function fetch_data() {
+        $user = $this->ion_auth->user()->row();
         $database_columns = array(
             'm_product.id as product_id',
             't_pricelist.id as pricelist_id',
@@ -115,7 +116,7 @@ class Pricelists extends MX_Controller {
         );
 
         $from = "t_pricelist";
-        $where = "t_pricelist.deleted = 0";
+        $where = "t_pricelist.deleted = 0 AND m_product.deleted = 0 AND t_pricelist.user_created = ".$user->id;
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
         $join[] = array('m_product', 'm_product.id = t_pricelist.product_id', 'inner');
 

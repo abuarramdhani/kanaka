@@ -219,10 +219,10 @@
         'onText' : 'Active',
         'offText' : 'Not',
     });
-    $('#cmb_menu_code').select2({
-        theme: "bootstrap",
-        width: "100%"
-    });
+    // $('#cmb_menu_code').select2({
+    //     theme: "bootstrap",
+    //     width: "100%"
+    // });
     toastr.options = { "positionClass": "toast-top-right", };
 
     $('#add-new').click(function(e){

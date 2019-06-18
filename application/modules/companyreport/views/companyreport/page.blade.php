@@ -46,6 +46,7 @@
                                 <div class="caption font-dark">
                                     <i class="icon-grid font-dark"></i>
                                     <span class="caption-subject"> {{lang('sell_in')}}</span>
+                                    {{ $user->group_id }}
                                 </div>
                                 <div class="tools">
                                     @if($add_access == 1)

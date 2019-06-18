@@ -21,11 +21,14 @@ class Companyreports extends MX_Controller {
         $data['principles'] = Principle::where('deleted', 0)->get();
         $data['products'] = Product::select('m_product.id', 'm_product.product_code', 'm_product.name as product_name')->where('m_product.deleted', 0)->orderBy('m_product.product_code', 'ASC')->get();
         $data['customers'] = Dipo::select('m_dipo_partner.id', 'm_dipo_partner.code as customer_code', 'm_dipo_partner.name as customer_name')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.code', 'ASC')->get();
+        $data['user'] = $this->ion_auth->user()->row();
 
         $this->load->blade('companyreport.views.companyreport.page', $data);
     }
 
     public function fetch_data() {
+        $user = $this->ion_auth->user()->row();
+
         $database_columns = array(
             'po_date',
             'receive_date',
@@ -103,6 +106,10 @@ class Companyreports extends MX_Controller {
 
         $from = "t_sell_in_company";
         $where = "t_sell_in_company.deleted = 0";
+        // if($user->group_id != '1'){
+        //     $where .= " AND t_sell_in_company.deleted = 0";
+        // }
+
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
         $join[] = array('m_principle', 't_sell_in_company.principle_id = m_principle.id', 'left');

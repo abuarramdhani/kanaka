@@ -46,7 +46,6 @@
                                 <div class="caption font-dark">
                                     <i class="icon-grid font-dark"></i>
                                     <span class="caption-subject"> {{lang('sell_in')}}</span>
-                                    {{ $user->group_id }}
                                 </div>
                                 <div class="tools">
                                     @if($add_access == 1)
@@ -728,6 +727,9 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}companyreport/companyreports/fetch_data",
         "columnDefs": [
+            @if($user->group_id != '1')
+                {"visible": false, "searchable": false, "targets": [2, 4, 5]},
+            @endif
             {"className": "dt-center", "targets": [37]},
             {"targets": [26, 27, 28, 37], "orderable": false}
         ],

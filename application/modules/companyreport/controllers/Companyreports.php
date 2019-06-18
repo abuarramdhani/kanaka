@@ -106,9 +106,9 @@ class Companyreports extends MX_Controller {
 
         $from = "t_sell_in_company";
         $where = "t_sell_in_company.deleted = 0";
-        // if($user->group_id != '1'){
-        //     $where .= " AND t_sell_in_company.deleted = 0";
-        // }
+        if($user->group_id != '1'){
+            $where .= " AND t_sell_in_company.user_created = ". $user->id;
+        }
 
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 

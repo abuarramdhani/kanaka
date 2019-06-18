@@ -88,7 +88,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label"><?=lang('menu')?><span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <select name="menu_code" id="cmb_menu_code" class="form-control" required>
+                                <select name="menu_code" id="cmb_menu_code" class="form-control select2" required>
                                     <?php
                                         if (!empty($menus)) {
                                             foreach ($menus as $menu) {

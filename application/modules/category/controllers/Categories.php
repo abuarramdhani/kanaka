@@ -166,6 +166,9 @@ class Categories extends MX_Controller {
                         $fileData = $this->upload->data();
                         $filename = $fileData['file_name'];
                     }
+                    else{
+                        $filename = $model->image;                
+                    }
                 }
                 else{
                     $filename = $model->image;

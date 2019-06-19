@@ -730,6 +730,7 @@
             @if($user->group_id != '1')
                 {"visible": false, "searchable": false, "targets": [2, 4, 5]},
             @endif
+            
             {"className": "dt-center", "targets": [37]},
             {"targets": [26, 27, 28, 37], "orderable": false}
         ],

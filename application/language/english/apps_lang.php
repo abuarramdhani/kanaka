@@ -393,6 +393,8 @@ $lang['dipo_address'] = 'Dipo Address';
 $lang['dipo_code'] = 'Dipo Code';
 $lang['sp_date'] = 'SP Date';
 $lang['ship_to'] = 'Ship to';
+$lang['D'] = 'In';
+$lang['K'] = 'Out';
 ## END Surat Pesanan ##
 
 ## Surat Jalan ##

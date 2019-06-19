@@ -25,11 +25,12 @@ class Jurnals extends MX_Controller {
         $database_columns = array(
             'jurnal_date',
             'month',
-            'reff',
+            // 'reff',
             'm_chart_of_accounts.code as coa_code',
+            'm_chart_of_accounts.description as coa_description',
             't_jurnal.description as jurnal_description',
             'd_k',
-            'pic',
+            // 'pic',
             'total',
             't_jurnal.date_created',
         );
@@ -37,11 +38,11 @@ class Jurnals extends MX_Controller {
         $header_columns = array(
             'jurnal_date',
             'month',
-            'reff',
+            // 'reff',
             'm_chart_of_accounts.code',
             't_jurnal.description',
             'd_k',
-            'pic',
+            // 'pic',
             'total',
             'total',
             't_jurnal.date_created',
@@ -63,10 +64,10 @@ class Jurnals extends MX_Controller {
             $where .= "m_chart_of_accounts.code LIKE '%" . $sSearch . "%' OR ";
             $where .= "jurnal_date LIKE '%" . $sSearch . "%' OR ";
             $where .= "month LIKE '%" . $sSearch . "%' OR ";
-            $where .= "reff LIKE '%" . $sSearch . "%' OR ";
+            // $where .= "reff LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_jurnal.description LIKE '%" . $sSearch . "%' OR ";
             $where .= "d_k LIKE '%" . $sSearch . "%' OR ";
-            $where .= "pic LIKE '%" . $sSearch . "%' OR ";
+            // $where .= "pic LIKE '%" . $sSearch . "%' OR ";
             $where .= "total LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_jurnal.date_created LIKE '%" . $sSearch . "%'";
             $where .= ")";
@@ -95,11 +96,11 @@ class Jurnals extends MX_Controller {
 
             $row_value[] = date('d-m-Y',strtotime($row->jurnal_date));
             $row_value[] = $row->month;
-            $row_value[] = $row->reff;
-            $row_value[] = $row->coa_code;
+            // $row_value[] = $row->reff;
+            $row_value[] = $row->coa_code.' - '.$row->coa_description;
             $row_value[] = $row->jurnal_description;
-            $row_value[] = $row->d_k;
-            $row_value[] = $row->pic;
+            $row_value[] = lang($row->d_k);
+            // $row_value[] = $row->pic;
             if($row->d_k == 'D'){
                 $row_value[] = number_format($row->total, 0);
                 $row_value[] = 0;
@@ -125,21 +126,21 @@ class Jurnals extends MX_Controller {
                 $date = date_create($this->input->post('tanggal'));
                 $jurnal_date = date_format($date,"Y-m-d");
                 $month = $this->input->post('month');
-                $reff = $this->input->post('reff');
+                // $reff = $this->input->post('reff');
                 $description = $this->input->post('keterangan');
                 $d_k = $this->input->post('d_k');
                 $coa_id = $this->input->post('coa_id');
-                $pic = $this->input->post('pic');
+                // $pic = $this->input->post('pic');
                 $total = $this->input->post('total');
                 
                 $model = new Jurnal();
                 $model->jurnal_date = $jurnal_date;
                 $model->month = $month;
-                $model->reff = $reff;
+                // $model->reff = $reff;
                 $model->description = $description;
                 $model->d_k = $d_k;
                 $model->coa_id = $coa_id;
-                $model->pic = $pic;
+                // $model->pic = $pic;
                 $model->total = $total;
                 
                 $model->user_created = $user->id;
@@ -151,11 +152,11 @@ class Jurnals extends MX_Controller {
                     $data_notif = array(
                         'Tanggal' => $jurnal_date,
                         'Bulan' => $month,
-                        'Reff' => $reff,
+                        // 'Reff' => $reff,
                         'Keterangan' => $description,
                         'D/K' => $d_k,
                         'Chart Of Account' => Chartofaccount::find($coa_id)->code,
-                        'PIC' => $pic,
+                        // 'PIC' => $pic,
                         'Total' => $total,
                     );
                     $message = "Add " . lang('jurnal') . " " . $jurnal_date . " succesfully by " . $user->full_name;
@@ -169,31 +170,31 @@ class Jurnals extends MX_Controller {
                 $date = date_create($this->input->post('tanggal'));
                 $jurnal_date = date_format($date,"Y-m-d");
                 $month = $this->input->post('month');
-                $reff = $this->input->post('reff');
+                // $reff = $this->input->post('reff');
                 $description = $this->input->post('keterangan');
                 $d_k = $this->input->post('d_k');
                 $coa_id = $this->input->post('coa_id');
-                $pic = $this->input->post('pic');
+                // $pic = $this->input->post('pic');
                 $total = $this->input->post('total');
             
                 $data_old = array(
                     'Tanggal' => $model->jurnal_date,
                     'Bulan' => $model->month,
-                    'Reff' => $model->reff,
+                    // 'Reff' => $model->reff,
                     'Keterangan' => $model->description,
                     'D/K' => $model->d_k,
                     'Chart Of Account' => Chartofaccount::find($model->coa_id)->code,
-                    'PIC' => $model->pic,
+                    // 'PIC' => $model->pic,
                     'Total' => $model->total,
                 );
 
                 $model->jurnal_date = $jurnal_date;
                 $model->month = $month;
-                $model->reff = $reff;
+                // $model->reff = $reff;
                 $model->description = $description;
                 $model->d_k = $d_k;
                 $model->coa_id = $coa_id;
-                $model->pic = $pic;
+                // $model->pic = $pic;
                 $model->total = $total;
 
                 $model->user_modified = $user->id;
@@ -204,11 +205,11 @@ class Jurnals extends MX_Controller {
                     $data_new = array(
                         'Tanggal' => $jurnal_date,
                         'Bulan' => $month,
-                        'Reff' => $reff,
+                        // 'Reff' => $reff,
                         'Keterangan' => $description,
                         'D/K' => $d_k,
                         'Chart Of Account' => Chartofaccount::find($coa_id)->code,
-                        'PIC' => $pic,
+                        // 'PIC' => $pic,
                         'Total' => $total,
                     );
 
@@ -253,11 +254,11 @@ class Jurnals extends MX_Controller {
                 $data_notif = array(
                     'Tanggal' => $model->jurnal_date,
                     'Bulan' => $model->month,
-                    'Reff' => $model->reff,
+                    // 'Reff' => $model->reff,
                     'Keterangan' => $model->description,
                     'D/K' => $model->d_k,
                     'Chart Of Account' => Chartofaccount::find($model->coa_id)->code,
-                    'PIC' => $model->pic,
+                    // 'PIC' => $model->pic,
                     'Total' => $model->total,
                 );
                 $message = "Delete " . lang('jurnal') . " " .  $model->name . " succesfully by " . $user->full_name;
@@ -274,7 +275,7 @@ class Jurnals extends MX_Controller {
     }
 
     function pdf(){
-        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
+        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
         $html = $this->load->view('jurnal/jurnal/jurnal_pdf', $data, true);
         $this->pdf_generator->generate($html, 'jurnal pdf', $orientation='Landscape');
     }
@@ -282,7 +283,7 @@ class Jurnals extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=jurnal.xls");
-        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
+        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
         $this->load->view('jurnal/jurnal/jurnal_pdf', $data);
     }
 

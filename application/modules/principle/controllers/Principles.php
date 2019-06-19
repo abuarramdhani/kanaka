@@ -35,6 +35,10 @@ class Principles extends MX_Controller {
             'email_office',
             'email_personal',
             'web',
+            'reg_disc',
+            'add_disc_1',
+            'add_disc_2',
+            'btw_disc',
             'date_created'
         );
 
@@ -52,6 +56,10 @@ class Principles extends MX_Controller {
             'email_office',
             'email_personal',
             'web',
+            'reg_disc',
+            'add_disc_1',
+            'add_disc_2',
+            'btw_disc',
             'date_created'
         );
 
@@ -115,6 +123,10 @@ class Principles extends MX_Controller {
             $row_value[] = $row->email_office;
             $row_value[] = $row->email_personal;
             $row_value[] = $row->web;
+            $row_value[] = $row->reg_disc;
+            $row_value[] = $row->add_disc_1;
+            $row_value[] = $row->add_disc_2;
+            $row_value[] = $row->btw_disc;
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             
@@ -147,6 +159,10 @@ class Principles extends MX_Controller {
                     $email_office = $this->input->post('email_office');
                     $email_personal = $this->input->post('email_personal');
                     $web = $this->input->post('web');
+                    $reg_disc = $this->input->post('reg_disc');
+                    $add_disc_1 = $this->input->post('add_disc_1');
+                    $add_disc_2 = $this->input->post('add_disc_2');
+                    $btw_disc = $this->input->post('btw_disc');
                     
                     $model = new principle();
                     $model->code = $code;
@@ -162,6 +178,10 @@ class Principles extends MX_Controller {
                     $model->email_office = $email_office;
                     $model->email_personal = $email_personal;
                     $model->web = $web;
+                    $model->reg_disc = $reg_disc;
+                    $model->add_disc_1 = $add_disc_1;
+                    $model->add_disc_2 = $add_disc_2;
+                    $model->btw_disc = $btw_disc;
                     
                     $model->user_created = $user->id;
                     $model->date_created = date('Y-m-d');
@@ -182,6 +202,10 @@ class Principles extends MX_Controller {
                             'Email Office' => $email_office,
                             'Email Persoal' => $email_personal,
                             'Web' => $web,
+                            'Reg Disc' => $reg_disc,
+                            'Add Disc 1' => $add_disc_1,
+                            'Add Disc 2' => $add_disc_2,
+                            'BTW Disc' => $btw_disc,
                         );
                         $message = "Add " . lang('principle') . " " . $name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 10);
@@ -205,6 +229,10 @@ class Principles extends MX_Controller {
                 $email_office = $this->input->post('email_office');
                 $email_personal = $this->input->post('email_personal');
                 $web = $this->input->post('web');
+                $reg_disc = $this->input->post('reg_disc');
+                $add_disc_1 = $this->input->post('add_disc_1');
+                $add_disc_2 = $this->input->post('add_disc_2');
+                $btw_disc = $this->input->post('btw_disc');
             
                 $data_old = array(
                     'Code' => $model->code,
@@ -220,6 +248,10 @@ class Principles extends MX_Controller {
                     'Email Office' => $model->email_office,
                     'Email Persoal' => $model->email_personal,
                     'Web' => $model->web,
+                    'Reg Disc' => $model->reg_disc,
+                    'Add Disc 1' => $model->add_disc_1,
+                    'Add Disc 2' => $model->add_disc_2,
+                    'BTW Disc' => $model->btw_disc,
                 );
 
                 $model->code = $code;
@@ -235,6 +267,10 @@ class Principles extends MX_Controller {
                 $model->email_office = $email_office;
                 $model->email_personal = $email_personal;
                 $model->web = $web;
+                $model->reg_disc = $reg_disc;
+                $model->add_disc_1 = $add_disc_1;
+                $model->add_disc_2 = $add_disc_2;
+                $model->btw_disc = $btw_disc;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
@@ -255,6 +291,10 @@ class Principles extends MX_Controller {
                         'Email Office' => $email_office,
                         'Email Persoal' => $email_personal,
                         'Web' => $web,
+                        'Reg Disc' => $reg_disc,
+                        'Add Disc 1' => $add_disc_1,
+                        'Add Disc 2' => $add_disc_2,
+                        'BTW Disc' => $btw_disc,
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);

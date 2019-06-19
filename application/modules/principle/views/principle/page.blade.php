@@ -66,6 +66,7 @@
                                 <th colspan="3" class="text-center"><?=lang('phone')?></th>
                                 <th colspan="2" class="text-center"><?=lang('email')?></th>
                                 <th rowspan="2" class="text-center"><?=lang('web')?></th>
+                                <th colspan="4" class="text-center"><?=lang('discount')?></th>
                                 <th rowspan="2" class="text-center"><?=lang('created_date')?></th>
                                 <th rowspan="2" width="13%"><?=lang('options')?></th>
                             </tr>
@@ -75,6 +76,10 @@
                                 <th><?=lang('fax')?></th> 
                                 <th><?=lang('office')?></th>
                                 <th><?=lang('personal')?></th> 
+                                <th>Reg Disc</th>
+                                <th>Add Disc 1</th> 
+                                <th>Add Disc 2</th> 
+                                <th>BTW Disc</th> 
                             </tr>
                         </thead>
                     </table>
@@ -177,6 +182,38 @@
                 <div class="form-control-focus"> </div>
             </div>
         </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Reg Disc</label>
+            <div class="col-lg-7">
+                <input type="number" class="form-control input-sm" name="reg_disc" id="reg_disc" placeholder="Reg Disc" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Add Disc 1</label>
+            <div class="col-lg-7">
+                <input type="number" class="form-control input-sm" name="add_disc_1" id="add_disc_1" placeholder="Add Disc 1" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Add Disc 2</label>
+            <div class="col-lg-7">
+                <input type="number" class="form-control input-sm" name="add_disc_2" id="add_disc_2" placeholder="Add Disc 2" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">BTW Disc</label>
+            <div class="col-lg-7">
+                <input type="number" class="form-control input-sm" name="btw_disc" id="btw_disc" placeholder="BTW Disc" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
         
       </div>
       <div class="modal-footer">
@@ -213,8 +250,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}principle/principles/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [8]},
-            {"targets": [8], "orderable": false}
+            {"className": "dt-center", "targets": [18]},
+            {"targets": [18], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
@@ -303,6 +340,10 @@
                 $('[name="email_office"]').val(row.email_office);
                 $('[name="email_personal"]').val(row.email_personal);
                 $('[name="web"]').val(row.web);
+                $('[name="reg_disc"]').val(row.reg_disc);
+                $('[name="add_disc_1"]').val(row.add_disc_1);
+                $('[name="add_disc_2"]').val(row.add_disc_2);
+                $('[name="btw_disc"]').val(row.btw_disc);
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_principle')?>'); 

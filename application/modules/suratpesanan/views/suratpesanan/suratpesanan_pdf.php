@@ -140,29 +140,29 @@
 				<th>&nbsp;</th>
 				<th>&nbsp;</th>
 				<th align="left" style="border-top:1px solid black">Reg Disc</th>
-				<th style="border-top:1px solid black">0%</th>
-				<th style="border-top:1px solid black">0</th>
+				<th style="border-top:1px solid black"><?=$pesanan->reg_disc?>%</th>
+				<th style="border-top:1px solid black"><?=$pesanan->reg_disc_total?></th>
 			</tr>
 			<tr style="font-size:12px">
 				<th>&nbsp;</th>
 				<th>&nbsp;</th>
 				<th align="left">Add Disc 1</th>
-				<th>0%</th>
-				<th>0</th>
+				<th><?=$pesanan->add_disc_1?>%</th>
+				<th><?=$pesanan->add_disc_1_total?></th>
 			</tr>
 			<tr style="font-size:12px">
 				<th>&nbsp;</th>
 				<th>&nbsp;</th>
 				<th align="left">Add Disc 2</th>
-				<th>0%</th>
-				<th>0</th>
+				<th><?=$pesanan->add_disc_2?>%</th>
+				<th><?=$pesanan->add_disc_2_total?></th>
 			</tr>
 			<tr style="font-size:12px">
 				<th>&nbsp;</th>
 				<th>&nbsp;</th>
 				<th align="left">BTW Disc</th>
-				<th>0%</th>
-				<th>0</th>
+				<th><?=$pesanan->btw_disc?>%</th>
+				<th><?=$pesanan->btw_disc_total?></th>
 			</tr>
 			<tr style="font-size:12px">
 				<th>&nbsp;</th>

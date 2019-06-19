@@ -58,11 +58,11 @@
                             <tr>
                                 <th>Tanggal</th>
                                 <th>Bulan</th>
-                                <th>Reff</th>
-                                <th>Code</th>
+                                <!-- <th>Reff</th> -->
+                                <th>Akun</th>
                                 <th>Keterangan</th>
-                                <th>D/K</th>
-                                <th><?=lang('pic')?></th>
+                                <th>In/Out</th>
+                                <!-- <th>PIC</th> -->
                                 <th><?=lang('debet')?></th>
                                 <th><?=lang('kredit')?></th>
                                 <th><?=lang('created_date')?></th>
@@ -103,13 +103,13 @@
             </div>
         </div>
 
-        <div class="form-group form-md-line-input">
+        <!-- <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label">Reff</label>
             <div class="col-lg-7">
                 <input type="text" class="form-control input-sm" name="reff" id="reff" placeholder="Reff" maxlength="50" />
                 <div class="form-control-focus"> </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label">Keterangan<span class="text-danger">*</span></label>
@@ -120,12 +120,12 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">D/K<span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label">In/Out<span class="text-danger">*</span></label>
             <div class="col-lg-7">
                 <select class="form-control input-sm" name="d_k" id="d_k" style="width: 100%;">
                     <option value=""><?= lang('select_your_option') ?></option>
-                    <option value="D">D</option>
-                    <option value="K">K</option>
+                    <option value="D">In</option>
+                    <option value="K">Out</option>
                 </select>
                 <div class="form-control-focus"> </div>
             </div>
@@ -139,20 +139,20 @@
                     <?php
                         if (!empty($chartofaccounts)) {
                             foreach ($chartofaccounts as $c) { ?>
-                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
+                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?>-<?=ucfirst($c->description)?></option>
                     <?php } } ?>
                 </select>
                 <div class="form-control-focus"> </div>
             </div>
         </div>
         
-        <div class="form-group form-md-line-input">
+        <!-- <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('pic')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
                 <input type="text" class="form-control input-sm" name="pic" id="pic" placeholder="<?=lang('pic')?>" maxlength="100" />
                 <div class="form-control-focus"> </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="form-group form-md-line-input div-total">
             <label class="col-lg-4 control-label total-label"><?=lang('debet')?><span class="text-danger">*</span></label>
@@ -218,9 +218,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}jurnal/jurnals/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [3, 5]},
-            {"className": "dt-right", "targets": [7, 8]},
-            {"targets": [10], "orderable": false}
+            {"className": "dt-center", "targets": [4, 5, 6]},
+            {"targets": [8], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
@@ -317,8 +316,8 @@
                 $('[name="coa_id"]').val(row.coa_id).change();
                 $('[name="tanggal"]').val(formatDate(row.jurnal_date));
                 $('[name="month"]').val(row.month);
-                $('[name="reff"]').val(row.reff);
-                $('[name="pic"]').val(row.pic);
+                // $('[name="reff"]').val(row.reff);
+                // $('[name="pic"]').val(row.pic);
                 $('[name="keterangan"]').val(row.description);
                 $('[name="total"]').val(row.total);
                 $('[name="d_k"]').val(row.d_k).change();

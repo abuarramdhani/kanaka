@@ -133,3 +133,16 @@ tr.text-discount th {
 .select2{
     width: 100% !important;
 }
+
+button.btn_add_comp{
+    margin-left: 10%;
+}
+
+.comparation_title {
+    margin: 5% 10%;
+}
+
+table#total-value-add {
+    width: 40%;
+    margin-left: 60%;
+}

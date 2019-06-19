@@ -76,7 +76,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title"><?=lang('new_category')?></h3>
       </div>
-      {{ form_open(null,array('id' => 'form-category', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      {{ form_open(null,array('id' => 'form-category', 'class' => 'form-horizontal', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data')) }}
       <div class="modal-body">
         <input type="hidden" name="id" value="">
         

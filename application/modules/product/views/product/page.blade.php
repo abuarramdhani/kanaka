@@ -199,6 +199,23 @@
                 <div class="product-image preview-upload-image text-center"></div>
             </div>
         </div>
+        
+        <table id="add-table-surat" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+            <tbody>
+            </tbody>
+        </table>
+
+        <div class="form-group form-md-line-input">
+            <fieldset id="product_comparation">
+                <legend class="text-center"><?=lang('product_comparation')?></legend>
+                <div class="form-group form-md-line-input">
+                    <div class="col-md-12">
+                        <button type="button" class="btn_add_comp"><i class="fa fa-plus"></i>Add Product</button>
+                        <button type="button" class="btn_add_comp_edit"><i class="fa fa-plus"></i>Add Product</button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
 
       </div>
       <div class="modal-footer">
@@ -213,6 +230,45 @@
 
 @section('scripts')
 <script type="text/javascript">
+    var i = 1;
+
+    $('.btn_add_comp').show();
+    $('.btn_add_comp_edit').hide();
+    $('.btn_add_comp').click(function(){
+        // if(i <= 4){
+            $("fieldset#product_comparation").append(
+                '<div class="comparation_title"><b>Product '+i+'</b></div>'+
+                '<div class="form-group form-md-line-input">'+
+                    '<label class="col-lg-4 control-label"><?=lang('brand')?><span class="text-danger">*</span></label>'+
+                    '<div class="col-lg-7">'+
+                        '<input type="hidden" class="form-control input-sm" name="comparation_id[]" id="comparation_id_'+i+'"/>'+
+                        '<input type="text" class="form-control input-sm" name="brand[]" id="brand_'+i+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
+                        '<div class="form-control-focus"> </div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group form-md-line-input">'+
+                    '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
+                    '<div class="col-lg-7">'+
+                        '<textarea rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
+                        '<div class="form-control-focus"> </div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group form-md-line-input">'+
+                    '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
+                    '<div class="col-lg-7">'+
+                    '<input type="file" class="form-control" name="image_comparation[]" id="image_comparation_'+i+'"/>'+
+                        '<div class="form-control-focus"> </div>'+
+                    '</div>'+
+                '</div>'
+            );
+            i++;
+        // }
+
+        // if(i == 5){
+        //     $('.btn_add_comp').attr('disabled','disabled');
+        // }
+    });
+
     $('#preview-upload-image-field').hide();
 
     function get_volume(){
@@ -299,7 +355,7 @@
 
                 App.unblockUI('#form-wrapper');
                 setTimeout(function(){
-                    window.location.reload()
+                    // window.location.reload()
                 },1000);
             } 
             return false;
@@ -322,6 +378,9 @@
                 var i;
                 var html = "";
 
+                var rowComparation = json.dataComparation;
+                var dataLength = rowComparation.length;
+
                 $('[name="id"]').val(row.id);
                 $('[name="product_code"]').val(row.product_code);
                 $('[name="barcode_product"]').val(row.barcode_product);
@@ -341,6 +400,71 @@
                 for(i=0; i<rowImage.length; i++){
                     html += '<div class="product-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/' + rowImage[i].image + '"></div>';
                 }
+
+                for(i=1; i<=dataLength; i++){
+                    $("fieldset#product_comparation").append(
+                        '<div class="comparation_title"><b>Product '+i+'</b></div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label"><?=lang('brand')?><span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input type="hidden" class="form-control input-sm" name="comparation_id[]" id="comparation_id_'+i+'"/>'+
+                                '<input type="text" class="form-control input-sm" name="brand[]" id="brand_'+i+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<textarea rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                            '<input type="file" class="form-control" name="image_comparation[]" id="image_comparation_'+i+'"/>'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'
+                    );
+
+                    $('#comparation_id_'+i).val(rowComparation[i-1].id);
+                    $('#brand_'+i).val(rowComparation[i-1].brand);
+                    $('#desc_comparation_'+i).val(rowComparation[i-1].description);
+                }
+
+                $('.btn_add_comp_edit').show();
+                $('.btn_add_comp').hide();
+                var z = dataLength+1;
+
+                $('.btn_add_comp_edit').click(function(){
+                    $("fieldset#product_comparation").append(
+                        '<div class="comparation_title"><b>Product '+z+'</b></div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label"><?=lang('brand')?><span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input type="hidden" class="form-control input-sm" name="comparation_id[]" id="comparation_id_'+z+'"/>'+
+                                '<input type="text" class="form-control input-sm" name="brand[]" id="brand_'+z+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<textarea rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+z+'" placeholder="<?=lang('description')?>"></textarea>'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                            '<input type="file" class="form-control" name="image_comparation[]" id="image_comparation_'+z+'"/>'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'
+                    );
+                    z++;
+                });
                
                 $('.preview-upload-image').html(html);
                 $('#preview-upload-image-field').show();
@@ -442,5 +566,9 @@
         imagesPreview(this, 'div.preview-upload-image');
         $('#preview-upload-image-field').show();
     });
+
+    $('#modal_form').on('hidden.bs.modal', function () {
+        location.reload();
+    })
 </script>
 @stop

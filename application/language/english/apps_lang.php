@@ -197,6 +197,8 @@ $lang['qty_per_ctn'] = "Qty per Ctn (pcs)";
 $lang['weight'] = "Weight (kg)";
 $lang['packing_size'] = "Packing Size";
 $lang['carton_dimension'] = "Carton Dimension (cm)";
+$lang['product_comparation'] = "Product Comparation";
+$lang['brand'] = "Brand";
 $lang['saving_product_successfully'] = 'Saving data Product succesfully';
 $lang['deleting_product_successfully'] = 'Deleting data Product succesfully';
 ## END Product ##

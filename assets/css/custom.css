@@ -141,3 +141,8 @@ button.btn_add_comp{
 .comparation_title {
     margin: 5% 10%;
 }
+
+table#total-value-add {
+    width: 40%;
+    margin-left: 60%;
+}

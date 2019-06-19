@@ -183,6 +183,11 @@ class Suratpesanans extends MX_Controller {
                     $total_order_price_before_tax = $this->input->post('total_order_price_before_tax');
                     $total_order_price_after_tax = $this->input->post('total_order_price_after_tax');
                     $total_order_amount_after_tax = $this->input->post('total_order_amount_after_tax');
+                    $total_niv = $this->input->post('total_niv_add');
+                    $reg_disc = $this->input->post('reg_disc_total_add');
+                    $add_disc_1 = $this->input->post('add_disc_1_total_add');
+                    $add_disc_2 = $this->input->post('add_disc_2_total_add');
+                    $btw_disc = $this->input->post('btw_disc_total_add');
 
                     $dataPesanan = array('principle_id'                 => $principle_id,
                                       'sp_no'                           => $no_sp,
@@ -191,6 +196,11 @@ class Suratpesanans extends MX_Controller {
                                       'total_order_price_before_tax'    => $total_order_price_before_tax,
                                       'total_order_price_after_tax'     => $total_order_price_after_tax,
                                       'total_order_amount_after_tax'    => $total_order_amount_after_tax,
+                                      'total_niv'                       => $total_niv,
+                                      'reg_disc_total'                  => $reg_disc,
+                                      'add_disc_1_total'                => $add_disc_1,
+                                      'add_disc_2_total'                => $add_disc_2,
+                                      'btw_disc_total'                  => $btw_disc,
                                       'sp_date'                         => date('Y-m-d',strtotime($sp_date)),
                                       'date_created'                    => date('Y-m-d'),
                                       'time_created'                    => date('H:i:s'),
@@ -239,6 +249,11 @@ class Suratpesanans extends MX_Controller {
                 $total_order_price_before_tax = $this->input->post('total_order_price_before_tax');
                 $total_order_price_after_tax = $this->input->post('total_order_price_after_tax');
                 $total_order_amount_after_tax = $this->input->post('total_order_amount_after_tax');
+                $total_niv = $this->input->post('total_niv_add');
+                $reg_disc = $this->input->post('reg_disc_add');
+                $add_disc_1 = $this->input->post('add_disc_1_total_add');
+                $add_disc_2 = $this->input->post('add_disc_2_total_add');
+                $btw_disc = $this->input->post('btw_disc_total_add');
             
                 $data_old = array(
                     'Principle'       => Principle::find($model->principle_id)->code,
@@ -254,6 +269,11 @@ class Suratpesanans extends MX_Controller {
                 $model->total_order_price_before_tax    = $total_order_price_before_tax;
                 $model->total_order_price_after_tax     = $total_order_price_after_tax;
                 $model->total_order_amount_after_tax    = $total_order_amount_after_tax;
+                $model->total_niv                       = $total_niv;
+                $model->reg_disc_total                  = $reg_disc;
+                $model->add_disc_1_total                = $add_disc_1;
+                $model->add_disc_2_total                = $add_disc_2;
+                $model->btw_disc_total                  = $btw_disc;
                 $model->sp_date                         = date('Y-m-d',strtotime($sp_date));
 
                 $model->user_modified = $user->id;
@@ -319,7 +339,7 @@ class Suratpesanans extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $dataPesanan = Suratpesanan::select('t_sp.*','m_principle.top as metode_pembayaran', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_principle.id as principle_id', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.id as dipo_id')
+            $dataPesanan = Suratpesanan::select('t_sp.*','m_principle.top as metode_pembayaran', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_principle.id as principle_id', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.id as dipo_id','m_principle.reg_disc', 'm_principle.add_disc_1', 'm_principle.add_disc_2', 'm_principle.btw_disc')
                                         ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                         ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                         ->where('t_sp.id', $id)
@@ -344,7 +364,7 @@ class Suratpesanans extends MX_Controller {
     public function viewDetail() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $dataPesanan = Suratpesanan::select('t_sp.*', 'm_principle.top as metode_pembayaran', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address')
+            $dataPesanan = Suratpesanan::select('t_sp.*', 'm_principle.top as metode_pembayaran', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address','m_dipo_partner.id as dipo_id','m_principle.reg_disc', 'm_principle.add_disc_1', 'm_principle.add_disc_2', 'm_principle.btw_disc')
                                         ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                         ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                         ->where('t_sp.id', $id)
@@ -435,7 +455,7 @@ class Suratpesanans extends MX_Controller {
 
     function pdf(){
         $id = (int) $this->input->get('id');
-        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.top as principle_top', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
+        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.top as principle_top', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code', 'm_principle.reg_disc', 'm_principle.add_disc_1', 'm_principle.add_disc_2', 'm_principle.btw_disc')
                                     ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                     ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                     ->where('t_sp.id', $id)
@@ -455,7 +475,7 @@ class Suratpesanans extends MX_Controller {
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=suratpesanan.xls");
         $id = (int) $this->input->get('id');
-        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.top as principle_top', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code')
+        $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.top as principle_top', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code' ,'m_principle.reg_disc', 'm_principle.add_disc_1', 'm_principle.add_disc_2', 'm_principle.btw_disc')
                                     ->join('m_principle', 'm_principle.id', '=', 't_sp.principle_id')
                                     ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                     ->where('t_sp.id', $id)

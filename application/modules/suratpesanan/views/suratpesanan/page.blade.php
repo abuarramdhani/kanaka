@@ -175,6 +175,37 @@
                 </tr>
             </tfoot>
         </table>
+
+        <table id="total-value-add" class="table dt-responsive">
+            <tr>
+                <th colspan="2">Total Value</th>
+                <th><input readonly type="text" class="form-control input-sm text-center" name="total_value_add" id="total_value_add"/></th>
+            </tr>
+            <tr class="text-discount">
+                <th>Reg Disc</th>
+                <th style="width:40%;"><input readonly type="text" class="form-control input-sm text-center" name="reg_disc_add" id="reg_disc_add"/></th>
+                <th style="width:40%;"><input readonly type="text" class="form-control input-sm text-center" name="reg_disc_total_add" id="reg_disc_total_add"/></th>
+            </tr>
+            <tr class="border-none text-discount">
+                <th>Add Disc 1</th>
+                <th><input readonly type="text" class="form-control input-sm text-center" name="add_disc_1_add" id="add_disc_1_add"/></th>
+                <th><input readonly type="text" class="form-control input-sm text-center" name="add_disc_1_total_add" id="add_disc_1_total_add"/></th>
+            </tr>
+            <tr class="border-none text-discount">
+                <th>Add Disc 2</th>
+                <th><input readonly type="text" class="form-control input-sm text-center" name="add_disc_2_add" id="add_disc_2_add"/></th>
+                <th><input readonly type="text" class="form-control input-sm text-center" name="add_disc_2_total_add" id="add_disc_2_total_add"/></th>
+            </tr>
+            <tr class="border-none text-discount">
+                <th>BTW Disc</th>
+                <th><input readonly type="text" class="form-control input-sm text-center" name="btw_disc_add" id="btw_disc_add"/></th>
+                <th><input readonly type="text" class="form-control input-sm text-center" name="btw_disc_total_add" id="btw_disc_total_add"/></th>
+            </tr>
+            <tr>
+                <th colspan="2">Total NIV</th>
+                <th><input readonly type="text" class="form-control input-sm text-center" name="total_niv_add" id="total_niv_add"/></th>
+            </tr>
+        </table>
       </div>
       <div class="modal-footer">
         <button type="submit" id="btnSave" class="btn btn-primary">{{ lang('save') }}</button>
@@ -310,23 +341,23 @@
                     </tr>
                     <tr class="text-discount">
                         <th>Reg Disc</th>
-                        <th id="reg_disc" class="text-right">0%</th>
-                        <th id="reg_disc_total" class="text-right">0</th>
+                        <th id="reg_disc" class="text-right"></th>
+                        <th id="reg_disc_total" class="text-right"></th>
                     </tr>
                     <tr class="border-none text-discount">
                         <th>Add Disc 1</th>
-                        <th id="add_disc_1" class="text-right">0%</th>
-                        <th id="add_disc_1_total" class="text-right">0</th>
+                        <th id="add_disc_1" class="text-right"></th>
+                        <th id="add_disc_1_total" class="text-right"></th>
                     </tr>
                     <tr class="border-none text-discount">
                         <th>Add Disc 2</th>
-                        <th id="add_disc_2" class="text-right">0%</th>
-                        <th id="add_disc_2_total" class="text-right">0</th>
+                        <th id="add_disc_2" class="text-right"></th>
+                        <th id="add_disc_2_total" class="text-right"></th>
                     </tr>
                     <tr class="border-none text-discount">
                         <th>BTW Disc</th>
-                        <th id="btw_disc" class="text-right">0%</th>
-                        <th id="btw_disc_total" class="text-right">0</th>
+                        <th id="btw_disc" class="text-right"></th>
+                        <th id="btw_disc_total" class="text-right"></th>
                     </tr>
                     <tr>
                         <th colspan="2">Total NIV</th>
@@ -422,6 +453,29 @@
         $('#total_order_price_before_tax').val(total_order_price_before_tax);
         $('#total_order_price_after_tax').val(total_order_price_after_tax);
         $('#total_order_amount_after_tax').val(total_order_amount_after_tax);
+
+        $('#total_value_add').val(total_order_amount_after_tax);
+        var total_value     = $('#total_value_add').val();
+        var reg_disc        = $('#reg_disc_add').val();
+        var add_disc_1      = $('#add_disc_1_add').val();
+        var add_disc_2      = $('#add_disc_2_add').val();
+        var btw_disc        = $('#btw_disc').val();
+
+        var reg_disc_total  = total_value*reg_disc;
+        $('#reg_disc_total_add').val(reg_disc_total);
+
+        var add_disc_1_total  = reg_disc_total*add_disc_1;
+        $('#add_disc_1_total_add').val(add_disc_1_total);
+
+        var add_disc_2_total  = add_disc_1_total*add_disc_2;
+        $('#add_disc_2_total_add').val(add_disc_2_total);
+
+        var btw_disc_total  = add_disc_2_total*btw_disc;
+        $('#btw_disc_total_add').val(btw_disc_total);
+
+        var total_niv = parseInt(total_value)+parseInt(reg_disc_total)+parseInt(add_disc_1_total)+parseInt(add_disc_2_total)+parseInt(btw_disc_total);
+        $('#total_niv_add').val(total_niv);
+
     }
 
     function getProduct(x){
@@ -454,6 +508,11 @@
                 $('[name="principle_pic"]').val(row.pic);
                 $('[name="metode_pembayaran"]').val(row.top);
                 $('[name="no_sp"]').focus();
+
+                $('[name="reg_disc_add"]').val(row.reg_disc);
+                $('[name="add_disc_1_add"]').val(row.add_disc_1);
+                $('[name="add_disc_2_add"]').val(row.add_disc_2);
+                $('[name="btw_disc_add"]').val(row.btw_disc);
 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
@@ -584,6 +643,28 @@
         $('#total_order_price_before_tax').val(total_order_price_before_tax);
         $('#total_order_price_after_tax').val(total_order_price_after_tax);
         $('#total_order_amount_after_tax').val(total_order_amount_after_tax);
+
+        $('#total_value_add').val(total_order_amount_after_tax);
+        var total_value     = $('#total_value_add').val();
+        var reg_disc        = $('#reg_disc_add').val();
+        var add_disc_1      = $('#add_disc_1_add').val();
+        var add_disc_2      = $('#add_disc_2_add').val();
+        var btw_disc        = $('#btw_disc').val();
+
+        var reg_disc_total  = total_value*reg_disc;
+        $('#reg_disc_total_add').val(reg_disc_total);
+
+        var add_disc_1_total  = reg_disc_total*add_disc_1;
+        $('#add_disc_1_total_add').val(add_disc_1_total);
+
+        var add_disc_2_total  = add_disc_1_total*add_disc_2;
+        $('#add_disc_2_total_add').val(add_disc_2_total);
+
+        var btw_disc_total  = add_disc_2_total*btw_disc;
+        $('#btw_disc_total_add').val(btw_disc_total);
+
+        var total_niv = parseInt(total_value)+parseInt(reg_disc_total)+parseInt(add_disc_1_total)+parseInt(add_disc_2_total)+parseInt(btw_disc_total);
+        $('#total_niv_add').val(total_niv);
     }
    
     // Menampilkan data pada form
@@ -614,6 +695,16 @@
                 $('[name="dipo_name"]').val(row.dipo_name);
                 $('[name="dipo_address"]').val(row.dipo_address);
                 $('[name="sp_date"]').val(row.sp_date);
+                $('[name="reg_disc_add"]').val(row.reg_disc);
+                $('[name="add_disc_1_add"]').val(row.add_disc_1);
+                $('[name="add_disc_2_add"]').val(row.add_disc_2);
+                $('[name="btw_disc_add"]').val(row.btw_disc);
+                $('[name="total_value_add"]').val(row.total_order_amount_after_tax);
+                $('[name="reg_disc_total_add"]').val(row.reg_disc_total);
+                $('[name="add_disc_1_total_add"]').val(row.add_disc_1_total);
+                $('[name="add_disc_2_total_add"]').val(row.add_disc_2_total);
+                $('[name="btw_disc_total_add"]').val(row.btw_disc_total);
+                $('[name="total_niv_add"]').val(row.total_niv);
 
                 for(i=1; i<=dataLength; i++){
                     $("#add-table-surat tbody").append(
@@ -728,6 +819,16 @@
                 $('#tanggal_pengiriman').text(formatDate(row.sp_date))
                 $('#total_value').text(row.total_order_amount_after_tax)
                 $('#total_niv').text(row.total_niv)
+                $('#reg_disc').text(row.reg_disc+'%');
+                $('#add_disc_1').text(row.add_disc_1+'%');
+                $('#add_disc_2').text(row.add_disc_2+'%');
+                $('#btw_disc').text(row.btw_disc+'%');
+                $('#total_value').text(row.total_order_amount_after_tax);
+                $('#reg_disc_total').text(row.reg_disc_total);
+                $('#add_disc_1_total').text(row.add_disc_1_total);
+                $('#add_disc_2_total').text(row.add_disc_2_total);
+                $('#btw_disc_total').text(row.btw_disc_total);
+                $('#total_niv').text(row.total_niv);
 
                 $('#modal_detail').modal('show');
                 $('.modal-title').text('<?=lang('edit_suratpesanan')?>'); 

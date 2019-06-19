@@ -38,6 +38,7 @@
 				<th align="center" colspan="3"><?=lang('phone')?></th>
 				<th align="center" colspan="2"><?=lang('email')?></th>
 				<th align="center" rowspan="2"><?=lang('web')?></th>
+				<th align="center" colspan="4"><?=lang('discount')?></th>
 				<th align="center" rowspan="2"><?=lang('created_date')?></th>
 			</tr>
 			<tr>
@@ -46,6 +47,10 @@
 				<th align="center"><?=lang('fax')?></th> 
 				<th align="center"><?=lang('office')?></th>
 				<th align="center"><?=lang('personal')?></th> 
+				<th align="center">Reg Disc</th>
+				<th align="center">Add Disc 1</th> 
+				<th align="center">Add Disc 2</th> 
+				<th align="center">BTW Disc</th> 
 			</tr>
 			<?php 
 			$i=0;
@@ -69,6 +74,10 @@
 					<td><?= $principle->email_office ?></td>
 					<td><?= $principle->email_personal?></td>
 					<td><?= $principle->web?></td>
+					<td><?= $principle->reg_disc?></td>
+					<td><?= $principle->add_disc_1?></td>
+					<td><?= $principle->add_disc_2?></td>
+					<td><?= $principle->btw_disc?></td>
 					<td><?= date('d-m-Y',strtotime($principle->date_created)) ?></td>
 				</tr>
 			<?php 

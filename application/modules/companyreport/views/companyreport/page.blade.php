@@ -190,6 +190,7 @@
       {{ form_open(null,array('id' => 'form-companyreport', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
         <input type="hidden" name="id" value="">
+        <input type="hidden" name="net_price_in_ctn_after_tax_tmp" id="net_price_in_ctn_after_tax_tmp" value="">
         
         <div class="row">
             <div class="col-md-6">
@@ -209,7 +210,7 @@
                     </div>
                 </div>
                 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input check_status_field">
                     <label class="col-lg-4 control-label"><?=lang('check_status')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <select class="form-control input-sm" name="check_status" id="check_status">
@@ -221,7 +222,7 @@
                     </div>
                 </div>
                 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input tax_status_field">
                     <label class="col-lg-4 control-label"><?=lang('tax_status')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <select class="form-control input-sm" name="tax_status" id="tax_status">
@@ -233,7 +234,7 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input tax_no_field">
                     <label class="col-lg-4 control-label"><?=lang('tax_no')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="tax_no" id="tax_no" placeholder="<?=lang('tax_no')?>" maxlength="50" />
@@ -244,7 +245,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('invoice_no')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <select class="form-control input-sm all_select2" name="invoice_id" id="invoice_id" style="width: 100%;">
+                        <select class="form-control input-sm select2" name="invoice_id" id="invoice_id" style="width: 100%;">
                             <option value=""><?= lang('select_your_option') ?></option>
                             @foreach($invoices as $invoice)
                                 <option value="{{ $invoice->id }}">{{ $invoice->invoice_no }}</option>
@@ -254,10 +255,10 @@
                     </div>
                 </div>
                 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input sp_no_field">
                     <label class="col-lg-4 control-label"><?=lang('sp_no')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <select class="form-control input-sm all_select2" name="sp_id" id="sp_id" style="width: 100%;">
+                        <select class="form-control input-sm select2" name="sp_id" id="sp_id" style="width: 100%;">
                             <option value=""><?= lang('select_your_option') ?></option>
                             @foreach($delivery_orders as $delivery_order)
                                 <option value="{{ $delivery_order->id }}">{{ $delivery_order->sp_no }}</option>
@@ -267,10 +268,10 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input principle_field">
                     <label class="col-lg-4 control-label"><?=lang('principle')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <select class="form-control input-sm all_select2" name="principle_id" id="principle_id" style="width: 100%;">
+                        <select class="form-control input-sm select2" name="principle_id" id="principle_id" style="width: 100%;">
                             <option value=""><?= lang('select_your_option') ?></option>
                             @foreach($principles as $principle)
                                 <option value="{{ $principle->id }}">{{ $principle->code . ' - ' . $principle->name }}</option>
@@ -283,7 +284,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('product')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <select class="form-control input-sm all_select2" name="product_id" id="product_id" style="width: 100%;">
+                        <select class="form-control input-sm select2" name="product_id" id="product_id" style="width: 100%;">
                             <option value=""><?= lang('select_your_option') ?></option>
                             @foreach($products as $product)
                                 <option value="{{ $product->id }}">{{ $product->product_code . ' - ' . $product->product_name }}</option>
@@ -296,7 +297,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('ship_to_delivery')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <select class="form-control input-sm all_select2" name="customer_id" id="customer_id" style="width: 100%;">
+                        <select class="form-control input-sm select2" name="customer_id" id="customer_id" style="width: 100%;">
                             <option value=""><?= lang('select_your_option') ?></option>
                             @foreach($customers as $customer)
                                 <option value="{{ $customer->id }}">{{ $customer->customer_code . ' - ' . $customer->customer_name }}</option>
@@ -329,8 +330,10 @@
                     <div class="col-lg-7">
                         <select class="form-control input-sm" name="payment_status" id="payment_status">
                             <option value=""><?= lang('select_your_option') ?></option>
-                            <option value="0"><?= lang('not_yet') ?></option>
-                            <option value="1"><?= lang('done') ?></option>
+                            <option value="0"><?= lang('belum_bayar') ?></option>
+                            <option value="1"><?= lang('cicil') ?></option>
+                            <option value="2"><?= lang('sudah_lewat_jatuh_tempo') ?></option>
+                            <option value="3"><?= lang('lunas') ?></option>
                         </select>
                         <div class="form-control-focus"> </div>
                     </div>
@@ -346,16 +349,16 @@
 
             </div>
             <div class="col-md-6">
-                <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_before_tax')?><span class="text-danger">*</span></label>
+                <div class="form-group form-md-line-input price_hna_per_ctn_before_tax_field">
+                    <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_before_tax')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="price_hna_per_ctn_before_tax" id="price_hna_per_ctn_before_tax" placeholder="<?=lang('price_hna_per_ctn_before_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
                 
-                <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_after_tax')?><span class="text-danger">*</span></label>
+                <div class="form-group form-md-line-input price_hna_per_ctn_after_tax_field">
+                    <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_after_tax')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="price_hna_per_ctn_after_tax" id="price_hna_per_ctn_after_tax" placeholder="<?=lang('price_hna_per_ctn_after_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -363,7 +366,7 @@
                 </div>
                 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('discount')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="discount" id="discount" placeholder="<?=lang('discount')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -371,31 +374,31 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('discount_value')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('discount_value')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="discount_value" id="discount_value" placeholder="<?=lang('discount_value')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('ppn')?><span class="text-danger">*</span></label>
+                <div class="form-group form-md-line-input ppn_field">
+                    <label class="col-lg-4 control-label"><?=lang('ppn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="ppn" id="ppn" placeholder="<?=lang('ppn')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('net_price_in_ctn_before_tax')?><span class="text-danger">*</span></label>
+                <div class="form-group form-md-line-input net_price_in_ctn_before_tax_field">
+                    <label class="col-lg-4 control-label"><?=lang('net_price_in_ctn_before_tax')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="net_price_in_ctn_before_tax" id="net_price_in_ctn_before_tax" placeholder="<?=lang('net_price_in_ctn_before_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('total_value_order_in_ctn_before_tax')?><span class="text-danger">*</span></label>
+                <div class="form-group form-md-line-input total_value_order_in_ctn_before_tax_field">
+                    <label class="col-lg-4 control-label"><?=lang('total_value_order_in_ctn_before_tax')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="total_value_order_in_ctn_before_tax" id="total_value_order_in_ctn_before_tax" placeholder="<?=lang('total_value_order_in_ctn_before_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -403,7 +406,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('total_value_order_in_ctn_after_tax')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('total_value_order_in_ctn_after_tax')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="total_value_order_in_ctn_after_tax" id="total_value_order_in_ctn_after_tax" placeholder="<?=lang('total_value_order_in_ctn_after_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -419,7 +422,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('selling_price')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('selling_price')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="selling_price" id="selling_price" placeholder="<?=lang('selling_price')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -427,7 +430,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('margin_value')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('margin_value')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="margin_value" id="margin_value" placeholder="<?=lang('margin_value')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -435,7 +438,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('margin_percented')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('margin_percented')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="margin_percented" id="margin_percented" placeholder="<?=lang('margin_percented')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -443,7 +446,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('payment_value')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('payment_value')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="payment_value" id="payment_value" placeholder="<?=lang('payment_value')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -451,7 +454,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('difference')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('difference')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="difference" id="difference" placeholder="<?=lang('difference')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -479,6 +482,7 @@
       {{ form_open(null,array('id' => 'form-companyreport-out', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
         <input type="hidden" name="id_out" value="">
+        <input type="hidden" name="net_price_in_ctn_after_tax_out_tmp" id="net_price_in_ctn_after_tax_out_tmp" value="">
         
         <div class="row">
             <div class="col-md-6">                
@@ -490,7 +494,7 @@
                     </div>
                 </div>
                 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input tax_status_field">
                     <label class="col-lg-4 control-label"><?=lang('tax_status')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <select class="form-control input-sm" name="tax_status_out" id="tax_status_out">
@@ -502,7 +506,7 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input tax_no_field">
                     <label class="col-lg-4 control-label"><?=lang('tax_no')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="tax_no_out" id="tax_no_out" placeholder="<?=lang('tax_no')?>" maxlength="50" />
@@ -513,7 +517,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('invoice_no')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <select class="form-control input-sm all_select2" name="invoice_id_out" id="invoice_id_out" style="width: 100%;">
+                        <select class="form-control input-sm select2" name="invoice_id_out" id="invoice_id_out" style="width: 100%;">
                             <option value=""><?= lang('select_your_option') ?></option>
                             @foreach($invoices as $invoice)
                                 <option value="{{ $invoice->id }}">{{ $invoice->invoice_no }}</option>
@@ -526,7 +530,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('product')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <select class="form-control input-sm all_select2" name="product_id_out" id="product_id_out" style="width: 100%;">
+                        <select class="form-control input-sm select2" name="product_id_out" id="product_id_out" style="width: 100%;">
                             <option value=""><?= lang('select_your_option') ?></option>
                             @foreach($products as $product)
                                 <option value="{{ $product->id }}">{{ $product->product_code . ' - ' . $product->product_name }}</option>
@@ -539,7 +543,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('ship_to_delivery')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <select class="form-control input-sm all_select2" name="customer_id_out" id="customer_id_out" style="width: 100%;">
+                        <select class="form-control input-sm select2" name="customer_id_out" id="customer_id_out" style="width: 100%;">
                             <option value=""><?= lang('select_your_option') ?></option>
                             @foreach($customers as $customer)
                                 <option value="{{ $customer->id }}">{{ $customer->customer_code . ' - ' . $customer->customer_name }}</option>
@@ -572,8 +576,10 @@
                     <div class="col-lg-7">
                         <select class="form-control input-sm" name="payment_status_out" id="payment_status_out">
                             <option value=""><?= lang('select_your_option') ?></option>
-                            <option value="0"><?= lang('not_yet') ?></option>
-                            <option value="1"><?= lang('done') ?></option>
+                            <option value="0"><?= lang('belum_bayar') ?></option>
+                            <option value="1"><?= lang('cicil') ?></option>
+                            <option value="2"><?= lang('sudah_lewat_jatuh_tempo') ?></option>
+                            <option value="3"><?= lang('lunas') ?></option>
                         </select>
                         <div class="form-control-focus"> </div>
                     </div>
@@ -589,7 +595,7 @@
 
             </div>
             <div class="col-md-6">
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input price_hna_per_ctn_before_tax_field">
                     <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_before_tax')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="price_hna_per_ctn_before_tax_out" id="price_hna_per_ctn_before_tax_out" placeholder="<?=lang('price_hna_per_ctn_before_tax')?>" readonly="readonly" />
@@ -597,7 +603,7 @@
                     </div>
                 </div>
                 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input price_hna_per_ctn_after_tax_field">
                     <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_after_tax')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="price_hna_per_ctn_after_tax_out" id="price_hna_per_ctn_after_tax_out" placeholder="<?=lang('price_hna_per_ctn_after_tax')?>" readonly="readonly" />
@@ -621,7 +627,7 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input ppn_field">
                     <label class="col-lg-4 control-label"><?=lang('ppn')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="ppn_out" id="ppn_out" placeholder="<?=lang('ppn')?>" readonly="readonly" />
@@ -629,7 +635,7 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input net_price_in_ctn_before_tax_field">
                     <label class="col-lg-4 control-label"><?=lang('net_price_in_ctn_before_tax')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="net_price_in_ctn_before_tax_out" id="net_price_in_ctn_before_tax_out" placeholder="<?=lang('net_price_in_ctn_before_tax')?>" readonly="readonly" />
@@ -637,7 +643,7 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input total_value_order_in_ctn_before_tax_field">
                     <label class="col-lg-4 control-label"><?=lang('total_value_order_in_ctn_before_tax')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="total_value_order_in_ctn_before_tax_out" id="total_value_order_in_ctn_before_tax_out" placeholder="<?=lang('total_value_order_in_ctn_before_tax')?>" readonly="readonly" />
@@ -693,7 +699,22 @@
 @section('scripts')
 <script type="text/javascript">
     $(function(){
-        $('.all_select2').select2();
+        
+        @if($user->group_id != '1')
+            $('.check_status_field').hide();
+            $('.tax_status_field').hide();
+            $('.tax_no_field').hide();
+            $('.sp_no_field').hide();
+            $('.principle_field').hide();
+            $('.price_hna_per_ctn_before_tax_field').hide();
+            $('.price_hna_per_ctn_after_tax_field').hide();
+            $('.ppn_field').hide();
+            $('.net_price_in_ctn_before_tax_field').hide();
+            $('.total_value_order_in_ctn_before_tax_field').hide();
+            $('#top').attr('readonly', false);
+            $('#top_out').attr('readonly', false);
+        @endif
+        
     });
 
     function add_companyreport(){
@@ -727,8 +748,9 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}companyreport/companyreports/fetch_data",
         "columnDefs": [
+
             @if($user->group_id != '1')
-                {"visible": false, "searchable": false, "targets": [2, 4, 5]},
+                {"visible": false, "searchable": false, "targets": [2, 4, 5, 7, 8, 9, 10, 13, 14, 15, 16, 20, 21, 23, 32, 33, 34, 35]},
             @endif
             
             {"className": "dt-center", "targets": [37]},
@@ -745,6 +767,11 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}companyreport/companyreports/fetch_data_out",
         "columnDefs": [
+            
+            @if($user->group_id != '1')
+                {"visible": false, "searchable": false, "targets": [2, 3, 5, 10, 11, 15, 16, 18]},
+            @endif
+
             {"className": "dt-center", "targets": [28]},
             {"targets": [21, 22, 23, 28], "orderable": false}
         ],
@@ -760,31 +787,41 @@
         rules: {
             po_date: "required",
             receive_date: "required",
-            check_status: "required",
-            tax_status: "required",
-            tax_no: "required",
+
+            @if($user->group_id == '1')
+                check_status: "required",
+                tax_status: "required",
+                tax_no: "required",
+                sp_id: "required",
+                principle_id: "required",
+            @endif
+
             invoice_id: "required",
-            sp_id: "required",
-            principle_id: "required",
             product_id: "required",
             customer_id: "required",
             net_price_in_ctn_after_tax: "required",
             total_order_in_ctn: "required",
+            top: "required",
             payment_status: "required",
         },
         messages: {
             po_date: "{{lang('po_date')}}" + " {{lang('not_empty')}}",
             receive_date: "{{lang('receive_date')}}" + " {{lang('not_empty')}}",
-            check_status: "{{lang('check_status')}}" + " {{lang('not_empty')}}",
-            tax_status: "{{lang('tax_status')}}" + " {{lang('not_empty')}}",
-            tax_no: "{{lang('tax_no')}}" + " {{lang('not_empty')}}",
+
+            @if($user->group_id == '1')            
+                check_status: "{{lang('check_status')}}" + " {{lang('not_empty')}}",
+                tax_status: "{{lang('tax_status')}}" + " {{lang('not_empty')}}",
+                tax_no: "{{lang('tax_no')}}" + " {{lang('not_empty')}}",
+                sp_id: "{{lang('sp_id')}}" + " {{lang('not_empty')}}",
+                principle_id: "{{lang('principle_id')}}" + " {{lang('not_empty')}}",
+            @endif
+                
             invoice_id: "{{lang('invoice_id')}}" + " {{lang('not_empty')}}",
-            sp_id: "{{lang('sp_id')}}" + " {{lang('not_empty')}}",
-            principle_id: "{{lang('principle_id')}}" + " {{lang('not_empty')}}",
             product_id: "{{lang('product_id')}}" + " {{lang('not_empty')}}",
             customer_id: "{{lang('customer_id')}}" + " {{lang('not_empty')}}",
             net_price_in_ctn_after_tax: "{{lang('net_price_in_ctn_after_tax')}}" + " {{lang('not_empty')}}",
             total_order_in_ctn: "{{lang('total_order_in_ctn')}}" + " {{lang('not_empty')}}",
+            top: "{{lang('top')}}" + " {{lang('not_empty')}}",
             payment_status: "{{lang('payment_status')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
@@ -829,24 +866,34 @@
         errorElement: "span",
         rules: {
             receive_date_out: "required",
-            tax_status_out: "required",
-            tax_no_out: "required",
+
+            @if($user->group_id == '1')
+                tax_status_out: "required",
+                tax_no_out: "required",
+            @endif
+
             invoice_id_out: "required",
             product_id_out: "required",
             customer_id_out: "required",
             net_price_in_ctn_after_tax_out: "required",
             total_order_in_ctn_out: "required",
+            top_out: "required",
             payment_status_out: "required",
         },
         messages: {
             receive_date_out: "{{lang('receive_date')}}" + " {{lang('not_empty')}}",
-            tax_status_out: "{{lang('tax_status')}}" + " {{lang('not_empty')}}",
-            tax_no_out: "{{lang('tax_no')}}" + " {{lang('not_empty')}}",
+
+            @if($user->group_id == '1')            
+                tax_status_out: "{{lang('tax_status')}}" + " {{lang('not_empty')}}",
+                tax_no_out: "{{lang('tax_no')}}" + " {{lang('not_empty')}}",
+            @endif
+        
             invoice_id_out: "{{lang('invoice_id')}}" + " {{lang('not_empty')}}",
             product_id_out: "{{lang('product_id')}}" + " {{lang('not_empty')}}",
             customer_id_out: "{{lang('customer_id')}}" + " {{lang('not_empty')}}",
             net_price_in_ctn_after_tax_out: "{{lang('net_price_in_ctn_after_tax')}}" + " {{lang('not_empty')}}",
             total_order_in_ctn_out: "{{lang('total_order_in_ctn')}}" + " {{lang('not_empty')}}",
+            top_out: "{{lang('top')}}" + " {{lang('not_empty')}}",
             payment_status_out: "{{lang('payment_status')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
@@ -1156,6 +1203,8 @@
                 $('#margin_value').val(margin_value);
                 $('#margin_percented').val(margin_percented);
                 $('#price_hna_per_ctn_after_tax').val(price_hna_per_ctn_after_tax);
+                $('#net_price_in_ctn_after_tax_tmp').val(net_price_in_ctn_after_tax);
+
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -1188,6 +1237,8 @@
                 $('#total_value_order_in_ctn_before_tax_out').val(total_value_order_in_ctn_before_tax);
                 $('#total_value_order_in_ctn_after_tax_out').val(total_value_order_in_ctn_after_tax);
                 $('#price_hna_per_ctn_after_tax_out').val(price_hna_per_ctn_after_tax);
+                $('#net_price_in_ctn_after_tax_out_tmp').val(net_price_in_ctn_after_tax);
+                
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -1233,7 +1284,7 @@
         var payment_value = 0;
         var difference = 0;
 
-        if($('#payment_status').val() == '1'){
+        if($('#payment_status').val() == '3'){
             payment_value = total_value_order_in_ctn_after_tax;
         }
         else{
@@ -1254,7 +1305,7 @@
         var payment_value = 0;
         var difference = 0;
 
-        if($('#payment_status_out').val() == '1'){
+        if($('#payment_status_out').val() == '3'){
             payment_value = total_value_order_in_ctn_after_tax;
         }
         else{

@@ -369,6 +369,10 @@ $lang['margin_value'] = "Margin Value";
 $lang['ship_to_delivery'] = "Ship to Delivery";
 $lang['margin_contibution'] = "Margin Contibution";
 $lang['remark'] = "Remark";
+$lang['lunas'] = "Lunas";
+$lang['cicil'] = "Cicil";
+$lang['belum_bayar'] = "Belum Bayar";
+$lang['sudah_lewat_jatuh_tempo'] = "Sudah Lewat Jatuh Tempo";
 
 $lang['saving_companyreport_successfully'] = 'Saving data Company Report succesfully';
 $lang['deleting_companyreport_successfully'] = 'Deleting data Company Report succesfully';

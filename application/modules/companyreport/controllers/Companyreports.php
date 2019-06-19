@@ -54,7 +54,7 @@ class Companyreports extends MX_Controller {
             'net_price_in_ctn_after_tax',
             'total_value_order_in_ctn_before_tax',
             'total_value_order_in_ctn_after_tax',
-            'm_principle.top as top',
+            't_sell_in_company.top as top',
             'due_date_invoice',
             'payment_status',
             'payment_value',
@@ -148,7 +148,7 @@ class Companyreports extends MX_Controller {
             $where .= "net_price_in_ctn_after_tax LIKE '%" . $sSearch . "%' OR ";
             $where .= "total_value_order_in_ctn_before_tax LIKE '%" . $sSearch . "%' OR ";
             $where .= "total_value_order_in_ctn_after_tax LIKE '%" . $sSearch . "%' OR ";
-            $where .= "m_principle.top LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_sell_in_company.top LIKE '%" . $sSearch . "%' OR ";
             $where .= "due_date_invoice LIKE '%" . $sSearch . "%' OR ";
             $where .= "payment_status LIKE '%" . $sSearch . "%' OR ";
             $where .= "payment_value LIKE '%" . $sSearch . "%' OR ";
@@ -189,21 +189,33 @@ class Companyreports extends MX_Controller {
                 $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
 
-            $aging_invoice = round((strtotime(date('Y-m-d')) - strtotime($row->due_date_invoice)) / (60 * 60 * 24));
+            // $due_date_invoice = date('Y-m-d', strtotime($row->receive_date . ' + ' . $row->top . ' days'));
+            $due_date_invoice = $row->due_date_invoice;
+            $aging_invoice = round((strtotime($due_date_invoice) - strtotime(date('Y-m-d'))) / (60 * 60 * 24));
             $due_date_ar = $row->top - $aging_invoice;
             $margin_contibution = $row->margin_value / $total_margin_value;
+
+            $payment_status = '-';
+            if($row->payment_status == "0")
+                $payment_status = lang('belum_bayar');
+            else if($row->payment_status == "1")
+                $payment_status = lang('cicil');
+            else if($row->payment_status == "2")
+                $payment_status = lang('sudah_lewat_jatuh_tempo');
+            else if($row->payment_status == "3")
+                $payment_status = lang('lunas');
 
             $row_value[] = date('d-m-Y', strtotime($row->po_date));
             $row_value[] = date('d-m-Y', strtotime($row->receive_date));
             $row_value[] = $row->check_status == "0" ? lang('no') : lang('yes');
             $row_value[] = $indonesian_month[(int) $row->monthly_period - 1];
             $row_value[] = $row->tax_status == "0" ? lang('non_pkp') : lang('pkp');
-            $row_value[] = $row->tax_no;
+            $row_value[] = $row->tax_no == "" ? "-" : $row->tax_no;
             $row_value[] = $row->invoice_no;
-            $row_value[] = $row->sp_no;
-            $row_value[] = substr($row->sp_no,0,3);
-            $row_value[] = $row->principle_code;
-            $row_value[] = $row->principle_name;
+            $row_value[] = $row->sp_no == "" ? "-" : $row->sp_no;
+            $row_value[] = $row->sp_no == "" ? "-" : substr($row->sp_no,0,3);
+            $row_value[] = $row->principle_code == "" ? "-" : $row->principle_code;
+            $row_value[] = $row->principle_name == "" ? "-" : $row->principle_name;
             $row_value[] = $row->product_code;
             $row_value[] = $row->product_name;
             $row_value[] = $row->customer_code;
@@ -219,10 +231,10 @@ class Companyreports extends MX_Controller {
             $row_value[] = number_format($row->total_value_order_in_ctn_before_tax, 0);
             $row_value[] = number_format($row->total_value_order_in_ctn_after_tax, 0);
             $row_value[] = number_format($row->top, 0);
-            $row_value[] = date('d-m-Y', strtotime($row->due_date_invoice));
+            $row_value[] = date('d-m-Y', strtotime($due_date_invoice));
             $row_value[] = $aging_invoice;
             $row_value[] = $due_date_ar;
-            $row_value[] = $row->payment_status == "0" ? lang('not_yet') : lang('done');
+            $row_value[] = $payment_status;
             $row_value[] = number_format($row->payment_value, 0);
             $row_value[] = number_format($row->difference, 0);
             $row_value[] = number_format($row->selling_price, 0);
@@ -240,6 +252,8 @@ class Companyreports extends MX_Controller {
     }
 
     public function fetch_data_out() {
+        $user = $this->ion_auth->user()->row();
+
         $database_columns = array(
             'receive_date',
             'monthly_period',
@@ -260,7 +274,7 @@ class Companyreports extends MX_Controller {
             'net_price_in_ctn_after_tax',
             'total_value_order_in_ctn_before_tax',
             'total_value_order_in_ctn_after_tax',
-            'm_dipo_partner.top as top',
+            't_sell_out_company.top as top',
             'due_date_invoice',
             'payment_status',
             'payment_value',
@@ -300,6 +314,10 @@ class Companyreports extends MX_Controller {
 
         $from = "t_sell_out_company";
         $where = "t_sell_out_company.deleted = 0";
+        if($user->group_id != '1'){
+            $where .= " AND t_sell_out_company.user_created = ". $user->id;
+        }
+
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
         $join[] = array('m_product', 't_sell_out_company.product_id = m_product.id', 'left');
@@ -331,7 +349,7 @@ class Companyreports extends MX_Controller {
             $where .= "net_price_in_ctn_after_tax LIKE '%" . $sSearch . "%' OR ";
             $where .= "total_value_order_in_ctn_before_tax LIKE '%" . $sSearch . "%' OR ";
             $where .= "total_value_order_in_ctn_after_tax LIKE '%" . $sSearch . "%' OR ";
-            $where .= "m_dipo_partner.top LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_sell_out_company.top LIKE '%" . $sSearch . "%' OR ";
             $where .= "due_date_invoice LIKE '%" . $sSearch . "%' OR ";
             $where .= "payment_status LIKE '%" . $sSearch . "%' OR ";
             $where .= "payment_value LIKE '%" . $sSearch . "%' OR ";
@@ -364,13 +382,23 @@ class Companyreports extends MX_Controller {
                 $btn_action .= '<a href="javascript:void()" onclick="deleteDataOut(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
 
-            $aging_invoice = round((strtotime(date('Y-m-d')) - strtotime($row->due_date_invoice)) / (60 * 60 * 24));
+            $aging_invoice = round((strtotime($row->due_date_invoice) - strtotime(date('Y-m-d'))) / (60 * 60 * 24));
             $due_date_ar = $row->top - $aging_invoice;
+
+            $payment_status = '-';
+            if($row->payment_status == "0")
+                $payment_status = lang('belum_bayar');
+            else if($row->payment_status == "1")
+                $payment_status = lang('cicil');
+            else if($row->payment_status == "2")
+                $payment_status = lang('sudah_lewat_jatuh_tempo');
+            else if($row->payment_status == "3")
+                $payment_status = lang('lunas');
 
             $row_value[] = date('d-m-Y', strtotime($row->receive_date));
             $row_value[] = $indonesian_month[(int) $row->monthly_period - 1];
             $row_value[] = $row->tax_status == "0" ? lang('non_pkp') : lang('pkp');
-            $row_value[] = $row->tax_no;
+            $row_value[] = $row->tax_no == "" ? "-" : $row->tax_no;
             $row_value[] = $row->invoice_no;
             $row_value[] = substr($row->invoice_no, 0, 3);
             $row_value[] = $row->product_code;
@@ -391,7 +419,7 @@ class Companyreports extends MX_Controller {
             $row_value[] = date('d-m-Y', strtotime($row->due_date_invoice));
             $row_value[] = $aging_invoice;
             $row_value[] = $due_date_ar;
-            $row_value[] = $row->payment_status == "0" ? lang('not_yet') : lang('done');
+            $row_value[] = $payment_status;
             $row_value[] = number_format($row->payment_value, 0);
             $row_value[] = number_format($row->difference, 0);
             $row_value[] = $row->remark;
@@ -427,11 +455,11 @@ class Companyreports extends MX_Controller {
                 $discount_value = str_replace('_', '', str_replace(',', '', $this->input->post('discount_value')));
                 $ppn = str_replace('_', '', str_replace(',', '', $this->input->post('ppn')));
                 $net_price_in_ctn_before_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_before_tax')));
-                $net_price_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_after_tax')));
+                $net_price_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_after_tax_tmp')));
                 $total_value_order_in_ctn_before_tax = str_replace('_', '', str_replace(',', '', $this->input->post('total_value_order_in_ctn_before_tax')));
                 $total_value_order_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('total_value_order_in_ctn_after_tax')));
                 $top = $this->input->post('top');
-                $due_date_invoice = date('Y-m-d', strtotime($this->input->post('receive_date') . ' +' . (int) $top . ' days'));
+                $due_date_invoice = date('Y-m-d', strtotime($receive_date . ' + ' . (int) $top . ' days'));
                 $payment_status = $this->input->post('payment_status');
                 $payment_value = str_replace('_', '', str_replace(',', '', $this->input->post('payment_value')));
                 $difference = str_replace('_', '', str_replace(',', '', $this->input->post('difference')));
@@ -459,7 +487,7 @@ class Companyreports extends MX_Controller {
                 $model->discount_value = $discount_value;
                 $model->ppn = $ppn;
                 $model->net_price_in_ctn_before_tax = $net_price_in_ctn_before_tax;
-                $model->net_price_in_ctn_after_tax = $price_hna_per_ctn_after_tax;
+                $model->net_price_in_ctn_after_tax = $net_price_in_ctn_after_tax;
                 $model->total_value_order_in_ctn_before_tax = $total_value_order_in_ctn_before_tax;
                 $model->total_value_order_in_ctn_after_tax = $total_value_order_in_ctn_after_tax;
                 $model->top = $top;
@@ -483,10 +511,10 @@ class Companyreports extends MX_Controller {
                         'Check Status' => $check_status == "0" ? lang('no') : lang('yes'),
                         'Monthly Period' => $monthly_period,
                         'Tax Status' => $tax_status == "0" ? lang('non_pkp') : lang('pkp'),
-                        'Tax No' => $tax_no,
+                        'Tax No' => $tax_no == "" ? "-" : $tax_no,
                         'Invoice No' => Invoice::find($invoice_id)->invoice_no,
-                        'SP No' => Suratpesanan::find($sp_id)->sp_no,
-                        'Principle' => Principle::find($principle_id)->code . ' - '  . Principle::find($principle_id)->name,
+                        'SP No' => $sp_id == "" ? "-" : Suratpesanan::find($sp_id)->sp_no,
+                        'Principle' => $principle_id == "" ? "-" : Principle::find($principle_id)->code . ' - '  . Principle::find($principle_id)->name,
                         'Product' => Product::find($product_id)->product_code . ' - '  . Product::find($product_id)->name,
                         'Ship to Delivery' => Dipo::find($customer_id)->code . ' - '  . Dipo::find($customer_id)->name,
                         'Price HNA Per Ctn (Before Tax)' => $price_hna_per_ctn_before_tax,
@@ -536,11 +564,11 @@ class Companyreports extends MX_Controller {
                 $discount_value = str_replace('_', '', str_replace(',', '', $this->input->post('discount_value')));
                 $ppn = str_replace('_', '', str_replace(',', '', $this->input->post('ppn')));
                 $net_price_in_ctn_before_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_before_tax')));
-                $net_price_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_after_tax')));
+                $net_price_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_after_tax_tmp')));
                 $total_value_order_in_ctn_before_tax = str_replace('_', '', str_replace(',', '', $this->input->post('total_value_order_in_ctn_before_tax')));
                 $total_value_order_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('total_value_order_in_ctn_after_tax')));
                 $top = $this->input->post('top');
-                $due_date_invoice = date('Y-m-d', strtotime($this->input->post('receive_date') . ' +' . (int) $top . ' days'));
+                $due_date_invoice = date('Y-m-d', strtotime($receive_date . ' + ' . (int) $top . ' days'));
                 $payment_status = $this->input->post('payment_status');
                 $payment_value = str_replace('_', '', str_replace(',', '', $this->input->post('payment_value')));
                 $difference = str_replace('_', '', str_replace(',', '', $this->input->post('difference')));
@@ -555,7 +583,7 @@ class Companyreports extends MX_Controller {
                     'Check Status' => $model->check_status == "0" ? lang('no') : lang('yes'),
                     'Monthly Period' => $model->monthly_period,
                     'Tax Status' => $model->tax_status == "0" ? lang('non_pkp') : lang('pkp'),
-                    'Tax No' => $model->tax_no,
+                    'Tax No' => $model->tax_no == "" ? "-" : $model->tax_no,
                     'Invoice No' => Invoice::find($model->invoice_id)->invoice_no,
                     'SP No' => Suratpesanan::find($model->sp_id)->sp_no,
                     'Principle' => Principle::find($model->principle_id)->code . ' - '  . Principle::find($model->principle_id)->name,
@@ -600,7 +628,7 @@ class Companyreports extends MX_Controller {
                 $model->discount_value = $discount_value;
                 $model->ppn = $ppn;
                 $model->net_price_in_ctn_before_tax = $net_price_in_ctn_before_tax;
-                $model->net_price_in_ctn_after_tax = $price_hna_per_ctn_after_tax;
+                $model->net_price_in_ctn_after_tax = $net_price_in_ctn_after_tax;
                 $model->total_value_order_in_ctn_before_tax = $total_value_order_in_ctn_before_tax;
                 $model->total_value_order_in_ctn_after_tax = $total_value_order_in_ctn_after_tax;
                 $model->top = $top;
@@ -624,7 +652,7 @@ class Companyreports extends MX_Controller {
                         'Check Status' => $check_status == "0" ? lang('no') : lang('yes'),
                         'Monthly Period' => $monthly_period,
                         'Tax Status' => $tax_status == "0" ? lang('non_pkp') : lang('pkp'),
-                        'Tax No' => $tax_no,
+                        'Tax No' => $tax_no == "" ? "-" : $tax_no,
                         'Invoice No' => Invoice::find($invoice_id)->invoice_no,
                         'SP No' => Suratpesanan::find($sp_id)->sp_no,
                         'Principle' => Principle::find($principle_id)->code . ' - '  . Principle::find($principle_id)->name,
@@ -685,11 +713,11 @@ class Companyreports extends MX_Controller {
                 $discount_value = str_replace('_', '', str_replace(',', '', $this->input->post('discount_value_out')));
                 $ppn = str_replace('_', '', str_replace(',', '', $this->input->post('ppn_out')));
                 $net_price_in_ctn_before_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_before_tax_out')));
-                $net_price_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_after_tax_out')));
+                $net_price_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_after_tax_out_tmp')));
                 $total_value_order_in_ctn_before_tax = str_replace('_', '', str_replace(',', '', $this->input->post('total_value_order_in_ctn_before_tax_out')));
                 $total_value_order_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('total_value_order_in_ctn_after_tax_out')));
                 $top = $this->input->post('top_out');
-                $due_date_invoice = date('Y-m-d', strtotime($this->input->post('receive_date_out') . ' +' . (int) $top . ' days'));
+                $due_date_invoice = date('Y-m-d', strtotime($receive_date . ' + ' . (int) $top . ' days'));
                 $payment_status = $this->input->post('payment_status_out');
                 $payment_value = str_replace('_', '', str_replace(',', '', $this->input->post('payment_value_out')));
                 $difference = str_replace('_', '', str_replace(',', '', $this->input->post('difference_out')));
@@ -710,7 +738,7 @@ class Companyreports extends MX_Controller {
                 $model->discount_value = $discount_value;
                 $model->ppn = $ppn;
                 $model->net_price_in_ctn_before_tax = $net_price_in_ctn_before_tax;
-                $model->net_price_in_ctn_after_tax = $price_hna_per_ctn_after_tax;
+                $model->net_price_in_ctn_after_tax = $net_price_in_ctn_after_tax;
                 $model->total_value_order_in_ctn_before_tax = $total_value_order_in_ctn_before_tax;
                 $model->total_value_order_in_ctn_after_tax = $total_value_order_in_ctn_after_tax;
                 $model->top = $top;
@@ -729,7 +757,7 @@ class Companyreports extends MX_Controller {
                         'Receive Date' => date('d-m-Y', strtotime($receive_date)),
                         'Monthly Period' => $monthly_period,
                         'Tax Status' => $tax_status == "0" ? lang('non_pkp') : lang('pkp'),
-                        'Tax No' => $tax_no,
+                        'Tax No' => $tax_no == "" ? "-" : $tax_no,
                         'Invoice No' => Invoice::find($invoice_id)->invoice_no,
                         'Product' => Product::find($product_id)->product_code . ' - '  . Product::find($product_id)->name,
                         'Ship to Delivery' => Dipo::find($customer_id)->code . ' - '  . Dipo::find($customer_id)->name,
@@ -773,11 +801,11 @@ class Companyreports extends MX_Controller {
                 $discount_value = str_replace('_', '', str_replace(',', '', $this->input->post('discount_value_out')));
                 $ppn = str_replace('_', '', str_replace(',', '', $this->input->post('ppn_out')));
                 $net_price_in_ctn_before_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_before_tax_out')));
-                $net_price_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_after_tax_out')));
+                $net_price_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('net_price_in_ctn_after_tax_out_tmp')));
                 $total_value_order_in_ctn_before_tax = str_replace('_', '', str_replace(',', '', $this->input->post('total_value_order_in_ctn_before_tax_out')));
                 $total_value_order_in_ctn_after_tax = str_replace('_', '', str_replace(',', '', $this->input->post('total_value_order_in_ctn_after_tax_out')));
                 $top = $this->input->post('top_out');
-                $due_date_invoice = date('Y-m-d', strtotime($this->input->post('receive_date_out') . ' +' . (int) $top . ' days'));
+                $due_date_invoice = date('Y-m-d', strtotime($receive_date . ' + ' . (int) $top . ' days'));
                 $payment_status = $this->input->post('payment_status_out');
                 $payment_value = str_replace('_', '', str_replace(',', '', $this->input->post('payment_value_out')));
                 $difference = str_replace('_', '', str_replace(',', '', $this->input->post('difference_out')));
@@ -787,7 +815,7 @@ class Companyreports extends MX_Controller {
                     'Receive Date' => date('d-m-Y', strtotime($model->receive_date)),
                     'Monthly Period' => $model->monthly_period,
                     'Tax Status' => $model->tax_status == "0" ? lang('non_pkp') : lang('pkp'),
-                    'Tax No' => $model->tax_no,
+                    'Tax No' => $model->tax_no == "" ? "-" : $model->tax_no,
                     'Invoice No' => Invoice::find($model->invoice_id)->invoice_no,
                     'Product' => Product::find($model->product_id)->product_code . ' - '  . Product::find($model->product_id)->name,
                     'Ship to Delivery' => Dipo::find($model->customer_id)->code . ' - '  . Dipo::find($model->customer_id)->name,
@@ -823,7 +851,7 @@ class Companyreports extends MX_Controller {
                 $model->discount_value = $discount_value;
                 $model->ppn = $ppn;
                 $model->net_price_in_ctn_before_tax = $net_price_in_ctn_before_tax;
-                $model->net_price_in_ctn_after_tax = $price_hna_per_ctn_after_tax;
+                $model->net_price_in_ctn_after_tax = $net_price_in_ctn_after_tax;
                 $model->total_value_order_in_ctn_before_tax = $total_value_order_in_ctn_before_tax;
                 $model->total_value_order_in_ctn_after_tax = $total_value_order_in_ctn_after_tax;
                 $model->top = $top;
@@ -842,7 +870,7 @@ class Companyreports extends MX_Controller {
                         'Receive Date' => date('d-m-Y', strtotime($receive_date)),
                         'Monthly Period' => $monthly_period,
                         'Tax Status' => $tax_status == "0" ? lang('non_pkp') : lang('pkp'),
-                        'Tax No' => $tax_no,
+                        'Tax No' => $tax_no == "" ? "-" : $tax_no,
                         'Invoice No' => Invoice::find($invoice_id)->invoice_no,
                         'Product' => Product::find($product_id)->product_code . ' - '  . Product::find($product_id)->name,
                         'Ship to Delivery' => Dipo::find($customer_id)->code . ' - '  . Dipo::find($customer_id)->name,
@@ -919,10 +947,10 @@ class Companyreports extends MX_Controller {
                     'Check Status' => $model->check_status == "0" ? lang('no') : lang('yes'),
                     'Monthly Period' => $model->monthly_period,
                     'Tax Status' => $model->tax_status == "0" ? lang('non_pkp') : lang('pkp'),
-                    'Tax No' => $model->tax_no,
+                    'Tax No' => $model->tax_no == "" ? "-" : $model->tax_no,
                     'Invoice No' => Invoice::find($model->invoice_id)->invoice_no,
-                    'SP No' => Suratpesanan::find($model->sp_id)->sp_no,
-                    'Principle' => Principle::find($model->principle_id)->code . ' - '  . Principle::find($model->principle_id)->name,
+                    'SP No' => $model->sp_id == "" ? "-" : Suratpesanan::find($model->sp_id)->sp_no,
+                    'Principle' => $model->principle_id == "" ? "-" : Principle::find($model->principle_id)->code . ' - '  . Principle::find($model->principle_id)->name,
                     'Product' => Product::find($model->product_id)->product_code . ' - '  . Product::find($model->product_id)->name,
                     'Ship to Delivery' => Dipo::find($model->customer_id)->code . ' - '  . Dipo::find($model->customer_id)->name,
                     'Price HNA Per Ctn (Before Tax)' => $model->price_hna_per_ctn_before_tax,
@@ -974,7 +1002,7 @@ class Companyreports extends MX_Controller {
                     'Receive Date' => date('d-m-Y', strtotime($model->receive_date)),
                     'Monthly Period' => $model->monthly_period,
                     'Tax Status' => $model->tax_status == "0" ? lang('non_pkp') : lang('pkp'),
-                    'Tax No' => $model->tax_no,
+                    'Tax No' => $model->tax_no == "" ? "-" : $model->tax_no,
                     'Invoice No' => Invoice::find($model->invoice_id)->invoice_no,
                     'Product' => Product::find($model->product_id)->product_code . ' - '  . Product::find($model->product_id)->name,
                     'Ship to Delivery' => Dipo::find($model->customer_id)->code . ' - '  . Dipo::find($model->customer_id)->name,

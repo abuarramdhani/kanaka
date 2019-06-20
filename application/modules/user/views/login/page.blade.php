@@ -862,7 +862,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
             function register_principal(){
                 $('#form-principal')[0].reset(); 
-                $('#modal_form').modal('show'); 
+                $('#modal_form_principal').modal('show'); 
                 $('.modal-title').text('<?=lang('new_principle')?>'); 
             }
 

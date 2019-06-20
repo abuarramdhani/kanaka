@@ -258,7 +258,7 @@ $lang['deleting_dipo_successfully'] = 'Deleting data DIPO succesfully';
 ## END DIPO ##
 
 ## Partner ##
-$lang['partner'] = 'Partner';
+$lang['partner'] = 'Mitra';
 $lang['new_partner'] = "New Partner";
 $lang['edit_partner'] = "Edit Partner";
 $lang['partner_name'] = "Partner Name";
@@ -434,9 +434,9 @@ $lang['no_sp'] = 'No SP';
 $lang['principle_code'] = 'Principle Code';
 $lang['principle_address'] = 'Principle Address';
 $lang['principle_pic'] = 'Principle PIC';
-$lang['dipo_name'] = 'Dipo Name';
-$lang['dipo_address'] = 'Dipo Address';
-$lang['dipo_code'] = 'Dipo Code';
+$lang['dipo_name'] = 'DIPO Name';
+$lang['dipo_address'] = 'DIPO Address';
+$lang['dipo_code'] = 'DIPO Code';
 $lang['sp_date'] = 'SP Date';
 $lang['ship_to'] = 'Ship to';
 $lang['D'] = 'In';

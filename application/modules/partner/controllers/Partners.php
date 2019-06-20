@@ -34,7 +34,8 @@ class Partners extends MX_Controller {
             'm_dipo_partner.email',
             'm_dipo_partner.city',
             'm_dipo_partner.subdistrict',
-            'm_zona.name as zona_name',
+            // 'm_zona.name as zona_name',
+            'm_dipo_partner.zona_id',            
             'm_dipo_partner.latitude',
             'm_dipo_partner.longitude',
             'm_dipo_partner.pic',
@@ -51,7 +52,8 @@ class Partners extends MX_Controller {
             'm_dipo_partner.email',
             'm_dipo_partner.city',
             'm_dipo_partner.subdistrict',
-            'm_zona.name as zona_name',
+            // 'zona_name',
+            'm_dipo_partner.zona_id',
             'm_dipo_partner.latitude',
             'm_dipo_partner.longitude',
             'm_dipo_partner.pic',
@@ -60,10 +62,10 @@ class Partners extends MX_Controller {
         );
 
         $from = "m_dipo_partner";
-        $where = "m_dipo_partner.type = 'partner' AND m_dipo_partner.deleted = 0 AND m_zona.deleted = 0";
+        $where = "m_dipo_partner.type = 'partner' AND m_dipo_partner.deleted = 0";
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
-        $join[] = array('m_zona', 'm_dipo_partner.zona_id = m_zona.id', 'left');
+        // $join[] = array('m_zona', 'm_dipo_partner.zona_id = m_zona.id', 'left');
         $join[] = array('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id = m_dipo.id', 'left');
         
         if ($this->input->get('sSearch') != '') {
@@ -81,7 +83,7 @@ class Partners extends MX_Controller {
             $where .= "m_dipo_partner.email LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.city LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.subdistrict LIKE '%" . $sSearch . "%' OR ";
-            $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
+            // $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.latitude LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.longitude LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.pic LIKE '%" . $sSearch . "%' OR ";
@@ -113,17 +115,18 @@ class Partners extends MX_Controller {
 
             $row_value[] = $row->code;
             $row_value[] = $row->name;
-            $row_value[] = $row->dipo_name;
+            $row_value[] = $row->dipo_name == "" ? "-" : $row->dipo_name;
             $row_value[] = $row->address;
             $row_value[] = $row->phone;
-            $row_value[] = $row->email;
+            $row_value[] = $row->email == "" ? "-" : $row->email;
             $row_value[] = $row->city;
-            $row_value[] = $row->subdistrict;
-            $row_value[] = $row->zona_name;
-            $row_value[] = $row->latitude;
-            $row_value[] = $row->longitude;
-            $row_value[] = $row->pic;
-            $row_value[] = $row->top;
+            $row_value[] = $row->subdistrict == "" ? "-" : $row->subdistrict;
+            // $row_value[] = $row->zona_name;
+            $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
+            $row_value[] = $row->latitude == "" ? "-" : $row->latitude;
+            $row_value[] = $row->longitude == "" ? "-" : $row->longitude;
+            $row_value[] = $row->pic == "" ? "-" : $row->pic;
+            $row_value[] = $row->top == "" ? "-" : $row->top;
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             

@@ -376,6 +376,7 @@ $lang['deleting_pricelist_successfully'] = 'Deleting data Price List succesfully
 
 ## Company Report ##
 $lang['companyreport'] = 'Company Report';
+$lang['sell'] = 'Sell';
 $lang['sell_in'] = 'Sell In';
 $lang['sell_out'] = 'Sell Out';
 $lang['new_sell_in_company'] = "New Sell In Company";

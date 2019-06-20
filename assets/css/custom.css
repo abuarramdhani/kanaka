@@ -134,7 +134,7 @@ tr.text-discount th {
     width: 100% !important;
 }
 
-button.btn_add_comp{
+button.btn_add_comp, button.btn_add_comp_edit{
     margin-left: 10%;
 }
 

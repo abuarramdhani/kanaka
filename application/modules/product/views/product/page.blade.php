@@ -242,21 +242,21 @@
                     '<label class="col-lg-4 control-label"><?=lang('brand')?><span class="text-danger">*</span></label>'+
                     '<div class="col-lg-7">'+
                         '<input type="hidden" class="form-control input-sm" name="comparation_id[]" id="comparation_id_'+i+'"/>'+
-                        '<input type="text" class="form-control input-sm" name="brand[]" id="brand_'+i+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
+                        '<input required type="text" class="form-control input-sm" name="brand[]" id="brand_'+i+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
                         '<div class="form-control-focus"> </div>'+
                     '</div>'+
                 '</div>'+
                 '<div class="form-group form-md-line-input">'+
                     '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
                     '<div class="col-lg-7">'+
-                        '<textarea rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
+                        '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
                         '<div class="form-control-focus"> </div>'+
                     '</div>'+
                 '</div>'+
                 '<div class="form-group form-md-line-input">'+
                     '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
                     '<div class="col-lg-7">'+
-                    '<input type="file" class="form-control" name="image_comparation[]" id="image_comparation_'+i+'"/>'+
+                    '<input required type="file" class="form-control" name="image_comparation[]" id="image_comparation_'+i+'"/>'+
                         '<div class="form-control-focus"> </div>'+
                     '</div>'+
                 '</div>'
@@ -408,14 +408,14 @@
                             '<label class="col-lg-4 control-label"><?=lang('brand')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
                                 '<input type="hidden" class="form-control input-sm" name="comparation_id[]" id="comparation_id_'+i+'"/>'+
-                                '<input type="text" class="form-control input-sm" name="brand[]" id="brand_'+i+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
+                                '<input required type="text" class="form-control input-sm" name="brand[]" id="brand_'+i+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'+
                         '<div class="form-group form-md-line-input">'+
                             '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                                '<textarea rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
+                                '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'+
@@ -444,21 +444,21 @@
                             '<label class="col-lg-4 control-label"><?=lang('brand')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
                                 '<input type="hidden" class="form-control input-sm" name="comparation_id[]" id="comparation_id_'+z+'"/>'+
-                                '<input type="text" class="form-control input-sm" name="brand[]" id="brand_'+z+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
+                                '<input required type="text" class="form-control input-sm" name="brand[]" id="brand_'+z+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'+
                         '<div class="form-group form-md-line-input">'+
                             '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                                '<textarea rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+z+'" placeholder="<?=lang('description')?>"></textarea>'+
+                                '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+z+'" placeholder="<?=lang('description')?>"></textarea>'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'+
                         '<div class="form-group form-md-line-input">'+
                             '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                            '<input type="file" class="form-control" name="image_comparation[]" id="image_comparation_'+z+'"/>'+
+                            '<input required type="file" class="form-control" name="image_comparation[]" id="image_comparation_'+z+'"/>'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'

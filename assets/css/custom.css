@@ -146,3 +146,63 @@ table#total-value-add {
     width: 40%;
     margin-left: 60%;
 }
+
+/* CATALOG */
+ol.product-items {
+    list-style: none none;
+    display: block;
+}
+
+.catalog-item {
+    width: 31%;
+    display: inline-block;
+    border: 1px solid lightgrey;
+    margin: 9px;
+    background-color: aliceblue;
+}
+
+li.product-item {
+    padding: 10px;
+}
+
+.catalog-item .product-image {
+    padding: 5% 17.5%;
+}
+
+.action-button-catalog a.btn.btn-sm.btn-primary {
+    width: 48%;
+    margin: 4px 2px;
+    padding: 8px;
+}
+
+.action-button-catalog {
+    margin-top: 15px;
+}
+
+.sales-talk-product {
+    border: 1px solid lightgrey;
+    background-color: aliceblue;
+}
+
+.sales-talk-product .product-name h3 {
+    text-align: center;
+    font-weight: 400;
+    margin: 30px 30px 10px 50px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid darkgrey;
+}
+
+.sales-talk-product-detail {
+    margin-left: 30px;
+}
+
+.sales-talk-detail {
+    display: flex;
+    padding: 30px;
+}
+
+.sales-talk-product .logo-kanaka img {
+    margin-left: 73%;
+    margin-bottom: 30px;
+}
+/* END CATALOG */

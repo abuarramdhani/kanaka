@@ -230,6 +230,10 @@
 
 @section('scripts')
 <script type="text/javascript">
+
+    $('#description').ckeditor();
+    $('#feature').ckeditor();
+
     var i = 1;
 
     $('.btn_add_comp').show();

@@ -7,6 +7,15 @@
         @endif
     </a>
 </li>
+<li class="nav-item {{ (uri_segment(1) == "catalogproduct") ? 'active open' : null }}">
+    <a href="{{base_url()}}catalogproduct" class="nav-link ">
+        <i class="fa fa-file"></i>
+        <span class="title">{{ lang('catalog_product') }}</span>
+        @if(uri_segment(1) == "catalogproduct")
+            <span class="selected"></span>
+        @endif
+    </a>
+</li>
 <?php
     $datamenu = User::selectraw('users.*, users_menu.*, menu.*, users_menu.menu_id')
     ->leftJoin('users_menu', 'users_menu.user_id', '=', 'users.id')

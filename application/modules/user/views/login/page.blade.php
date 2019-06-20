@@ -146,6 +146,14 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="row modal-body">
                     <div class="col-md-6">
                         <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('username')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="username_customer" id="username_customer" placeholder="<?=lang('username')?>" maxlength="10" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
                                 <input type="text" class="form-control input-sm" name="code" id="code_customer" placeholder="<?=lang('code')?>" maxlength="10" />
@@ -773,10 +781,12 @@ License: You must have a valid license purchased only from themeforest(the above
                 },
                 errorElement: "span",
                 rules: {
+                    username_customer: "required",
                     code: "required",
                     type: "required",
                     name: "required",
                     phone: "required",
+                    email: "required",
                     address: "required",
                     billing_address: "required",
                     city: "required",
@@ -785,10 +795,12 @@ License: You must have a valid license purchased only from themeforest(the above
                     taxable: "required",
                 },
                 messages: {
+                    username_customer: "{{lang('username')}}" + " {{lang('not_empty')}}",
                     code: "{{lang('code')}}" + " {{lang('not_empty')}}",
                     type: "{{lang('cooperation_system')}}" + " {{lang('not_empty')}}",
                     name: "{{lang('name')}}" + " {{lang('not_empty')}}",
                     phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
+                    email: "{{lang('email')}}" + " {{lang('not_empty')}}",
                     address: "{{lang('address')}}" + " {{lang('not_empty')}}",
                     billing_address: "{{lang('billing_address')}}" + " {{lang('not_empty')}}",
                     city: "{{lang('city')}}" + " {{lang('not_empty')}}",

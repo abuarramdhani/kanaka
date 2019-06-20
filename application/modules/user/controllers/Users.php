@@ -576,6 +576,7 @@ class Users extends MX_Controller {
                     }
                     else{
                         $code = strtoupper($this->input->post('code'));
+                        $username = $this->input->post('username_customer');
                         $type = $this->input->post('type');
                         $name = ucwords($this->input->post('name'));
                         $phone = $this->input->post('phone');
@@ -720,6 +721,31 @@ class Users extends MX_Controller {
                             $model_code->time_modified = date('H:i:s');
                             $model_code->save();
     
+                            if($type == "dipo") {
+                                $group_id = 2;
+                            }
+                            else if($type == "customer") {
+                                $group_id = 4;
+                            }
+                            else {
+                                $group_id = 3;                                
+                            }
+
+                            $group = array($group_id);
+                            
+                            $data = array(
+                                "full_name" => $name,
+                                "company" => 'Kanaka',
+                                "group_id" => $group_id,
+                                "address" => $address,
+                                "city" => $city,
+                                "phone" => str_replace("_", "", $phone),
+                                "created_date" => date('Y-m-d H:i:s'),
+                                "avatar" => 'default_avatar.jpg'
+                            );
+
+                            $this->ion_auth->register($username, $code, $email, $data, $group);
+
                             $data_notif = array(
                                 'Code' => $code == "" ? "-" : $code,
                                 'Type' => $type == "" ? "-" : ucwords(str_replace('_', ' ', $type)),

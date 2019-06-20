@@ -320,7 +320,7 @@
 
                 App.unblockUI('#form-wrapper');
                 setTimeout(function(){
-                    window.location.reload()
+                    // window.location.reload()
                 },1000);
             } 
             return false;

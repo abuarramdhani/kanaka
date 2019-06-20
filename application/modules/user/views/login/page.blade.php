@@ -33,6 +33,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="{{ base_url() }}assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ base_url() }}assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
         <link href="{{ base_url() }}assets/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{ base_url() }}assets/plugins/bootstrap-toastr/toastr.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="{{ base_url() }}assets/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
@@ -56,6 +57,11 @@ License: You must have a valid license purchased only from themeforest(the above
                         <h3>{{ lang('system_name') }}<br/> <small> </small></h3>
                     </div>
                     <!-- END LOGO -->
+
+                    <div class="form-actions block-register">
+                        <p><button onclick="register_customer()" class="btn btn-primary btn-md"><i class="fa fa-plus"></i>{{lang('register_customer')}}</button></p>
+                        <p><button onclick="register_principal()" class="btn btn-info btn-md"><i class="fa fa-plus"></i>{{lang('register_principal')}}</button></p>
+                    </div>
                 </div>
                 
                 <div class="col-md-6">
@@ -122,11 +128,299 @@ License: You must have a valid license purchased only from themeforest(the above
                         </div>
                     </form>
                     <!-- END FORGOT PASSWORD FORM -->
+                    
                 </div>
             </div>
             
         </div>
         <!-- END LOGIN -->
+
+        <div class="modal fade" id="modal_form" role="dialog">
+            <div class="modal-dialog" style="width:80%;">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title"><?=lang('new_partner')?></h3>
+                </div>
+                {{ form_open(null,array('id' => 'form-partner', 'class' => 'form-horizontal', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data')) }}
+                <div class="row modal-body">
+                    <div class="col-md-6">
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="code" id="code" placeholder="<?=lang('code')?>" maxlength="10" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('cooperation_system')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <select class="form-control input-sm" name="type" id="type" style="width: 100%;">
+                                    <option value=""><?= lang('select_your_option') ?></option>
+                                    <option value="dipo"><?= lang('distribution_point') ?></option>
+                                    <option value="partner"><?= lang('partner') ?></option>
+                                    <option value="independent_partner"><?= lang('independent_partner') ?></option>
+                                    <option value="customer"><?= lang('customer') ?></option>
+                                </select>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('phone')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm number" name="phone" id="phone" placeholder="<?=lang('phone')?>" maxlength="20" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('fax')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm number" name="fax" id="fax" placeholder="<?=lang('fax')?>" maxlength="20" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('email')?></label>
+                            <div class="col-lg-7">
+                                <input type="email" class="form-control input-sm" name="email" id="email" placeholder="<?=lang('email')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('shipping_address')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="address" id="address" placeholder="<?=lang('shipping_address')?>" maxlength="150" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('billing_address')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="billing_address" id="billing_address" placeholder="<?=lang('billing_address')?>" maxlength="150" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('city')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="city" id="city" placeholder="<?=lang('city')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('postal_code')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm number" name="postal_code" id="postal_code" placeholder="<?=lang('postal_code')?>" maxlength="5" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('latitude')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="latitude" id="latitude" placeholder="<?=lang('latitude')?>" maxlength="30" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('longitude')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="longitude" id="longitude" placeholder="<?=lang('longitude')?>" maxlength="30" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('purchase_price_type')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <select class="form-control input-sm" name="purchase_price_type" id="purchase_price_type" style="width: 100%;">
+                                    <option value=""><?= lang('select_your_option') ?></option>
+                                    <option value="dipo"><?= lang('distribution_point') ?></option>
+                                    <option value="partner"><?= lang('partner') ?></option>
+                                    <option value="customer"><?= lang('customer') ?></option>
+                                </select>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('taxable')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <select class="form-control input-sm" name="taxable" id="taxable" style="width: 100%;">
+                                    <option value=""><?= lang('select_your_option') ?></option>
+                                    <option value="0"><?= lang('no') ?></option>
+                                    <option value="1"><?= lang('yes') ?></option>
+                                </select>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <h5>{{ lang('text_identitas_npwp') }}</h5>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('npwp')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm number" name="npwp" id="npwp" placeholder="<?=lang('npwp')?>" maxlength="15" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('name')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="tax_name" id="tax_name" placeholder="<?=lang('name')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('tax_invoice_address')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="tax_invoice_address" id="tax_invoice_address" placeholder="<?=lang('tax_invoice_address')?>" maxlength="150" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('payment_method')?></label>
+                            <div class="col-lg-7">
+                                <select class="form-control input-sm" name="tax_payment_method" id="tax_payment_method" style="width: 100%;">
+                                    <option value=""><?= lang('select_your_option') ?></option>
+                                    <option value="cash"><?= lang('cash') ?></option>
+                                    <option value="credit"><?= lang('credit') ?></option>
+                                    <option value="central_ar"><?= lang('central_ar') ?></option>
+                                </select>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('payment_time')?></label>
+                            <div class="col-lg-7">
+                                <select class="form-control input-sm" name="tax_payment_time" id="tax_payment_time" style="width: 100%;">
+                                    <option value=""><?= lang('select_your_option') ?></option>
+                                    <option value="cbd"><?= lang('cbd') ?></option>
+                                    <option value="cod"><?= lang('cod') ?></option>
+                                    <option value="3"><?= lang('3_days') ?></option>
+                                    <option value="7"><?= lang('7_days') ?></option>
+                                    <option value="14"><?= lang('14_days') ?></option>
+                                    <option value="21"><?= lang('21_days') ?></option>
+                                    <option value="30"><?= lang('30_days') ?></option>
+                                    <option value="45"><?= lang('45_days') ?></option>
+                                    <option value="60"><?= lang('60_days') ?></option>
+                                </select>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('credit_ceiling')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="tax_credit_ceiling" id="tax_credit_ceiling" placeholder="<?=lang('credit_ceiling')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <hr>
+
+                        <h5>{{ lang('bank_account') }}</h5>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('account_number')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm number" name="account_number" id="account_number" placeholder="<?=lang('account_number')?>" maxlength="25" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('account_name')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="account_name" id="account_name" placeholder="<?=lang('account_name')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('bank_name')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="bank_name" id="bank_name" placeholder="<?=lang('bank_name')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('bank_code')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm number" name="bank_code" id="bank_code" placeholder="<?=lang('bank_code')?>" maxlength="3" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('account_address')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="account_address" id="account_address" placeholder="<?=lang('account_address')?>" maxlength="150" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('customer_photo')?></label>
+                            <div class="col-lg-7">
+                                <input type="file" class="form-control" name="customer_photo" id="customer_photo" accept="image/*">
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('house_photo')?></label>
+                            <div class="col-lg-7">
+                                <input type="file" class="form-control" name="house_photo" id="house_photo" accept="image/*">
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('warehouse_photo')?></label>
+                            <div class="col-lg-7">
+                                <input type="file" class="form-control" name="warehouse_photo" id="warehouse_photo" accept="image/*">
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{ lang('close') }}</button>
+                </div>
+                {{ form_close() }}
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
         <!--[if lt IE 9]>
 <script src="../assets/global/plugins/respond.min.js"></script>
 <script src="../assets/global/plugins/excanvas.min.js"></script> 
@@ -140,12 +434,15 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="{{ base_url() }}assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
         <script src="{{ base_url() }}assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
         <script src="{{ base_url() }}assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        <script src="{{ base_url() }}assets/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
         <script src="{{ base_url() }}assets/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
         <script src="{{ base_url() }}assets/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+        <script src="{{ base_url() }}assets/plugins/form/jquery.form.js" type="text/javascript"></script>
         <script src="{{ base_url() }}assets/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
         <script src="{{ base_url() }}assets/plugins/backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
+        <script src="{{ base_url() }}assets/plugins/jquery-mask/jquery.mask.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="{{ base_url() }}assets/scripts/app.min.js" type="text/javascript"></script>
@@ -155,6 +452,87 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <!-- END THEME LAYOUT SCRIPTS -->
+
+        <script type="text/javascript">
+            $(function(){
+                $('.select2').select2();
+                $('.number').mask('0000000000000000000000000');
+
+            });
+
+            function register_customer(){
+                $('#form-partner')[0].reset(); 
+                $('#modal_form').modal('show'); 
+                $('.modal-title').text('<?=lang('new_customer')?>'); 
+            }
+
+            toastr.options = { "positionClass": "toast-top-right", };
+
+            // Pengaturan Form Validation 
+            var form_validator = $("#form-partner").validate({
+                errorPlacement: function(error, element) {
+                    $(element).parent().closest('.form-group').append(error);
+                },
+                errorElement: "span",
+                rules: {
+                    code: "required",
+                    type: "required",
+                    name: "required",
+                    phone: "required",
+                    address: "required",
+                    billing_address: "required",
+                    city: "required",
+                    postal_code: "required",
+                    purchase_price_type: "required",
+                    taxable: "required",
+                },
+                messages: {
+                    code: "{{lang('code')}}" + " {{lang('not_empty')}}",
+                    type: "{{lang('cooperation_system')}}" + " {{lang('not_empty')}}",
+                    name: "{{lang('name')}}" + " {{lang('not_empty')}}",
+                    phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
+                    address: "{{lang('address')}}" + " {{lang('not_empty')}}",
+                    billing_address: "{{lang('billing_address')}}" + " {{lang('not_empty')}}",
+                    city: "{{lang('city')}}" + " {{lang('not_empty')}}",
+                    postal_code: "{{lang('postal_code')}}" + " {{lang('not_empty')}}",
+                    purchase_price_type: "{{lang('purchase_price_type')}}" + " {{lang('not_empty')}}",
+                    taxable: "{{lang('taxable')}}" + " {{lang('not_empty')}}",
+                },
+                submitHandler : function(form){
+                    App.blockUI({
+                        target: '#form-wrapper'
+                    });
+                    $(form).ajaxSubmit({  
+                        beforeSubmit:  showRequest,  
+                        success:       showResponse,
+                        url:       '{{ base_url() . "register-customer" }}',
+                        type:      'POST',       
+                        clearForm: true ,       
+                        resetForm: true ,  
+                    }); 
+                    function showRequest(formData, jqForm, options) { 
+                        var queryString = $.param(formData); 
+                        return true; 
+                    } 
+                    function showResponse(responseText, statusText, xhr, $form)  { 
+                        if(responseText.status == "success"){
+                            toastr.success(responseText.message,'{{ lang("notification") }}');
+                        }else if(responseText.status == "error"){
+                            toastr.error(responseText.message,'{{ lang("notification") }}');
+                        }else if(responseText.status == "unique"){
+                            toastr.error(responseText.message,'{{ lang("notification") }}');
+                        }
+
+                        App.unblockUI('#form-wrapper');
+                        setTimeout(function(){
+                            window.location.reload()
+                        },1000);
+                    } 
+                    return false;
+                }
+            });
+                
+        </script>
     </body>
 
 </html>

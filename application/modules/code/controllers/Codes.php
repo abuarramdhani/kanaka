@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Categories extends MX_Controller {
+class Codes extends MX_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -12,10 +12,10 @@ class Categories extends MX_Controller {
     }
 
     public function index() {
-        $data['add_access'] = $this->user_profile->get_user_access('Created', 'category');
-        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'category');
-        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'category');
-        $this->load->blade('category.views.category.page', $data);
+        $data['add_access'] = $this->user_profile->get_user_access('Created', 'zona');
+        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'zona');
+        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'zona');
+        $this->load->blade('zona.views.zona.page', $data);
     }
 
     public function fetch_data() {
@@ -32,7 +32,7 @@ class Categories extends MX_Controller {
             'date_created',
         );
 
-        $from = "m_category";
+        $from = "m_zona";
         $where = "deleted = 0";
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
         
@@ -61,10 +61,10 @@ class Categories extends MX_Controller {
             $row_value = array();
 
             $btn_action = '';
-            if($this->user_profile->get_user_access('Updated', 'category')){
+            if($this->user_profile->get_user_access('Updated', 'zona')){
                 $btn_action .= '<a href="javascript:void()" onclick="viewData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
             }
-            if($this->user_profile->get_user_access('Deleted', 'category')){
+            if($this->user_profile->get_user_access('Deleted', 'zona')){
                 $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
 
@@ -83,45 +83,18 @@ class Categories extends MX_Controller {
     public function save() {
         if ($this->input->is_ajax_request()) {
             $user = $this->ion_auth->user()->row();
-            $id_category = $this->input->post('id');
-            $get_category = Category::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
-            if (empty($id_category)) {
-                if (!empty($get_category->name)) {
+            $id_zona = $this->input->post('id');
+            $get_zona = Zona::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
+            if (empty($id_zona)) {
+                if (!empty($get_zona->name)) {
                     $status = array('status' => 'unique', 'message' => lang('already_exist'));
                 }else{
                     $name = ucwords($this->input->post('name'));
                     $description = $this->input->post('description');
-                    $filename = '';
-
-                    if(!empty($_FILES['image']['name'])){
-                        $_FILES['file']['name']     = $_FILES['image']['name'];
-                        $_FILES['file']['type']     = $_FILES['image']['type'];
-                        $_FILES['file']['tmp_name'] = $_FILES['image']['tmp_name'];
-                        $_FILES['file']['error']     = $_FILES['image']['error'];
-                        $_FILES['file']['size']     = $_FILES['image']['size'];
-                        
-                        // File upload configuration
-                        $uploadPath = 'uploads/images/categories/';
-                        $config['upload_path'] = $uploadPath;
-                        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                        $config['file_name'] = date('YmdHis').rand(10,99);
-
-                        // Load and initialize upload library
-                        $this->load->library('upload', $config);
-                        $this->upload->initialize($config);
-                        
-                        // Upload file to server
-                        if($this->upload->do_upload('file')){
-                            // Uploaded file data
-                            $fileData = $this->upload->data();
-                            $filename = $fileData['file_name'];
-                        }
-                    }
-
-                    $model = new Category();
+                    
+                    $model = new Zona();
                     $model->name = $name;
                     $model->description = $description;
-                    $model->image = $filename;
                     
                     $model->user_created = $user->id;
                     $model->date_created = date('Y-m-d');
@@ -131,61 +104,26 @@ class Categories extends MX_Controller {
                         $data_notif = array(
                             'Name' => $name,
                             'Description' => $description,
-                            'Image' => $filename,
                         );
-                        $message = "Add " . strtolower(lang('category')) . " " . $name . " succesfully by " . $user->full_name;
-                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 5);
+                        $message = "Add " . strtolower(lang('zona')) . " " . $name . " succesfully by " . $user->full_name;
+                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 8);
                         $status = array('status' => 'success', 'message' => lang('message_save_success'));
                     } else {
                         $status = array('status' => 'error', 'message' => lang('message_save_failed'));
                     }
                 }
-            } elseif(!empty($id_category)) {
-                $model = Category::find($id_category);
+            } elseif(!empty($id_zona)) {
+                $model = Zona::find($id_zona);
                 $name = ucwords($this->input->post('name'));
                 $description = $this->input->post('description');
 
-                if(!empty($_FILES['image']['name'])){
-                    $_FILES['file']['name']     = $_FILES['image']['name'];
-                    $_FILES['file']['type']     = $_FILES['image']['type'];
-                    $_FILES['file']['tmp_name'] = $_FILES['image']['tmp_name'];
-                    $_FILES['file']['error']     = $_FILES['image']['error'];
-                    $_FILES['file']['size']     = $_FILES['image']['size'];
-                    
-                    // File upload configuration
-                    $uploadPath = 'uploads/images/categories/';
-                    $config['upload_path'] = $uploadPath;
-                    $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                    $config['file_name'] = date('YmdHis').rand(10,99);
-                    
-                    // Load and initialize upload library
-                    $this->load->library('upload', $config);
-                    $this->upload->initialize($config);
-                    
-                    // Upload file to server
-                    if($this->upload->do_upload('file')){
-                        // Uploaded file data
-                        $fileData = $this->upload->data();
-                        $filename = $fileData['file_name'];
-                    }
-                    else{
-                        $filename = $model->image;                
-                    }
-                }
-                else{
-                    $filename = $model->image;
-                }
-
-                $image_files = $model->images;
                 $data_old = array(
                     'Name' => $model->name,
                     'Description' => $model->description,
-                    'Image' => $model->image,
                 );
 
                 $model->name = $name;
                 $model->description = $description;
-                $model->image = $filename;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
@@ -195,19 +133,11 @@ class Categories extends MX_Controller {
                     $data_new = array(
                         'Name' => $name,
                         'Description' => $description,
-                        'Image' => $filename,
                     );
 
-                    // Hapus File Gambar Sebelumnya
-                    // if(!empty($_FILES['image']['name'])){
-                    //     $path_file = 'uploads/images/categories/'.$image_files;
-                    //     if(file_exists($path_file))
-                    //         unlink($path_file);
-                    // }
-
                     $data_change = array_diff_assoc($data_new, $data_old);
-                    $message = "Update " . strtolower(lang('category')) . " " .  $model->name . " succesfully by " . $user->full_name;
-                    $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 5);
+                    $message = "Update " . strtolower(lang('zona')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                    $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 8);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
                     $status = array('status' => 'error', 'message' => lang('message_save_failed'));
@@ -223,7 +153,7 @@ class Categories extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $model = array('status' => 'success', 'data' => Category::find($id));
+            $model = array('status' => 'success', 'data' => Zona::find($id));
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }
@@ -235,7 +165,7 @@ class Categories extends MX_Controller {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
             $user = $this->ion_auth->user()->row();
-            $model = Category::find($id);
+            $model = Zona::find($id);
             if (!empty($model)) {
                 $model->deleted = 1;
                 $model->user_deleted = $user->id;
@@ -246,10 +176,9 @@ class Categories extends MX_Controller {
                 $data_notif = array(
                     'Name' => $model->name,
                     'Description' => $model->description,
-                    'Image' => $model->image,
                 );
-                $message = "Delete " . strtolower(lang('category')) . " " .  $model->name . " succesfully by " . $user->full_name;
-                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 5);
+                $message = "Delete " . strtolower(lang('zona')) . " " .  $model->name . " succesfully by " . $user->full_name;
+                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 8);
                 $status = array('status' => 'success');
             } else {
                 $status = array('status' => 'error');
@@ -262,16 +191,16 @@ class Categories extends MX_Controller {
     }
 
     function pdf(){
-        $data['categories'] = Category::where('deleted', 0)->orderBy('id', 'DESC')->get();
-        $html = $this->load->view('category/category/category_pdf', $data, true);
-        $this->pdf_generator->generate($html, 'category pdf', $orientation='Portrait');
+        $data['zonas'] = Zona::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $html = $this->load->view('zona/zona/zona_pdf', $data, true);
+        $this->pdf_generator->generate($html, 'zona pdf', $orientation='Portrait');
     }
 
     function excel(){
         header("Content-type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=category.xls");
-        $data['categories'] = Category::where('deleted', 0)->orderBy('id', 'DESC')->get();
-        $this->load->view('category/category/category_pdf', $data);
+        header("Content-Disposition: attachment; filename=zona.xls");
+        $data['zonas'] = Zona::where('deleted', 0)->orderBy('id', 'DESC')->get();
+        $this->load->view('zona/zona/zona_pdf', $data);
     }
 
 }

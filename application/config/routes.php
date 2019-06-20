@@ -225,3 +225,12 @@ $route['master/chartofaccount/excel'] = 'chartofaccount/chartofaccounts/excel';
 $route['reports/jurnal'] = 'jurnal/jurnals/index';
 $route['reports/jurnal/pdf'] = 'jurnal/jurnals/pdf';
 $route['reports/jurnal/excel'] = 'jurnal/jurnals/excel';
+
+/**
+* CATALOG PRODUCT
+*/
+$route['catalogproduct'] = 'product/products/catalog';
+$route['catalogproduct/salestalk'] = 'product/products/salestalk';
+$route['catalogproduct/price'] = 'product/products/price';
+$route['catalogproduct/comparation'] = 'product/products/comparation';
+$route['catalogproduct/buildingblock'] = 'product/products/buildingblock';

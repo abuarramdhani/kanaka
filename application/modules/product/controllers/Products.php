@@ -638,4 +638,21 @@ class Products extends MX_Controller {
         $this->load->view('product/product/product_pdf', $data);
     }
 
+    function catalog(){
+        $data['add_access'] = $this->user_profile->get_user_access('Created', 'product');
+        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
+        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');
+        $data['catalogs'] = Product::select('t_pricelist.*', 'm_product.*', 'm_product.id as product_id')->join('t_pricelist', 't_pricelist.product_id', '=', 'm_product.id')->where('m_product.deleted', '0')->where('t_pricelist.deleted', '0')->get();
+        $this->load->blade('product.views.product.catalog', $data);
+    }
+
+    function salestalk(){
+        $id = $this->input->get('id');
+
+        $data['add_access'] = $this->user_profile->get_user_access('Created', 'product');
+        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
+        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');
+        $data['product'] = Product::where('m_product.id', $id)->where('m_product.deleted', '0')->get();
+        $this->load->blade('product.views.product.sales_talk', $data);
+    }
 }

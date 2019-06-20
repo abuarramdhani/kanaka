@@ -444,3 +444,8 @@ $lang['debet'] = "Debet";
 $lang['kredit'] = "Kredit";
 ## END JURNAL ##
 
+## CATALOG PRODUCT ##
+$lang['catalog_product'] = 'Catalog Product';
+$lang['sales_talk'] = 'Sales Talk';
+## END CATALOG PRODUCT ##
+

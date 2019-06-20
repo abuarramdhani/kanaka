@@ -68,6 +68,9 @@ $route['change-password'] = 'user/users/change_password';
 $route['change-password/save'] = 'user/users/change_password_save';
 $route['forgot-password']	= "user/users/forgot_password";
 $route['reset-password/(:any)'] = "user/users/reset_password/$1";
+$route['register-customer']	= "user/users/register_customer";
+$route['check-code-customer']	= "user/users/check_code_customer";
+$route['register-principal']	= "user/users/register_principal";
 
 /**
 * MENU

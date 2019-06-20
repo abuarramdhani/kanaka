@@ -70,6 +70,57 @@ $lang['click'] = 'Click';
 $lang['here'] = 'here';
 $lang['to_reset_your_password'] = 'to reset your password.';
 $lang['enter_your_email_address_below_to_reset_your_password'] = 'Enter your e-mail address below to reset your password.';
+$lang['form_register'] = 'Form Register';
+$lang['form_register_principal'] = 'Form Register Principal';
+$lang['register_customer'] = 'Register Customer';
+$lang['register_principal'] = 'Register Principal';
+$lang['cooperation_system'] = 'Cooperation System';
+$lang['distribution_point'] = 'Distribution Point';
+$lang['independent_partner'] = 'Mitra Mandiri';
+$lang['fax'] = 'Fax';
+$lang['shipping_address'] = 'Shipping Address';
+$lang['billing_address'] = 'Billing Address';
+$lang['postal_code'] = 'Postal Code';
+$lang['purchase_price_type'] = 'Purchase Price Type';
+$lang['taxable'] = 'Taxable';
+$lang['text_identitas_npwp'] = 'IDENTITAS CUSTOMER SESUAI DENGAN NPWP';
+$lang['npwp'] = 'NPWP';
+$lang['tax_invoice_address'] = 'Tax Invoice Address';
+$lang['cash'] = 'Cash';
+$lang['credit'] = 'Credit';
+$lang['central_ar'] = 'Central A/R';
+$lang['payment_time'] = 'Payment Time';
+$lang['cbd'] = 'CBD';
+$lang['cod'] = 'COD';
+$lang['3_days'] = '3 Days';
+$lang['7_days'] = '7 Days';
+$lang['14_days'] = '14 Days';
+$lang['21_days'] = '21 Days';
+$lang['30_days'] = '30 Days';
+$lang['45_days'] = '45 Days';
+$lang['60_days'] = '60 Days';
+$lang['credit_ceiling'] = 'Credit Ceiling';
+$lang['bank_account'] = 'Bank Account';
+$lang['account_number'] = 'Account Number';
+$lang['account_name'] = 'Account Name';
+$lang['account_address'] = 'Account Address';
+$lang['bank_name'] = 'Bank Name';
+$lang['bank_code'] = 'Bank Code';
+$lang['customer_photo'] = 'Customer Photo';
+$lang['house_photo'] = 'House Photo';
+$lang['warehouse_photo'] = 'Warehouse Photo';
+$lang['not_registered'] = 'Not Registered';
+$lang['already_used'] = 'Already Used';
+$lang['text_pic_company'] = 'PIC Company';
+$lang['pic_operational'] = 'PIC Operational';
+$lang['pic_finance'] = 'PIC Finance';
+$lang['pic_finance_name'] = 'PIC Finance Name';
+$lang['pic_finance_phone'] = 'PIC Finance Phone';
+$lang['tdp'] = 'TDP';
+$lang['siup'] = 'SIUP';
+$lang['sppkp'] = 'SPPKP';
+$lang['company_address'] = 'Company Address';
+
 ## END LOGIN PAGE   ##
 
 ## BUTTON	##
@@ -216,7 +267,7 @@ $lang['deleting_dipo_successfully'] = 'Deleting data DIPO succesfully';
 ## END DIPO ##
 
 ## Partner ##
-$lang['partner'] = 'Partner';
+$lang['partner'] = 'Mitra';
 $lang['new_partner'] = "New Partner";
 $lang['edit_partner'] = "Edit Partner";
 $lang['partner_name'] = "Partner Name";
@@ -225,7 +276,7 @@ $lang['deleting_partner_successfully'] = 'Deleting data Partner succesfully';
 ## END Partner ##
 
 ## Vendor ##
-$lang['vendor'] = 'Principle';
+$lang['vendor'] = 'Principal';
 $lang['new_vendor'] = "New Vendor";
 $lang['edit_vendor'] = "Edit Vendor";
 $lang['vendor_name'] = "Vendor Name";
@@ -264,7 +315,6 @@ $lang['deleting_customer_successfully'] = 'Deleting data Customer succesfully';
 $lang['company'] = 'Company';
 $lang['new_company'] = "New Company";
 $lang['edit_company'] = "Edit Company";
-$lang['company_name'] = "Company Name";
 $lang['saving_company_successfully'] = 'Saving data Company succesfully';
 $lang['deleting_company_successfully'] = 'Deleting data Company succesfully';
 ## END Company ##
@@ -287,10 +337,10 @@ $lang['saving_partner_report_successfully'] = 'Saving data Partner succesfully';
 $lang['deleting_partner_report_successfully'] = 'Deleting data Partner succesfully';
 ## END Partner Report ##
 
-## Principle ##
-$lang['principle'] = 'Principle';
-$lang['new_principle'] = "New Principle";
-$lang['edit_principle'] = "Edit Principle";
+## Principal ##
+$lang['principle'] = 'Principal';
+$lang['new_principle'] = "New Principal";
+$lang['edit_principle'] = "Edit Principal";
 $lang['saving_principle_successfully'] = 'Saving data principle succesfully';
 $lang['deleting_principle_successfully'] = 'Deleting data principle succesfully';
 $lang['brand'] = 'Brand';
@@ -300,7 +350,7 @@ $lang['web'] = 'Web';
 $lang['fax'] = 'Fax';
 $lang['office'] = 'Office';
 $lang['personal'] = 'Personal';
-## END Principle ##
+## END Principal ##
 
 ## Price List ##
 $lang['pricelist'] = 'Price List';
@@ -345,7 +395,7 @@ $lang['invoice_no'] = "Invoice No";
 $lang['invoice_id'] = "Invoice ID";
 $lang['sp_no'] = "SP No";
 $lang['sp_id'] = "SP ID";
-$lang['principle_name'] = 'Principle Name';
+$lang['principle_name'] = 'Principal Name';
 $lang['customer_code'] = 'Customer Code';
 $lang['price_hna_per_ctn_before_tax'] = "Price HNA Per Ctn (Before Tax)";
 $lang['price_hna_per_ctn_after_tax'] = "Price HNA Per Ctn (After Tax)";
@@ -389,12 +439,12 @@ $lang['ubah_surat_pesanan'] = "Ubah Surat Pesanan";
 $lang['saving_data_successfully'] = 'Saving data succesfully';
 $lang['deleting_data_successfully'] = 'Deleting data succesfully';
 $lang['no_sp'] = 'No SP';
-$lang['principle_code'] = 'Principle Code';
-$lang['principle_address'] = 'Principle Address';
-$lang['principle_pic'] = 'Principle PIC';
-$lang['dipo_name'] = 'Dipo Name';
-$lang['dipo_address'] = 'Dipo Address';
-$lang['dipo_code'] = 'Dipo Code';
+$lang['principle_code'] = 'Principal Code';
+$lang['principle_address'] = 'Principal Address';
+$lang['principle_pic'] = 'Principal PIC';
+$lang['dipo_name'] = 'DIPO Name';
+$lang['dipo_address'] = 'DIPO Address';
+$lang['dipo_code'] = 'DIPO Code';
 $lang['sp_date'] = 'SP Date';
 $lang['ship_to'] = 'Ship to';
 $lang['D'] = 'In';

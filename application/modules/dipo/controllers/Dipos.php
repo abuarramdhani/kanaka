@@ -32,7 +32,8 @@ class Dipos extends MX_Controller {
             'email',
             'city',
             'subdistrict',
-            'm_zona.name as zona_name',
+            // 'm_zona.name as zona_name',
+            'm_dipo_partner.zona_id',
             'latitude',
             'longitude',
             'pic',
@@ -48,7 +49,8 @@ class Dipos extends MX_Controller {
             'email',
             'city',
             'subdistrict',
-            'm_zona.name as zona_name',
+            // 'zona_name',
+            'm_dipo_partner.zona_id',
             'latitude',
             'longitude',
             'pic',
@@ -57,10 +59,10 @@ class Dipos extends MX_Controller {
         );
 
         $from = "m_dipo_partner";
-        $where = "m_dipo_partner.type = 'dipo' AND m_dipo_partner.deleted = 0 AND m_zona.deleted = 0";
+        $where = "m_dipo_partner.type = 'dipo' AND m_dipo_partner.deleted = 0";
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
-        $join[] = array('m_zona', 'm_dipo_partner.zona_id = m_zona.id', 'left');
+        // $join[] = array('m_zona', 'm_zona.id = m_dipo_partner.zona_id', 'left');
         
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
@@ -76,7 +78,7 @@ class Dipos extends MX_Controller {
             $where .= "email LIKE '%" . $sSearch . "%' OR ";
             $where .= "city LIKE '%" . $sSearch . "%' OR ";
             $where .= "subdistrict LIKE '%" . $sSearch . "%' OR ";
-            $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
+            // $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "latitude LIKE '%" . $sSearch . "%' OR ";
             $where .= "longitude LIKE '%" . $sSearch . "%' OR ";
             $where .= "pic LIKE '%" . $sSearch . "%' OR ";
@@ -88,7 +90,7 @@ class Dipos extends MX_Controller {
         $this->datatables->set_index('m_dipo_partner.id');
         $this->datatables->config('database_columns', $database_columns);
         $this->datatables->config('from', $from);
-        $this->datatables->config('join', $join);
+        // $this->datatables->config('join', $join);
         $this->datatables->config('where', $where);
         $this->datatables->config('order_by', $order_by);
         $selected_data = $this->datatables->get_select_data();
@@ -110,14 +112,15 @@ class Dipos extends MX_Controller {
             $row_value[] = $row->name;
             $row_value[] = $row->address;
             $row_value[] = $row->phone;
-            $row_value[] = $row->email;
+            $row_value[] = $row->email == "" ? "-" : $row->email;
             $row_value[] = $row->city;
-            $row_value[] = $row->subdistrict;
-            $row_value[] = $row->zona_name;
-            $row_value[] = $row->latitude;
-            $row_value[] = $row->longitude;
-            $row_value[] = $row->pic;
-            $row_value[] = $row->top;
+            $row_value[] = $row->subdistrict == "" ? "-" : $row->subdistrict;
+            // $row_value[] = $row->zona_name;
+            $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
+            $row_value[] = $row->latitude == "" ? "-" : $row->latitude;
+            $row_value[] = $row->longitude == "" ? "-" : $row->longitude;
+            $row_value[] = $row->pic == "" ? "-" : $row->pic;
+            $row_value[] = $row->top == "" ? "-" : $row->top;
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             

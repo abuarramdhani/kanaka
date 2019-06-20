@@ -40,7 +40,8 @@
             "application/modules/invoice/models",
             "application/modules/companyreport/models",
             "application/modules/chartofaccount/models",
-            "application/modules/jurnal/models"
+            "application/modules/jurnal/models",
+            "application/modules/code/models"
         ]
     }
 }

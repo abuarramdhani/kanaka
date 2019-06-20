@@ -542,195 +542,201 @@ class Users extends MX_Controller {
                     $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('already_used'));
                 }
                 else{
-                    $code = strtoupper($this->input->post('code'));
-                    $type = $this->input->post('type');
-                    $name = ucwords($this->input->post('name'));
-                    $phone = $this->input->post('phone');
-                    $fax = $this->input->post('fax');
-                    $email = $this->input->post('email');
-                    $address = $this->input->post('address');
-                    $billing_address = $this->input->post('billing_address');
-                    $city = $this->input->post('city');
-                    $postal_code = $this->input->post('postal_code');
-                    $latitude = $this->input->post('latitude');
-                    $longitude = $this->input->post('longitude');
-                    $purchase_price_type = $this->input->post('purchase_price_type');
-                    $taxable = $this->input->post('taxable');
-                    $npwp = $this->input->post('npwp');
-                    $tax_name = $this->input->post('tax_name');
-                    $tax_invoice_address = $this->input->post('tax_invoice_address');
-                    $tax_payment_method = $this->input->post('tax_payment_method');
-                    $tax_payment_time = $this->input->post('tax_payment_time');
-                    $tax_credit_ceiling = $this->input->post('tax_credit_ceiling');
-                    $account_number = $this->input->post('account_number');
-                    $account_name = $this->input->post('account_name');
-                    $bank_name = $this->input->post('bank_name');
-                    $bank_code = $this->input->post('bank_code');
-                    $account_address = $this->input->post('account_address');
-                    $customer_photo = '';
-                    if(!empty($_FILES['customer_photo']['name'])){
-                        $_FILES['file']['name']     = $_FILES['customer_photo']['name'];
-                        $_FILES['file']['type']     = $_FILES['customer_photo']['type'];
-                        $_FILES['file']['tmp_name'] = $_FILES['customer_photo']['tmp_name'];
-                        $_FILES['file']['error']     = $_FILES['customer_photo']['error'];
-                        $_FILES['file']['size']     = $_FILES['customer_photo']['size'];
-                        
-                        // File upload configuration
-                        $uploadPath = 'uploads/images/customers/';
-                        $config['upload_path'] = $uploadPath;
-                        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                        $config['file_name'] = date('YmdHis').rand(10,99);
-
-                        // Load and initialize upload library
-                        $this->load->library('upload', $config);
-                        $this->upload->initialize($config);
-                        
-                        // Upload file to server
-                        if($this->upload->do_upload('file')){
-                            // Uploaded file data
-                            $fileData = $this->upload->data();
-                            $customer_photo = $fileData['file_name'];
-                        }
+                    $get_partner = Partner::where('code' , $this->input->post('code'))->where('deleted', 0)->first();
+                    if (count($get_partner) > 0) {
+                        $status = array('status' => 'unique', 'message' => lang('already_exist'));
                     }
-
-                    $house_photo = '';
-                    if(!empty($_FILES['house_photo']['name'])){
-                        $_FILES['file']['name']     = $_FILES['house_photo']['name'];
-                        $_FILES['file']['type']     = $_FILES['house_photo']['type'];
-                        $_FILES['file']['tmp_name'] = $_FILES['house_photo']['tmp_name'];
-                        $_FILES['file']['error']     = $_FILES['house_photo']['error'];
-                        $_FILES['file']['size']     = $_FILES['house_photo']['size'];
-                        
-                        // File upload configuration
-                        $uploadPath = 'uploads/images/houses/';
-                        $config['upload_path'] = $uploadPath;
-                        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                        $config['file_name'] = date('YmdHis').rand(10,99);
-
-                        // Load and initialize upload library
-                        $this->load->library('upload', $config);
-                        $this->upload->initialize($config);
-                        
-                        // Upload file to server
-                        if($this->upload->do_upload('file')){
-                            // Uploaded file data
-                            $fileData = $this->upload->data();
-                            $house_photo = $fileData['file_name'];
+                    else{
+                        $code = strtoupper($this->input->post('code'));
+                        $type = $this->input->post('type');
+                        $name = ucwords($this->input->post('name'));
+                        $phone = $this->input->post('phone');
+                        $fax = $this->input->post('fax');
+                        $email = $this->input->post('email');
+                        $address = $this->input->post('address');
+                        $billing_address = $this->input->post('billing_address');
+                        $city = $this->input->post('city');
+                        $postal_code = $this->input->post('postal_code');
+                        $latitude = $this->input->post('latitude');
+                        $longitude = $this->input->post('longitude');
+                        $purchase_price_type = $this->input->post('purchase_price_type');
+                        $taxable = $this->input->post('taxable');
+                        $npwp = $this->input->post('npwp');
+                        $tax_name = $this->input->post('tax_name');
+                        $tax_invoice_address = $this->input->post('tax_invoice_address');
+                        $tax_payment_method = $this->input->post('tax_payment_method');
+                        $tax_payment_time = $this->input->post('tax_payment_time');
+                        $tax_credit_ceiling = $this->input->post('tax_credit_ceiling');
+                        $account_number = $this->input->post('account_number');
+                        $account_name = $this->input->post('account_name');
+                        $bank_name = $this->input->post('bank_name');
+                        $bank_code = $this->input->post('bank_code');
+                        $account_address = $this->input->post('account_address');
+                        $customer_photo = '';
+                        if(!empty($_FILES['customer_photo']['name'])){
+                            $_FILES['file']['name']     = $_FILES['customer_photo']['name'];
+                            $_FILES['file']['type']     = $_FILES['customer_photo']['type'];
+                            $_FILES['file']['tmp_name'] = $_FILES['customer_photo']['tmp_name'];
+                            $_FILES['file']['error']     = $_FILES['customer_photo']['error'];
+                            $_FILES['file']['size']     = $_FILES['customer_photo']['size'];
+                            
+                            // File upload configuration
+                            $uploadPath = 'uploads/images/customers/';
+                            $config['upload_path'] = $uploadPath;
+                            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                            $config['file_name'] = date('YmdHis').rand(10,99);
+    
+                            // Load and initialize upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            
+                            // Upload file to server
+                            if($this->upload->do_upload('file')){
+                                // Uploaded file data
+                                $fileData = $this->upload->data();
+                                $customer_photo = $fileData['file_name'];
+                            }
                         }
-                    }
-
-                    $warehouse_photo = '';
-                    if(!empty($_FILES['warehouse_photo']['name'])){
-                        $_FILES['file']['name']     = $_FILES['warehouse_photo']['name'];
-                        $_FILES['file']['type']     = $_FILES['warehouse_photo']['type'];
-                        $_FILES['file']['tmp_name'] = $_FILES['warehouse_photo']['tmp_name'];
-                        $_FILES['file']['error']     = $_FILES['warehouse_photo']['error'];
-                        $_FILES['file']['size']     = $_FILES['warehouse_photo']['size'];
+    
+                        $house_photo = '';
+                        if(!empty($_FILES['house_photo']['name'])){
+                            $_FILES['file']['name']     = $_FILES['house_photo']['name'];
+                            $_FILES['file']['type']     = $_FILES['house_photo']['type'];
+                            $_FILES['file']['tmp_name'] = $_FILES['house_photo']['tmp_name'];
+                            $_FILES['file']['error']     = $_FILES['house_photo']['error'];
+                            $_FILES['file']['size']     = $_FILES['house_photo']['size'];
+                            
+                            // File upload configuration
+                            $uploadPath = 'uploads/images/houses/';
+                            $config['upload_path'] = $uploadPath;
+                            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                            $config['file_name'] = date('YmdHis').rand(10,99);
+    
+                            // Load and initialize upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            
+                            // Upload file to server
+                            if($this->upload->do_upload('file')){
+                                // Uploaded file data
+                                $fileData = $this->upload->data();
+                                $house_photo = $fileData['file_name'];
+                            }
+                        }
+    
+                        $warehouse_photo = '';
+                        if(!empty($_FILES['warehouse_photo']['name'])){
+                            $_FILES['file']['name']     = $_FILES['warehouse_photo']['name'];
+                            $_FILES['file']['type']     = $_FILES['warehouse_photo']['type'];
+                            $_FILES['file']['tmp_name'] = $_FILES['warehouse_photo']['tmp_name'];
+                            $_FILES['file']['error']     = $_FILES['warehouse_photo']['error'];
+                            $_FILES['file']['size']     = $_FILES['warehouse_photo']['size'];
+                            
+                            // File upload configuration
+                            $uploadPath = 'uploads/images/warehouses/';
+                            $config['upload_path'] = $uploadPath;
+                            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                            $config['file_name'] = date('YmdHis').rand(10,99);
+    
+                            // Load and initialize upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            
+                            // Upload file to server
+                            if($this->upload->do_upload('file')){
+                                // Uploaded file data
+                                $fileData = $this->upload->data();
+                                $warehouse_photo = $fileData['file_name'];
+                            }
+                        }
+    
+                        $model = new Partner();
+                        $model->code = $code;
+                        $model->type = $type;
+                        $model->name = $name;
+                        $model->phone = $phone;
+                        $model->fax = $fax;
+                        $model->email = $email;
+                        $model->address = $address;
+                        $model->billing_address = $billing_address;
+                        $model->city = $city;
+                        $model->postal_code = $postal_code;
+                        $model->latitude = $latitude;
+                        $model->longitude = $longitude;
+                        $model->purchase_price_type = $purchase_price_type;
+                        $model->taxable = $taxable;
+                        $model->npwp = $npwp;
+                        $model->tax_name = $tax_name;
+                        $model->tax_invoice_address = $tax_invoice_address;
+                        $model->tax_payment_method = $tax_payment_method;
+                        $model->tax_payment_time = $tax_payment_time;
+                        $model->tax_credit_ceiling = $tax_credit_ceiling;
+                        $model->account_number = $account_number;
+                        $model->account_name = $account_name;
+                        $model->bank_name = $bank_name;
+                        $model->bank_code = $bank_code;
+                        $model->account_address = $account_address;
+                        $model->customer_photo = $customer_photo;
+                        $model->house_photo = $house_photo;
+                        $model->warehouse_photo = $warehouse_photo;
                         
-                        // File upload configuration
-                        $uploadPath = 'uploads/images/warehouses/';
-                        $config['upload_path'] = $uploadPath;
-                        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                        $config['file_name'] = date('YmdHis').rand(10,99);
-
-                        // Load and initialize upload library
-                        $this->load->library('upload', $config);
-                        $this->upload->initialize($config);
-                        
-                        // Upload file to server
-                        if($this->upload->do_upload('file')){
-                            // Uploaded file data
-                            $fileData = $this->upload->data();
-                            $warehouse_photo = $fileData['file_name'];
+                        $model->user_created = 0;
+                        $model->date_created = date('Y-m-d');
+                        $model->time_created = date('H:i:s');
+                        $save = $model->save();                
+                        if ($save) {
+                            $model_code = Code::where('code', $code)->first();
+                            $model_code->status = 1;
+                            $model_code->user_modified = 0;
+                            $model_code->date_modified = date('Y-m-d');
+                            $model_code->time_modified = date('H:i:s');
+                            $model_code->save();
+    
+                            $data_notif = array(
+                                'Code' => $code == "" ? "-" : $code,
+                                'Type' => $type == "" ? "-" : ucwords(str_replace('_', ' ', $type)),
+                                'Name' => $name == "" ? "-" : $name,
+                                'Phone' => $phone == "" ? "-" : $phone,
+                                'Fax' => $fax == "" ? "-" : $fax,
+                                'Email' => $email == "" ? "-" : $email,
+                                'Address' => $address == "" ? "-" : $address,
+                                'Billing Address' => $billing_address == "" ? "-" : $billing_address,
+                                'City' => $city == "" ? "-" : $city,
+                                'Postal Code' => $postal_code == "" ? "-" : $postal_code,
+                                'Latitude' => $latitude == "" ? "-" : $latitude,
+                                'Longitude' => $longitude == "" ? "-" : $longitude,
+                                'Purchase Price Type' => $purchase_price_type == "" ? "-" : ucwords(str_replace('_', ' ', $purchase_price_type)),
+                                'Taxable' => $taxable == "0" ? lang('no') : lang('yes'),
+                                'NPWP' => $npwp == "" ? "-" : $npwp,
+                                'Tax Name' => $tax_name == "" ? "-" : $tax_name,
+                                'Tax Invoice Address' => $tax_invoice_address == "" ? "-" : $tax_invoice_address,
+                                'Tax Payment Method' => $tax_payment_method == "" ? "-" : ucwords(str_replace('_', ' ', $tax_payment_method)),
+                                'Tax Payment Time' => $tax_payment_time == "" ? "-" : strtoupper($tax_payment_time),
+                                'Tax Credit Ceiling' => $tax_credit_ceiling == "" ? "-" : $tax_credit_ceiling,
+                                'Account Number' => $account_number == "" ? "-" : $account_number,
+                                'Account Name' => $account_name == "" ? "-" : $account_name,
+                                'Bank Name' => $bank_name == "" ? "-" : $bank_name,
+                                'Bank Code' => $bank_code == "" ? "-" : $bank_code,
+                                'Account Address' => $account_address == "" ? "-" : $account_address,
+                                'Customer Photo' => $customer_photo == "" ? "-" : $customer_photo,
+                                'House Photo' => $house_photo == "" ? "-" : $house_photo,
+                                'Harehouse Photo' => $warehouse_photo == "" ? "-" : $warehouse_photo,
+                            );
+    
+                            $type_log = 0;
+                            if($type == 'dipo'){
+                                $type_log = 6;                        
+                            }
+                            else{
+                                $type_log = 7;
+                            }
+            
+                            $message = "Add " . lang($type) . " " . $name . " succesfully by User from Form Register Customer";
+                            $this->activity_log->create(1, json_encode($data_notif), NULL, NULL, $message, 'C', $type_log);
+                            $status = array('status' => 'success', 'message' => lang('message_save_success'));
+                        } else {
+                            $status = array('status' => 'error', 'message' => lang('message_save_failed'));
                         }
-                    }
-
-                    $model = new Partner();
-                    $model->code = $code;
-                    $model->type = $type;
-                    $model->name = $name;
-                    $model->phone = $phone;
-                    $model->fax = $fax;
-                    $model->email = $email;
-                    $model->address = $address;
-                    $model->billing_address = $billing_address;
-                    $model->city = $city;
-                    $model->postal_code = $postal_code;
-                    $model->latitude = $latitude;
-                    $model->longitude = $longitude;
-                    $model->purchase_price_type = $purchase_price_type;
-                    $model->taxable = $taxable;
-                    $model->npwp = $npwp;
-                    $model->tax_name = $tax_name;
-                    $model->tax_invoice_address = $tax_invoice_address;
-                    $model->tax_payment_method = $tax_payment_method;
-                    $model->tax_payment_time = $tax_payment_time;
-                    $model->tax_credit_ceiling = $tax_credit_ceiling;
-                    $model->account_number = $account_number;
-                    $model->account_name = $account_name;
-                    $model->bank_name = $bank_name;
-                    $model->bank_code = $bank_code;
-                    $model->account_address = $account_address;
-                    $model->customer_photo = $customer_photo;
-                    $model->house_photo = $house_photo;
-                    $model->warehouse_photo = $warehouse_photo;
-                    
-                    $model->user_created = 0;
-                    $model->date_created = date('Y-m-d');
-                    $model->time_created = date('H:i:s');
-                    $save = $model->save();                
-                    if ($save) {
-                        $model_code = Code::where('code', $code)->first();
-                        $model_code->status = 1;
-                        $model_code->user_modified = 0;
-                        $model_code->date_modified = date('Y-m-d');
-                        $model_code->time_modified = date('H:i:s');
-                        $model_code->save();
-
-                        $data_notif = array(
-                            'Code' => $code == "" ? "-" : $code,
-                            'Type' => $type == "" ? "-" : ucwords(str_replace('_', ' ', $type)),
-                            'Name' => $name == "" ? "-" : $name,
-                            'Phone' => $phone == "" ? "-" : $phone,
-                            'Fax' => $fax == "" ? "-" : $fax,
-                            'Email' => $email == "" ? "-" : $email,
-                            'Address' => $address == "" ? "-" : $address,
-                            'Billing Address' => $billing_address == "" ? "-" : $billing_address,
-                            'City' => $city == "" ? "-" : $city,
-                            'Postal Code' => $postal_code == "" ? "-" : $postal_code,
-                            'Latitude' => $latitude == "" ? "-" : $latitude,
-                            'Longitude' => $longitude == "" ? "-" : $longitude,
-                            'Purchase Price Type' => $purchase_price_type == "" ? "-" : ucwords(str_replace('_', ' ', $purchase_price_type)),
-                            'Taxable' => $taxable == "0" ? lang('no') : lang('yes'),
-                            'NPWP' => $npwp == "" ? "-" : $npwp,
-                            'Tax Name' => $tax_name == "" ? "-" : $tax_name,
-                            'Tax Invoice Address' => $tax_invoice_address == "" ? "-" : $tax_invoice_address,
-                            'Tax Payment Method' => $tax_payment_method == "" ? "-" : ucwords(str_replace('_', ' ', $tax_payment_method)),
-                            'Tax Payment Time' => $tax_payment_time == "" ? "-" : strtoupper($tax_payment_time),
-                            'Tax Credit Ceiling' => $tax_credit_ceiling == "" ? "-" : $tax_credit_ceiling,
-                            'Account Number' => $account_number == "" ? "-" : $account_number,
-                            'Account Name' => $account_name == "" ? "-" : $account_name,
-                            'Bank Name' => $bank_name == "" ? "-" : $bank_name,
-                            'Bank Code' => $bank_code == "" ? "-" : $bank_code,
-                            'Account Address' => $account_address == "" ? "-" : $account_address,
-                            'Customer Photo' => $customer_photo == "" ? "-" : $customer_photo,
-                            'House Photo' => $house_photo == "" ? "-" : $house_photo,
-                            'Harehouse Photo' => $warehouse_photo == "" ? "-" : $warehouse_photo,
-                        );
-
-                        $type_log = 0;
-                        if($type == 'dipo'){
-                            $type_log = 6;                        
-                        }
-                        else{
-                            $type_log = 7;
-                        }
-        
-                        $message = "Add " . lang($type) . " " . $name . " succesfully by User from Form Register Customer";
-                        $this->activity_log->create(1, json_encode($data_notif), NULL, NULL, $message, 'C', $type_log);
-                        $status = array('status' => 'success', 'message' => lang('message_save_success'));
-                    } else {
-                        $status = array('status' => 'error', 'message' => lang('message_save_failed'));
                     }
                 }
             }

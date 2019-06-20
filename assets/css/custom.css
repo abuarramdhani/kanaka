@@ -154,12 +154,11 @@ ol.product-items {
 }
 
 .catalog-item {
-    width: 23%;
+    width: 31%;
     display: inline-block;
     border: 1px solid lightgrey;
     margin: 9px;
     background-color: aliceblue;
-    height: 420px;
 }
 
 li.product-item {
@@ -167,13 +166,13 @@ li.product-item {
 }
 
 .catalog-item .product-image {
-    padding: 5% 15%;
+    padding: 5% 17.5%;
 }
 
 .action-button-catalog a.btn.btn-sm.btn-primary {
-    width: 47%;
+    width: 48%;
     margin: 4px 2px;
-    padding: 5px;
+    padding: 8px;
 }
 
 .action-button-catalog {

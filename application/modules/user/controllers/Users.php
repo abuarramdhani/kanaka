@@ -530,6 +530,34 @@ class Users extends MX_Controller {
         }
     }
 
+
+    public function check_code_customer() {
+        if ($this->input->is_ajax_request()) {
+            $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $this->input->get('type'))->where('deleted', 0)->first();
+            if (count($get_code) == 0) {
+                $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('not_registered'));
+            }
+            else{
+                $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $this->input->get('type'))->where('status', 1)->where('deleted', 0)->first();
+                if (count($get_code) > 0) {
+                    $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('already_used'));
+                }
+                else{
+                    $get_partner = Partner::where('code' , $this->input->get('code'))->where('deleted', 0)->first();
+                    if (count($get_partner) > 0) {
+                        $status = array('status' => 'error', 'message' => lang('already_exist'));
+                    }
+                    else{
+                        $status = array('status' => 'success', 'message' => 'success');
+                    }
+                }
+            }
+        }
+
+        $data = $status;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
     public function register_customer() {
         if ($this->input->is_ajax_request()) {
             $get_code = Code::where('code' , $this->input->post('code'))->where('type' , $this->input->post('type'))->where('deleted', 0)->first();
@@ -565,7 +593,7 @@ class Users extends MX_Controller {
                         $tax_name = $this->input->post('tax_name');
                         $tax_invoice_address = $this->input->post('tax_invoice_address');
                         $tax_payment_method = $this->input->post('tax_payment_method');
-                        $tax_payment_time = $this->input->post('tax_payment_time');
+                        $top = $this->input->post('top');
                         $tax_credit_ceiling = $this->input->post('tax_credit_ceiling');
                         $account_number = $this->input->post('account_number');
                         $account_name = $this->input->post('account_name');
@@ -669,7 +697,7 @@ class Users extends MX_Controller {
                         $model->tax_name = $tax_name;
                         $model->tax_invoice_address = $tax_invoice_address;
                         $model->tax_payment_method = $tax_payment_method;
-                        $model->tax_payment_time = $tax_payment_time;
+                        $model->top = $top;
                         $model->tax_credit_ceiling = $tax_credit_ceiling;
                         $model->account_number = $account_number;
                         $model->account_name = $account_name;
@@ -711,7 +739,7 @@ class Users extends MX_Controller {
                                 'Tax Name' => $tax_name == "" ? "-" : $tax_name,
                                 'Tax Invoice Address' => $tax_invoice_address == "" ? "-" : $tax_invoice_address,
                                 'Tax Payment Method' => $tax_payment_method == "" ? "-" : ucwords(str_replace('_', ' ', $tax_payment_method)),
-                                'Tax Payment Time' => $tax_payment_time == "" ? "-" : strtoupper($tax_payment_time),
+                                'TOP' => $top == "" ? "-" : strtoupper($top),
                                 'Tax Credit Ceiling' => $tax_credit_ceiling == "" ? "-" : $tax_credit_ceiling,
                                 'Account Number' => $account_number == "" ? "-" : $account_number,
                                 'Account Name' => $account_name == "" ? "-" : $account_name,

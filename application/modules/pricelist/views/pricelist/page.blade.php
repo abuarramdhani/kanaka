@@ -207,7 +207,7 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <fieldset>
+            <fieldset id="fieldset-kanaka">
                 <legend class="text-center">Kanaka</legend>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
@@ -254,7 +254,7 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <fieldset>
+            <fieldset id="fieldset-dipo">
                 <legend class="text-center"><?=lang('dipo')?></legend>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
@@ -308,7 +308,7 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <fieldset>
+            <fieldset id="fieldset-mitra">
                 <legend class="text-center"><?=lang('mitra')?></legend>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
@@ -362,7 +362,7 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <fieldset>
+            <fieldset id="fieldset-customer">
                 <legend class="text-center"><?=lang('customer')?></legend>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
@@ -444,6 +444,16 @@
 
 @section('scripts')
 <script type="text/javascript">
+    // $(function(){
+        
+    //     @if($user->group_id == '2')
+    //         $('#fieldset-kanaka').hide();
+    //         $('#fieldset-mitra').hide();
+    //         $('#fieldset-customer').hide();
+    //     @endif
+        
+    // });
+    
     $('#product_code').change(function(){
         $.getJSON('{{base_url()}}pricelist/pricelists/getProductData', {id: $('#product_code').val()}, function(json, textStatus) {
             if(json.status == "success"){

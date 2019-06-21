@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 19, 2019 at 08:14 AM
+-- Generation Time: Jun 21, 2019 at 03:58 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -25,10 +25,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `m_product_comparation`
+-- Table structure for table `m_product_comparison`
 --
 
-CREATE TABLE `m_product_comparation` (
+CREATE TABLE `m_product_comparison` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `brand` varchar(50) NOT NULL,
@@ -55,9 +55,9 @@ CREATE TABLE `m_product_comparation` (
 --
 
 --
--- Indexes for table `m_product_comparation`
+-- Indexes for table `m_product_comparison`
 --
-ALTER TABLE `m_product_comparation`
+ALTER TABLE `m_product_comparison`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -65,9 +65,9 @@ ALTER TABLE `m_product_comparation`
 --
 
 --
--- AUTO_INCREMENT for table `m_product_comparation`
+-- AUTO_INCREMENT for table `m_product_comparison`
 --
-ALTER TABLE `m_product_comparation`
+ALTER TABLE `m_product_comparison`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

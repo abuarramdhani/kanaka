@@ -18,6 +18,7 @@ class Pricelists extends MX_Controller {
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'pricelist');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'pricelist');
         $data['products'] = Product::where('deleted', '0')->get();
+        $data['user'] = $this->ion_auth->user()->row();
 
         $discount = $this->db->select('*')
                   ->order_by('id', 'DESC')

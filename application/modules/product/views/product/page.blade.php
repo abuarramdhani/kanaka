@@ -125,7 +125,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('packing_size')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="packing_size" id="packing_size" placeholder="<?=lang('packing_size')?>" maxlength="50" />
+                <input onchange="get_cbp_per_karton()" type="number" class="form-control input-sm" name="packing_size" id="packing_size" placeholder="<?=lang('packing_size')?>" maxlength="50" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -133,7 +133,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('qty_per_ctn')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="number" class="form-control input-sm" name="qty" id="qty" placeholder="<?=lang('qty_per_ctn')?>" maxlength="50" />
+                <input onchange="get_cbp_per_karton()" type="number" class="form-control input-sm" name="qty" id="qty" placeholder="<?=lang('qty_per_ctn')?>" maxlength="50" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -153,6 +153,41 @@
             <label class="col-lg-4 control-label"><?=lang('weight')?></label>
             <div class="col-lg-7">
                 <input type="number" class="form-control input-sm" name="weight" id="weight" placeholder="<?=lang('weight')?>" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Tipe Kemasan<span class="text-danger">*</span></label>
+            <div class="col-md-7">
+                <select id="tipe_kemasan" name="tipe_kemasan" class="form-control">
+                    <option value="Pouch">Pouch</option>
+                    <option value="Botol">Botol</option>
+                    <option value="Bag">Bag</option>
+                </select>  
+            </div>  
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label cbp_per_xxx">CBP Per XXX<span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input onchange="get_cbp_per_karton()" type="number" class="form-control input-sm" name="cbp_per_kemasan" id="cbp_per_kemasan" placeholder="CBP Per XXX" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">CBP Per Karton<span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="number" class="form-control input-sm" name="cbp_per_karton" id="cbp_per_karton" placeholder="CBP Per Karton" maxlength="50" />
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">Harga<span class="text-danger">*</span></label>
+            <div class="col-lg-7">
+                <input type="number" class="form-control input-sm" name="harga" id="harga" placeholder="Harga" maxlength="50" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -234,6 +269,35 @@
     $('#description').ckeditor();
     $('#feature').ckeditor();
 
+    var type = $('#tipe_kemasan').val();
+    $('.cbp_per_xxx').html('CBP Per '+type+'<span class="text-danger">*</span>'); 
+    $('[name="cbp_per_kemasan"]').attr('placeholder','CBP Per '+type);
+
+    $('#tipe_kemasan').change(function(){
+        var type = $('#tipe_kemasan').val();
+        $('.cbp_per_xxx').html('CBP Per '+type+'<span class="text-danger">*</span>'); 
+        $('[name="cbp_per_kemasan"]').attr('placeholder','CBP Per '+type);
+    });
+
+    function get_cbp_per_karton(){
+        $('[name="cbp_per_karton"').attr('readonly',true);
+        $('[name="harga"').attr('readonly',true);
+
+        var isi_per_karton  = $('[name="qty"]').val();
+        var cbp_per_kemasan = $('[name="cbp_per_kemasan"]').val();
+        var packing_size  = $('[name="packing_size"]').val();
+
+        if(isi_per_karton != ''){
+            var cbp_per_karton  = isi_per_karton*cbp_per_kemasan;
+            $('[name="cbp_per_karton"]').val(cbp_per_karton.toFixed(0));
+        }
+
+        if(packing_size != ''){
+            var harga  = cbp_per_kemasan/packing_size;
+            $('[name="harga"]').val(harga.toFixed(0));
+        }
+    }
+
     var i = 1;
 
     $('.btn_add_comp').show();
@@ -263,10 +327,58 @@
                     '<input required type="file" class="form-control" name="image_comparison[]" id="image_comparison_'+i+'"/>'+
                         '<div class="form-control-focus"> </div>'+
                     '</div>'+
+                '</div>'+
+                '<div class="form-group form-md-line-input">'+
+                    '<label class="col-lg-4 control-label"><?=lang('packing_size')?><span class="text-danger">*</span></label>'+
+                    '<div class="col-lg-7">'+
+                        '<input onchange="get_cbp_per_karton_comp('+i+')" type="number" class="form-control input-sm" name="packing_size_comp[]" id="packing_size_comp_'+i+'" placeholder="<?=lang('packing_size')?>" maxlength="50" />'+
+                        '<div class="form-control-focus"> </div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group form-md-line-input">'+
+                    '<label class="col-lg-4 control-label"><?=lang('qty_per_ctn')?><span class="text-danger">*</span></label>'+
+                    '<div class="col-lg-7">'+
+                        '<input onchange="get_cbp_per_karton_comp('+i+')" type="number" class="form-control input-sm" name="qty_comp[]" id="qty_comp_'+i+'" placeholder="<?=lang('qty_per_ctn')?>" maxlength="50" />'+
+                        '<div class="form-control-focus"> </div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group form-md-line-input">'+
+                    '<label class="col-lg-4 control-label">Tipe Kemasan<span class="text-danger">*</span></label>'+
+                    '<div class="col-md-7">'+
+                        '<select onchange="changeTipe('+i+')" id="tipe_kemasan_comp_'+i+'" name="tipe_kemasan_comp[]" class="form-control">'+
+                            '<option value="Pouch">Pouch</option>'+
+                            '<option value="Botol">Botol</option>'+
+                            '<option value="Bag">Bag</option>'+
+                        '</select>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group form-md-line-input">'+
+                    '<label class="col-lg-4 control-label" id="cbp_per_xxx_comp_'+i+'">CBP Per XXX<span class="text-danger">*</span></label>'+
+                    '<div class="col-lg-7">'+
+                        '<input onchange="get_cbp_per_karton_comp('+i+')" type="number" class="form-control input-sm" name="cbp_per_kemasan_comp[]" id="cbp_per_kemasan_comp_'+i+'" placeholder="CBP Per XXX" maxlength="50" />'+
+                        '<div class="form-control-focus"> </div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group form-md-line-input">'+
+                    '<label class="col-lg-4 control-label">CBP Per Karton<span class="text-danger">*</span></label>'+
+                    '<div class="col-lg-7">'+
+                        '<input type="number" class="form-control input-sm" name="cbp_per_karton_comp[]" id="cbp_per_karton_comp_'+i+'" placeholder="CBP Per Karton" maxlength="50" />'+
+                        '<div class="form-control-focus"> </div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group form-md-line-input">'+
+                    '<label class="col-lg-4 control-label">Harga<span class="text-danger">*</span></label>'+
+                    '<div class="col-lg-7">'+
+                        '<input type="number" class="form-control input-sm" name="harga_comp[]" id="harga_comp_'+i+'" placeholder="Harga" maxlength="50" />'+
+                        '<div class="form-control-focus"> </div>'+
+                    '</div>'+
                 '</div>'
             );
 
             $('#desc_comparison_'+i).ckeditor();
+            var typeComp = $('#tipe_kemasan_comp_'+i).val();
+            $('#cbp_per_xxx_comp_'+i).html('CBP Per '+typeComp+'<span class="text-danger">*</span>'); 
+            $('#cbp_per_kemasan_comp_'+i).attr('placeholder','CBP Per '+typeComp);
             i++;
         // }
 
@@ -274,6 +386,32 @@
         //     $('.btn_add_comp').attr('disabled','disabled');
         // }
     });
+
+    function changeTipe(i){
+        var typeComp = $('#tipe_kemasan_comp_'+i).val();
+        $('#cbp_per_xxx_comp_'+i).html('CBP Per '+typeComp+'<span class="text-danger">*</span>'); 
+        $('#cbp_per_kemasan_comp_'+i).attr('placeholder','CBP Per '+typeComp);
+    }
+
+    function get_cbp_per_karton_comp(x){
+        console.log('masuk'+x)
+        $('#cbp_per_karton_comp_'+x).attr('readonly',true);
+        $('#harga_comp_'+x).attr('readonly',true);
+
+        var isi_per_karton_comp  = $('#qty_comp_'+x).val();
+        var cbp_per_kemasan_comp = $('#cbp_per_kemasan_comp_'+x).val();
+        var packing_size_comp  = $('#packing_size_comp_'+x).val();
+
+        if(isi_per_karton_comp != ''){
+            var cbp_per_karton_comp  = isi_per_karton_comp*cbp_per_kemasan_comp;
+            $('#cbp_per_karton_comp_'+x).val(cbp_per_karton_comp.toFixed(0));
+        }
+
+        if(packing_size_comp != ''){
+            var harga_comp  = cbp_per_kemasan_comp/packing_size_comp;
+            $('#harga_comp_'+x).val(harga_comp.toFixed(0));
+        }
+    }
 
     $('#preview-upload-image-field').hide();
 
@@ -431,12 +569,65 @@
                             '<input type="file" class="form-control" name="image_comparison[]" id="image_comparison_'+i+'"/>'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label"><?=lang('packing_size')?><span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input onchange="get_cbp_per_karton_comp('+i+')" type="number" class="form-control input-sm" name="packing_size_comp[]" id="packing_size_comp_'+i+'" placeholder="<?=lang('packing_size')?>" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label"><?=lang('qty_per_ctn')?><span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input onchange="get_cbp_per_karton_comp('+i+')" type="number" class="form-control input-sm" name="qty_comp[]" id="qty_comp_'+i+'" placeholder="<?=lang('qty_per_ctn')?>" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label">Tipe Kemasan<span class="text-danger">*</span></label>'+
+                            '<div class="col-md-7">'+
+                                '<select id="tipe_kemasan_comp_'+i+'" name="tipe_kemasan_comp[]" class="form-control">'+
+                                    '<option value="Pouch">Pouch</option>'+
+                                    '<option value="Botol">Botol</option>'+
+                                    '<option value="Bag">Bag</option>'+
+                                '</select>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label cbp_per_xxx" id="cbp_per_xxx_comp_'+i+'">CBP Per XXX<span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input onchange="get_cbp_per_karton_comp('+i+')" type="number" class="form-control input-sm" name="cbp_per_kemasan_comp[]" id="cbp_per_kemasan_comp_'+i+'" placeholder="CBP Per XXX" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label">CBP Per Karton<span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input type="number" class="form-control input-sm" name="cbp_per_karton_comp[]" id="cbp_per_karton_comp_'+i+'" placeholder="CBP Per Karton" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label">Harga<span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input type="number" class="form-control input-sm" name="harga_comp[]" id="harga_comp_'+i+'" placeholder="Harga" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
                         '</div>'
                     );
 
                     $('#comparison_id_'+i).val(rowComparison[i-1].id);
                     $('#brand_'+i).val(rowComparison[i-1].brand);
                     $('#desc_comparison_'+i).val(rowComparison[i-1].description);
+                    $('#cbp_per_kemasan_comp_'+i).val(rowComparison[i-1].cbp_per_kemasan);
+                    $('#cbp_per_karton_comp_'+i).val(rowComparison[i-1].cbp_per_karton);
+                    $('#harga_comp_'+i).val(rowComparison[i-1].harga);
+                    $('#tipe_kemasan_comp_'+i).val(rowComparison[i-1].tipe_kemasan);
+                    $('#packing_size_comp_'+i).val(rowComparison[i-1].packing_size);
+                    $('#qty_comp_'+i).val(rowComparison[i-1].qty_per_ctn);
+
+                    $('#desc_comparison_'+i).ckeditor();
                 }
 
                 $('.btn_add_comp_edit').show();
@@ -469,6 +660,8 @@
                             '</div>'+
                         '</div>'
                     );
+
+                    $('#desc_comparison_'+z).ckeditor();
                     z++;
                 });
                

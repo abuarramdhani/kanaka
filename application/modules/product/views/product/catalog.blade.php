@@ -83,7 +83,7 @@
                                                     <tr>
                                                         <td valign="top">Tipe Kemasan &nbsp;</td>
                                                         <td valign="top">:&nbsp;</td>
-                                                        <td valign="top"></td>
+                                                        <td valign="top"><?= $c->tipe_kemasan ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td valign="top">Isi Per &nbsp;</td>
@@ -96,19 +96,19 @@
                                                         <td valign="top"><?= $c->qty ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top">CPB/ &nbsp;</td>
+                                                        <td valign="top">CBP/<?= $c->tipe_kemasan ?> &nbsp;</td>
                                                         <td valign="top">:&nbsp;</td>
-                                                        <td valign="top"><?= $c->customer_after_tax_pcs ?></td>
+                                                        <td valign="top"><?= $c->cbp_per_kemasan ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top">CPB/Karton &nbsp;</td>
+                                                        <td valign="top">CBP/Karton &nbsp;</td>
                                                         <td valign="top">:&nbsp;</td>
-                                                        <td valign="top"><?= $c->customer_after_tax_ctn ?></td>
+                                                        <td valign="top"><?= $c->cbp_per_karton ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td valign="top">Harga Per ML &nbsp;</td>
                                                         <td valign="top">:&nbsp;</td>
-                                                        <td valign="top"></td>
+                                                        <td valign="top"><?= $c->harga ?></td>
                                                     </tr>
                                                 </table>
 

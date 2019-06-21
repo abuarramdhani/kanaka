@@ -15,7 +15,8 @@ class Dipos extends MX_Controller {
         $data['add_access'] = $this->user_profile->get_user_access('Created', 'dipo');
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'dipo');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'dipo');
-        
+
+        $data['cities'] = City::where('deleted', 0)->get();        
         $data['zonas'] = Zona::where('deleted', 0)->get();
 
         $this->load->blade('dipo.views.dipo.page', $data);
@@ -30,7 +31,7 @@ class Dipos extends MX_Controller {
             'address',
             'phone',
             'email',
-            'city',
+            'm_city.name as city_name',
             'subdistrict',
             // 'm_zona.name as zona_name',
             'm_dipo_partner.zona_id',
@@ -47,7 +48,7 @@ class Dipos extends MX_Controller {
             'address',
             'phone',
             'email',
-            'city',
+            'city_name',
             'subdistrict',
             // 'zona_name',
             'm_dipo_partner.zona_id',
@@ -62,7 +63,7 @@ class Dipos extends MX_Controller {
         $where = "m_dipo_partner.type = 'dipo' AND m_dipo_partner.deleted = 0";
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
-        // $join[] = array('m_zona', 'm_zona.id = m_dipo_partner.zona_id', 'left');
+        $join[] = array('m_city', 'm_city.id = m_dipo_partner.city', 'left');
         
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
@@ -76,7 +77,7 @@ class Dipos extends MX_Controller {
             $where .= "address LIKE '%" . $sSearch . "%' OR ";
             $where .= "phone LIKE '%" . $sSearch . "%' OR ";
             $where .= "email LIKE '%" . $sSearch . "%' OR ";
-            $where .= "city LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_city.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "subdistrict LIKE '%" . $sSearch . "%' OR ";
             // $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "latitude LIKE '%" . $sSearch . "%' OR ";
@@ -90,7 +91,7 @@ class Dipos extends MX_Controller {
         $this->datatables->set_index('m_dipo_partner.id');
         $this->datatables->config('database_columns', $database_columns);
         $this->datatables->config('from', $from);
-        // $this->datatables->config('join', $join);
+        $this->datatables->config('join', $join);
         $this->datatables->config('where', $where);
         $this->datatables->config('order_by', $order_by);
         $selected_data = $this->datatables->get_select_data();
@@ -113,14 +114,14 @@ class Dipos extends MX_Controller {
             $row_value[] = $row->address;
             $row_value[] = $row->phone;
             $row_value[] = $row->email == "" ? "-" : $row->email;
-            $row_value[] = $row->city;
+            $row_value[] = ucwords(strtolower($row->city_name));
             $row_value[] = $row->subdistrict == "" ? "-" : $row->subdistrict;
             // $row_value[] = $row->zona_name;
             $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
             $row_value[] = $row->latitude == "" ? "-" : $row->latitude;
             $row_value[] = $row->longitude == "" ? "-" : $row->longitude;
             $row_value[] = $row->pic == "" ? "-" : $row->pic;
-            $row_value[] = $row->top == "" ? "-" : $row->top;
+            $row_value[] = $row->top == "" ? "-" : strtoupper($row->top);
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             
@@ -179,13 +180,13 @@ class Dipos extends MX_Controller {
                             'Address' => $address,
                             'Phone' => $phone,
                             'Email' => $email,
-                            'City' => $city,
+                            'City' => ucwords(strtolower(City::find($city)->name)),
                             'Subdistrict' => $subdistrict,
                             'Zona Name' => Zona::find($zona_id)->name,
                             'Latitude' => $latitude,
                             'Longitude' => $longitude,
                             'PIC' => $pic,
-                            'TOP' => $top,
+                            'TOP' => strtoupper($top),
                         );
                         $message = "Add " . lang('dipo') . " " . $name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 6);
@@ -215,13 +216,13 @@ class Dipos extends MX_Controller {
                     'Address' => $model->address,
                     'Phone' => $model->phone,
                     'Email' => $model->email,
-                    'City' => $model->city,
+                    'City' => $model->city == "" ? "-" : ucwords(strtolower(City::find($model->city)->name)),
                     'Subdistrict' => $model->subdistrict,
-                    'Zona Name' => Zona::find($model->zona_id)->name,
+                    'Zona Name' => $model->zona_id == "" ? "-" : Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
                     'PIC' => $model->pic,
-                    'TOP' => $model->top,
+                    'TOP' => strtoupper($model->top),
                 );
 
                 $model->code = $code;
@@ -248,13 +249,13 @@ class Dipos extends MX_Controller {
                         'Address' => $address,
                         'Phone' => $phone,
                         'Email' => $email,
-                        'City' => $city,
+                        'City' => ucwords(strtolower(City::find($city)->name)),
                         'Subdistrict' => $subdistrict,
                         'Zona Name' => Zona::find($zona_id)->name,
                         'Latitude' => $latitude,
                         'Longitude' => $longitude,
                         'PIC' => $pic,
-                        'TOP' => $top,
+                        'TOP' => strtoupper($top),
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
@@ -301,13 +302,13 @@ class Dipos extends MX_Controller {
                     'Address' => $model->address,
                     'Phone' => $model->phone,
                     'Email' => $model->email,
-                    'City' => $model->city,
+                    'City' => $model->city == "" ? "-" : ucwords(strtolower(City::find($model->city)->name)),
                     'Subdistrict' => $model->subdistrict,
-                    'Zona Name' => Zona::find($model->zona_id)->name,
+                    'Zona Name' => $model->zona_id == "" ? "-" : Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
                     'PIC' => $model->pic,
-                    'TOP' => $model->top,
+                    'TOP' => strtoupper($model->top),
                 );
                 $message = "Delete " . lang('dipo') . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 6);
@@ -323,7 +324,7 @@ class Dipos extends MX_Controller {
     }
 
     function pdf(){
-        $data['dipos'] = Dipo::select('m_dipo_partner.*', 'm_zona.name as zona_name')->join('m_zona', 'm_dipo_partner.zona_id', '=' ,'m_zona.id')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['dipos'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
         $data['quote'] = "";
         $html = $this->load->view('dipo/dipo/dipo_pdf', $data, true);
         $this->pdf_generator->generate($html, 'dipo pdf', $orientation='Landscape');
@@ -332,7 +333,7 @@ class Dipos extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=dipo.xls");
-        $data['dipos'] = Dipo::select('m_dipo_partner.*', 'm_zona.name as zona_name')->join('m_zona', 'm_dipo_partner.zona_id', '=' ,'m_zona.id')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['dipos'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
         $data['quote'] = "'";
         $this->load->view('dipo/dipo/dipo_pdf', $data);
     }

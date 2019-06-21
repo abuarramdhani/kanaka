@@ -34,6 +34,8 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="{{ base_url() }}assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
         <link href="{{ base_url() }}assets/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ base_url() }}assets/plugins/bootstrap-toastr/toastr.css" rel="stylesheet" type="text/css" />
+        <link href="{{ base_url() }}assets/plugins/select2/css/select2.css" rel="stylesheet" type="text/css" />
+        <link href="{{ base_url() }}assets/plugins/select2/css/select2-bootstrap.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="{{ base_url() }}assets/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
@@ -173,7 +175,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
-                                        
+
                         <div class="form-group form-md-line-input dipo_field">
                             <label class="col-lg-4 control-label"><?=lang('dipo')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
@@ -189,7 +191,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
+                                <input type="text" class="form-control input-sm" name="name" id="name_customer" placeholder="<?=lang('name')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -205,7 +207,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('fax')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm number" name="fax" id="fax" placeholder="<?=lang('fax')?>" maxlength="20" />
+                                <input type="text" class="form-control input-sm number" name="fax" id="fax_customer" placeholder="<?=lang('fax')?>" maxlength="20" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -221,7 +223,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('shipping_address')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="address" id="address" placeholder="<?=lang('shipping_address')?>" maxlength="150" />
+                                <input type="text" class="form-control input-sm" name="address" id="address_customer" placeholder="<?=lang('shipping_address')?>" maxlength="150" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -237,7 +239,12 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('city')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="city" id="city" placeholder="<?=lang('city')?>" maxlength="50" />
+                                <select class="form-control input-sm select2" name="city" id="city" style="width: 100%;">
+                                    <option value=""><?= lang('select_your_option') ?></option>
+                                    @foreach($cities as $city)
+                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    @endforeach
+                                </select>
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -245,7 +252,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('postal_code')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm number" name="postal_code" id="postal_code" placeholder="<?=lang('postal_code')?>" maxlength="5" />
+                                <input type="text" class="form-control input-sm number" name="postal_code" id="postal_code_customer" placeholder="<?=lang('postal_code')?>" maxlength="5" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -253,7 +260,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('latitude')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="latitude" id="latitude" placeholder="<?=lang('latitude')?>" maxlength="30" />
+                                <input type="text" class="form-control input-sm" name="latitude" id="latitude_customer" placeholder="<?=lang('latitude')?>" maxlength="30" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -261,7 +268,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('longitude')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="longitude" id="longitude" placeholder="<?=lang('longitude')?>" maxlength="30" />
+                                <input type="text" class="form-control input-sm" name="longitude" id="longitude_customer" placeholder="<?=lang('longitude')?>" maxlength="30" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -282,7 +289,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('taxable')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <select class="form-control input-sm" name="taxable" id="taxable" style="width: 100%;">
+                                <select class="form-control input-sm" name="taxable" id="taxable_customer" style="width: 100%;">
                                     <option value=""><?= lang('select_your_option') ?></option>
                                     <option value="0"><?= lang('no') ?></option>
                                     <option value="1"><?= lang('yes') ?></option>
@@ -298,7 +305,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('npwp')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm number" name="npwp" id="npwp" placeholder="<?=lang('npwp')?>" maxlength="15" />
+                                <input type="text" class="form-control input-sm number" name="npwp" id="npwp_customer" placeholder="<?=lang('npwp')?>" maxlength="15" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -306,7 +313,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('name')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="tax_name" id="tax_name" placeholder="<?=lang('name')?>" maxlength="50" />
+                                <input type="text" class="form-control input-sm" name="tax_name" id="tax_name_customer" placeholder="<?=lang('name')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -322,7 +329,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('payment_method')?></label>
                             <div class="col-lg-7">
-                                <select class="form-control input-sm" name="tax_payment_method" id="tax_payment_method" style="width: 100%;">
+                                <select class="form-control input-sm" name="tax_payment_method" id="tax_payment_method_customer" style="width: 100%;">
                                     <option value=""><?= lang('select_your_option') ?></option>
                                     <option value="cash"><?= lang('cash') ?></option>
                                     <option value="credit"><?= lang('credit') ?></option>
@@ -333,9 +340,9 @@ License: You must have a valid license purchased only from themeforest(the above
                         </div>
 
                         <div class="form-group form-md-line-input">
-                            <label class="col-lg-4 control-label"><?=lang('payment_time')?></label>
+                            <label class="col-lg-4 control-label"><?=lang('payment_time')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <select class="form-control input-sm" name="top" id="top" style="width: 100%;">
+                                <select class="form-control input-sm" name="top" id="top_customer" style="width: 100%;">
                                     <option value=""><?= lang('select_your_option') ?></option>
                                     <option value="cbd"><?= lang('cbd') ?></option>
                                     <option value="cod"><?= lang('cod') ?></option>
@@ -354,7 +361,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('credit_ceiling')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="tax_credit_ceiling" id="tax_credit_ceiling" placeholder="<?=lang('credit_ceiling')?>" maxlength="50" />
+                                <input type="text" class="form-control input-sm" name="tax_credit_ceiling" id="tax_credit_ceiling_customer" placeholder="<?=lang('credit_ceiling')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -366,7 +373,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('account_number')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm number" name="account_number" id="account_number" placeholder="<?=lang('account_number')?>" maxlength="25" />
+                                <input type="text" class="form-control input-sm number" name="account_number" id="account_number_customer" placeholder="<?=lang('account_number')?>" maxlength="25" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -374,7 +381,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('account_name')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="account_name" id="account_name" placeholder="<?=lang('account_name')?>" maxlength="50" />
+                                <input type="text" class="form-control input-sm" name="account_name" id="account_name_customer" placeholder="<?=lang('account_name')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -382,7 +389,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('bank_name')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="bank_name" id="bank_name" placeholder="<?=lang('bank_name')?>" maxlength="50" />
+                                <input type="text" class="form-control input-sm" name="bank_name" id="bank_name_customer" placeholder="<?=lang('bank_name')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -390,7 +397,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('bank_code')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm number" name="bank_code" id="bank_code" placeholder="<?=lang('bank_code')?>" maxlength="3" />
+                                <input type="text" class="form-control input-sm number" name="bank_code" id="bank_code_customer" placeholder="<?=lang('bank_code')?>" maxlength="3" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -398,7 +405,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('account_address')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="account_address" id="account_address" placeholder="<?=lang('account_address')?>" maxlength="150" />
+                                <input type="text" class="form-control input-sm" name="account_address" id="account_address_customer" placeholder="<?=lang('account_address')?>" maxlength="150" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -432,7 +439,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="btnSave" class="btn btn-primary">{{ lang('save') }}</button>
+                    <button type="submit" id="btnSaveCustomer" class="btn btn-primary">{{ lang('save') }}</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">{{ lang('close') }}</button>
                 </div>
                 {{ form_close() }}
@@ -453,7 +460,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="code" id="code" placeholder="<?=lang('code')?>" maxlength="10" />
+                                <input type="text" class="form-control input-sm" name="code" id="code_principal" placeholder="<?=lang('code')?>" maxlength="10" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -461,7 +468,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
+                                <input type="text" class="form-control input-sm" name="name" id="name_principal" placeholder="<?=lang('name')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -477,13 +484,13 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('fax')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm number" name="fax" id="fax" placeholder="<?=lang('fax')?>" maxlength="20" />
+                                <input type="text" class="form-control input-sm number" name="fax" id="fax_principal" placeholder="<?=lang('fax')?>" maxlength="20" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
                         
                         <div class="form-group form-md-line-input">
-                            <label class="col-lg-4 control-label"><?=lang('email')?></label>
+                            <label class="col-lg-4 control-label"><?=lang('email')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
                                 <input type="email" class="form-control input-sm" name="email_office" id="email_office" placeholder="<?=lang('email')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
@@ -493,7 +500,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('address')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="address" id="address" placeholder="<?=lang('shipping_address')?>" maxlength="150" />
+                                <input type="text" class="form-control input-sm" name="address" id="address_principal" placeholder="<?=lang('shipping_address')?>" maxlength="150" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -501,7 +508,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('postal_code')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm number" name="postal_code" id="postal_code" placeholder="<?=lang('postal_code')?>" maxlength="5" />
+                                <input type="text" class="form-control input-sm number" name="postal_code" id="postal_code_principal" placeholder="<?=lang('postal_code')?>" maxlength="5" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -509,7 +516,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('latitude')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="latitude" id="latitude" placeholder="<?=lang('latitude')?>" maxlength="30" />
+                                <input type="text" class="form-control input-sm" name="latitude" id="latitude_principal" placeholder="<?=lang('latitude')?>" maxlength="30" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -517,7 +524,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('longitude')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="longitude" id="longitude" placeholder="<?=lang('longitude')?>" maxlength="30" />
+                                <input type="text" class="form-control input-sm" name="longitude" id="longitude_principal" placeholder="<?=lang('longitude')?>" maxlength="30" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -579,7 +586,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('taxable')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <select class="form-control input-sm" name="taxable" id="taxable" style="width: 100%;">
+                                <select class="form-control input-sm" name="taxable" id="taxable_principal" style="width: 100%;">
                                     <option value=""><?= lang('select_your_option') ?></option>
                                     <option value="0"><?= lang('no') ?></option>
                                     <option value="1"><?= lang('yes') ?></option>
@@ -591,7 +598,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('npwp')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm number" name="npwp" id="npwp" placeholder="<?=lang('npwp')?>" maxlength="15" />
+                                <input type="text" class="form-control input-sm number" name="npwp" id="npwp_principal" placeholder="<?=lang('npwp')?>" maxlength="15" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -599,7 +606,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('name')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="tax_name" id="tax_name" placeholder="<?=lang('name')?>" maxlength="50" />
+                                <input type="text" class="form-control input-sm" name="tax_name" id="tax_name_principal" placeholder="<?=lang('name')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -647,7 +654,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('payment_method')?></label>
                             <div class="col-lg-7">
-                                <select class="form-control input-sm" name="tax_payment_method" id="tax_payment_method" style="width: 100%;">
+                                <select class="form-control input-sm" name="tax_payment_method" id="tax_payment_method_principal" style="width: 100%;">
                                     <option value=""><?= lang('select_your_option') ?></option>
                                     <option value="cash"><?= lang('cash') ?></option>
                                     <option value="credit"><?= lang('credit') ?></option>
@@ -658,9 +665,9 @@ License: You must have a valid license purchased only from themeforest(the above
                         </div>
 
                         <div class="form-group form-md-line-input">
-                            <label class="col-lg-4 control-label"><?=lang('payment_time')?></label>
+                            <label class="col-lg-4 control-label"><?=lang('payment_time')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <select class="form-control input-sm" name="top" id="top" style="width: 100%;">
+                                <select class="form-control input-sm" name="top" id="top_principal" style="width: 100%;">
                                     <option value=""><?= lang('select_your_option') ?></option>
                                     <option value="cbd"><?= lang('cbd') ?></option>
                                     <option value="cod"><?= lang('cod') ?></option>
@@ -679,7 +686,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('credit_ceiling')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="tax_credit_ceiling" id="tax_credit_ceiling" placeholder="<?=lang('credit_ceiling')?>" maxlength="50" />
+                                <input type="text" class="form-control input-sm" name="tax_credit_ceiling" id="tax_credit_ceiling_principal" placeholder="<?=lang('credit_ceiling')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -691,7 +698,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('account_number')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm number" name="account_number" id="account_number" placeholder="<?=lang('account_number')?>" maxlength="25" />
+                                <input type="text" class="form-control input-sm number" name="account_number" id="account_number_principal" placeholder="<?=lang('account_number')?>" maxlength="25" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -699,7 +706,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('account_name')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="account_name" id="account_name" placeholder="<?=lang('account_name')?>" maxlength="50" />
+                                <input type="text" class="form-control input-sm" name="account_name" id="account_name_principal" placeholder="<?=lang('account_name')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -707,7 +714,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('bank_name')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="bank_name" id="bank_name" placeholder="<?=lang('bank_name')?>" maxlength="50" />
+                                <input type="text" class="form-control input-sm" name="bank_name" id="bank_name_principal" placeholder="<?=lang('bank_name')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -715,7 +722,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('bank_code')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm number" name="bank_code" id="bank_code" placeholder="<?=lang('bank_code')?>" maxlength="3" />
+                                <input type="text" class="form-control input-sm number" name="bank_code" id="bank_code_principal" placeholder="<?=lang('bank_code')?>" maxlength="3" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -723,7 +730,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('account_address')?></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="account_address" id="account_address" placeholder="<?=lang('account_address')?>" maxlength="150" />
+                                <input type="text" class="form-control input-sm" name="account_address" id="account_address_principal" placeholder="<?=lang('account_address')?>" maxlength="150" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -731,7 +738,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
+                    <button type="submit" id="btnSavePrincipal"  class="btn btn-primary">{{ lang('save') }}</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">{{ lang('close') }}</button>
                 </div>
                 {{ form_close() }}
@@ -807,6 +814,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     postal_code: "required",
                     purchase_price_type: "required",
                     taxable: "required",
+                    top: "required",
                 },
                 messages: {
                     username_customer: "{{lang('username')}}" + " {{lang('not_empty')}}",
@@ -821,6 +829,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     postal_code: "{{lang('postal_code')}}" + " {{lang('not_empty')}}",
                     purchase_price_type: "{{lang('purchase_price_type')}}" + " {{lang('not_empty')}}",
                     taxable: "{{lang('taxable')}}" + " {{lang('not_empty')}}",
+                    top: "{{lang('payment_time')}}" + " {{lang('not_empty')}}",
                 },
                 submitHandler : function(form){
                     App.blockUI({
@@ -887,6 +896,15 @@ License: You must have a valid license purchased only from themeforest(the above
                 $('#modal_form_principal').modal('show'); 
                 $('.modal-title').text('<?=lang('new_principle')?>'); 
             }
+            
+            $('#code_principal').change(function(){
+                $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_principal').val(), type: 'principal'}, function(json, textStatus) {
+                    if(json.status == "error"){
+                        toastr.error(json.message,'{{ lang("notification") }}');
+                    }
+                    App.unblockUI('#form-wrapper');
+                });
+            });
 
             // Pengaturan Form Validation Principal
             var form_validator = $("#form-principal").validate({
@@ -896,27 +914,23 @@ License: You must have a valid license purchased only from themeforest(the above
                 errorElement: "span",
                 rules: {
                     code: "required",
-                    type: "required",
                     name: "required",
-                    phone: "required",
+                    phone_office: "required",
+                    email_office: "required",
                     address: "required",
-                    billing_address: "required",
-                    city: "required",
                     postal_code: "required",
-                    purchase_price_type: "required",
                     taxable: "required",
+                    top: "required",
                 },
                 messages: {
                     code: "{{lang('code')}}" + " {{lang('not_empty')}}",
-                    type: "{{lang('cooperation_system')}}" + " {{lang('not_empty')}}",
                     name: "{{lang('name')}}" + " {{lang('not_empty')}}",
-                    phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
+                    phone_office: "{{lang('phone')}}" + " {{lang('not_empty')}}",
+                    email_office: "{{lang('email')}}" + " {{lang('not_empty')}}",
                     address: "{{lang('address')}}" + " {{lang('not_empty')}}",
-                    billing_address: "{{lang('billing_address')}}" + " {{lang('not_empty')}}",
-                    city: "{{lang('city')}}" + " {{lang('not_empty')}}",
                     postal_code: "{{lang('postal_code')}}" + " {{lang('not_empty')}}",
-                    purchase_price_type: "{{lang('purchase_price_type')}}" + " {{lang('not_empty')}}",
                     taxable: "{{lang('taxable')}}" + " {{lang('not_empty')}}",
+                    top: "{{lang('payment_time')}}" + " {{lang('not_empty')}}",
                 },
                 submitHandler : function(form){
                     App.blockUI({
@@ -925,7 +939,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     $(form).ajaxSubmit({  
                         beforeSubmit:  showRequest,  
                         success:       showResponse,
-                        url:       '{{ base_url() . "register-customer" }}',
+                        url:       '{{ base_url() . "register-principal" }}',
                         type:      'POST',       
                         clearForm: true ,       
                         resetForm: true ,  

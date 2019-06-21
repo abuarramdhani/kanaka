@@ -56,13 +56,13 @@
 					<td><?= $dipo->address ?></td>
 					<td><?= $quote.$dipo->phone ?></td>
 					<td><?= $dipo->email ?></td>
-					<td><?= $dipo->city ?></td>
+					<td><?= $dipo->city == "" ? "-" : ucwords(strtolower(City::find($dipo->city)->name)) ?></td>
 					<td><?= $dipo->subdistrict ?></td>
-					<td><?= $dipo->zona_name ?></td>
+					<td><?= $dipo->zona_id == "" ? "-" : Zona::find($dipo->zona_id)->name ?></td>
 					<td><?= $dipo->latitude ?></td>
 					<td><?= $dipo->longitude ?></td>
 					<td><?= $dipo->pic ?></td>
-					<td><?= $dipo->top ?></td>
+					<td><?= strtoupper($dipo->top) ?></td>
 					<td><?= date('d-m-Y',strtotime($dipo->date_created)) ?></td>
 				</tr>
 			<?php 

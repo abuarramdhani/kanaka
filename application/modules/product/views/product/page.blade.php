@@ -206,8 +206,8 @@
         </table>
 
         <div class="form-group form-md-line-input">
-            <fieldset id="product_comparation">
-                <legend class="text-center"><?=lang('product_comparation')?></legend>
+            <fieldset id="product_comparison">
+                <legend class="text-center"><?=lang('product_comparison')?></legend>
                 <div class="form-group form-md-line-input">
                     <div class="col-md-12">
                         <button type="button" class="btn_add_comp"><i class="fa fa-plus"></i>Add Product</button>
@@ -240,12 +240,12 @@
     $('.btn_add_comp_edit').hide();
     $('.btn_add_comp').click(function(){
         // if(i <= 4){
-            $("fieldset#product_comparation").append(
-                '<div class="comparation_title"><b>Product '+i+'</b></div>'+
+            $("fieldset#product_comparison").append(
+                '<div class="comparison_title"><b>Product '+i+'</b></div>'+
                 '<div class="form-group form-md-line-input">'+
                     '<label class="col-lg-4 control-label"><?=lang('brand')?><span class="text-danger">*</span></label>'+
                     '<div class="col-lg-7">'+
-                        '<input type="hidden" class="form-control input-sm" name="comparation_id[]" id="comparation_id_'+i+'"/>'+
+                        '<input type="hidden" class="form-control input-sm" name="comparison_id[]" id="comparison_id_'+i+'"/>'+
                         '<input required type="text" class="form-control input-sm" name="brand[]" id="brand_'+i+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
                         '<div class="form-control-focus"> </div>'+
                     '</div>'+
@@ -253,18 +253,20 @@
                 '<div class="form-group form-md-line-input">'+
                     '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
                     '<div class="col-lg-7">'+
-                        '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
+                        '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparison[]" id="desc_comparison_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
                         '<div class="form-control-focus"> </div>'+
                     '</div>'+
                 '</div>'+
                 '<div class="form-group form-md-line-input">'+
                     '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
                     '<div class="col-lg-7">'+
-                    '<input required type="file" class="form-control" name="image_comparation[]" id="image_comparation_'+i+'"/>'+
+                    '<input required type="file" class="form-control" name="image_comparison[]" id="image_comparison_'+i+'"/>'+
                         '<div class="form-control-focus"> </div>'+
                     '</div>'+
                 '</div>'
             );
+
+            $('#desc_comparison_'+i).ckeditor();
             i++;
         // }
 
@@ -382,8 +384,8 @@
                 var i;
                 var html = "";
 
-                var rowComparation = json.dataComparation;
-                var dataLength = rowComparation.length;
+                var rowComparison = json.dataComparison;
+                var dataLength = rowComparison.length;
 
                 $('[name="id"]').val(row.id);
                 $('[name="product_code"]').val(row.product_code);
@@ -406,12 +408,12 @@
                 }
 
                 for(i=1; i<=dataLength; i++){
-                    $("fieldset#product_comparation").append(
-                        '<div class="comparation_title"><b>Product '+i+'</b></div>'+
+                    $("fieldset#product_comparison").append(
+                        '<div class="comparison_title"><b>Product '+i+'</b></div>'+
                         '<div class="form-group form-md-line-input">'+
                             '<label class="col-lg-4 control-label"><?=lang('brand')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                                '<input type="hidden" class="form-control input-sm" name="comparation_id[]" id="comparation_id_'+i+'"/>'+
+                                '<input type="hidden" class="form-control input-sm" name="comparison_id[]" id="comparison_id_'+i+'"/>'+
                                 '<input required type="text" class="form-control input-sm" name="brand[]" id="brand_'+i+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
@@ -419,22 +421,22 @@
                         '<div class="form-group form-md-line-input">'+
                             '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                                '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
+                                '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparison[]" id="desc_comparison_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'+
                         '<div class="form-group form-md-line-input">'+
                             '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                            '<input type="file" class="form-control" name="image_comparation[]" id="image_comparation_'+i+'"/>'+
+                            '<input type="file" class="form-control" name="image_comparison[]" id="image_comparison_'+i+'"/>'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'
                     );
 
-                    $('#comparation_id_'+i).val(rowComparation[i-1].id);
-                    $('#brand_'+i).val(rowComparation[i-1].brand);
-                    $('#desc_comparation_'+i).val(rowComparation[i-1].description);
+                    $('#comparison_id_'+i).val(rowComparison[i-1].id);
+                    $('#brand_'+i).val(rowComparison[i-1].brand);
+                    $('#desc_comparison_'+i).val(rowComparison[i-1].description);
                 }
 
                 $('.btn_add_comp_edit').show();
@@ -442,12 +444,12 @@
                 var z = dataLength+1;
 
                 $('.btn_add_comp_edit').click(function(){
-                    $("fieldset#product_comparation").append(
-                        '<div class="comparation_title"><b>Product '+z+'</b></div>'+
+                    $("fieldset#product_comparison").append(
+                        '<div class="comparison_title"><b>Product '+z+'</b></div>'+
                         '<div class="form-group form-md-line-input">'+
                             '<label class="col-lg-4 control-label"><?=lang('brand')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                                '<input type="hidden" class="form-control input-sm" name="comparation_id[]" id="comparation_id_'+z+'"/>'+
+                                '<input type="hidden" class="form-control input-sm" name="comparison_id[]" id="comparison_id_'+z+'"/>'+
                                 '<input required type="text" class="form-control input-sm" name="brand[]" id="brand_'+z+'" placeholder="<?=lang('brand')?>" maxlength="50" />'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
@@ -455,14 +457,14 @@
                         '<div class="form-group form-md-line-input">'+
                             '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                                '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparation[]" id="desc_comparation_'+z+'" placeholder="<?=lang('description')?>"></textarea>'+
+                                '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparison[]" id="desc_comparison_'+z+'" placeholder="<?=lang('description')?>"></textarea>'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'+
                         '<div class="form-group form-md-line-input">'+
                             '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                            '<input required type="file" class="form-control" name="image_comparation[]" id="image_comparation_'+z+'"/>'+
+                            '<input required type="file" class="form-control" name="image_comparison[]" id="image_comparison_'+z+'"/>'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'

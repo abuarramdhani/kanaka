@@ -235,5 +235,5 @@ $route['reports/jurnal/excel'] = 'jurnal/jurnals/excel';
 $route['catalogproduct'] = 'product/products/catalog';
 $route['catalogproduct/salestalk'] = 'product/products/salestalk';
 $route['catalogproduct/price'] = 'product/products/price';
-$route['catalogproduct/comparation'] = 'product/products/comparation';
+$route['catalogproduct/comparison'] = 'product/products/comparison';
 $route['catalogproduct/buildingblock'] = 'product/products/buildingblock';

@@ -200,14 +200,14 @@ class Products extends MX_Controller {
                     if(!empty($this->input->post('brand'))){
                         $productCount = count($this->input->post('brand'));
                         for($i = 0; $i < $productCount; $i++){ 
-                            if(!empty($_FILES['image_comparation']['name'])){
-                                $_FILES['image']['name']      = $_FILES['image_comparation']['name'][$i]; 
-                                $_FILES['image']['type']      = $_FILES['image_comparation']['type'][$i]; 
-                                $_FILES['image']['tmp_name']  = $_FILES['image_comparation']['tmp_name'][$i]; 
-                                $_FILES['image']['error']     = $_FILES['image_comparation']['error'][$i]; 
-                                $_FILES['image']['size']      = $_FILES['image_comparation']['size'][$i]; 
+                            if(!empty($_FILES['image_comparison']['name'])){
+                                $_FILES['image']['name']      = $_FILES['image_comparison']['name'][$i]; 
+                                $_FILES['image']['type']      = $_FILES['image_comparison']['type'][$i]; 
+                                $_FILES['image']['tmp_name']  = $_FILES['image_comparison']['tmp_name'][$i]; 
+                                $_FILES['image']['error']     = $_FILES['image_comparison']['error'][$i]; 
+                                $_FILES['image']['size']      = $_FILES['image_comparison']['size'][$i]; 
                                 
-                                $uploadPath = 'uploads/images/comparation/'; 
+                                $uploadPath = 'uploads/images/comparison/'; 
                                 $config['upload_path'] = $uploadPath; 
                                 $config['allowed_types'] = 'gif|jpg|png'; 
     
@@ -220,23 +220,23 @@ class Products extends MX_Controller {
                                     $fileDataComp                       = $this->upload->data();
                                     $uploadDataComp[$i]['file_name']    = $fileDataComp['file_name'];
                                 
-                                    $dataComparation = array('product_id'        => $id_product,
+                                    $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
-                                                        'description'            => $this->input->post('desc_comparation')[$i],
+                                                        'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => $uploadDataComp[$i]['file_name'],
                                                         'date_created'           => date('Y-m-d'),
                                                         'time_created'           => date('H:i:s'),
                                                         'user_created'           => $user->id);
-                                    $saveComparation = $this->db->insert('m_product_comparation', $dataComparation);
+                                    $saveComparison = $this->db->insert('m_product_comparison', $dataComparison);
                                 }else{
-                                    $dataComparation = array('product_id'        => $id_product,
+                                    $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
-                                                        'description'            => $this->input->post('desc_comparation')[$i],
+                                                        'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => 'default.jpg',
                                                         'date_created'           => date('Y-m-d'),
                                                         'time_created'           => date('H:i:s'),
                                                         'user_created'           => $user->id);
-                                    $saveComparation = $this->db->insert('m_product_comparation', $dataComparation);
+                                    $saveComparison = $this->db->insert('m_product_comparison', $dataComparison);
                                 }   
                             }
                         }
@@ -401,16 +401,16 @@ class Products extends MX_Controller {
                 if(!empty($this->input->post('brand'))){
                     $productCount = count($this->input->post('brand'));
                     for($i = 0; $i < $productCount; $i++){ 
-                        $get_comparation = ProductComparation::where('id' , $this->input->post('comparation_id')[$i])->where('deleted', 0)->first();
-                        if (empty($get_comparation)) {
-                            if(!empty($_FILES['image_comparation']['name'][$i])){
-                                $_FILES['image']['name']      = $_FILES['image_comparation']['name'][$i]; 
-                                $_FILES['image']['type']      = $_FILES['image_comparation']['type'][$i]; 
-                                $_FILES['image']['tmp_name']  = $_FILES['image_comparation']['tmp_name'][$i]; 
-                                $_FILES['image']['error']     = $_FILES['image_comparation']['error'][$i]; 
-                                $_FILES['image']['size']      = $_FILES['image_comparation']['size'][$i]; 
+                        $get_comparison = ProductComparison::where('id' , $this->input->post('comparison_id')[$i])->where('deleted', 0)->first();
+                        if (empty($get_comparison)) {
+                            if(!empty($_FILES['image_comparison']['name'][$i])){
+                                $_FILES['image']['name']      = $_FILES['image_comparison']['name'][$i]; 
+                                $_FILES['image']['type']      = $_FILES['image_comparison']['type'][$i]; 
+                                $_FILES['image']['tmp_name']  = $_FILES['image_comparison']['tmp_name'][$i]; 
+                                $_FILES['image']['error']     = $_FILES['image_comparison']['error'][$i]; 
+                                $_FILES['image']['size']      = $_FILES['image_comparison']['size'][$i]; 
                                 
-                                $uploadPath = 'uploads/images/comparation/'; 
+                                $uploadPath = 'uploads/images/comparison/'; 
                                 $config['upload_path'] = $uploadPath; 
                                 $config['allowed_types'] = 'gif|jpg|png'; 
     
@@ -423,43 +423,43 @@ class Products extends MX_Controller {
                                     $fileDataComp                       = $this->upload->data();
                                     $uploadDataComp[$i]['file_name']    = $fileDataComp['file_name'];
                                 
-                                    $dataComparation = array('product_id'        => $id_product,
+                                    $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
-                                                        'description'            => $this->input->post('desc_comparation')[$i],
+                                                        'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => $uploadDataComp[$i]['file_name'],
                                                         'date_created'           => date('Y-m-d'),
                                                         'time_created'           => date('H:i:s'),
                                                         'user_created'           => $user->id);
-                                    $saveComparation = $this->db->insert('m_product_comparation', $dataComparation);
+                                    $saveComparison = $this->db->insert('m_product_comparison', $dataComparison);
                                 }else{
-                                    $dataComparation = array('product_id'        => $id_product,
+                                    $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
-                                                        'description'            => $this->input->post('desc_comparation')[$i],
+                                                        'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => 'default.jpg',
                                                         'date_created'           => date('Y-m-d'),
                                                         'time_created'           => date('H:i:s'),
                                                         'user_created'           => $user->id);
-                                    $saveComparation = $this->db->insert('m_product_comparation', $dataComparation);
+                                    $saveComparison = $this->db->insert('m_product_comparison', $dataComparison);
                                 }   
                             }else{
-                                $dataComparation = array('product_id'        => $id_product,
+                                $dataComparison = array('product_id'        => $id_product,
                                                     'brand'                  => $this->input->post('brand')[$i],
-                                                    'description'            => $this->input->post('desc_comparation')[$i],
+                                                    'description'            => $this->input->post('desc_comparison')[$i],
                                                     'image'                  => 'default.jpg',
                                                     'date_created'           => date('Y-m-d'),
                                                     'time_created'           => date('H:i:s'),
                                                     'user_created'           => $user->id);
-                                $saveComparation = $this->db->insert('m_product_comparation', $dataComparation);
+                                $saveComparison = $this->db->insert('m_product_comparison', $dataComparison);
                             }
                         }else{
-                            if(!empty($_FILES['image_comparation']['name'][$i])){
-                                $_FILES['image']['name']      = $_FILES['image_comparation']['name'][$i]; 
-                                $_FILES['image']['type']      = $_FILES['image_comparation']['type'][$i]; 
-                                $_FILES['image']['tmp_name']  = $_FILES['image_comparation']['tmp_name'][$i]; 
-                                $_FILES['image']['error']     = $_FILES['image_comparation']['error'][$i]; 
-                                $_FILES['image']['size']      = $_FILES['image_comparation']['size'][$i]; 
+                            if(!empty($_FILES['image_comparison']['name'][$i])){
+                                $_FILES['image']['name']      = $_FILES['image_comparison']['name'][$i]; 
+                                $_FILES['image']['type']      = $_FILES['image_comparison']['type'][$i]; 
+                                $_FILES['image']['tmp_name']  = $_FILES['image_comparison']['tmp_name'][$i]; 
+                                $_FILES['image']['error']     = $_FILES['image_comparison']['error'][$i]; 
+                                $_FILES['image']['size']      = $_FILES['image_comparison']['size'][$i]; 
                                 
-                                $uploadPath = 'uploads/images/comparation/'; 
+                                $uploadPath = 'uploads/images/comparison/'; 
                                 $config['upload_path'] = $uploadPath; 
                                 $config['allowed_types'] = 'gif|jpg|png'; 
     
@@ -472,36 +472,36 @@ class Products extends MX_Controller {
                                     $fileDataComp                       = $this->upload->data();
                                     $uploadDataComp[$i]['file_name']    = $fileDataComp['file_name'];
                                 
-                                    $model_comparation                  = ProductComparation::find($this->input->post('comparation_id')[$i]);
-                                    $model_comparation->brand           = $this->input->post('brand')[$i];
-                                    $model_comparation->description     = $this->input->post('desc_comparation')[$i];
-                                    $model_comparation->image           = $uploadDataComp[$i]['file_name'];
+                                    $model_comparison                  = ProductComparison::find($this->input->post('comparison_id')[$i]);
+                                    $model_comparison->brand           = $this->input->post('brand')[$i];
+                                    $model_comparison->description     = $this->input->post('desc_comparison')[$i];
+                                    $model_comparison->image           = $uploadDataComp[$i]['file_name'];
         
-                                    $model_comparation->user_modified = $user->id;
-                                    $model_comparation->date_modified = date('Y-m-d');
-                                    $model_comparation->time_modified = date('H:i:s');
-                                    $updateDetail = $model_comparation->save();
+                                    $model_comparison->user_modified = $user->id;
+                                    $model_comparison->date_modified = date('Y-m-d');
+                                    $model_comparison->time_modified = date('H:i:s');
+                                    $updateDetail = $model_comparison->save();
                                 }else{
-                                    $model_comparation                  = ProductComparation::find($this->input->post('comparation_id')[$i]);
-                                    $model_comparation->brand           = $this->input->post('brand')[$i];
-                                    $model_comparation->description     = $this->input->post('desc_comparation')[$i];
-                                    $model_comparation->image           = $model_comparation->image;
+                                    $model_comparison                  = ProductComparison::find($this->input->post('comparison_id')[$i]);
+                                    $model_comparison->brand           = $this->input->post('brand')[$i];
+                                    $model_comparison->description     = $this->input->post('desc_comparison')[$i];
+                                    $model_comparison->image           = $model_comparison->image;
         
-                                    $model_comparation->user_modified = $user->id;
-                                    $model_comparation->date_modified = date('Y-m-d');
-                                    $model_comparation->time_modified = date('H:i:s');
-                                    $updateDetail = $model_comparation->save();
+                                    $model_comparison->user_modified = $user->id;
+                                    $model_comparison->date_modified = date('Y-m-d');
+                                    $model_comparison->time_modified = date('H:i:s');
+                                    $updateDetail = $model_comparison->save();
                                 }   
                             }else{
-                                $model_comparation                  = ProductComparation::find($this->input->post('comparation_id')[$i]);
-                                $model_comparation->brand           = $this->input->post('brand')[$i];
-                                $model_comparation->description     = $this->input->post('desc_comparation')[$i];
-                                $model_comparation->image           = $model_comparation->image;
+                                $model_comparison                  = ProductComparison::find($this->input->post('comparison_id')[$i]);
+                                $model_comparison->brand           = $this->input->post('brand')[$i];
+                                $model_comparison->description     = $this->input->post('desc_comparison')[$i];
+                                $model_comparison->image           = $model_comparison->image;
     
-                                $model_comparation->user_modified = $user->id;
-                                $model_comparation->date_modified = date('Y-m-d');
-                                $model_comparation->time_modified = date('H:i:s');
-                                $updateDetail = $model_comparation->save();
+                                $model_comparison->user_modified = $user->id;
+                                $model_comparison->date_modified = date('Y-m-d');
+                                $model_comparison->time_modified = date('H:i:s');
+                                $updateDetail = $model_comparison->save();
                             }
                         }
                     }
@@ -543,12 +543,12 @@ class Products extends MX_Controller {
     public function view() {
         if ($this->input->is_ajax_request()) {
             $id = (int) uri_decrypt($this->input->get('id'));
-            $dataComparation = ProductComparation::select('m_product_comparation.*')
-                                                    ->join('m_product', 'm_product.id', '=', 'm_product_comparation.product_id')
-                                                    ->where('m_product_comparation.product_id', $id)
-                                                    ->where('m_product_comparation.deleted', 0)
+            $dataComparison = ProductComparison::select('m_product_comparison.*')
+                                                    ->join('m_product', 'm_product.id', '=', 'm_product_comparison.product_id')
+                                                    ->where('m_product_comparison.product_id', $id)
+                                                    ->where('m_product_comparison.deleted', 0)
                                                     ->where('m_product.deleted', 0)->get();
-            $model = array('status' => 'success', 'data' => Product::find($id), 'image' => ProductImage::where('product_id', $id)->where('deleted', '0')->get(), 'dataComparation' => $dataComparation);
+            $model = array('status' => 'success', 'data' => Product::find($id), 'image' => ProductImage::where('product_id', $id)->where('deleted', '0')->get(), 'dataComparison' => $dataComparison);
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }
@@ -654,5 +654,16 @@ class Products extends MX_Controller {
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');
         $data['product'] = Product::where('m_product.id', $id)->where('m_product.deleted', '0')->get();
         $this->load->blade('product.views.product.sales_talk', $data);
+    }
+
+    function comparison(){
+        $id = $this->input->get('id');
+
+        $data['add_access'] = $this->user_profile->get_user_access('Created', 'product');
+        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
+        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');
+        $data['product'] = Product::where('m_product.id', $id)->where('m_product.deleted', '0')->get();
+        $data['comparisons'] = ProductComparison::where('product_id', $id)->where('deleted', '0')->get();
+        $this->load->blade('product.views.product.comparison', $data);
     }
 }

@@ -1,6 +1,6 @@
 @extends('default.views.layouts.default')
 
-@section('title') {{lang('product')}} @stop
+@section('title') {{lang('sales_talk')}} @stop
 
 @section('body')
 <style type="text/css">
@@ -16,6 +16,10 @@
         <ul class="page-breadcrumb">
             <li>
                 <a href="{{ base_url() }}">{{ lang('dashboard') }}</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <a href="{{ base_url() }}catalogproduct">{{ lang('catalog_product') }}</a>
                 <i class="fa fa-circle"></i>
             </li>
             <li>

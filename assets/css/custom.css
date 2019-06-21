@@ -166,7 +166,7 @@ li.product-item {
 }
 
 .catalog-item .product-image {
-    padding: 5% 17.5%;
+    padding: 5% 10%;
 }
 
 .action-button-catalog a.btn.btn-sm.btn-primary {
@@ -229,5 +229,13 @@ li.product-item {
     position: absolute;
     top: 95px;
     left: 45px;
+}
+
+.comparison-detail p {
+    margin: 0;
+}
+
+.product-comparison .catalog-item {
+    min-height: 420px;
 }
 /* END CATALOG */

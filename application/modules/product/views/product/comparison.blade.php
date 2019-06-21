@@ -94,7 +94,7 @@
                                                         <tr>
                                                             <td valign="top">Tipe Kemasan &nbsp;</td>
                                                             <td valign="top">:&nbsp;</td>
-                                                            <td valign="top"></td>
+                                                            <td valign="top"><?= $prod->tipe_kemasan ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td valign="top">Isi Per &nbsp;</td>
@@ -107,19 +107,19 @@
                                                             <td valign="top"><?= $prod->qty ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <td valign="top">CPB/ &nbsp;</td>
+                                                            <td valign="top">CBP/<?= $prod->tipe_kemasan ?> &nbsp;</td>
                                                             <td valign="top">:&nbsp;</td>
-                                                            <td valign="top"><?= $prod->customer_after_tax_pcs ?></td>
+                                                            <td valign="top"><?= $prod->cbp_per_kemasan ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <td valign="top">CPB/Karton &nbsp;</td>
+                                                            <td valign="top">CBP/Karton &nbsp;</td>
                                                             <td valign="top">:&nbsp;</td>
-                                                            <td valign="top"><?= $prod->customer_after_tax_ctn ?></td>
+                                                            <td valign="top"><?= $prod->cbp_per_karton ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td valign="top">Harga Per ML &nbsp;</td>
                                                             <td valign="top">:&nbsp;</td>
-                                                            <td valign="top"></td>
+                                                            <td valign="top"><?= $prod->harga ?></td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -154,37 +154,10 @@
                                                             <tr>
                                                                 <td valign="top"><b>Brand/Merek &nbsp;</b></td>
                                                                 <td valign="top"><b>:&nbsp;</b></td>
-                                                                <td valign="top"><b><?= $comp->name ?></b></td>
+                                                                <td valign="top"><b><?= $comp->brand ?></b></td>
                                                             </tr>
-                                                            <tr>
-                                                                <td valign="top">Tipe Kemasan &nbsp;</td>
-                                                                <td valign="top">:&nbsp;</td>
-                                                                <td valign="top"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td valign="top">Isi Per &nbsp;</td>
-                                                                <td valign="top">:&nbsp;</td>
-                                                                <td valign="top"><?= $comp->packing_size ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td valign="top">Isi Per Karton &nbsp;</td>
-                                                                <td valign="top">:&nbsp;</td>
-                                                                <td valign="top"><?= $comp->qty ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td valign="top">CPB/ &nbsp;</td>
-                                                                <td valign="top">:&nbsp;</td>
-                                                                <td valign="top"><?= $comp->customer_after_tax_pcs ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td valign="top">CPB/Karton &nbsp;</td>
-                                                                <td valign="top">:&nbsp;</td>
-                                                                <td valign="top"><?= $comp->customer_after_tax_ctn ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td valign="top">Harga Per ML &nbsp;</td>
-                                                                <td valign="top">:&nbsp;</td>
-                                                                <td valign="top"></td>
+                                                            <tr class="comparison-detail">
+                                                                <td colspan="3" valign="top"><?= $comp->description ?></td>
                                                             </tr>
                                                         </table>
                                                     </div>

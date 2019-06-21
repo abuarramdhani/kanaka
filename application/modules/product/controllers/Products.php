@@ -159,6 +159,10 @@ class Products extends MX_Controller {
                     $width = $this->input->post('height');
                     $volume = $this->input->post('volume');
                     $weight = $this->input->post('weight');
+                    $cbp_per_kemasan = $this->input->post('cbp_per_kemasan');
+                    $cbp_per_karton = $this->input->post('cbp_per_karton');
+                    $tipe_kemasan = $this->input->post('tipe_kemasan');
+                    $harga = $this->input->post('harga');
                     
                     $model = new Product();
                     $model->name = $name;
@@ -175,6 +179,10 @@ class Products extends MX_Controller {
                     $model->width = $width;
                     $model->volume = $volume;
                     $model->weight = $weight;
+                    $model->cbp_per_kemasan = $cbp_per_kemasan;
+                    $model->cbp_per_karton = $cbp_per_karton;
+                    $model->tipe_kemasan = $tipe_kemasan;
+                    $model->harga = $harga;
 
                     $dataProduct = array('name'         => $name,
                                       'category_id'     => $category_id,
@@ -190,6 +198,10 @@ class Products extends MX_Controller {
                                       'width'           => $width,
                                       'volume'          => $volume,
                                       'weight'          => $weight,
+                                      'cbp_per_kemasan' => $cbp_per_kemasan,
+                                      'cbp_per_karton'  => $cbp_per_karton,
+                                      'tipe_kemasan'    => $tipe_kemasan,
+                                      'harga'           => $harga,
                                       'user_created'    => $user->id,
                                       'date_created'    => date('Y-m-d'),
                                       'time_created'    => date('H:i:s'));
@@ -220,10 +232,16 @@ class Products extends MX_Controller {
                                     $fileDataComp                       = $this->upload->data();
                                     $uploadDataComp[$i]['file_name']    = $fileDataComp['file_name'];
                                 
-                                    $dataComparison = array('product_id'        => $id_product,
+                                    $dataComparison = array('product_id'         => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
                                                         'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => $uploadDataComp[$i]['file_name'],
+                                                        'packing_size'           => $this->input->post('packing_size_comp')[$i],
+                                                        'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
+                                                        'tipe_kemasan'           => $this->input->post('tipe_kemasan_comp')[$i],
+                                                        'cbp_per_kemasan'        => $this->input->post('cbp_per_kemasan_comp')[$i],
+                                                        'cbp_per_karton'         => $this->input->post('cbp_per_karton_comp')[$i],
+                                                        'harga'                  => $this->input->post('harga_comp')[$i],
                                                         'date_created'           => date('Y-m-d'),
                                                         'time_created'           => date('H:i:s'),
                                                         'user_created'           => $user->id);
@@ -233,6 +251,12 @@ class Products extends MX_Controller {
                                                         'brand'                  => $this->input->post('brand')[$i],
                                                         'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => 'default.jpg',
+                                                        'packing_size'           => $this->input->post('packing_size_comp')[$i],
+                                                        'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
+                                                        'tipe_kemasan'           => $this->input->post('tipe_kemasan_comp')[$i],
+                                                        'cbp_per_kemasan'        => $this->input->post('cbp_per_kemasan_comp')[$i],
+                                                        'cbp_per_karton'         => $this->input->post('cbp_per_karton_comp')[$i],
+                                                        'harga'                  => $this->input->post('harga_comp')[$i],
                                                         'date_created'           => date('Y-m-d'),
                                                         'time_created'           => date('H:i:s'),
                                                         'user_created'           => $user->id);
@@ -297,6 +321,10 @@ class Products extends MX_Controller {
                             'Width'           => $width,
                             'Volume'          => $volume,
                             'Weight'          => $weight,
+                            'Tipe Kemasan'    => $tipe_kemasan,
+                            'CBP Per Kemasan' => $cbp_per_kemasan,
+                            'CBP Per Karton'  => $cbp_per_karton,
+                            'Harga'           => $harga,
                         );
                         $message = "Add " . strtolower(lang('product')) . " " . $name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 4);
@@ -321,6 +349,10 @@ class Products extends MX_Controller {
                 $width = $this->input->post('width');
                 $height = $this->input->post('height');
                 $volume = $this->input->post('volume');
+                $cbp_per_kemasan = $this->input->post('cbp_per_kemasan');
+                $cbp_per_karton = $this->input->post('cbp_per_karton');
+                $tipe_kemasan = $this->input->post('tipe_kemasan');
+                $harga = $this->input->post('harga');
             
                 $data_old = array(
                     'Name'            => $model->name,
@@ -337,22 +369,30 @@ class Products extends MX_Controller {
                     'Width'           => $model->width,
                     'Volume'          => $model->volume,
                     'Weight'          => $model->weight,
+                    'Tipe Kemasan'    => $model->tipe_kemasan,
+                    'CBP Per Kemasan' => $model->cbp_per_kemasan,
+                    'CBP Per Karton'  => $model->cbp_per_karton,
+                    'Harga'           => $model->harga,
                 );
 
                 $model->name            = $name;
                 $model->category_id     = $category_id;
-                $model->product_code             = $product_code;
+                $model->product_code    = $product_code;
                 $model->description     = $description;
                 $model->feature         = $feature;
                 $model->barcode_product = $barcode_product;
                 $model->barcode_carton  = $barcode_carton;
                 $model->packing_size    = $packing_size;
                 $model->qty             = $qty;
-                $model->length     = $length;
-                $model->height     = $height;
-                $model->width     = $width;
-                $model->volume   = $volume;
+                $model->length          = $length;
+                $model->height          = $height;
+                $model->width           = $width;
+                $model->volume          = $volume;
                 $model->weight          = $weight;
+                $model->cbp_per_kemasan = $cbp_per_kemasan;
+                $model->cbp_per_karton  = $cbp_per_karton;
+                $model->tipe_kemasan    = $tipe_kemasan;
+                $model->harga           = $harga;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
@@ -427,6 +467,12 @@ class Products extends MX_Controller {
                                                         'brand'                  => $this->input->post('brand')[$i],
                                                         'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => $uploadDataComp[$i]['file_name'],
+                                                        'packing_size'           => $this->input->post('packing_size_comp')[$i],
+                                                        'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
+                                                        'tipe_kemasan'           => $this->input->post('tipe_kemasan_comp')[$i],
+                                                        'cbp_per_kemasan'        => $this->input->post('cbp_per_kemasan_comp')[$i],
+                                                        'cbp_per_karton'         => $this->input->post('cbp_per_karton_comp')[$i],
+                                                        'harga'                  => $this->input->post('harga_comp')[$i],
                                                         'date_created'           => date('Y-m-d'),
                                                         'time_created'           => date('H:i:s'),
                                                         'user_created'           => $user->id);
@@ -436,6 +482,12 @@ class Products extends MX_Controller {
                                                         'brand'                  => $this->input->post('brand')[$i],
                                                         'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => 'default.jpg',
+                                                        'packing_size'           => $this->input->post('packing_size_comp')[$i],
+                                                        'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
+                                                        'tipe_kemasan'           => $this->input->post('tipe_kemasan_comp')[$i],
+                                                        'cbp_per_kemasan'        => $this->input->post('cbp_per_kemasan_comp')[$i],
+                                                        'cbp_per_karton'         => $this->input->post('cbp_per_karton_comp')[$i],
+                                                        'harga'                  => $this->input->post('harga_comp')[$i],
                                                         'date_created'           => date('Y-m-d'),
                                                         'time_created'           => date('H:i:s'),
                                                         'user_created'           => $user->id);
@@ -446,6 +498,12 @@ class Products extends MX_Controller {
                                                     'brand'                  => $this->input->post('brand')[$i],
                                                     'description'            => $this->input->post('desc_comparison')[$i],
                                                     'image'                  => 'default.jpg',
+                                                    'packing_size'           => $this->input->post('packing_size_comp')[$i],
+                                                    'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
+                                                    'tipe_kemasan'           => $this->input->post('tipe_kemasan_comp')[$i],
+                                                    'cbp_per_kemasan'        => $this->input->post('cbp_per_kemasan_comp')[$i],
+                                                    'cbp_per_karton'         => $this->input->post('cbp_per_karton_comp')[$i],
+                                                    'harga'                  => $this->input->post('harga_comp')[$i],
                                                     'date_created'           => date('Y-m-d'),
                                                     'time_created'           => date('H:i:s'),
                                                     'user_created'           => $user->id);
@@ -472,20 +530,32 @@ class Products extends MX_Controller {
                                     $fileDataComp                       = $this->upload->data();
                                     $uploadDataComp[$i]['file_name']    = $fileDataComp['file_name'];
                                 
-                                    $model_comparison                  = ProductComparison::find($this->input->post('comparison_id')[$i]);
-                                    $model_comparison->brand           = $this->input->post('brand')[$i];
-                                    $model_comparison->description     = $this->input->post('desc_comparison')[$i];
-                                    $model_comparison->image           = $uploadDataComp[$i]['file_name'];
+                                    $model_comparison                   = ProductComparison::find($this->input->post('comparison_id')[$i]);
+                                    $model_comparison->brand            = $this->input->post('brand')[$i];
+                                    $model_comparison->description      = $this->input->post('desc_comparison')[$i];
+                                    $model_comparison->packing_size     = $this->input->post('packing_size_comp')[$i];
+                                    $model_comparison->qty_per_ctn      = $this->input->post('qty_comp')[$i];
+                                    $model_comparison->tipe_kemasan     = $this->input->post('tipe_kemasan_comp')[$i];
+                                    $model_comparison->cbp_per_kemasan  = $this->input->post('cbp_per_kemasan_comp')[$i];
+                                    $model_comparison->cbp_per_karton   = $this->input->post('cbp_per_karton_comp')[$i];
+                                    $model_comparison->harga            = $this->input->post('harga_comp')[$i];
+                                    $model_comparison->image            = $uploadDataComp[$i]['file_name'];
         
                                     $model_comparison->user_modified = $user->id;
                                     $model_comparison->date_modified = date('Y-m-d');
                                     $model_comparison->time_modified = date('H:i:s');
                                     $updateDetail = $model_comparison->save();
                                 }else{
-                                    $model_comparison                  = ProductComparison::find($this->input->post('comparison_id')[$i]);
-                                    $model_comparison->brand           = $this->input->post('brand')[$i];
-                                    $model_comparison->description     = $this->input->post('desc_comparison')[$i];
-                                    $model_comparison->image           = $model_comparison->image;
+                                    $model_comparison                   = ProductComparison::find($this->input->post('comparison_id')[$i]);
+                                    $model_comparison->brand            = $this->input->post('brand')[$i];
+                                    $model_comparison->description      = $this->input->post('desc_comparison')[$i];
+                                    $model_comparison->image            = $model_comparison->image;
+                                    $model_comparison->packing_size     = $this->input->post('packing_size_comp')[$i];
+                                    $model_comparison->qty_per_ctn      = $this->input->post('qty_comp')[$i];
+                                    $model_comparison->tipe_kemasan     = $this->input->post('tipe_kemasan_comp')[$i];
+                                    $model_comparison->cbp_per_kemasan  = $this->input->post('cbp_per_kemasan_comp')[$i];
+                                    $model_comparison->cbp_per_karton   = $this->input->post('cbp_per_karton_comp')[$i];
+                                    $model_comparison->harga            = $this->input->post('harga_comp')[$i];
         
                                     $model_comparison->user_modified = $user->id;
                                     $model_comparison->date_modified = date('Y-m-d');
@@ -493,10 +563,16 @@ class Products extends MX_Controller {
                                     $updateDetail = $model_comparison->save();
                                 }   
                             }else{
-                                $model_comparison                  = ProductComparison::find($this->input->post('comparison_id')[$i]);
-                                $model_comparison->brand           = $this->input->post('brand')[$i];
-                                $model_comparison->description     = $this->input->post('desc_comparison')[$i];
-                                $model_comparison->image           = $model_comparison->image;
+                                $model_comparison                   = ProductComparison::find($this->input->post('comparison_id')[$i]);
+                                $model_comparison->brand            = $this->input->post('brand')[$i];
+                                $model_comparison->description      = $this->input->post('desc_comparison')[$i];
+                                $model_comparison->image            = $model_comparison->image;
+                                $model_comparison->packing_size     = $this->input->post('packing_size_comp')[$i];
+                                $model_comparison->qty_per_ctn      = $this->input->post('qty_comp')[$i];
+                                $model_comparison->tipe_kemasan     = $this->input->post('tipe_kemasan_comp')[$i];
+                                $model_comparison->cbp_per_kemasan  = $this->input->post('cbp_per_kemasan_comp')[$i];
+                                $model_comparison->cbp_per_karton   = $this->input->post('cbp_per_karton_comp')[$i];
+                                $model_comparison->harga            = $this->input->post('harga_comp')[$i];
     
                                 $model_comparison->user_modified = $user->id;
                                 $model_comparison->date_modified = date('Y-m-d');
@@ -523,6 +599,10 @@ class Products extends MX_Controller {
                         'Width'           => $width,
                         'Volume'          => $volume,
                         'Weight'          => $weight,
+                        'Tipe Kemasan'    => $tipe_kemasan,
+                        'CBP Per Kemasan' => $cbp_per_kemasan,
+                        'CBP Per Karton'  => $cbp_per_karton,
+                        'Harga'           => $harga,
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
@@ -642,7 +722,7 @@ class Products extends MX_Controller {
         $data['add_access'] = $this->user_profile->get_user_access('Created', 'product');
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');
-        $data['catalogs'] = Product::select('t_pricelist.*', 'm_product.*', 'm_product.id as product_id')->join('t_pricelist', 't_pricelist.product_id', '=', 'm_product.id')->where('m_product.deleted', '0')->where('t_pricelist.deleted', '0')->get();
+        $data['catalogs'] = Product::select('m_product.*', 'm_product.id as product_id')->where('m_product.deleted', '0')->get();
         $this->load->blade('product.views.product.catalog', $data);
     }
 

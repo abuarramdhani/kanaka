@@ -495,8 +495,8 @@ $lang['jurnal'] = 'Jurnal';
 $lang['new_jurnal'] = "New Jurnal";
 $lang['edit_jurnal'] = "Edit Jurnal";
 $lang['month'] = "Month";
-$lang['debet'] = "Debet";
-$lang['kredit'] = "Kredit";
+$lang['debet'] = "In";
+$lang['kredit'] = "Out";
 ## END JURNAL ##
 
 ## CATALOG PRODUCT ##

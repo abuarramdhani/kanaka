@@ -58,13 +58,13 @@
 					<td><?= $partner->address ?></td>
 					<td><?= $quote.$partner->phone ?></td>
 					<td><?= $partner->email ?></td>
-					<td><?= $partner->city ?></td>
+					<td><?= $partner->city == "" ? "-" : ucwords(strtolower(City::find($partner->city)->name)) ?></td>
 					<td><?= $partner->subdistrict ?></td>
-					<td><?= $partner->zona_name ?></td>
+					<td><?= $partner->zona_id == "" ? "-" : Zona::find($partner->zona_id)->name ?></td>
 					<td><?= $partner->latitude ?></td>
 					<td><?= $partner->longitude ?></td>
 					<td><?= $partner->pic ?></td>
-					<td><?= $partner->top ?></td>
+					<td><?= strtoupper($partner->top) ?></td>
 					<td><?= date('d-m-Y',strtotime($partner->date_created)) ?></td>
 				</tr>
 			<?php 

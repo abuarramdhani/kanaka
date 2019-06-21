@@ -40,6 +40,7 @@ class Users extends MX_Controller {
             $data['csrftoken_name'] = $this->security->get_csrf_token_name();
             $data['csrftoken_value'] = $this->security->get_csrf_hash();
             $data['dipos'] = Dipo::where('type', 'dipo')->where('deleted', 0)->get();
+            $data['cities'] = City::where('deleted', 0)->get();
             
             $this->load->blade('user.views.login.page', $data);
         }
@@ -763,7 +764,7 @@ class Users extends MX_Controller {
                                 'Email' => $email == "" ? "-" : $email,
                                 'Address' => $address == "" ? "-" : $address,
                                 'Billing Address' => $billing_address == "" ? "-" : $billing_address,
-                                'City' => $city == "" ? "-" : $city,
+                                'City' => $city == "" ? "-" : City::find($city)->name,
                                 'Postal Code' => $postal_code == "" ? "-" : $postal_code,
                                 'Latitude' => $latitude == "" ? "-" : $latitude,
                                 'Longitude' => $longitude == "" ? "-" : $longitude,

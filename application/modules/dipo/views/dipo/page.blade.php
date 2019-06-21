@@ -133,7 +133,12 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('city')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="city" id="city" placeholder="<?=lang('city')?>" maxlength="50" />
+                <select class="form-control input-sm select2" name="city" id="city" style="width: 100%;">
+                    <option value=""><?= lang('select_your_option') ?></option>
+                    @foreach($cities as $city)
+                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                    @endforeach
+                </select>
                 <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -149,7 +154,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('zona')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <select class="form-control input-sm" name="zona_id" id="zona_id" style="width: 100%;">
+                <select class="form-control input-sm select2" name="zona_id" id="zona_id" style="width: 100%;">
                     <option value=""><?= lang('select_your_option') ?></option>
                     @foreach($zonas as $zona)
                         <option value="{{ $zona->id }}">{{ $zona->name }}</option>
@@ -186,7 +191,18 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('top')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="top" id="top" placeholder="<?=lang('top')?>" maxlength="50" />
+                <select class="form-control input-sm" name="top" id="top" style="width: 100%;">
+                    <option value=""><?= lang('select_your_option') ?></option>
+                    <option value="cbd"><?= lang('cbd') ?></option>
+                    <option value="cod"><?= lang('cod') ?></option>
+                    <option value="3"><?= lang('3_days') ?></option>
+                    <option value="7"><?= lang('7_days') ?></option>
+                    <option value="14"><?= lang('14_days') ?></option>
+                    <option value="21"><?= lang('21_days') ?></option>
+                    <option value="30"><?= lang('30_days') ?></option>
+                    <option value="45"><?= lang('45_days') ?></option>
+                    <option value="60"><?= lang('60_days') ?></option>
+                </select>
                 <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -205,7 +221,7 @@
 @section('scripts')
 <script type="text/javascript">
     $(function(){
-        $('#zona_id').select2();
+
     });
 
     function add_dipo(){
@@ -214,6 +230,7 @@
         $('.modal-title').text('<?=lang('new_dipo')?>'); 
 
         $('[name="id"]').val('');
+        $('[name="city"]').val('').change();
         $('[name="zona_id"]').val('').change();
         // $('[name="code"').attr('readonly',false);
     }
@@ -314,7 +331,7 @@
                 $('[name="address"]').val(row.address);
                 $('[name="phone"]').val(row.phone);
                 $('[name="email"]').val(row.email);
-                $('[name="city"]').val(row.city);
+                $('[name="city"]').val(row.city).change();
                 $('[name="subdistrict"]').val(row.subdistrict);
                 $('[name="zona_id"]').val(row.zona_id).change();
                 $('[name="latitude"]').val(row.latitude);

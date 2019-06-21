@@ -16,6 +16,7 @@ class Partners extends MX_Controller {
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'partner');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'partner');
         
+        $data['cities'] = City::where('deleted', 0)->get();        
         $data['zonas'] = Zona::where('deleted', 0)->get();
         $data['dipos'] = Dipo::where('type', 'dipo')->where('deleted', 0)->get();
 
@@ -32,7 +33,7 @@ class Partners extends MX_Controller {
             'm_dipo_partner.address',
             'm_dipo_partner.phone',
             'm_dipo_partner.email',
-            'm_dipo_partner.city',
+            'm_city.name as city_name',
             'm_dipo_partner.subdistrict',
             // 'm_zona.name as zona_name',
             'm_dipo_partner.zona_id',            
@@ -50,7 +51,7 @@ class Partners extends MX_Controller {
             'm_dipo_partner.address',
             'm_dipo_partner.phone',
             'm_dipo_partner.email',
-            'm_dipo_partner.city',
+            'city_name',
             'm_dipo_partner.subdistrict',
             // 'zona_name',
             'm_dipo_partner.zona_id',
@@ -65,7 +66,7 @@ class Partners extends MX_Controller {
         $where = "m_dipo_partner.type = 'partner' AND m_dipo_partner.deleted = 0";
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
-        // $join[] = array('m_zona', 'm_dipo_partner.zona_id = m_zona.id', 'left');
+        $join[] = array('m_city', 'm_dipo_partner.city = m_city.id', 'left');
         $join[] = array('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id = m_dipo.id', 'left');
         
         if ($this->input->get('sSearch') != '') {
@@ -81,7 +82,7 @@ class Partners extends MX_Controller {
             $where .= "m_dipo_partner.address LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.phone LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.email LIKE '%" . $sSearch . "%' OR ";
-            $where .= "m_dipo_partner.city LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_city.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.subdistrict LIKE '%" . $sSearch . "%' OR ";
             // $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.latitude LIKE '%" . $sSearch . "%' OR ";
@@ -119,14 +120,14 @@ class Partners extends MX_Controller {
             $row_value[] = $row->address;
             $row_value[] = $row->phone;
             $row_value[] = $row->email == "" ? "-" : $row->email;
-            $row_value[] = $row->city;
+            $row_value[] = ucwords(strtolower($row->city_name));
             $row_value[] = $row->subdistrict == "" ? "-" : $row->subdistrict;
             // $row_value[] = $row->zona_name;
             $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
             $row_value[] = $row->latitude == "" ? "-" : $row->latitude;
             $row_value[] = $row->longitude == "" ? "-" : $row->longitude;
             $row_value[] = $row->pic == "" ? "-" : $row->pic;
-            $row_value[] = $row->top == "" ? "-" : $row->top;
+            $row_value[] = $row->top == "" ? "-" : strtoupper($row->top);
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             
@@ -188,13 +189,13 @@ class Partners extends MX_Controller {
                             'Address' => $address,
                             'Phone' => $phone,
                             'Email' => $email,
-                            'City' => $city,
+                            'City' => ucwords(strtolower(City::find($city)->name)),
                             'Subdistrict' => $subdistrict,
                             'Zona Name' => Zona::find($zona_id)->name,
                             'Latitude' => $latitude,
                             'Longitude' => $longitude,
                             'PIC' => $pic,
-                            'TOP' => $top,
+                            'TOP' => strtoupper($top),
                         );
                         $message = "Add " . lang('partner') . " " . $name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 7);
@@ -226,13 +227,13 @@ class Partners extends MX_Controller {
                     'Address' => $model->address,
                     'Phone' => $model->phone,
                     'Email' => $model->email,
-                    'City' => $model->city,
+                    'City' => $model->city == "" ? "-" : ucwords(strtolower(City::find($model->city)->name)),
                     'Subdistrict' => $model->subdistrict,
-                    'Zona Name' => Zona::find($model->zona_id)->name,
+                    'Zona Name' => $model->zona_id == "" ? "-" : Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
                     'PIC' => $model->pic,
-                    'TOP' => $model->top,
+                    'TOP' => strtoupper($model->top),
                 );
 
                 $model->code = $code;
@@ -261,13 +262,13 @@ class Partners extends MX_Controller {
                         'Address' => $address,
                         'Phone' => $phone,
                         'Email' => $email,
-                        'City' => $city,
+                        'City' => ucwords(strtolower(City::find($city)->name)),
                         'Subdistrict' => $subdistrict,
                         'Zona Name' => Zona::find($zona_id)->name,
                         'Latitude' => $latitude,
                         'Longitude' => $longitude,
                         'PIC' => $pic,
-                        'TOP' => $top,
+                        'TOP' => strtoupper($top),
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
@@ -315,13 +316,13 @@ class Partners extends MX_Controller {
                     'Address' => $model->address,
                     'Phone' => $model->phone,
                     'Email' => $model->email,
-                    'City' => $model->city,
+                    'City' => $model->city == "" ? "-" : ucwords(strtolower(City::find($model->city)->name)),
                     'Subdistrict' => $model->subdistrict,
-                    'Zona Name' => Zona::find($model->zona_id)->name,
+                    'Zona Name' => $model->zona_id == "" ? "-" : Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
                     'PIC' => $model->pic,
-                    'TOP' => $model->top,
+                    'TOP' => strtoupper($model->top),
                 );
                 $message = "Delete " . lang('partner') . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 7);
@@ -337,7 +338,7 @@ class Partners extends MX_Controller {
     }
 
     function pdf(){
-        $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name', 'm_zona.name as zona_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->join('m_zona', 'm_dipo_partner.zona_id', '=' ,'m_zona.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
         $data['quote'] = "";
         $html = $this->load->view('partner/partner/partner_pdf', $data, true);
         $this->pdf_generator->generate($html, 'partner pdf', $orientation='Landscape');
@@ -346,7 +347,7 @@ class Partners extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=partner.xls");
-        $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name', 'm_zona.name as zona_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->join('m_zona', 'm_dipo_partner.zona_id', '=' ,'m_zona.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
         $data['quote'] = "'";
         $this->load->view('partner/partner/partner_pdf', $data);
     }

@@ -34,6 +34,8 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="{{ base_url() }}assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
         <link href="{{ base_url() }}assets/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ base_url() }}assets/plugins/bootstrap-toastr/toastr.css" rel="stylesheet" type="text/css" />
+        <link href="{{ base_url() }}assets/plugins/select2/css/select2.css" rel="stylesheet" type="text/css" />
+        <link href="{{ base_url() }}assets/plugins/select2/css/select2-bootstrap.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="{{ base_url() }}assets/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
@@ -173,7 +175,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
-                                        
+
                         <div class="form-group form-md-line-input dipo_field">
                             <label class="col-lg-4 control-label"><?=lang('dipo')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
@@ -237,7 +239,12 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('city')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="city" id="city" placeholder="<?=lang('city')?>" maxlength="50" />
+                                <select class="form-control input-sm select2" name="city" id="city" style="width: 100%;">
+                                    <option value=""><?= lang('select_your_option') ?></option>
+                                    @foreach($cities as $city)
+                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    @endforeach
+                                </select>
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>

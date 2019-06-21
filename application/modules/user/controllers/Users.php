@@ -39,6 +39,8 @@ class Users extends MX_Controller {
             );
             $data['csrftoken_name'] = $this->security->get_csrf_token_name();
             $data['csrftoken_value'] = $this->security->get_csrf_hash();
+            $data['dipos'] = Dipo::where('type', 'dipo')->where('deleted', 0)->get();
+            
             $this->load->blade('user.views.login.page', $data);
         }
     }
@@ -576,7 +578,9 @@ class Users extends MX_Controller {
                     }
                     else{
                         $code = strtoupper($this->input->post('code'));
+                        $username = $this->input->post('username_customer');
                         $type = $this->input->post('type');
+                        $dipo_id = $this->input->post('dipo_id');
                         $name = ucwords($this->input->post('name'));
                         $phone = $this->input->post('phone');
                         $fax = $this->input->post('fax');
@@ -601,6 +605,10 @@ class Users extends MX_Controller {
                         $bank_code = $this->input->post('bank_code');
                         $account_address = $this->input->post('account_address');
                         $customer_photo = '';
+
+                        if($type != "partner")
+                            $dipo_id = 0;
+
                         if(!empty($_FILES['customer_photo']['name'])){
                             $_FILES['file']['name']     = $_FILES['customer_photo']['name'];
                             $_FILES['file']['type']     = $_FILES['customer_photo']['type'];
@@ -681,6 +689,7 @@ class Users extends MX_Controller {
                         $model = new Partner();
                         $model->code = $code;
                         $model->type = $type;
+                        $model->dipo_id = $dipo_id;
                         $model->name = $name;
                         $model->phone = $phone;
                         $model->fax = $fax;
@@ -720,6 +729,31 @@ class Users extends MX_Controller {
                             $model_code->time_modified = date('H:i:s');
                             $model_code->save();
     
+                            if($type == "dipo") {
+                                $group_id = 2;
+                            }
+                            else if($type == "customer") {
+                                $group_id = 4;
+                            }
+                            else {
+                                $group_id = 3;                                
+                            }
+
+                            $group = array($group_id);
+                            
+                            $data = array(
+                                "full_name" => $name,
+                                "company" => 'Kanaka',
+                                "group_id" => $group_id,
+                                "address" => $address,
+                                "city" => $city,
+                                "phone" => str_replace("_", "", $phone),
+                                "created_date" => date('Y-m-d H:i:s'),
+                                "avatar" => 'default_avatar.jpg'
+                            );
+
+                            $this->ion_auth->register($username, $code, $email, $data, $group);
+
                             $data_notif = array(
                                 'Code' => $code == "" ? "-" : $code,
                                 'Type' => $type == "" ? "-" : ucwords(str_replace('_', ' ', $type)),

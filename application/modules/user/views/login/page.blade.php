@@ -173,7 +173,19 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
-                        
+                                        
+                        <div class="form-group form-md-line-input dipo_field">
+                            <label class="col-lg-4 control-label"><?=lang('dipo')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <select class="form-control input-sm" name="dipo_id" id="dipo_id" style="width: 100%;">
+                                    @foreach($dipos as $dipo)
+                                        <option value="{{ $dipo->id }}">{{ $dipo->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
@@ -199,7 +211,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         </div>
                         
                         <div class="form-group form-md-line-input">
-                            <label class="col-lg-4 control-label"><?=lang('email')?></label>
+                            <label class="col-lg-4 control-label"><?=lang('email')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
                                 <input type="email" class="form-control input-sm" name="email" id="email" placeholder="<?=lang('email')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
@@ -764,6 +776,8 @@ License: You must have a valid license purchased only from themeforest(the above
                 $('.select2').select2();
                 $('.number').mask('0000000000000000000000000');
 
+                $('.dipo_field').hide();
+
             });
 
             toastr.options = { "positionClass": "toast-top-right", };
@@ -858,6 +872,14 @@ License: You must have a valid license purchased only from themeforest(the above
                     }
                     App.unblockUI('#form-wrapper');
                 });
+
+                if($('#type_customer').val() == 'partner'){
+                    $('.dipo_field').show();
+                }
+                else{
+                    $('.dipo_field').hide();
+                }
+
             });
 
             function register_principal(){

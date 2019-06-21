@@ -39,6 +39,8 @@ class Users extends MX_Controller {
             );
             $data['csrftoken_name'] = $this->security->get_csrf_token_name();
             $data['csrftoken_value'] = $this->security->get_csrf_hash();
+            $data['dipos'] = Dipo::where('type', 'dipo')->where('deleted', 0)->get();
+            
             $this->load->blade('user.views.login.page', $data);
         }
     }
@@ -578,6 +580,7 @@ class Users extends MX_Controller {
                         $code = strtoupper($this->input->post('code'));
                         $username = $this->input->post('username_customer');
                         $type = $this->input->post('type');
+                        $dipo_id = $this->input->post('dipo_id');
                         $name = ucwords($this->input->post('name'));
                         $phone = $this->input->post('phone');
                         $fax = $this->input->post('fax');
@@ -602,6 +605,10 @@ class Users extends MX_Controller {
                         $bank_code = $this->input->post('bank_code');
                         $account_address = $this->input->post('account_address');
                         $customer_photo = '';
+
+                        if($type != "partner")
+                            $dipo_id = 0;
+
                         if(!empty($_FILES['customer_photo']['name'])){
                             $_FILES['file']['name']     = $_FILES['customer_photo']['name'];
                             $_FILES['file']['type']     = $_FILES['customer_photo']['type'];
@@ -682,6 +689,7 @@ class Users extends MX_Controller {
                         $model = new Partner();
                         $model->code = $code;
                         $model->type = $type;
+                        $model->dipo_id = $dipo_id;
                         $model->name = $name;
                         $model->phone = $phone;
                         $model->fax = $fax;

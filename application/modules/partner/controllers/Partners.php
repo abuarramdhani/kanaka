@@ -34,7 +34,7 @@ class Partners extends MX_Controller {
             'm_dipo_partner.phone',
             'm_dipo_partner.email',
             'm_city.name as city_name',
-            'm_dipo_partner.subdistrict',
+            'm_district.name as subdistrict',
             // 'm_zona.name as zona_name',
             'm_dipo_partner.zona_id',            
             'm_dipo_partner.latitude',
@@ -52,7 +52,7 @@ class Partners extends MX_Controller {
             'm_dipo_partner.phone',
             'm_dipo_partner.email',
             'city_name',
-            'm_dipo_partner.subdistrict',
+            'subdistrict',
             // 'zona_name',
             'm_dipo_partner.zona_id',
             'm_dipo_partner.latitude',
@@ -67,6 +67,7 @@ class Partners extends MX_Controller {
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
         $join[] = array('m_city', 'm_dipo_partner.city = m_city.id', 'left');
+        $join[] = array('m_district', 'm_district.id = m_dipo_partner.subdistrict', 'left');
         $join[] = array('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id = m_dipo.id', 'left');
         
         if ($this->input->get('sSearch') != '') {
@@ -83,7 +84,7 @@ class Partners extends MX_Controller {
             $where .= "m_dipo_partner.phone LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.email LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_city.name LIKE '%" . $sSearch . "%' OR ";
-            $where .= "m_dipo_partner.subdistrict LIKE '%" . $sSearch . "%' OR ";
+            $where .= "subdistrict LIKE '%" . $sSearch . "%' OR ";
             // $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.latitude LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.longitude LIKE '%" . $sSearch . "%' OR ";
@@ -120,7 +121,7 @@ class Partners extends MX_Controller {
             $row_value[] = $row->address;
             $row_value[] = $row->phone;
             $row_value[] = $row->email == "" ? "-" : $row->email;
-            $row_value[] = ucwords(strtolower($row->city_name));
+            $row_value[] = $row->city_name == "" ? "-" : ucwords(strtolower($row->city_name));
             $row_value[] = $row->subdistrict == "" ? "-" : $row->subdistrict;
             // $row_value[] = $row->zona_name;
             $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
@@ -190,7 +191,7 @@ class Partners extends MX_Controller {
                             'Phone' => $phone,
                             'Email' => $email,
                             'City' => ucwords(strtolower(City::find($city)->name)),
-                            'Subdistrict' => $subdistrict,
+                            'District' => ucwords(strtolower(District::find($subdistrict)->name)),
                             'Zona Name' => Zona::find($zona_id)->name,
                             'Latitude' => $latitude,
                             'Longitude' => $longitude,
@@ -228,7 +229,7 @@ class Partners extends MX_Controller {
                     'Phone' => $model->phone,
                     'Email' => $model->email,
                     'City' => $model->city == "" ? "-" : ucwords(strtolower(City::find($model->city)->name)),
-                    'Subdistrict' => $model->subdistrict,
+                    'District' => $model->subdistrict == "" ? "-" : ucwords(strtolower(District::find($model->subdistrict)->name)),
                     'Zona Name' => $model->zona_id == "" ? "-" : Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
@@ -263,7 +264,7 @@ class Partners extends MX_Controller {
                         'Phone' => $phone,
                         'Email' => $email,
                         'City' => ucwords(strtolower(City::find($city)->name)),
-                        'Subdistrict' => $subdistrict,
+                        'District' => ucwords(strtolower(District::find($subdistrict)->name)),
                         'Zona Name' => Zona::find($zona_id)->name,
                         'Latitude' => $latitude,
                         'Longitude' => $longitude,
@@ -317,7 +318,7 @@ class Partners extends MX_Controller {
                     'Phone' => $model->phone,
                     'Email' => $model->email,
                     'City' => $model->city == "" ? "-" : ucwords(strtolower(City::find($model->city)->name)),
-                    'Subdistrict' => $model->subdistrict,
+                    'District' => $model->subdistrict == "" ? "-" : ucwords(strtolower(District::find($model->subdistrict)->name)),
                     'Zona Name' => $model->zona_id == "" ? "-" : Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,

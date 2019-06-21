@@ -32,7 +32,7 @@ class Dipos extends MX_Controller {
             'phone',
             'email',
             'm_city.name as city_name',
-            'subdistrict',
+            'm_district.name as subdistrict',
             // 'm_zona.name as zona_name',
             'm_dipo_partner.zona_id',
             'latitude',
@@ -64,6 +64,7 @@ class Dipos extends MX_Controller {
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
         $join[] = array('m_city', 'm_city.id = m_dipo_partner.city', 'left');
+        $join[] = array('m_district', 'm_district.id = m_dipo_partner.subdistrict', 'left');
         
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
@@ -114,7 +115,7 @@ class Dipos extends MX_Controller {
             $row_value[] = $row->address;
             $row_value[] = $row->phone;
             $row_value[] = $row->email == "" ? "-" : $row->email;
-            $row_value[] = ucwords(strtolower($row->city_name));
+            $row_value[] = $row->city_name == "" ? "-" : ucwords(strtolower($row->city_name));
             $row_value[] = $row->subdistrict == "" ? "-" : $row->subdistrict;
             // $row_value[] = $row->zona_name;
             $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
@@ -181,7 +182,7 @@ class Dipos extends MX_Controller {
                             'Phone' => $phone,
                             'Email' => $email,
                             'City' => ucwords(strtolower(City::find($city)->name)),
-                            'Subdistrict' => $subdistrict,
+                            'District' => ucwords(strtolower(District::find($subdistrict)->name)),
                             'Zona Name' => Zona::find($zona_id)->name,
                             'Latitude' => $latitude,
                             'Longitude' => $longitude,
@@ -217,7 +218,7 @@ class Dipos extends MX_Controller {
                     'Phone' => $model->phone,
                     'Email' => $model->email,
                     'City' => $model->city == "" ? "-" : ucwords(strtolower(City::find($model->city)->name)),
-                    'Subdistrict' => $model->subdistrict,
+                    'District' => $model->subdistrict == "" ? "-" : ucwords(strtolower(District::find($model->subdistrict)->name)),
                     'Zona Name' => $model->zona_id == "" ? "-" : Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,
@@ -250,7 +251,7 @@ class Dipos extends MX_Controller {
                         'Phone' => $phone,
                         'Email' => $email,
                         'City' => ucwords(strtolower(City::find($city)->name)),
-                        'Subdistrict' => $subdistrict,
+                        'District' => ucwords(strtolower(District::find($subdistrict)->name)),
                         'Zona Name' => Zona::find($zona_id)->name,
                         'Latitude' => $latitude,
                         'Longitude' => $longitude,
@@ -303,7 +304,7 @@ class Dipos extends MX_Controller {
                     'Phone' => $model->phone,
                     'Email' => $model->email,
                     'City' => $model->city == "" ? "-" : ucwords(strtolower(City::find($model->city)->name)),
-                    'Subdistrict' => $model->subdistrict,
+                    'District' => $model->subdistrict == "" ? "-" : ucwords(strtolower(District::find($model->subdistrict)->name)),
                     'Zona Name' => $model->zona_id == "" ? "-" : Zona::find($model->zona_id)->name,
                     'Latitude' => $model->latitude,
                     'Longitude' => $model->longitude,

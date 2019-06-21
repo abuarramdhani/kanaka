@@ -123,7 +123,7 @@
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('email')?></label>
+            <label class="col-lg-4 control-label"><?=lang('email')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
                 <input type="email" class="form-control input-sm" name="email" id="email" placeholder="<?=lang('email')?>" maxlength="50" />
                 <div class="form-control-focus"> </div>
@@ -136,7 +136,7 @@
                 <select class="form-control input-sm select2" name="city" id="city" style="width: 100%;">
                     <option value=""><?= lang('select_your_option') ?></option>
                     @foreach($cities as $city)
-                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                        <option value="{{ $city->id }}">{{ ucwords(strtolower($city->name)) }}</option>
                     @endforeach
                 </select>
                 <div class="form-control-focus"> </div>
@@ -146,7 +146,9 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('subdistrict')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="subdistrict" id="subdistrict" placeholder="<?=lang('subdistrict')?>" maxlength="50" />
+                <select class="form-control input-sm select2" name="subdistrict" id="subdistrict" style="width: 100%;">
+                    <option value=""><?= lang('select_your_option') ?></option>
+                </select>
                 <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -231,6 +233,7 @@
 
         $('[name="id"]').val('');
         $('[name="city"]').val('').change();
+        $('[name="subdistrict"]').val('').change();
         $('[name="zona_id"]').val('').change();
         // $('[name="code"').attr('readonly',false);
     }
@@ -262,6 +265,7 @@
             name: "required",
             address: "required",
             phone: "required",
+            email: "required",
             city: "required",
             subdistrict: "required",
             zona_id: "required",
@@ -273,6 +277,7 @@
             name: "{{lang('name')}}" + " {{lang('not_empty')}}",
             address: "{{lang('address')}}" + " {{lang('not_empty')}}",
             phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
+            email: "{{lang('email')}}" + " {{lang('not_empty')}}",
             city: "{{lang('city')}}" + " {{lang('not_empty')}}",
             subdistrict: "{{lang('subdistrict')}}" + " {{lang('not_empty')}}",
             zona_id: "{{lang('zona')}}" + " {{lang('not_empty')}}",
@@ -325,6 +330,7 @@
         $.getJSON('{{base_url()}}dipo/dipos/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
+                
                 $('[name="id"]').val(row.id);
                 $('[name="code"]').val(row.code);
                 $('[name="name"]').val(row.name);
@@ -332,7 +338,6 @@
                 $('[name="phone"]').val(row.phone);
                 $('[name="email"]').val(row.email);
                 $('[name="city"]').val(row.city).change();
-                $('[name="subdistrict"]').val(row.subdistrict);
                 $('[name="zona_id"]').val(row.zona_id).change();
                 $('[name="latitude"]').val(row.latitude);
                 $('[name="longitude"]').val(row.longitude);
@@ -340,7 +345,18 @@
                 $('[name="top"]').val(row.top);
 
                 // $('[name="code"').attr('readonly',true);
-
+                $.getJSON('{{base_url()}}get-district-by-city', {city_id: row.city}, function(json_district, textStatus) {
+                    if(json_district.status == "error"){
+                        toastr.error(json_district.message,'{{ lang("notification") }}');
+                    }
+                    else{
+                        $('#subdistrict').html(json_district.tag_html);
+                        $('#subdistrict').val('').change();
+                    }
+                    $('[name="subdistrict"]').val(row.subdistrict).change();
+                    App.unblockUI('#form-wrapper');
+                });
+                
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_dipo')?>'); 
             }else if(json.status == "error"){
@@ -385,5 +401,19 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
+
+    $('#city').change(function(){
+        $.getJSON('{{base_url()}}get-district-by-city', {city_id: $('#city').val()}, function(json, textStatus) {
+            if(json.status == "error"){
+                toastr.error(json.message,'{{ lang("notification") }}');
+            }
+            else{
+                $('#subdistrict').html(json.tag_html);
+                $('#subdistrict').val('').change();
+            }
+            App.unblockUI('#form-wrapper');
+        });
+    });
+
 </script>
 @stop

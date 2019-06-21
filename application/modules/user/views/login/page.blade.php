@@ -150,7 +150,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('username')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="username_customer" id="username_customer" placeholder="<?=lang('username')?>" maxlength="10" />
+                                <input type="text" class="form-control input-sm" name="username_customer" id="username_customer" placeholder="<?=lang('username')?>" maxlength="20" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -242,8 +242,18 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <select class="form-control input-sm select2" name="city" id="city" style="width: 100%;">
                                     <option value=""><?= lang('select_your_option') ?></option>
                                     @foreach($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                        <option value="{{ $city->id }}">{{ ucwords(strtolower($city->name)) }}</option>
                                     @endforeach
+                                </select>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('subdistrict')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <select class="form-control input-sm select2" name="subdistrict" id="subdistrict" style="width: 100%;">
+                                    <option value=""><?= lang('select_your_option') ?></option>
                                 </select>
                                 <div class="form-control-focus"> </div>
                             </div>
@@ -787,7 +797,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
             });
 
-            toastr.options = { "positionClass": "toast-top-right", };
+            toastr.options = { "positionClass": "toast-top-right", "timeOut": "10000",};
 
             function register_customer(){
                 $('#form-partner')[0].reset(); 
@@ -811,6 +821,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     address: "required",
                     billing_address: "required",
                     city: "required",
+                    subdistrict: "required",
                     postal_code: "required",
                     purchase_price_type: "required",
                     taxable: "required",
@@ -826,6 +837,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     address: "{{lang('address')}}" + " {{lang('not_empty')}}",
                     billing_address: "{{lang('billing_address')}}" + " {{lang('not_empty')}}",
                     city: "{{lang('city')}}" + " {{lang('not_empty')}}",
+                    subdistrict: "{{lang('subdistrict')}}" + " {{lang('not_empty')}}",
                     postal_code: "{{lang('postal_code')}}" + " {{lang('not_empty')}}",
                     purchase_price_type: "{{lang('purchase_price_type')}}" + " {{lang('not_empty')}}",
                     taxable: "{{lang('taxable')}}" + " {{lang('not_empty')}}",
@@ -869,6 +881,11 @@ License: You must have a valid license purchased only from themeforest(the above
                 $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
                     if(json.status == "error"){
                         toastr.error(json.message,'{{ lang("notification") }}');
+                        $('#code_customer').val('');
+                        $('#code_customer').focus();
+                    }
+                    else{
+                        toastr.success(json.message,'{{ lang("notification") }}');                        
                     }
                     App.unblockUI('#form-wrapper');
                 });
@@ -878,6 +895,11 @@ License: You must have a valid license purchased only from themeforest(the above
                 $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
                     if(json.status == "error"){
                         toastr.error(json.message,'{{ lang("notification") }}');
+                        $('#code_customer').val('');
+                        $('#code_customer').focus();
+                    }
+                    else{
+                        toastr.success(json.message,'{{ lang("notification") }}');                        
                     }
                     App.unblockUI('#form-wrapper');
                 });
@@ -891,6 +913,22 @@ License: You must have a valid license purchased only from themeforest(the above
 
             });
 
+            $('#city').change(function(){
+                $.getJSON('{{base_url()}}get-district-by-city', {city_id: $('#city').val()}, function(json, textStatus) {
+                    if(json.status == "error"){
+                        toastr.error(json.message,'{{ lang("notification") }}');
+                    }
+                    else{
+                        $('#subdistrict').html(json.tag_html);
+                        $('#subdistrict').val('').change();
+                    }
+                    App.unblockUI('#form-wrapper');
+                });
+            });
+
+
+            // BLOCK PRINCIPAL
+
             function register_principal(){
                 $('#form-principal')[0].reset(); 
                 $('#modal_form_principal').modal('show'); 
@@ -901,6 +939,11 @@ License: You must have a valid license purchased only from themeforest(the above
                 $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_principal').val(), type: 'principal'}, function(json, textStatus) {
                     if(json.status == "error"){
                         toastr.error(json.message,'{{ lang("notification") }}');
+                        $('#code_principal').val('');
+                        $('#code_principal').focus();
+                    }
+                    else{
+                        toastr.success(json.message,'{{ lang("notification") }}');                        
                     }
                     App.unblockUI('#form-wrapper');
                 });

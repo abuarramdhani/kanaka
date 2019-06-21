@@ -533,7 +533,6 @@ class Users extends MX_Controller {
         }
     }
 
-
     public function check_code_customer() {
         if ($this->input->is_ajax_request()) {
             $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $this->input->get('type'))->where('deleted', 0)->first();
@@ -551,10 +550,25 @@ class Users extends MX_Controller {
                         $status = array('status' => 'error', 'message' => lang('already_exist'));
                     }
                     else{
-                        $status = array('status' => 'success', 'message' => 'success');
+                        $status = array('status' => 'success', 'message' => lang('code_is_valid'));
                     }
                 }
             }
+        }
+
+        $data = $status;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    public function get_district_by_city_id() {
+        if ($this->input->is_ajax_request()) {
+            $get_district = District::where('city_id' , $this->input->get('city_id'))->where('deleted', 0)->orderBy('name', 'asc')->get();
+            $html = '<option value="">' . lang('select_your_option') . '</option>';
+            foreach($get_district as $row){
+                $html .= '<option value="' . $row->id . '">' . ucwords(strtolower($row->name)) . '</option>';
+            }
+
+            $status = array('status' => 'success', 'tag_html' => $html);
         }
 
         $data = $status;
@@ -589,6 +603,7 @@ class Users extends MX_Controller {
                         $address = $this->input->post('address');
                         $billing_address = $this->input->post('billing_address');
                         $city = $this->input->post('city');
+                        $subdistrict = $this->input->post('subdistrict');
                         $postal_code = $this->input->post('postal_code');
                         $latitude = $this->input->post('latitude');
                         $longitude = $this->input->post('longitude');
@@ -698,6 +713,7 @@ class Users extends MX_Controller {
                         $model->address = $address;
                         $model->billing_address = $billing_address;
                         $model->city = $city;
+                        $model->subdistrict = $subdistrict;
                         $model->postal_code = $postal_code;
                         $model->latitude = $latitude;
                         $model->longitude = $longitude;
@@ -764,7 +780,8 @@ class Users extends MX_Controller {
                                 'Email' => $email == "" ? "-" : $email,
                                 'Address' => $address == "" ? "-" : $address,
                                 'Billing Address' => $billing_address == "" ? "-" : $billing_address,
-                                'City' => $city == "" ? "-" : City::find($city)->name,
+                                'City' => $city == "" ? "-" : ucwords(strtolower(City::find($city)->name)),
+                                'District' => $subdistrict == "" ? "-" : District::find($subdistrict)->name,
                                 'Postal Code' => $postal_code == "" ? "-" : $postal_code,
                                 'Latitude' => $latitude == "" ? "-" : $latitude,
                                 'Longitude' => $longitude == "" ? "-" : $longitude,

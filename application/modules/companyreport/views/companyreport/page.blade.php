@@ -1363,9 +1363,59 @@
     });
 
     $('#top').change(function(){
-        $('#due_date_invoice').val('');
+        var toYyMmDd = function(input) {
+            var ptrn = /(\d{2})\-(\d{2})\-(\d{4})/;
+            if(!input || !input.match(ptrn)) {
+                return null;
+            }
+            return input.replace(ptrn, '$3-$2-$1');
+        };
+
+        var dt = new Date(toYyMmDd($('#receive_date').val()));
+        dt.setDate(dt.getDate() + parseInt($('#top').val()));
+
+        var dd = ('0' + dt.getDate()).slice(-2);
+        var mm = ('0' + parseInt(dt.getMonth() + 1)).slice(-2);
+        var y = dt.getFullYear();
+
+        var due_date_invoice = dd + '-' + mm + '-' + y;
+        var aging_invoice = getDiffDate(due_date_invoice);
+        var due_date_ar = parseInt($('#top').val()) - aging_invoice;
+        
+        $('#due_date_invoice').val(due_date_invoice);
+        $('#aging_invoice').val(aging_invoice);
+        $('#due_date_ar').val(due_date_ar);
 
     });
 
+    function getDiffDate(fromDate){
+        // datepart: 'y', 'm', 'w', 'd', 'h', 'n', 's'
+        Date.dateDiff = function(datepart, fromdate, todate) {	
+            datepart = datepart.toLowerCase();	
+            var diff = fromdate - todate;
+            var divideBy = { w:604800000, 
+                            d:86400000, 
+                            h:3600000, 
+                            n:60000, 
+                            s:1000 };	
+            
+            return Math.floor( diff/divideBy[datepart]);
+        }
+
+        var toYyMmDd = function(input) {
+            var ptrn = /(\d{2})\-(\d{2})\-(\d{4})/;
+            if(!input || !input.match(ptrn)) {
+                return null;
+            }
+            return input.replace(ptrn, '$3-$2-$1');
+        };
+
+        //Set the two dates
+        var y2k  = new Date(toYyMmDd(fromDate));
+        // var y2k  = new Date('2019-06-23');
+        var today= new Date();
+        // console.log('Weeks since the new millenium: ' + Date.dateDiff('d', y2k, today));
+        return Date.dateDiff('d', y2k, today);
+    }
 </script>
 @stop

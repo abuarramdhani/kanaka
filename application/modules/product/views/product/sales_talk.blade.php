@@ -70,12 +70,12 @@
                                         if(count($productImage) > 0){
                                             foreach($productImage as $p){
                                     ?>
-                                            <img height="350" class="img-sales-talk" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/<?= $p->image ?>">
+                                            <img width="350" class="img-sales-talk" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/<?= $p->image ?>">
                                     <?php 
                                             } 
                                         }else{
                                     ?>
-                                            <img height="350" class="img-sales-talk" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/default.png">
+                                            <img width="350" class="img-sales-talk" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/default.png">
                                     <?php
                                         } 
                                     ?>

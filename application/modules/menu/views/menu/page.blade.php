@@ -115,7 +115,7 @@
                <div class="form-group">
                     <label class="col-lg-3 control-label"><?=lang('menu_parent')?><span class="text-danger bold">*</span></label>
                     <div class="col-lg-8">
-                        <select name="menu_parent" id="parent_menu_id" class="form-control" required>
+                        <select name="menu_parent" id="parent_menu_id" class="form-control select2" required>
                             <option value="0">- Parent -</option>
                             @if (!empty($parent_menus)) 
                                 @foreach ($parent_menus as $parent) 
@@ -150,10 +150,10 @@
         'offText' : 'Not',
     });
     
-    $('#parent_menu_id').select2({
-        theme: "bootstrap",
-        width: "100%"
-    });
+    // $('#parent_menu_id').select2({
+    //     theme: "bootstrap",
+    //     width: "100%"
+    // });
 
     function add_menu(){
       $('#form-menu')[0].reset(); 

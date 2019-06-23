@@ -314,13 +314,13 @@
                         '<div class="form-control-focus"> </div>'+
                     '</div>'+
                 '</div>'+
-                '<div class="form-group form-md-line-input">'+
-                    '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
-                    '<div class="col-lg-7">'+
-                        '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparison[]" id="desc_comparison_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
-                        '<div class="form-control-focus"> </div>'+
-                    '</div>'+
-                '</div>'+
+                // '<div class="form-group form-md-line-input">'+
+                //     '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
+                //     '<div class="col-lg-7">'+
+                //         '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparison[]" id="desc_comparison_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
+                //         '<div class="form-control-focus"> </div>'+
+                //     '</div>'+
+                // '</div>'+
                 '<div class="form-group form-md-line-input">'+
                     '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
                     '<div class="col-lg-7">'+
@@ -375,7 +375,7 @@
                 '</div>'
             );
 
-            $('#desc_comparison_'+i).ckeditor();
+            // $('#desc_comparison_'+i).ckeditor();
             var typeComp = $('#tipe_kemasan_comp_'+i).val();
             $('#cbp_per_xxx_comp_'+i).html('CBP Per '+typeComp+'<span class="text-danger">*</span>'); 
             $('#cbp_per_kemasan_comp_'+i).attr('placeholder','CBP Per '+typeComp);
@@ -394,7 +394,6 @@
     }
 
     function get_cbp_per_karton_comp(x){
-        console.log('masuk'+x)
         $('#cbp_per_karton_comp_'+x).attr('readonly',true);
         $('#harga_comp_'+x).attr('readonly',true);
 
@@ -540,6 +539,10 @@
                 $('[name="category_id"]').val(row.category_id);
                 $('[name="description"]').val(row.description);
                 $('[name="feature"]').val(row.feature);
+                $('[name="cbp_per_kemasan"]').val(row.cbp_per_kemasan);
+                $('[name="cbp_per_karton"]').val(row.cbp_per_karton);
+                $('[name="harga"]').val(row.harga);
+                $('[name="tipe_kemasan"]').val(row.tipe_kemasan);
 
                 for(i=0; i<rowImage.length; i++){
                     html += '<div class="product-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/' + rowImage[i].image + '"></div>';
@@ -556,13 +559,13 @@
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'+
-                        '<div class="form-group form-md-line-input">'+
-                            '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
-                            '<div class="col-lg-7">'+
-                                '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparison[]" id="desc_comparison_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
-                                '<div class="form-control-focus"> </div>'+
-                            '</div>'+
-                        '</div>'+
+                        // '<div class="form-group form-md-line-input">'+
+                        //     '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
+                        //     '<div class="col-lg-7">'+
+                        //         '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparison[]" id="desc_comparison_'+i+'" placeholder="<?=lang('description')?>"></textarea>'+
+                        //         '<div class="form-control-focus"> </div>'+
+                        //     '</div>'+
+                        // '</div>'+
                         '<div class="form-group form-md-line-input">'+
                             '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
@@ -619,7 +622,7 @@
 
                     $('#comparison_id_'+i).val(rowComparison[i-1].id);
                     $('#brand_'+i).val(rowComparison[i-1].brand);
-                    $('#desc_comparison_'+i).val(rowComparison[i-1].description);
+                    // $('#desc_comparison_'+i).val(rowComparison[i-1].description);
                     $('#cbp_per_kemasan_comp_'+i).val(rowComparison[i-1].cbp_per_kemasan);
                     $('#cbp_per_karton_comp_'+i).val(rowComparison[i-1].cbp_per_karton);
                     $('#harga_comp_'+i).val(rowComparison[i-1].harga);
@@ -627,7 +630,7 @@
                     $('#packing_size_comp_'+i).val(rowComparison[i-1].packing_size);
                     $('#qty_comp_'+i).val(rowComparison[i-1].qty_per_ctn);
 
-                    $('#desc_comparison_'+i).ckeditor();
+                    // $('#desc_comparison_'+i).ckeditor();
                 }
 
                 $('.btn_add_comp_edit').show();
@@ -645,23 +648,68 @@
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'+
+                        // '<div class="form-group form-md-line-input">'+
+                        //     '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
+                        //     '<div class="col-lg-7">'+
+                        //         '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparison[]" id="desc_comparison_'+z+'" placeholder="<?=lang('description')?>"></textarea>'+
+                        //         '<div class="form-control-focus"> </div>'+
+                        //     '</div>'+
+                        // '</div>'+
                         '<div class="form-group form-md-line-input">'+
-                            '<label class="col-lg-4 control-label"><?=lang('description')?><span class="text-danger">*</span></label>'+
+                            '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                                '<textarea required rows="2" cols="50" class="form-control input-sm" name="desc_comparison[]" id="desc_comparison_'+z+'" placeholder="<?=lang('description')?>"></textarea>'+
+                            '<input type="file" class="form-control" name="image_comparison[]" id="image_comparison_'+z+'"/>'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'+
                         '<div class="form-group form-md-line-input">'+
-                            '<label class="col-lg-4 control-label"><?=lang('image')?><span class="text-danger">*</span></label>'+
+                            '<label class="col-lg-4 control-label"><?=lang('packing_size')?><span class="text-danger">*</span></label>'+
                             '<div class="col-lg-7">'+
-                            '<input required type="file" class="form-control" name="image_comparison[]" id="image_comparison_'+z+'"/>'+
+                                '<input onchange="get_cbp_per_karton_comp('+z+')" type="number" class="form-control input-sm" name="packing_size_comp[]" id="packing_size_comp_'+z+'" placeholder="<?=lang('packing_size')?>" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label"><?=lang('qty_per_ctn')?><span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input onchange="get_cbp_per_karton_comp('+z+')" type="number" class="form-control input-sm" name="qty_comp[]" id="qty_comp_'+z+'" placeholder="<?=lang('qty_per_ctn')?>" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label">Tipe Kemasan<span class="text-danger">*</span></label>'+
+                            '<div class="col-md-7">'+
+                                '<select id="tipe_kemasan_comp_'+z+'" name="tipe_kemasan_comp[]" class="form-control">'+
+                                    '<option value="Pouch">Pouch</option>'+
+                                    '<option value="Botol">Botol</option>'+
+                                    '<option value="Bag">Bag</option>'+
+                                '</select>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label cbp_per_xxx" id="cbp_per_xxx_comp_'+z+'">CBP Per XXX<span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input onchange="get_cbp_per_karton_comp('+z+')" type="number" class="form-control input-sm" name="cbp_per_kemasan_comp[]" id="cbp_per_kemasan_comp_'+z+'" placeholder="CBP Per XXX" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label">CBP Per Karton<span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input type="number" class="form-control input-sm" name="cbp_per_karton_comp[]" id="cbp_per_karton_comp_'+z+'" placeholder="CBP Per Karton" maxlength="50" />'+
+                                '<div class="form-control-focus"> </div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group form-md-line-input">'+
+                            '<label class="col-lg-4 control-label">Harga<span class="text-danger">*</span></label>'+
+                            '<div class="col-lg-7">'+
+                                '<input type="number" class="form-control input-sm" name="harga_comp[]" id="harga_comp_'+z+'" placeholder="Harga" maxlength="50" />'+
                                 '<div class="form-control-focus"> </div>'+
                             '</div>'+
                         '</div>'
                     );
 
-                    $('#desc_comparison_'+z).ckeditor();
+                    // $('#desc_comparison_'+z).ckeditor();
                     z++;
                 });
                

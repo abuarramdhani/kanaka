@@ -216,12 +216,12 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<select id="pricelist_id_tmp" name="pricelist_id_tmp" class="form-control" style="display:none;">
+<select id="pricelist_id_tmp" name="pricelist_id_tmp" class="form-control select2" style="display:none;">
     <option selected disabled value=""><?=lang('select')?> <?=lang('product_code')?></option>
     <?php
         if (!empty($pricelists)) {
             foreach ($pricelists as $c) { ?>
-            <option value="<?=$c->pricelist_id?>"><?=ucfirst($c->product_code)?></option>
+            <option value="<?=$c->id?>"><?=ucfirst($c->product_code)?></option>
     <?php } } ?>
 </select> 
 
@@ -379,7 +379,6 @@
 
 @section('scripts')
 <script type="text/javascript">
-
     function printPdf(){
         return window.open('{{base_url()}}reports/suratpesanan/pdf/?id='+$('[name="id_pesanan"]').val())
     }
@@ -420,9 +419,15 @@
                     '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
                 '</td>' +
                 '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
-                '<td class="text-center"><input onchange="get_total('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
+                // '<td class="text-center"><input onchange="get_total('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
+                '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
                 '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
-                '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'"/></td>' +
+                '<td class="text-center">'+
+                    '<input type="text" class="form-control input-sm" name="order_price_after_tax_tmp[]" id="order_price_after_tax_tmp_'+i+'"/>'+
+                    '<select onchange="get_pricelist('+i+')" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'">'+
+                        '<option value=""><?= lang('select_your_option') ?></option>'+
+                    '</select>'+
+                '</td>' +
                 '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
             '</tr>'
         );
@@ -479,22 +484,98 @@
     }
 
     function getProduct(x){
-        $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getPricelist', {id: $('#pricelist_id_'+x).val()}, function(json, textStatus) {
+       $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getpricelistbyproduct', {id: $('#pricelist_id_'+x).val()}, function(json, textStatus) {
             if(json.status == "success"){
-                var row = json.data[0];
-                var i;
-                var html = "";
+                var row = json.data;
+                var rowProduct = json.product[0];
+                var html = '<option value=""><?= lang('select') ?></option>';
 
-                $('#product_name_'+x).val(row.name);
-                $('#order_price_before_tax_'+x).val(row.company_before_tax_ctn);
-                $('#order_price_after_tax_'+x).val(row.company_after_tax_ctn);
+                $.each(row, function(){
+                    var val_id = '';
+                    var val_text = '';
+                    $.each(this, function(name, value){
+                        if(name == 'id')
+                            val_id = value;
+
+                        if(name == 'company_after_tax_ctn')
+                            val_text = value;
+    
+                    });
+                    html += '<option value="' + val_id + '">' + val_text + '</option>';
+                });
+
+                $('#order_price_after_tax_'+x).html(html);
+                $('#product_name_'+x).val(rowProduct.name);
                 $('#order_amount_in_ctn_'+x).focus();
 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
             App.unblockUI('#form-wrapper');
-       });
+        });
+    }
+
+    function get_pricelist(x){
+       $.getJSON('{{base_url()}}suratpesanan/suratpesanans/get_pricelist', {id: $('#order_price_after_tax_'+x).val()}, function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data[0];
+                var html = "";
+
+                $('#order_price_before_tax_'+x).val(row.company_before_tax_ctn)
+                $('#order_price_after_tax_tmp_'+x).val(row.company_after_tax_ctn);
+
+                var amount = $('#order_amount_in_ctn_'+x).val();
+                var price = $('#order_price_after_tax_tmp_'+x).val();
+
+                console.log(price);
+
+                var total = amount*price;
+
+                $('#order_amount_after_tax_'+x).val(total);
+                
+                var total_order_amount_in_ctn = 0;
+                var total_order_price_before_tax = 0;
+                var total_order_price_after_tax = 0;
+                var total_order_amount_after_tax = 0;
+                for (var y = 1; y < i; y++) {
+                    total_order_amount_in_ctn = parseInt($('#order_amount_in_ctn_'+y).val()) + parseInt(total_order_amount_in_ctn);
+                    total_order_price_before_tax = parseInt($('#order_price_before_tax_'+y).val()) + parseInt(total_order_price_before_tax);
+                    total_order_price_after_tax = parseInt($('#order_price_after_tax_tmp_'+y).val()) + parseInt(total_order_price_after_tax);
+                    total_order_amount_after_tax = parseInt($('#order_amount_after_tax_'+y).val()) + parseInt(total_order_amount_after_tax);
+                } 
+
+                $('#total_order_amount_in_ctn').val(total_order_amount_in_ctn);
+                $('#total_order_price_before_tax').val(total_order_price_before_tax);
+                $('#total_order_price_after_tax').val(total_order_price_after_tax);
+                $('#total_order_amount_after_tax').val(total_order_amount_after_tax);
+
+                $('#total_value_add').val(total_order_amount_after_tax);
+                var total_value     = $('#total_value_add').val();
+                var reg_disc        = $('#reg_disc_add').val();
+                var add_disc_1      = $('#add_disc_1_add').val();
+                var add_disc_2      = $('#add_disc_2_add').val();
+                var btw_disc        = $('#btw_disc').val();
+
+                var reg_disc_total  = total_value*reg_disc;
+                $('#reg_disc_total_add').val(reg_disc_total);
+
+                var add_disc_1_total  = reg_disc_total*add_disc_1;
+                $('#add_disc_1_total_add').val(add_disc_1_total);
+
+                var add_disc_2_total  = add_disc_1_total*add_disc_2;
+                $('#add_disc_2_total_add').val(add_disc_2_total);
+
+                var btw_disc_total  = add_disc_2_total*btw_disc;
+                $('#btw_disc_total_add').val(btw_disc_total);
+
+                var total_niv = parseInt(total_value)+parseInt(reg_disc_total)+parseInt(add_disc_1_total)+parseInt(add_disc_2_total)+parseInt(btw_disc_total);
+                $('#total_niv_add').val(total_niv);
+
+            }else if(json.status == "error"){
+                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+            }
+            App.unblockUI('#form-wrapper');
+        });
     }
 
     $('#principle_id').change(function(){
@@ -612,7 +693,7 @@
 
                 App.unblockUI('#form-wrapper');
                 setTimeout(function(){
-                    window.location.reload()
+                    // window.location.reload()
                 },1000);
             } 
             return false;

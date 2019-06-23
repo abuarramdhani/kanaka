@@ -1129,4 +1129,100 @@ class Companyreports extends MX_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
+    function stock(){
+        $data['user'] = $this->ion_auth->user()->row();
+        $data['add_access'] = $this->user_profile->get_user_access('Created', 'product');
+        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
+        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');
+
+        $sell_in = $this->db->where('t_sell_in_company.deleted', '0')
+                          ->select('m_product.name as product_name')
+                          ->select('m_dipo_partner.name as customer_name')
+                          ->select('net_price_in_ctn_after_tax as nominal')
+                          ->select_sum('total_order_in_ctn', 'pax')
+                          ->join('m_product', 't_sell_in_company.product_id = m_product.id')
+                          ->join('m_dipo_partner', 't_sell_in_company.customer_id = m_dipo_partner.id')
+                          ->group_by('product_id')
+                          ->group_by('customer_id')
+                          ->get('t_sell_in_company')->result();
+        
+        $sell_out = $this->db->where('t_sell_out_company.deleted', '0')
+                          ->select('m_product.name as product_name')
+                          ->select('m_dipo_partner.name as customer_name')
+                          ->select('net_price_in_ctn_after_tax as nominal')
+                          ->select_sum('total_order_in_ctn', 'pax')
+                          ->join('m_product', 't_sell_out_company.product_id = m_product.id')
+                          ->join('m_dipo_partner', 't_sell_out_company.customer_id = m_dipo_partner.id')
+                          ->group_by('product_id')
+                          ->group_by('customer_id')
+                          ->get('t_sell_out_company')->result();
+        
+        $this->load->blade('companyreport.views.companyreport.stock', $data);
+    }
+
+    public function fetch_data_stock() {
+        $user = $this->ion_auth->user()->row();
+
+        $database_columns = array(
+            'm_product.name as product_name',
+            'm_dipo_partner.name as customer_name',
+            'sum(total_order_in_ctn) as total_order',
+            'net_price_in_ctn_after_tax',
+        );
+
+        $header_columns = array(
+            'product_name',
+            'customer_name',
+            'total_order',
+            'net_price_in_ctn_after_tax',
+        );
+
+        $from = "t_sell_in_company";
+        $where = "t_sell_in_company.deleted = 0 AND m_dipo_partner.type = 'dipo'";
+        if($user->group_id != '1'){
+            $where .= " AND t_sell_in_company.user_created = ". $user->id;
+        }
+
+        $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
+        $group_by = "product_id, customer_id";
+
+        $join[] = array('m_product', 't_sell_in_company.product_id = m_product.id', 'inner');
+        $join[] = array('m_dipo_partner', 't_sell_in_company.customer_id = m_dipo_partner.id', 'inner');
+        
+        if ($this->input->get('sSearch') != '') {
+            $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
+            if((bool)strtotime($sSearch)){
+                $sSearch = date('Y-m-d',strtotime($sSearch));
+            }
+            $where .= " AND (";
+            $where .= "product_name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "customer_name LIKE '%" . $sSearch . "%' OR ";
+            $where .= ")";
+        }
+
+        $this->datatables->set_index('t_sell_in_company.id');
+        $this->datatables->config('database_columns', $database_columns);
+        $this->datatables->config('from', $from);
+        $this->datatables->config('join', $join);
+        $this->datatables->config('where', $where);
+        $this->datatables->config('group_by', $group_by);
+        $this->datatables->config('order_by', $order_by);
+        $selected_data = $this->datatables->get_select_data();
+        $aa_data = $selected_data['aaData'];
+        $new_aa_data = array();
+
+        foreach ($aa_data as $row) {
+            $row_value = array();
+
+            $row_value[] = $row->product_name;
+            $row_value[] = $row->customer_name;
+            $row_value[] = $row->total_order;
+            $row_value[] = number_format($row->net_price_in_ctn_after_tax, 0);
+            
+            $new_aa_data[] = $row_value;
+        }
+        
+        $selected_data['aaData'] = $new_aa_data;
+        $this->output->set_content_type('application/json')->set_output(json_encode($selected_data));
+    }
 }

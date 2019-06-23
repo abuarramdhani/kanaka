@@ -73,7 +73,7 @@ class Products extends MX_Controller {
             }
             $where .= " AND (";
             $where .= "m_product.name LIKE '%" . $sSearch . "%' OR ";
-            $where .= "category_name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_category.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_product.product_code LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_product.description LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_product.feature LIKE '%" . $sSearch . "%' OR ";
@@ -234,7 +234,7 @@ class Products extends MX_Controller {
                                 
                                     $dataComparison = array('product_id'         => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
-                                                        'description'            => $this->input->post('desc_comparison')[$i],
+                                                        // 'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => $uploadDataComp[$i]['file_name'],
                                                         'packing_size'           => $this->input->post('packing_size_comp')[$i],
                                                         'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
@@ -249,7 +249,7 @@ class Products extends MX_Controller {
                                 }else{
                                     $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
-                                                        'description'            => $this->input->post('desc_comparison')[$i],
+                                                        // 'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => 'default.jpg',
                                                         'packing_size'           => $this->input->post('packing_size_comp')[$i],
                                                         'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
@@ -462,10 +462,12 @@ class Products extends MX_Controller {
                                     // Uploaded file data
                                     $fileDataComp                       = $this->upload->data();
                                     $uploadDataComp[$i]['file_name']    = $fileDataComp['file_name'];
+                            
+                                    print_r($uploadDataComp[$i]['file_name']);exit;
                                 
                                     $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
-                                                        'description'            => $this->input->post('desc_comparison')[$i],
+                                                        // 'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => $uploadDataComp[$i]['file_name'],
                                                         'packing_size'           => $this->input->post('packing_size_comp')[$i],
                                                         'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
@@ -480,7 +482,7 @@ class Products extends MX_Controller {
                                 }else{
                                     $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
-                                                        'description'            => $this->input->post('desc_comparison')[$i],
+                                                        // 'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => 'default.jpg',
                                                         'packing_size'           => $this->input->post('packing_size_comp')[$i],
                                                         'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
@@ -496,7 +498,7 @@ class Products extends MX_Controller {
                             }else{
                                 $dataComparison = array('product_id'        => $id_product,
                                                     'brand'                  => $this->input->post('brand')[$i],
-                                                    'description'            => $this->input->post('desc_comparison')[$i],
+                                                    // 'description'            => $this->input->post('desc_comparison')[$i],
                                                     'image'                  => 'default.jpg',
                                                     'packing_size'           => $this->input->post('packing_size_comp')[$i],
                                                     'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
@@ -532,7 +534,7 @@ class Products extends MX_Controller {
                                 
                                     $model_comparison                   = ProductComparison::find($this->input->post('comparison_id')[$i]);
                                     $model_comparison->brand            = $this->input->post('brand')[$i];
-                                    $model_comparison->description      = $this->input->post('desc_comparison')[$i];
+                                    // $model_comparison->description      = $this->input->post('desc_comparison')[$i];
                                     $model_comparison->packing_size     = $this->input->post('packing_size_comp')[$i];
                                     $model_comparison->qty_per_ctn      = $this->input->post('qty_comp')[$i];
                                     $model_comparison->tipe_kemasan     = $this->input->post('tipe_kemasan_comp')[$i];
@@ -548,7 +550,7 @@ class Products extends MX_Controller {
                                 }else{
                                     $model_comparison                   = ProductComparison::find($this->input->post('comparison_id')[$i]);
                                     $model_comparison->brand            = $this->input->post('brand')[$i];
-                                    $model_comparison->description      = $this->input->post('desc_comparison')[$i];
+                                    // $model_comparison->description      = $this->input->post('desc_comparison')[$i];
                                     $model_comparison->image            = $model_comparison->image;
                                     $model_comparison->packing_size     = $this->input->post('packing_size_comp')[$i];
                                     $model_comparison->qty_per_ctn      = $this->input->post('qty_comp')[$i];
@@ -565,7 +567,7 @@ class Products extends MX_Controller {
                             }else{
                                 $model_comparison                   = ProductComparison::find($this->input->post('comparison_id')[$i]);
                                 $model_comparison->brand            = $this->input->post('brand')[$i];
-                                $model_comparison->description      = $this->input->post('desc_comparison')[$i];
+                                // $model_comparison->description      = $this->input->post('desc_comparison')[$i];
                                 $model_comparison->image            = $model_comparison->image;
                                 $model_comparison->packing_size     = $this->input->post('packing_size_comp')[$i];
                                 $model_comparison->qty_per_ctn      = $this->input->post('qty_comp')[$i];

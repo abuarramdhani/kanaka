@@ -18,7 +18,7 @@ class Suratpesanans extends MX_Controller {
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'suratpesanan');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'suratpesanan');
         $data['principles'] = Principle::where('deleted', '0')->get();
-        $data['pricelists'] = Pricelist::select('t_pricelist.id as pricelist_id', 't_pricelist.*', 'm_product.*')->join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', '0')->where('m_product.deleted', '0')->get();
+        $data['pricelists'] = Product::where('deleted', '0')->get();
         $data['dipos'] = Dipo::where('deleted', '0')->get();
         $this->load->blade('suratpesanan.views.suratpesanan.page', $data);
     }
@@ -130,8 +130,8 @@ class Suratpesanans extends MX_Controller {
             $where = "t_sp_detail.deleted = 0 AND sp_id =".$id;
             $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
             $join[] = array('t_sp', 't_sp.id = t_sp_detail.sp_id', 'inner');
-            $join[] = array('t_pricelist', 't_pricelist.id = t_sp_detail.pricelist_id', 'inner');
-            $join[] = array('m_product', 'm_product.id = t_pricelist.product_id', 'inner');
+            $join[] = array('m_product', 'm_product.id = t_sp_detail.product_id', 'inner');
+            $join[] = array('t_pricelist', 't_pricelist.product_id = m_product.id', 'inner');
     
             $this->datatables->set_index('t_sp_detail.id');
             $this->datatables->config('database_columns', $database_columns);
@@ -213,7 +213,7 @@ class Suratpesanans extends MX_Controller {
                         $productCount = count($this->input->post('product_name'));
                         for($i = 0; $i < $productCount; $i++){ 
                             $dataDetail = array('sp_id'                  => $id_sp,
-                                                'pricelist_id'           => $this->input->post('pricelist_id')[$i],
+                                                'product_id'             => $this->input->post('pricelist_id')[$i],
                                                 'order_amount_in_ctn'    => $this->input->post('order_amount_in_ctn')[$i],
                                                 'order_price_before_tax' => $this->input->post('order_price_before_tax')[$i],
                                                 'order_price_after_tax'  => $this->input->post('order_price_after_tax')[$i],
@@ -287,7 +287,7 @@ class Suratpesanans extends MX_Controller {
                         $get_detail = Spdetail::where('id' , $this->input->post('sp_detail_id')[$i])->where('deleted', 0)->first();
                         if (empty($get_detail)) {
                             $dataDetail = array('sp_id'                  => $id_suratpesanan,
-                                                'pricelist_id'           => $this->input->post('pricelist_id')[$i],
+                                                'product_id'             => $this->input->post('pricelist_id')[$i],
                                                 'order_amount_in_ctn'    => $this->input->post('order_amount_in_ctn')[$i],
                                                 'order_price_before_tax' => $this->input->post('order_price_before_tax')[$i],
                                                 'order_price_after_tax'  => $this->input->post('order_price_after_tax')[$i],
@@ -299,7 +299,7 @@ class Suratpesanans extends MX_Controller {
                         }else{
                             $modelDetail                                  = Spdetail::find($this->input->post('sp_detail_id')[$i]);
                             $modelDetail->sp_id                           = $id_suratpesanan;
-                            $modelDetail->pricelist_id                    = $this->input->post('pricelist_id')[$i];
+                            $modelDetail->product_id                      = $this->input->post('pricelist_id')[$i];
                             $modelDetail->order_amount_in_ctn             = $this->input->post('order_amount_in_ctn')[$i];
                             $modelDetail->order_price_before_tax          = $this->input->post('order_price_before_tax')[$i];
                             $modelDetail->order_price_after_tax           = $this->input->post('order_price_after_tax')[$i];
@@ -346,8 +346,8 @@ class Suratpesanans extends MX_Controller {
                                         ->where('t_sp.deleted', 0)->get();
             $dataDetail = Spdetail::select('t_sp.*', 't_pricelist.*', 'm_product.*', 't_sp_detail.*', 't_sp_detail.id as spdetail_id')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
-                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
-                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')
+                                    ->join('t_pricelist', 't_pricelist.product_id', '=', 'm_product.id')
                                     ->where('t_sp_detail.sp_id', $id)
                                     ->where('t_sp_detail.deleted', 0)
                                     ->where('t_sp.deleted', 0)
@@ -453,6 +453,28 @@ class Suratpesanans extends MX_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
+    function getpricelistbyproduct(){
+        if ($this->input->is_ajax_request()) {
+            $id = (int)$this->input->get('id');
+            $model = array('status' => 'success', 'data' => Pricelist::where('product_id',$id)->orderBy('id', 'DESC')->get(), 'product' => Product::where('id',$id)->get());
+        } else {
+            $model = array('status' => 'error', 'message' => lang('data_not_found'));
+        }
+        $data = $model;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    function get_pricelist(){
+        if ($this->input->is_ajax_request()) {
+            $id = (int)$this->input->get('id');
+            $model = array('status' => 'success', 'data' => Pricelist::select('company_after_tax_ctn','company_before_tax_ctn')->where('id',$id)->orderBy('id', 'DESC')->get());
+        } else {
+            $model = array('status' => 'error', 'message' => lang('data_not_found'));
+        }
+        $data = $model;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
     function pdf(){
         $id = (int) $this->input->get('id');
         $data['suratpesanans'] = Suratpesanan::select('t_sp.*', 'm_principle.top as principle_top', 'm_principle.code as principle_code', 'm_principle.name as principle_name', 'm_principle.pic as principle_pic', 'm_dipo_partner.name as dipo_name', 'm_dipo_partner.code as dipo_code', 'm_dipo_partner.address as dipo_address', 'm_dipo_partner.code as dipo_code', 'm_principle.reg_disc', 'm_principle.add_disc_1', 'm_principle.add_disc_2', 'm_principle.btw_disc')
@@ -462,8 +484,8 @@ class Suratpesanans extends MX_Controller {
                                     ->where('t_sp.deleted', 0)->get();
         $data['detailpesanans'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
-                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
-                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')
+                                    ->join('t_pricelist', 't_pricelist.product_id', '=', 'm_produc.id')
                                     ->where('sp_id', $id)
                                     ->where('t_sp_detail.deleted', 0)
                                     ->where('t_sp.deleted', 0)->get();
@@ -482,8 +504,8 @@ class Suratpesanans extends MX_Controller {
                                     ->where('t_sp.deleted', 0)->get();
         $data['detailpesanans'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
-                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
-                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')
+                                    ->join('t_pricelist', 't_pricelist.product_id', '=', 'm_produc.id')
                                     ->where('sp_id', $id)
                                     ->where('t_sp_detail.deleted', 0)
                                     ->where('t_sp.deleted', 0)->get();

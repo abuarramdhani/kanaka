@@ -504,3 +504,9 @@ $lang['catalog_product'] = 'Catalog Product';
 $lang['sales_talk'] = 'Sales Talk';
 ## END CATALOG PRODUCT ##
 
+## STOCK ##
+$lang['stock'] = 'Stock';
+$lang['pack'] = 'Pack';
+$lang['nominal'] = 'Nominal';
+## END STOCK ##
+

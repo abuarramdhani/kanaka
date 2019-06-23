@@ -238,3 +238,8 @@ $route['catalogproduct/salestalk'] = 'product/products/salestalk';
 $route['catalogproduct/price'] = 'product/products/price';
 $route['catalogproduct/comparison'] = 'product/products/comparison';
 $route['catalogproduct/buildingblock'] = 'product/products/buildingblock';
+
+/**
+* STOCK
+*/
+$route['reports/stock'] = 'companyreport/companyreports/stock';

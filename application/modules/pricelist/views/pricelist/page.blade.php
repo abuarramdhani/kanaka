@@ -212,7 +212,8 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('after_tax')?> <?=lang('in_ctn')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <input oninput="get_kanaka_pricelist()" type="text" class="form-control input-sm" name="company_after_tax_ctn" id="company_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
+                        <!-- <input oninput="get_kanaka_pricelist()" type="text" class="form-control input-sm" name="company_after_tax_ctn" id="company_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" /> -->
+                        <input type="text" class="form-control input-sm" name="company_after_tax_ctn" id="company_after_tax_ctn" placeholder="<?=lang('after_tax')?> <?=lang('in_ctn')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
@@ -259,7 +260,8 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
                     <div class="col-lg-2">
-                        <input oninput="get_kanaka_pricelist()"  type="text" class="form-control input-sm" name="dipo_discount" id="dipo_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
+                        <!-- <input oninput="get_kanaka_pricelist()"  type="text" class="form-control input-sm" name="dipo_discount" id="dipo_discount" placeholder="<?=lang('discount')?>" maxlength="50" /> -->
+                        <input type="text" class="form-control input-sm" name="dipo_discount" id="dipo_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
                     </div>
                     <label class="col-lg-6">%</label>
@@ -313,7 +315,8 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
                     <div class="col-lg-2">
-                        <input oninput="get_kanaka_pricelist()"  type="text" class="form-control input-sm" name="mitra_discount" id="mitra_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
+                        <!-- <input oninput="get_kanaka_pricelist()"  type="text" class="form-control input-sm" name="mitra_discount" id="mitra_discount" placeholder="<?=lang('discount')?>" maxlength="50" /> -->
+                        <input type="text" class="form-control input-sm" name="mitra_discount" id="mitra_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
                     </div>
                     <label class="col-lg-6">%</label>
@@ -367,7 +370,8 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
                     <div class="col-lg-2">
-                        <input oninput="get_kanaka_pricelist()"  type="text" class="form-control input-sm" name="customer_discount" id="customer_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
+                        <!-- <input oninput="get_kanaka_pricelist()"  type="text" class="form-control input-sm" name="customer_discount" id="customer_discount" placeholder="<?=lang('discount')?>" maxlength="50" /> -->
+                        <input type="text" class="form-control input-sm" name="customer_discount" id="customer_discount" placeholder="<?=lang('discount')?>" maxlength="50" />
                         <div class="form-control-focus"> </div>
                     </div>
                     <label class="col-lg-6">%</label>
@@ -444,15 +448,21 @@
 
 @section('scripts')
 <script type="text/javascript">
-    // $(function(){
+    $(function(){
         
-    //     @if($user->group_id == '2')
-    //         $('#fieldset-kanaka').hide();
-    //         $('#fieldset-mitra').hide();
-    //         $('#fieldset-customer').hide();
-    //     @endif
+        @if($user->group_id == '2')
+            $('#fieldset-kanaka').hide();
+            $('#fieldset-mitra').hide();
+            $('#fieldset-customer').hide();
+        @endif
+
+        @if($user->group_id == '3')
+            $('#fieldset-kanaka').hide();
+            $('#fieldset-dipo').hide();
+            $('#fieldset-customer').hide();
+        @endif
         
-    // });
+    });
     
     $('#product_code').change(function(){
         $.getJSON('{{base_url()}}pricelist/pricelists/getProductData', {id: $('#product_code').val()}, function(json, textStatus) {
@@ -572,6 +582,14 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}pricelist/pricelists/fetch_data",
         "columnDefs": [
+            @if($user->group_id == '2')
+                {"visible": false, "searchable": false, "targets": [12, 13, 14, 15, 16, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]},
+            @endif
+
+            @if($user->group_id == '3')
+                {"visible": false, "searchable": false, "targets": [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 27, 28, 29, 30, 31, 32, 33]},
+            @endif
+
             {"className": "dt-center", "targets": [35]},
             {"targets": [35], "orderable": false}
         ],
@@ -587,20 +605,26 @@
         rules: {
             product_id: "required",
             normal_price: "required",
-            company_after_tax_ctn: "required",
             stock_availibility: "required",
-            dipo_discount: "required",
-            mitra_discount: "required",
-            customer_discount: "required",
+
+            @if($user->group_id == '1')
+                dipo_discount: "required",
+                mitra_discount: "required",
+                customer_discount: "required",
+                company_after_tax_ctn: "required",
+            @endif
         },
         messages: {
             product_id: "{{lang('product_code')}}" + " {{lang('not_empty')}}",
             normal_price: "{{lang('normal_price')}}" + " {{lang('not_empty')}}",
-            company_after_tax_ctn: "{{lang('company_after_tax_ctn')}}" + " {{lang('not_empty')}}",
             stock_availibility: "{{lang('stock_availibility_per_ctn')}}" + " {{lang('not_empty')}}",
-            dipo_discount: "{{lang('dipo_discount')}}" + " {{lang('not_empty')}}",
-            mitra_discount: "{{lang('mitra_discount')}}" + " {{lang('not_empty')}}",
-            customer_discount: "{{lang('customer_discount')}}" + " {{lang('not_empty')}}",
+            
+            @if($user->group_id == '1')
+                dipo_discount: "{{lang('dipo_discount')}}" + " {{lang('not_empty')}}",
+                mitra_discount: "{{lang('mitra_discount')}}" + " {{lang('not_empty')}}",
+                customer_discount: "{{lang('customer_discount')}}" + " {{lang('not_empty')}}",
+                company_after_tax_ctn: "{{lang('company_after_tax_ctn')}}" + " {{lang('not_empty')}}",
+            @endif
         },
         submitHandler : function(form){
             App.blockUI({

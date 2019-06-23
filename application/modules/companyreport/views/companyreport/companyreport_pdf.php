@@ -105,8 +105,8 @@
 		<td><?= $companyreport->principle_name ?></td>
 		<td><?= $companyreport->product_code ?></td>
 		<td><?= $companyreport->product_name ?></td>
-		<td><?= $companyreport->customer_code ?></td>
-		<td><?= $companyreport->customer_name ?></td>
+		<td><?= $companyreport->customer_code == "" ? "-" : $companyreport->customer_code ?></td>
+		<td><?= $companyreport->customer_name == "" ? "-" : $companyreport->customer_name ?></td>
 		<td><?= number_format($companyreport->price_hna_per_ctn_before_tax, 0) ?></td>
 		<td><?= number_format($companyreport->price_hna_per_ctn_after_tax, 0) ?></td>
 		<td><?= number_format($companyreport->total_order_in_ctn, 0) ?></td>

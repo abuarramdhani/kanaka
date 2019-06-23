@@ -60,7 +60,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </div>
                     <!-- END LOGO -->
 
-                    <div class="form-actions block-register">
+                    <div class="block-register">
                         <p><button onclick="register_customer()" class="btn btn-primary btn-md"><i class="fa fa-plus"></i>{{lang('register_customer')}}</button></p>
                         <p><button onclick="register_principal()" class="btn btn-info btn-md"><i class="fa fa-plus"></i>{{lang('register_principal')}}</button></p>
                     </div>

@@ -294,7 +294,7 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input customer_id_field">
                     <label class="col-lg-4 control-label"><?=lang('ship_to_delivery')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <select class="form-control input-sm select2" name="customer_id" id="customer_id" style="width: 100%;">
@@ -340,6 +340,14 @@
                 </div>
                 
                 <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('top')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="top" id="top" placeholder="<?=lang('top')?>" maxlength="3" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('remark')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="remark" id="remark" placeholder="<?=lang('remark')?>" maxlength="150" />
@@ -366,9 +374,9 @@
                 </div>
                 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('discount')?></label>
+                    <label class="col-lg-4 control-label"><?=lang('discount')?> (%)</label>
                     <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm currency" name="discount" id="discount" placeholder="<?=lang('discount')?>" readonly="readonly" />
+                        <input type="text" class="form-control input-sm" name="discount" id="discount" placeholder="<?=lang('discount')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
@@ -413,15 +421,7 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('top')?><span class="text-danger">*</span></label>
-                    <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm" name="top" id="top" placeholder="<?=lang('top')?>" readonly="readonly" />
-                        <div class="form-control-focus"> </div>
-                    </div>
-                </div>
-
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input selling_price_field">
                     <label class="col-lg-4 control-label"><?=lang('selling_price')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="selling_price" id="selling_price" placeholder="<?=lang('selling_price')?>" readonly="readonly" />
@@ -429,7 +429,7 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input margin_value_field">
                     <label class="col-lg-4 control-label"><?=lang('margin_value')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="margin_value" id="margin_value" placeholder="<?=lang('margin_value')?>" readonly="readonly" />
@@ -437,10 +437,34 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input margin_percented_field">
                     <label class="col-lg-4 control-label"><?=lang('margin_percented')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="margin_percented" id="margin_percented" placeholder="<?=lang('margin_percented')?>" readonly="readonly" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('due_date_invoice')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="due_date_invoice" id="due_date_invoice" placeholder="<?=lang('due_date_invoice')?>" readonly="readonly" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('aging_invoice')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="aging_invoice" id="aging_invoice" placeholder="<?=lang('aging_invoice')?>" readonly="readonly" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('due_date_ar')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="due_date_ar" id="due_date_ar" placeholder="<?=lang('due_date_ar')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
@@ -540,7 +564,7 @@
                     </div>
                 </div>
 
-                <div class="form-group form-md-line-input">
+                <div class="form-group form-md-line-input customer_id_field">
                     <label class="col-lg-4 control-label"><?=lang('ship_to_delivery')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <select class="form-control input-sm select2" name="customer_id_out" id="customer_id_out" style="width: 100%;">
@@ -586,6 +610,14 @@
                 </div>
                 
                 <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('top')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="top_out" id="top_out" placeholder="<?=lang('top')?>" maxlength="3" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('remark')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="remark_out" id="remark_out" placeholder="<?=lang('remark')?>" maxlength="150" />
@@ -612,9 +644,9 @@
                 </div>
                 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('discount')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('discount')?> (%)<span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm currency" name="discount_out" id="discount_out" placeholder="<?=lang('discount')?>" readonly="readonly" />
+                        <input type="text" class="form-control input-sm" name="discount_out" id="discount_out" placeholder="<?=lang('discount')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
@@ -660,14 +692,6 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('top')?><span class="text-danger">*</span></label>
-                    <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm" name="top_out" id="top_out" placeholder="<?=lang('top')?>" readonly="readonly" />
-                        <div class="form-control-focus"> </div>
-                    </div>
-                </div>
-
-                <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('payment_value')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="payment_value_out" id="payment_value_out" placeholder="<?=lang('payment_value')?>" readonly="readonly" />
@@ -701,6 +725,10 @@
     $(function(){
         
         @if($user->group_id != '1')
+            $('.customer_id_field').hide();
+            $('.selling_price_field').hide();
+            $('.margin_value_field').hide();
+            $('.margin_percented_field').hide();
             $('.check_status_field').hide();
             $('.tax_status_field').hide();
             $('.tax_no_field').hide();
@@ -711,8 +739,8 @@
             $('.ppn_field').hide();
             $('.net_price_in_ctn_before_tax_field').hide();
             $('.total_value_order_in_ctn_before_tax_field').hide();
-            $('#top').attr('readonly', false);
-            $('#top_out').attr('readonly', false);
+            // $('#top').attr('readonly', false);
+            // $('#top_out').attr('readonly', false);
         @endif
         
     });
@@ -792,13 +820,13 @@
                 check_status: "required",
                 tax_status: "required",
                 tax_no: "required",
+                customer_id: "required",
                 sp_id: "required",
                 principle_id: "required",
             @endif
 
             invoice_id: "required",
             product_id: "required",
-            customer_id: "required",
             net_price_in_ctn_after_tax: "required",
             total_order_in_ctn: "required",
             top: "required",
@@ -812,13 +840,13 @@
                 check_status: "{{lang('check_status')}}" + " {{lang('not_empty')}}",
                 tax_status: "{{lang('tax_status')}}" + " {{lang('not_empty')}}",
                 tax_no: "{{lang('tax_no')}}" + " {{lang('not_empty')}}",
+                customer_id: "{{lang('customer_id')}}" + " {{lang('not_empty')}}",
                 sp_id: "{{lang('sp_id')}}" + " {{lang('not_empty')}}",
                 principle_id: "{{lang('principle_id')}}" + " {{lang('not_empty')}}",
             @endif
                 
             invoice_id: "{{lang('invoice_id')}}" + " {{lang('not_empty')}}",
             product_id: "{{lang('product_id')}}" + " {{lang('not_empty')}}",
-            customer_id: "{{lang('customer_id')}}" + " {{lang('not_empty')}}",
             net_price_in_ctn_after_tax: "{{lang('net_price_in_ctn_after_tax')}}" + " {{lang('not_empty')}}",
             total_order_in_ctn: "{{lang('total_order_in_ctn')}}" + " {{lang('not_empty')}}",
             top: "{{lang('top')}}" + " {{lang('not_empty')}}",
@@ -870,11 +898,11 @@
             @if($user->group_id == '1')
                 tax_status_out: "required",
                 tax_no_out: "required",
+                customer_id_out: "required",
             @endif
 
             invoice_id_out: "required",
             product_id_out: "required",
-            customer_id_out: "required",
             net_price_in_ctn_after_tax_out: "required",
             total_order_in_ctn_out: "required",
             top_out: "required",
@@ -886,11 +914,11 @@
             @if($user->group_id == '1')            
                 tax_status_out: "{{lang('tax_status')}}" + " {{lang('not_empty')}}",
                 tax_no_out: "{{lang('tax_no')}}" + " {{lang('not_empty')}}",
+                customer_id_out: "{{lang('customer_id')}}" + " {{lang('not_empty')}}",
             @endif
         
             invoice_id_out: "{{lang('invoice_id')}}" + " {{lang('not_empty')}}",
             product_id_out: "{{lang('product_id')}}" + " {{lang('not_empty')}}",
-            customer_id_out: "{{lang('customer_id')}}" + " {{lang('not_empty')}}",
             net_price_in_ctn_after_tax_out: "{{lang('net_price_in_ctn_after_tax')}}" + " {{lang('not_empty')}}",
             total_order_in_ctn_out: "{{lang('total_order_in_ctn')}}" + " {{lang('not_empty')}}",
             top_out: "{{lang('top')}}" + " {{lang('not_empty')}}",
@@ -1180,7 +1208,8 @@
                 var net_price_in_ctn_after_tax = $('#net_price_in_ctn_after_tax option:selected').text();
                 var net_price_in_ctn_before_tax = parseInt(net_price_in_ctn_after_tax / 1.1);
                 var discount_value = price_hna_per_ctn_after_tax - net_price_in_ctn_after_tax;
-                var discount = discount_value / price_hna_per_ctn_after_tax;
+                // var discount = discount_value / price_hna_per_ctn_after_tax;
+                var discount = (discount_value / price_hna_per_ctn_after_tax) * 100;
                 var ppn = net_price_in_ctn_after_tax - net_price_in_ctn_before_tax;
                 
                 var total_order_in_ctn = $('#total_order_in_ctn').val();
@@ -1193,7 +1222,7 @@
 
                 $('#price_hna_per_ctn_before_tax').val(price_hna_per_ctn_before_tax);
                 $('#discount_value').val(discount_value);
-                $('#discount').val(discount);
+                $('#discount').val(discount.toFixed(0));
                 $('#net_price_in_ctn_before_tax').val(net_price_in_ctn_before_tax);
                 $('#ppn').val(ppn);
                 $('#total_value_order_in_ctn_before_tax').val(total_value_order_in_ctn_before_tax);
@@ -1222,7 +1251,7 @@
                 var net_price_in_ctn_after_tax = $('#net_price_in_ctn_after_tax_out option:selected').text();
                 var net_price_in_ctn_before_tax = parseInt(net_price_in_ctn_after_tax / 1.1);
                 var discount_value = price_hna_per_ctn_after_tax - net_price_in_ctn_after_tax;
-                var discount = discount_value / price_hna_per_ctn_after_tax;
+                var discount = (discount_value / price_hna_per_ctn_after_tax) * 100;
                 var ppn = net_price_in_ctn_after_tax - net_price_in_ctn_before_tax;
                 
                 var total_order_in_ctn = $('#total_order_in_ctn_out').val();
@@ -1231,7 +1260,7 @@
 
                 $('#price_hna_per_ctn_before_tax_out').val(price_hna_per_ctn_before_tax);
                 $('#discount_value_out').val(discount_value);
-                $('#discount_out').val(discount);
+                $('#discount_out').val(discount.toFixed(0));
                 $('#net_price_in_ctn_before_tax_out').val(net_price_in_ctn_before_tax);
                 $('#ppn_out').val(ppn);
                 $('#total_value_order_in_ctn_before_tax_out').val(total_value_order_in_ctn_before_tax);
@@ -1331,6 +1360,11 @@
             }
             App.unblockUI('#form-wrapper');
         });
+    });
+
+    $('#top').change(function(){
+        $('#due_date_invoice').val('');
+
     });
 
 </script>

@@ -74,12 +74,12 @@
                                                         if(count($productImage) > 0){
                                                             foreach($productImage as $prodImg){
                                                     ?>
-                                                            <img width="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/<?= $prodImg->image ?>">
+                                                            <img width="230" height="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/<?= $prodImg->image ?>">
                                                     <?php 
                                                             } 
                                                         }else{
                                                     ?>
-                                                            <img width="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/default.png">
+                                                            <img width="230" height="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/default.png">
                                                     <?php
                                                         } 
                                                     ?>
@@ -134,17 +134,13 @@
                                                 <div class="product-item-info">
                                                     <div class="product-image">
                                                         <?php 
-                                                            $productImageComp = ProductImage::where('product_id', $comp->product_id)->where('deleted', '0')->limit(1)->get();
-
-                                                            if(count($productImageComp) > 0){
-                                                                foreach($productImageComp as $imgComp){
+                                                           if(!empty($comp->image)){
                                                         ?>
-                                                                <img width="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/<?= $imgComp->image ?>">
+                                                                <img width="230" height="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/comparison/<?= $comp->image ?>">
                                                         <?php 
-                                                                } 
                                                             }else{
                                                         ?>
-                                                                <img width="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/default.png">
+                                                                <img width="230" height="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/default.png">
                                                         <?php
                                                             } 
                                                         ?>
@@ -156,8 +152,35 @@
                                                                 <td valign="top"><b>:&nbsp;</b></td>
                                                                 <td valign="top"><b><?= $comp->brand ?></b></td>
                                                             </tr>
-                                                            <tr class="comparison-detail">
-                                                                <td colspan="3" valign="top"><?= $comp->description ?></td>
+                                                            <tr>
+                                                                <td valign="top">Tipe Kemasan &nbsp;</td>
+                                                                <td valign="top">:&nbsp;</td>
+                                                                <td valign="top"><?= $comp->tipe_kemasan ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top">Isi Per &nbsp;</td>
+                                                                <td valign="top">:&nbsp;</td>
+                                                                <td valign="top"><?= $comp->packing_size ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top">Isi Per Karton &nbsp;</td>
+                                                                <td valign="top">:&nbsp;</td>
+                                                                <td valign="top"><?= $comp->qty_per_ctn ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top">CBP/<?= $comp->tipe_kemasan ?> &nbsp;</td>
+                                                                <td valign="top">:&nbsp;</td>
+                                                                <td valign="top"><?= $comp->cbp_per_kemasan ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top">CBP/Karton &nbsp;</td>
+                                                                <td valign="top">:&nbsp;</td>
+                                                                <td valign="top"><?= $comp->cbp_per_karton ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top">Harga Per ML &nbsp;</td>
+                                                                <td valign="top">:&nbsp;</td>
+                                                                <td valign="top"><?= $comp->harga ?></td>
                                                             </tr>
                                                         </table>
                                                     </div>

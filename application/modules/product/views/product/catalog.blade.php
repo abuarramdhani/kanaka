@@ -63,12 +63,12 @@
                                                     if(count($productImage) > 0){
                                                         foreach($productImage as $p){
                                                 ?>
-                                                        <img width="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/<?= $p->image ?>">
+                                                        <img width="230" height="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/<?= $p->image ?>">
                                                 <?php 
                                                         } 
                                                     }else{
                                                 ?>
-                                                        <img width="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/default.png">
+                                                        <img width="230" height="230" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/default.png">
                                                 <?php
                                                     } 
                                                 ?>

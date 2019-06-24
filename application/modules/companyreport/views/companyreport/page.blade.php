@@ -751,6 +751,11 @@
         $('.modal-title').text('<?=lang('new_sell_in_company')?>'); 
 
         $('[name="id"]').val('');
+        $('[name="invoice_id"]').val('').change();
+        $('[name="sp_id"]').val('').change();
+        $('[name="principle_id"]').val('').change();
+        $('[name="product_id"]').val('').change();
+        $('[name="customer_id"]').val('').change();
         $('[name="po_date"]').val('<?= date('d-m-Y') ?>');
         $('[name="receive_date"]').val('<?= date('d-m-Y') ?>');
     }
@@ -761,6 +766,9 @@
         $('.modal-title').text('<?=lang('new_sell_out_company')?>'); 
 
         $('[name="id_out"]').val('');
+        $('[name="invoice_id_out"]').val('').change();
+        $('[name="product_id_out"]').val('').change();
+        $('[name="customer_id_out"]').val('').change();
         $('[name="receive_date_out"]').val('<?= date('d-m-Y') ?>');
     }
 
@@ -1131,7 +1139,7 @@
             if(json.status == "success"){
                 var row = json.data;
 
-                $('#top').val(row.top);
+                $('#top').val(row.top).change();
 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
@@ -1399,7 +1407,8 @@
                             n:60000, 
                             s:1000 };	
             
-            return Math.floor( diff/divideBy[datepart]);
+            // return Math.floor( diff/divideBy[datepart]);
+            return Math.round( diff/divideBy[datepart]);
         }
 
         var toYyMmDd = function(input) {

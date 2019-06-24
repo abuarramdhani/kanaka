@@ -376,7 +376,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?> (%)</label>
                     <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm" name="discount" id="discount" placeholder="<?=lang('discount')?>" readonly="readonly" />
+                        <input type="text" class="form-control input-sm" name="discount" id="discount" placeholder="<?=lang('discount')?>" maxlength="3" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
@@ -646,7 +646,7 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('discount')?> (%)<span class="text-danger">*</span></label>
                     <div class="col-lg-7">
-                        <input type="text" class="form-control input-sm" name="discount_out" id="discount_out" placeholder="<?=lang('discount')?>" readonly="readonly" />
+                        <input type="text" class="form-control input-sm" name="discount_out" id="discount_out" placeholder="<?=lang('discount')?>" maxlength="3" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
@@ -739,8 +739,8 @@
             $('.ppn_field').hide();
             $('.net_price_in_ctn_before_tax_field').hide();
             $('.total_value_order_in_ctn_before_tax_field').hide();
-            // $('#top').attr('readonly', false);
-            // $('#top_out').attr('readonly', false);
+            $('#discount').attr('readonly', false);
+            $('#discount_out').attr('readonly', false);
         @endif
         
     });
@@ -1229,8 +1229,12 @@
                 var margin_percented = parseInt(margin_value / selling_price);
 
                 $('#price_hna_per_ctn_before_tax').val(price_hna_per_ctn_before_tax);
-                $('#discount_value').val(discount_value);
-                $('#discount').val(discount.toFixed(0));
+    
+                @if($user->group_id == '1')
+                    $('#discount_value').val(discount_value);
+                    $('#discount').val(discount.toFixed(0));
+                @endif
+    
                 $('#net_price_in_ctn_before_tax').val(net_price_in_ctn_before_tax);
                 $('#ppn').val(ppn);
                 $('#total_value_order_in_ctn_before_tax').val(total_value_order_in_ctn_before_tax);
@@ -1267,8 +1271,12 @@
                 var total_value_order_in_ctn_after_tax = net_price_in_ctn_after_tax * total_order_in_ctn;
 
                 $('#price_hna_per_ctn_before_tax_out').val(price_hna_per_ctn_before_tax);
-                $('#discount_value_out').val(discount_value);
-                $('#discount_out').val(discount.toFixed(0));
+
+                @if($user->group_id == '1')
+                    $('#discount_value_out').val(discount_value);
+                    $('#discount_out').val(discount.toFixed(0));
+                @endif
+                
                 $('#net_price_in_ctn_before_tax_out').val(net_price_in_ctn_before_tax);
                 $('#ppn_out').val(ppn);
                 $('#total_value_order_in_ctn_before_tax_out').val(total_value_order_in_ctn_before_tax);
@@ -1426,5 +1434,13 @@
         // console.log('Weeks since the new millenium: ' + Date.dateDiff('d', y2k, today));
         return Date.dateDiff('d', y2k, today);
     }
+
+    $('#discount').change(function(){
+        $('#discount_value').val(parseInt($('#net_price_in_ctn_after_tax').text()) * parseInt($('#discount').val()));
+        console.log(parseInt($('#net_price_in_ctn_after_tax option:selected').text()));
+        console.log(parseInt($('#discount').val()));
+        console.log(parseInt($('#net_price_in_ctn_after_tax').text()) * parseInt($('#discount').val()));
+    });
+
 </script>
 @stop

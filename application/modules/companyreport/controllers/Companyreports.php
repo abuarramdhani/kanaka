@@ -16,7 +16,15 @@ class Companyreports extends MX_Controller {
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'companyreport');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'companyreport');
         
-        $data['invoices'] = Invoice::where('deleted', 0)->get();
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id == 1){
+            $invoices = Invoice::where('deleted', 0)->get();
+        }   
+        else{
+            $invoices = Invoice::where('deleted', 0)->where('user_created', $user->id)->get();            
+        }     
+
+        $data['invoices'] = $invoices;
         $data['delivery_orders'] = Suratpesanan::where('deleted', 0)->get();
         $data['principles'] = Principle::where('deleted', 0)->get();
         $data['products'] = Product::select('m_product.id', 'm_product.product_code', 'm_product.name as product_name')->where('m_product.deleted', 0)->orderBy('m_product.product_code', 'ASC')->get();
@@ -1099,7 +1107,15 @@ class Companyreports extends MX_Controller {
     function getpricelistbyproduct(){
         if ($this->input->is_ajax_request()) {
             $id = (int)$this->input->get('id');
-            $model = array('status' => 'success', 'data' => Pricelist::select('id', 'company_after_tax_ctn')->where('product_id',$id)->orderBy('id', 'DESC')->get());
+            $user = $this->ion_auth->user()->row();
+            if($user->group_id == 1){
+                $pricelist = Pricelist::select('id', 'company_after_tax_ctn')->where('product_id',$id)->where('deleted',0)->orderBy('id', 'DESC')->get();
+            }
+            else{
+                $pricelist = Pricelist::select('id', 'company_after_tax_ctn')->where('product_id',$id)->where('deleted',0)->where('user_created', $user->id)->orderBy('id', 'DESC')->get();                
+            }
+
+            $model = array('status' => 'success', 'data' => $pricelist);
         } else {
             $model = array('status' => 'error', 'message' => lang('data_not_found'));
         }

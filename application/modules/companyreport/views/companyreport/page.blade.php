@@ -1436,10 +1436,11 @@
     }
 
     $('#discount').change(function(){
-        $('#discount_value').val(parseInt($('#net_price_in_ctn_after_tax').text()) * parseInt($('#discount').val()));
-        console.log(parseInt($('#net_price_in_ctn_after_tax option:selected').text()));
-        console.log(parseInt($('#discount').val()));
-        console.log(parseInt($('#net_price_in_ctn_after_tax').text()) * parseInt($('#discount').val()));
+        var net_price_in_ctn_after_tax = $('#net_price_in_ctn_after_tax option:selected').text();
+        var discount = $('#discount').val();
+        var discount_value = (net_price_in_ctn_after_tax * discount) / 100;
+
+        $('#discount_value').val(discount_value);
     });
 
 </script>

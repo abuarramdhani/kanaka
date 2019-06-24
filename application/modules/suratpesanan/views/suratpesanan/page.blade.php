@@ -216,7 +216,7 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<select id="pricelist_id_tmp" name="pricelist_id_tmp" class="form-control select2" style="display:none;">
+<select id="product_id_tmp" name="product_id_tmp" class="form-control select2" style="display:none;">
     <option selected disabled value=""><?=lang('select')?> <?=lang('product_code')?></option>
     <?php
         if (!empty($pricelists)) {
@@ -389,8 +389,8 @@
 
     $('#sp_date').datepicker();
 
-    $('#pricelist_id').change(function(){
-        $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getPricelist', {id: $('#pricelist_id').val()}, function(json, textStatus) {
+    $('#product_id').change(function(){
+        $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getPricelist', {id: $('#product_id').val()}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data[0];
                 var i;
@@ -416,7 +416,7 @@
         $("#add-table-surat tbody").append(
             '<tr>' +
                 '<td class="text-center">'+
-                    '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
+                    '<select onchange="getProduct('+i+')" id="product_id_'+i+'" name="product_id[]" class="form-control"></select> '+
                 '</td>' +
                 '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
                 // '<td class="text-center"><input onchange="get_total('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
@@ -431,7 +431,7 @@
                 '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
             '</tr>'
         );
-        $('#pricelist_id_'+i).html($('#pricelist_id_tmp').html());
+        $('#product_id_'+i).html($('#product_id_tmp').html());
         i++;
     });
 
@@ -484,7 +484,7 @@
     }
 
     function getProduct(x){
-       $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getpricelistbyproduct', {id: $('#pricelist_id_'+x).val()}, function(json, textStatus) {
+       $.getJSON('{{base_url()}}suratpesanan/suratpesanans/getpricelistbyproduct', {id: $('#product_id_'+x).val()}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
                 var rowProduct = json.product[0];
@@ -526,8 +526,6 @@
 
                 var amount = $('#order_amount_in_ctn_'+x).val();
                 var price = $('#order_price_after_tax_tmp_'+x).val();
-
-                console.log(price);
 
                 var total = amount*price;
 
@@ -655,7 +653,7 @@
             no_sp: "required",
             dipo_partner_id: "required",
             sp_date: "required",
-            pricelist_id: "required",
+            product_id: "required",
             order_amount_in_ctn: "required",
         },
         messages: {
@@ -663,7 +661,7 @@
             no_sp: "{{lang('no_sp')}}" + " {{lang('not_empty')}}",
             dipo_partner_id: "{{lang('dipo')}}" + " {{lang('not_empty')}}",
             sp_date: "{{lang('sp_date')}}" + " {{lang('not_empty')}}",
-            pricelist_id: "{{lang('product_code')}}" + " {{lang('not_empty')}}",
+            product_id: "{{lang('product_code')}}" + " {{lang('not_empty')}}",
             order_amount_in_ctn: "Jumlah Pesanan (Per Karton)" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
@@ -747,6 +745,71 @@
         var total_niv = parseInt(total_value)+parseInt(reg_disc_total)+parseInt(add_disc_1_total)+parseInt(add_disc_2_total)+parseInt(btw_disc_total);
         $('#total_niv_add').val(total_niv);
     }
+
+    function get_pricelist_edit(x){
+       $.getJSON('{{base_url()}}suratpesanan/suratpesanans/get_pricelist', {id: $('#order_price_after_tax_'+x).val()}, function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data[0];
+                var dataLength = json.data.length;
+                var html = "";
+
+                if(dataLength != 0){
+                    $('#order_price_before_tax_'+x).val(row.company_before_tax_ctn)
+                    $('#order_price_after_tax_tmp_'+x).val(row.company_after_tax_ctn);
+
+                    var amount = $('#order_amount_in_ctn_'+x).val();
+                    var price = $('#order_price_after_tax_tmp_'+x).val();
+
+                    var total = amount*price;
+
+                    $('#order_amount_after_tax_'+x).val(total);
+                    
+                    var total_order_amount_in_ctn = 0;
+                    var total_order_price_before_tax = 0;
+                    var total_order_price_after_tax = 0;
+                    var total_order_amount_after_tax = 0;
+                    
+                    for (var y = 1; y < x+1; y++) {
+                        total_order_amount_in_ctn = parseInt($('#order_amount_in_ctn_'+y).val()) + parseInt(total_order_amount_in_ctn);
+                        total_order_price_before_tax = parseInt($('#order_price_before_tax_'+y).val()) + parseInt(total_order_price_before_tax);
+                        total_order_price_after_tax = parseInt($('#order_price_after_tax_tmp_'+y).val()) + parseInt(total_order_price_after_tax);
+                        total_order_amount_after_tax = parseInt($('#order_amount_after_tax_'+y).val()) + parseInt(total_order_amount_after_tax);
+                    }
+
+                    $('#total_order_amount_in_ctn').val(total_order_amount_in_ctn);
+                    $('#total_order_price_before_tax').val(total_order_price_before_tax);
+                    $('#total_order_price_after_tax').val(total_order_price_after_tax);
+                    $('#total_order_amount_after_tax').val(total_order_amount_after_tax);
+
+                    $('#total_value_add').val(total_order_amount_after_tax);
+                    var total_value     = $('#total_value_add').val();
+                    var reg_disc        = $('#reg_disc_add').val();
+                    var add_disc_1      = $('#add_disc_1_add').val();
+                    var add_disc_2      = $('#add_disc_2_add').val();
+                    var btw_disc        = $('#btw_disc').val();
+
+                    var reg_disc_total  = total_value*reg_disc;
+                    $('#reg_disc_total_add').val(reg_disc_total);
+
+                    var add_disc_1_total  = reg_disc_total*add_disc_1;
+                    $('#add_disc_1_total_add').val(add_disc_1_total);
+
+                    var add_disc_2_total  = add_disc_1_total*add_disc_2;
+                    $('#add_disc_2_total_add').val(add_disc_2_total);
+
+                    var btw_disc_total  = add_disc_2_total*btw_disc;
+                    $('#btw_disc_total_add').val(btw_disc_total);
+
+                    var total_niv = parseInt(total_value)+parseInt(reg_disc_total)+parseInt(add_disc_1_total)+parseInt(add_disc_2_total)+parseInt(btw_disc_total);
+                    $('#total_niv_add').val(total_niv);
+                }
+
+            }else if(json.status == "error"){
+                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+            }
+            App.unblockUI('#form-wrapper');
+        });
+    }
    
     // Menampilkan data pada form
     function viewData(value){   
@@ -792,16 +855,22 @@
                         '<tr>' +
                             '<td class="text-center">'+
                                 '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
-                                '<select onchange="getProduct('+i+')" id="pricelist_id_'+i+'" name="pricelist_id[]" class="form-control"></select> '+
+                                '<select onchange="getProduct('+i+')" id="product_id_'+i+'" name="product_id[]" class="form-control"></select> '+
                             '</td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
-                            '<td class="text-center"><input onchange="get_total_edit('+i+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'"/></td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
+                            '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'"/></td>' +
+                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
+                            '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
+                            '<td class="text-center">'+
+                                '<input type="text" class="form-control input-sm" name="order_price_after_tax_tmp[]" id="order_price_after_tax_tmp_'+i+'"/>'+
+                                '<select onchange="get_pricelist_edit('+i+')" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'">'+
+                                    '<option value=""><?= lang('select_your_option') ?></option>'+
+                                '</select>'+
+                            '</td>' +
+                            '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
                         '</tr>'
                     );
-                    $('#pricelist_id_'+i).html($('#pricelist_id_tmp').html());
+
+                    $('#product_id_'+i).html($('#product_id_tmp').html());
 
                     $('#sp_detail_id_'+i).val(rowDetail[i-1].spdetail_id);
                     $('#product_name_'+i).val(rowDetail[i-1].name);
@@ -809,7 +878,10 @@
                     $('#order_price_after_tax_'+i).val(rowDetail[i-1].company_after_tax_ctn);
                     $('#order_amount_in_ctn_'+i).val(rowDetail[i-1].order_amount_in_ctn);
                     $('#order_amount_after_tax_'+i).val(rowDetail[i-1].order_amount_after_tax);
-                    $('#pricelist_id_'+i).val(rowDetail[i-1].pricelist_id);
+                    $('#product_id_'+i).val(rowDetail[i-1].product_id).change();
+                    $('#order_price_after_tax_tmp_'+i).val(rowDetail[i-1].company_after_tax_ctn);
+                    $('#order_price_after_tax_'+i).val(rowDetail[i-1].product_id).change();
+
                     $('#total_order_amount_in_ctn').val(row.total_order_amount_in_ctn);
                     $('#total_order_price_before_tax').val(row.total_order_price_before_tax);
                     $('#total_order_price_after_tax').val(row.total_order_price_after_tax);
@@ -824,17 +896,22 @@
                     $("#add-table-surat tbody").append(
                         '<tr>' +
                             '<td class="text-center">'+
-                                '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+i+'"/>'+
-                                '<select onchange="getProduct('+z+')" id="pricelist_id_'+z+'" name="pricelist_id[]" class="form-control"></select> '+
+                                '<input type="hidden" class="form-control input-sm" name="sp_detail_id[]" id="sp_detail_id_'+z+'"/>'+
+                                '<select onchange="getProduct('+z+')" id="product_id_'+z+'" name="product_id[]" class="form-control"></select> '+
                             '</td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+z+'"/></td>' +
-                            '<td class="text-center"><input onchange="get_total_edit('+z+')" type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+z+'"/></td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+z+'"/>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+z+'"/></td>' +
-                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+z+'"/></td>' +
+                            '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+z+'"/></td>' +
+                            '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+z+'"/></td>' +
+                            '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+z+'"/>' +
+                            '<td class="text-center">'+
+                                '<input type="text" class="form-control input-sm" name="order_price_after_tax_tmp[]" id="order_price_after_tax_tmp_'+z+'"/>'+
+                                '<select onchange="get_pricelist_edit('+z+')" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+z+'">'+
+                                    '<option value=""><?= lang('select_your_option') ?></option>'+
+                                '</select>'+
+                            '</td>' +
+                            '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+z+'"/></td>' +
                         '</tr>'
                     );
-                    $('#pricelist_id_'+z).html($('#pricelist_id_tmp').html());
+                    $('#product_id_'+z).html($('#product_id_tmp').html());
                     z++;
                 });
 

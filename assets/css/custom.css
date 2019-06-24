@@ -298,3 +298,21 @@ li.product-item {
 
 }
 /* END CATALOG */
+
+.btn-collapse > a:before {
+    float: left !important;
+    font-family: FontAwesome;
+    content:"\f068";
+    padding-right: 5px;
+}
+
+.btn-collapse > a.collapsed:before {
+    float: left !important;
+    content:"\f067";
+}
+
+.btn-collapse > a:hover, 
+.btn-collapse > a:active, 
+.btn-collapse > a:focus  {
+    text-decoration:none;
+}

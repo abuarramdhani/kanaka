@@ -91,7 +91,7 @@
                                                             <tr>
                                                                 <td><?= $d['product_name'] ?></td>
                                                                 <td class="text-center"><?= $d['pax'] ?></td>
-                                                                <td class="text-center"><?= $d['nominal'] ?></td>
+                                                                <td class="text-center"><?= number_format($d['nominal']) ?></td>
                                                             </tr>
                                                             <?php } ?>
                                                         </table>
@@ -142,7 +142,7 @@
                                                             <tr>
                                                                 <td><?= $m['product_name'] ?></td>
                                                                 <td class="text-center"><?= $m['pax'] ?></td>
-                                                                <td class="text-center"><?= $m['nominal'] ?></td>
+                                                                <td class="text-center"><?= number_format($m['nominal']) ?></td>
                                                             </tr>
                                                             <?php } ?>
                                                         </table>

@@ -692,6 +692,30 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('due_date_invoice')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="due_date_invoice_out" id="due_date_invoice_out" placeholder="<?=lang('due_date_invoice')?>" readonly="readonly" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('aging_invoice')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="aging_invoice_out" id="aging_invoice_out" placeholder="<?=lang('aging_invoice')?>" readonly="readonly" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('due_date_ar')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="due_date_ar_out" id="due_date_ar_out" placeholder="<?=lang('due_date_ar')?>" readonly="readonly" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
+                <div class="form-group form-md-line-input">
                     <label class="col-lg-4 control-label"><?=lang('payment_value')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="payment_value_out" id="payment_value_out" placeholder="<?=lang('payment_value')?>" readonly="readonly" />
@@ -725,7 +749,6 @@
     $(function(){
         
         @if($user->group_id != '1')
-            $('.customer_id_field').hide();
             $('.selling_price_field').hide();
             $('.margin_value_field').hide();
             $('.margin_percented_field').hide();
@@ -823,12 +846,12 @@
         rules: {
             po_date: "required",
             receive_date: "required",
+            customer_id: "required",
 
             @if($user->group_id == '1')
                 check_status: "required",
                 tax_status: "required",
                 tax_no: "required",
-                customer_id: "required",
                 sp_id: "required",
                 principle_id: "required",
             @endif
@@ -843,12 +866,12 @@
         messages: {
             po_date: "{{lang('po_date')}}" + " {{lang('not_empty')}}",
             receive_date: "{{lang('receive_date')}}" + " {{lang('not_empty')}}",
+            customer_id: "{{lang('ship_to_delivery')}}" + " {{lang('not_empty')}}",
 
             @if($user->group_id == '1')            
                 check_status: "{{lang('check_status')}}" + " {{lang('not_empty')}}",
                 tax_status: "{{lang('tax_status')}}" + " {{lang('not_empty')}}",
                 tax_no: "{{lang('tax_no')}}" + " {{lang('not_empty')}}",
-                customer_id: "{{lang('customer_id')}}" + " {{lang('not_empty')}}",
                 sp_id: "{{lang('sp_id')}}" + " {{lang('not_empty')}}",
                 principle_id: "{{lang('principle_id')}}" + " {{lang('not_empty')}}",
             @endif
@@ -902,11 +925,11 @@
         errorElement: "span",
         rules: {
             receive_date_out: "required",
+            customer_id_out: "required",
 
             @if($user->group_id == '1')
                 tax_status_out: "required",
                 tax_no_out: "required",
-                customer_id_out: "required",
             @endif
 
             invoice_id_out: "required",
@@ -918,11 +941,11 @@
         },
         messages: {
             receive_date_out: "{{lang('receive_date')}}" + " {{lang('not_empty')}}",
+            customer_id_out: "{{lang('ship_to_delivery')}}" + " {{lang('not_empty')}}",
 
             @if($user->group_id == '1')            
                 tax_status_out: "{{lang('tax_status')}}" + " {{lang('not_empty')}}",
                 tax_no_out: "{{lang('tax_no')}}" + " {{lang('not_empty')}}",
-                customer_id_out: "{{lang('customer_id')}}" + " {{lang('not_empty')}}",
             @endif
         
             invoice_id_out: "{{lang('invoice_id')}}" + " {{lang('not_empty')}}",
@@ -1369,7 +1392,7 @@
             if(json.status == "success"){
                 var row = json.data;
 
-                $('#top_out').val(row.top);
+                $('#top_out').val(row.top).change();
 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
@@ -1404,6 +1427,32 @@
 
     });
 
+    $('#top_out').change(function(){
+        var toYyMmDd = function(input) {
+            var ptrn = /(\d{2})\-(\d{2})\-(\d{4})/;
+            if(!input || !input.match(ptrn)) {
+                return null;
+            }
+            return input.replace(ptrn, '$3-$2-$1');
+        };
+
+        var dt = new Date(toYyMmDd($('#receive_date_out').val()));
+        dt.setDate(dt.getDate() + parseInt($('#top_out').val()));
+
+        var dd = ('0' + dt.getDate()).slice(-2);
+        var mm = ('0' + parseInt(dt.getMonth() + 1)).slice(-2);
+        var y = dt.getFullYear();
+
+        var due_date_invoice = dd + '-' + mm + '-' + y;
+        var aging_invoice = getDiffDate(due_date_invoice);
+        var due_date_ar = parseInt($('#top_out').val()) - aging_invoice;
+        
+        $('#due_date_invoice_out').val(due_date_invoice);
+        $('#aging_invoice_out').val(aging_invoice);
+        $('#due_date_ar_out').val(due_date_ar);
+
+    });
+
     function getDiffDate(fromDate){
         // datepart: 'y', 'm', 'w', 'd', 'h', 'n', 's'
         Date.dateDiff = function(datepart, fromdate, todate) {	
@@ -1416,7 +1465,7 @@
                             s:1000 };	
             
             // return Math.floor( diff/divideBy[datepart]);
-            return Math.round( diff/divideBy[datepart]);
+            return parseInt(Math.round( diff/divideBy[datepart])) + 1;
         }
 
         var toYyMmDd = function(input) {
@@ -1441,6 +1490,14 @@
         var discount_value = (net_price_in_ctn_after_tax * discount) / 100;
 
         $('#discount_value').val(discount_value);
+    });
+
+    $('#discount_out').change(function(){
+        var net_price_in_ctn_after_tax = $('#net_price_in_ctn_after_tax_out option:selected').text();
+        var discount = $('#discount_out').val();
+        var discount_value = (net_price_in_ctn_after_tax * discount) / 100;
+
+        $('#discount_value_out').val(discount_value);
     });
 
 </script>

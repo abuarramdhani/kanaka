@@ -217,6 +217,7 @@ class Suratpesanans extends MX_Controller {
                         for($i = 0; $i < $productCount; $i++){ 
                             $dataDetail = array('sp_id'                  => $id_sp,
                                                 'product_id'             => $this->input->post('product_id')[$i],
+                                                'pricelist_id'           => $this->input->post('order_price_after_tax')[$i],
                                                 'order_amount_in_ctn'    => $this->input->post('order_amount_in_ctn')[$i],
                                                 'order_price_before_tax' => $this->input->post('order_price_before_tax')[$i],
                                                 'order_price_after_tax'  => $this->input->post('order_price_after_tax_tmp')[$i],
@@ -291,6 +292,7 @@ class Suratpesanans extends MX_Controller {
                         if (empty($get_detail)) {
                             $dataDetail = array('sp_id'                  => $id_suratpesanan,
                                                 'product_id'             => $this->input->post('product_id')[$i],
+                                                'pricelist_id'           => $this->input->post('order_price_after_tax')[$i],
                                                 'order_amount_in_ctn'    => $this->input->post('order_amount_in_ctn')[$i],
                                                 'order_price_before_tax' => $this->input->post('order_price_before_tax')[$i],
                                                 'order_price_after_tax'  => $this->input->post('order_price_after_tax_tmp')[$i],
@@ -303,6 +305,7 @@ class Suratpesanans extends MX_Controller {
                             $modelDetail                                  = Spdetail::find($this->input->post('sp_detail_id')[$i]);
                             $modelDetail->sp_id                           = $id_suratpesanan;
                             $modelDetail->product_id                      = $this->input->post('product_id')[$i];
+                            $modelDetail->pricelist_id                    = $this->input->post('order_price_after_tax')[$i];
                             $modelDetail->order_amount_in_ctn             = $this->input->post('order_amount_in_ctn')[$i];
                             $modelDetail->order_price_before_tax          = $this->input->post('order_price_before_tax')[$i];
                             $modelDetail->order_price_after_tax           = $this->input->post('order_price_after_tax_tmp')[$i];
@@ -350,7 +353,7 @@ class Suratpesanans extends MX_Controller {
             $dataDetail = Spdetail::select('t_sp.*', 't_pricelist.*', 'm_product.*', 't_sp_detail.*', 't_sp_detail.id as spdetail_id')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
                                     ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')
-                                    ->join('t_pricelist', 't_pricelist.product_id', '=', 'm_product.id')
+                                    ->join('t_pricelist', 't_sp_detail.pricelist_id', '=', 't_pricelist.id')
                                     ->where('t_sp_detail.sp_id', $id)
                                     ->where('t_sp_detail.deleted', 0)
                                     ->where('t_sp.deleted', 0)

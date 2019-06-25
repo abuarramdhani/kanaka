@@ -875,12 +875,12 @@
                     $('#sp_detail_id_'+i).val(rowDetail[i-1].spdetail_id);
                     $('#product_name_'+i).val(rowDetail[i-1].name);
                     $('#order_price_before_tax_'+i).val(rowDetail[i-1].company_before_tax_ctn);
-                    $('#order_price_after_tax_'+i).val(rowDetail[i-1].company_after_tax_ctn);
+                    // $('#order_price_after_tax_'+i).val(rowDetail[i-1].company_after_tax_ctn);
                     $('#order_amount_in_ctn_'+i).val(rowDetail[i-1].order_amount_in_ctn);
                     $('#order_amount_after_tax_'+i).val(rowDetail[i-1].order_amount_after_tax);
                     $('#product_id_'+i).val(rowDetail[i-1].product_id).change();
                     $('#order_price_after_tax_tmp_'+i).val(rowDetail[i-1].company_after_tax_ctn);
-                    $('#order_price_after_tax_'+i).val(rowDetail[i-1].product_id).change();
+                    $('#order_price_after_tax_'+i).val(rowDetail[i-1].pricelist_id).change();
 
                     $('#total_order_amount_in_ctn').val(row.total_order_amount_in_ctn);
                     $('#total_order_price_before_tax').val(row.total_order_price_before_tax);

@@ -49,6 +49,63 @@
                     </div>
                 </div>
                 <div class="portlet-body">
+                    <!-- FILTER -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading" role="tab" id="filterView">
+                                        <h3 class="panel-title">
+                                            <div class="pull-left">
+                                                <i class="dashicons dashicons-filter"></i> Filter
+                                            </div>
+                                            <div class="pull-right">
+                                                <a style="color: #fff;text-decoration: none;" role="button" data-toggle="collapse" data-parent="#accordion" href="#filterField" aria-expanded="true" aria-controls="filterField">
+                                                    <span id="icon-arrow-filter" class="dashicons dashicons-arrow-down-alt2"></span>
+                                                </a>
+                                            </div>
+                                        </h3>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div id="filterField" role="tabpanel" aria-labelledby="filterView">
+                                        <div class="panel-body">
+                                            {{ form_open(null,array('id' => 'form-filter-stock-dipo', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+                                                <div class="row filter-field">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="product"><?= lang('product_name') ?></label>
+                                                            <select class="form-control input-sm select2" name="product_id" id="product_id" style="width: 100%;">
+                                                                <option value=""><?= lang('select_your_option') ?></option>
+                                                                @foreach($products as $product)
+                                                                    <option <?php if($product_id == $product->id) echo "selected" ?> value="{{ $product->id }}">{{ $product->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="dipo"><?= lang('dipo') ?>/<?= lang('mitra') ?></label>
+                                                            <select class="form-control input-sm select2" name="dipo_id" id="dipo_id" style="width: 100%;">
+                                                                <option value=""><?= lang('select_your_option') ?></option>
+                                                                @foreach($dipos as $dipo)
+                                                                    <option <?php if($dipo_id == $dipo->id) echo "selected" ?> value="{{ $dipo->id }}">{{ $dipo->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                                    <!-- <button type="reset" class="btn btn-default">Reset</button> -->
+                                                    <button onclick="myFunctionReset()" class="btn btn-default">Reset</button>
+                                                </div>
+                                            {{ form_close() }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab_dipo" data-toggle="tab" aria-expanded="true"> <?= lang('dipo') ?> </a></li>
                         <li class=""><a href="#tab_mitra" data-toggle="tab" aria-expanded="false"> <?= lang('mitra') ?> </a></li>
@@ -80,7 +137,7 @@
                                             <tr id="accordion_<?= $stock_dipo['customer_id'] ?>" class="collapse panel-collapse">
                                                 <td colspan="5">
                                                     <div>
-                                                        <h5 class="text-center"><b>Stock DIPO <?= $dipo->name ?></b></h5>
+                                                        <h5 class="text-center"><b><?=lang('stock')?> <?= $dipo->name ?></b></h5>
                                                         <table id="detail-stock" class="table table-striped table-bordered table-hover dt-responsive" width="100%">
                                                             <tr>
                                                                 <th class="text-center"><?=lang('product_name')?></th>
@@ -131,7 +188,7 @@
                                             <tr id="accordion_<?= $stock_mitra['customer_id'] ?>" class="collapse panel-collapse">
                                                 <td colspan="5">
                                                     <div>
-                                                        <h5 class="text-center"><b>Stock Mitra <?= $mitra->name ?></b></h5>
+                                                        <h5 class="text-center"><b><?=lang('stock')?> <?= $mitra->name ?></b></h5>
                                                         <table id="detail-stock" class="table table-striped table-bordered table-hover dt-responsive" width="100%">
                                                             <tr>
                                                                 <th class="text-center"><?=lang('product_name')?></th>
@@ -166,6 +223,11 @@
 
 @section('scripts')
 <script type="text/javascript">
+
+    function myFunctionReset() {
+        document.getElementById('dipo_id').value = '';
+        document.getElementById('product_id').value = '';
+    }
 
     // Pengaturan Datatable 
     // var oTable =$('#table-stock').dataTable({

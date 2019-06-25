@@ -1155,8 +1155,7 @@ class Companyreports extends MX_Controller {
         $data['add_access'] = $this->user_profile->get_user_access('Created', 'product');
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');
-        $data['dipos'] = Dipo::where('deleted', '0')->where('type', 'dipo')->get();
-        $data['mitras'] = Dipo::where('deleted', '0')->where('type', 'partner')->get();
+        $data['dipos'] = Dipo::where('deleted', '0')->get();
         $data['products'] = Product::where('deleted', '0')->get();
 
         $condition = '';

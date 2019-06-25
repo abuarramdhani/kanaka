@@ -502,6 +502,7 @@ $lang['kredit'] = "Out";
 ## CATALOG PRODUCT ##
 $lang['catalog_product'] = 'Catalog Product';
 $lang['sales_talk'] = 'Sales Talk';
+$lang['price'] = 'Price';
 ## END CATALOG PRODUCT ##
 
 ## STOCK ##

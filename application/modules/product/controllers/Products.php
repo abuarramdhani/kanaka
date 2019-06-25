@@ -213,6 +213,21 @@ class Products extends MX_Controller {
                     $save       = $this->db->insert('m_product', $dataProduct);
                     $id_product = $this->db->insert_id();
 
+                    if(!empty($this->input->post('price_value'))){
+                        $priceCount = count($this->input->post('price_value'));
+                        for($x = 0; $x < $priceCount; $x++){ 
+                            $dataComparison = array('product_id'             => $id_product,
+                                                    'area'                   => $this->input->post('price_area')[$x],
+                                                    'description'            => $this->input->post('price_description')[$x],
+                                                    'type'                   => $this->input->post('price_type')[$x],
+                                                    'value'                  => $this->input->post('price_value')[$x],
+                                                    'date_created'           => date('Y-m-d'),
+                                                    'time_created'           => date('H:i:s'),
+                                                    'user_created'           => $user->id);
+                                $saveComparison = $this->db->insert('m_product_price', $dataComparison);
+                        }
+                    }
+
                     if(!empty($this->input->post('brand'))){
                         $productCount = count($this->input->post('brand'));
                         for($i = 0; $i < $productCount; $i++){ 
@@ -751,5 +766,16 @@ class Products extends MX_Controller {
         $data['product'] = Product::where('m_product.id', $id)->where('m_product.deleted', '0')->get();
         $data['comparisons'] = ProductComparison::where('product_id', $id)->where('deleted', '0')->get();
         $this->load->blade('product.views.product.comparison', $data);
+    }
+
+    function price(){
+        $id = $this->input->get('id');
+
+        $data['add_access'] = $this->user_profile->get_user_access('Created', 'product');
+        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
+        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');
+        $data['product'] = Product::where('m_product.id', $id)->where('m_product.deleted', '0')->get();
+        $data['prices_jabodetabek'] = ProductPrice::join('m_product', 'm_product_price.product_id', '=', 'm_product.id')->where('product_id', $id)->where('area', 'jabodetabek')->where('m_product_price.deleted', '0')->where('m_product.deleted', '0')->get();
+        $this->load->blade('product.views.product.price', $data);
     }
 }

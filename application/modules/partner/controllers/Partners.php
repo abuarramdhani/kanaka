@@ -9,6 +9,11 @@ class Partners extends MX_Controller {
         if (!$this->ion_auth->logged_in()) {
             redirect('login', 'refresh');
         }
+
+        if(!$this->user_profile->get_user_access('Availabled', 'partner')){
+            redirect('dashboard', 'refresh');            
+        }
+        
     }
 
     public function index() {

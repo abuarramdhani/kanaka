@@ -10,6 +10,10 @@ class Pricelists extends MX_Controller {
             redirect('login', 'refresh');
         }
 
+        if(!$this->user_profile->get_user_access('Availabled', 'pricelist')){
+            redirect('dashboard', 'refresh');            
+        }
+        
         $this->load->model('pricelist');
     }
 

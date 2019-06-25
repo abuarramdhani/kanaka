@@ -147,8 +147,7 @@ class Invoices extends MX_Controller {
             $where = "t_sp_detail.deleted = 0 AND sp_id =".Suratjalan::find(Invoice::find($id)->sj_id)->sp_id;
             $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
             $join[] = array('t_sp', 't_sp.id = t_sp_detail.sp_id', 'inner');
-            $join[] = array('t_pricelist', 't_pricelist.id = t_sp_detail.pricelist_id', 'inner');
-            $join[] = array('m_product', 'm_product.id = t_pricelist.product_id', 'inner');
+            $join[] = array('m_product', 'm_product.id = t_sp_detail.product_id', 'inner');
     
             $this->datatables->set_index('t_sp_detail.id');
             $this->datatables->config('database_columns', $database_columns);
@@ -361,8 +360,8 @@ class Invoices extends MX_Controller {
             $dataDetail = Spdetail::select('t_sp.*', 't_sp_detail.*', 't_sp_detail.id as spdetail_id', 'm_product.*', 't_pricelist.dipo_after_tax_ctn as price_after_tax')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
                                     ->join('t_sj', 't_sj.sp_id', '=', 't_sp.id')
+                                    ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')
                                     ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
-                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
                                     ->where('t_sj.id', $id)
                                     ->where('t_sp_detail.deleted', 0)
                                     ->where('t_sp.deleted', 0)
@@ -465,10 +464,9 @@ class Invoices extends MX_Controller {
                                     ->where('t_invoice.id', $id)
                                     ->where('t_invoice.deleted', 0)->first();
         
-        $data['datadetails'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
+        $data['datadetails'] = Spdetail::select('t_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
-                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
-                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')
                                     ->where('sp_id', $data['row']->sp_id)
                                     ->where('t_sp_detail.deleted', 0)
                                     ->where('t_sp.deleted', 0)->get();
@@ -487,10 +485,9 @@ class Invoices extends MX_Controller {
                                     ->where('t_invoice.id', $id)
                                     ->where('t_invoice.deleted', 0)->first();
 
-        $data['datadetails'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
+        $data['datadetails'] = Spdetail::select('t_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
-                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
-                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')
                                     ->where('sp_id', $data['row']->sp_id)
                                     ->where('t_sp_detail.deleted', 0)
                                     ->where('t_sp.deleted', 0)->get();

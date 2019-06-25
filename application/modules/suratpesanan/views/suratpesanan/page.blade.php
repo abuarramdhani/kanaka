@@ -423,7 +423,7 @@
                 '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
                 '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
                 '<td class="text-center">'+
-                    '<input type="text" class="form-control input-sm" name="order_price_after_tax_tmp[]" id="order_price_after_tax_tmp_'+i+'"/>'+
+                    '<input type="hidden" class="form-control input-sm" name="order_price_after_tax_tmp[]" id="order_price_after_tax_tmp_'+i+'"/>'+
                     '<select onchange="get_pricelist('+i+')" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'">'+
                         '<option value=""><?= lang('select_your_option') ?></option>'+
                     '</select>'+
@@ -691,7 +691,7 @@
 
                 App.unblockUI('#form-wrapper');
                 setTimeout(function(){
-                    // window.location.reload()
+                    window.location.reload()
                 },1000);
             } 
             return false;
@@ -861,7 +861,7 @@
                             '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'"/></td>' +
                             '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'"/>' +
                             '<td class="text-center">'+
-                                '<input type="text" class="form-control input-sm" name="order_price_after_tax_tmp[]" id="order_price_after_tax_tmp_'+i+'"/>'+
+                                '<input type="hidden" class="form-control input-sm" name="order_price_after_tax_tmp[]" id="order_price_after_tax_tmp_'+i+'"/>'+
                                 '<select onchange="get_pricelist_edit('+i+')" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'">'+
                                     '<option value=""><?= lang('select_your_option') ?></option>'+
                                 '</select>'+
@@ -903,7 +903,7 @@
                             '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+z+'"/></td>' +
                             '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+z+'"/>' +
                             '<td class="text-center">'+
-                                '<input type="text" class="form-control input-sm" name="order_price_after_tax_tmp[]" id="order_price_after_tax_tmp_'+z+'"/>'+
+                                '<input type="hidden" class="form-control input-sm" name="order_price_after_tax_tmp[]" id="order_price_after_tax_tmp_'+z+'"/>'+
                                 '<select onchange="get_pricelist_edit('+z+')" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+z+'">'+
                                     '<option value=""><?= lang('select_your_option') ?></option>'+
                                 '</select>'+

@@ -532,6 +532,7 @@
         $('.modal-title').text('<?=lang('tambah_invoice')?>'); 
 
         $('[name="invoice_id"]').val('');
+        $('[name="dipo_partner_id"]').val('').change();
         $('[name="invoice_no"]').attr('readonly', false);
     }
     toastr.options = { "positionClass": "toast-top-right", };

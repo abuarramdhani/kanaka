@@ -447,6 +447,7 @@
         $('.modal-title').text('<?=lang('tambah_surat_jalan')?>'); 
 
         $('[name="sj_id"]').val('');
+        $('[name="dipo_partner_id"]').val('').change();
         $('[name="sj_no"]').attr('readonly', false);
     }
     toastr.options = { "positionClass": "toast-top-right", };

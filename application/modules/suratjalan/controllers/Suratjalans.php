@@ -137,8 +137,7 @@ class Suratjalans extends MX_Controller {
             $where = "t_sp_detail.deleted = 0 AND sp_id =".Suratjalan::find($id)->sp_id;
             $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
             $join[] = array('t_sp', 't_sp.id = t_sp_detail.sp_id', 'inner');
-            $join[] = array('t_pricelist', 't_pricelist.id = t_sp_detail.pricelist_id', 'inner');
-            $join[] = array('m_product', 'm_product.id = t_pricelist.product_id', 'inner');
+            $join[] = array('m_product', 'm_product.id = t_sp_detail.product_id', 'inner');
     
             $this->datatables->set_index('t_sp_detail.id');
             $this->datatables->config('database_columns', $database_columns);
@@ -324,12 +323,10 @@ class Suratjalans extends MX_Controller {
             $id = (int) $this->input->get('id');
             $dataDetail = Spdetail::select('t_sp.*', 't_sp_detail.*', 't_sp_detail.id as spdetail_id', 'm_product.*')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
-                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
-                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')
                                     ->where('t_sp_detail.sp_id', $id)
                                     ->where('t_sp_detail.deleted', 0)
                                     ->where('t_sp.deleted', 0)
-                                    ->where('t_pricelist.deleted', 0)
                                     ->where('m_product.deleted', 0)->get();
             $model = array('status' => 'success', 'dataDetail' => $dataDetail);
         } else {
@@ -422,10 +419,9 @@ class Suratjalans extends MX_Controller {
                                     ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                     ->where('t_sj.id', $id)
                                     ->where('t_sj.deleted', 0)->first();
-        $data['datadetails'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
+        $data['datadetails'] = Spdetail::select('t_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
-                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
-                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')
                                     ->where('sp_id', $data['row']->sp_id)
                                     ->where('t_sp_detail.deleted', 0)
                                     ->where('t_sp.deleted', 0)->get();
@@ -442,10 +438,9 @@ class Suratjalans extends MX_Controller {
                                     ->join('m_dipo_partner', 'm_dipo_partner.id', '=', 't_sp.dipo_partner_id')
                                     ->where('t_sj.id', $id)
                                     ->where('t_sj.deleted', 0)->first();
-        $data['datadetails'] = Spdetail::select('t_pricelist.*', 't_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
+        $data['datadetails'] = Spdetail::select('t_sp.*', 'm_product.*', 'm_product.name as product_name', 't_sp_detail.*')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
-                                    ->join('t_pricelist', 't_pricelist.id', '=', 't_sp_detail.pricelist_id')
-                                    ->join('m_product', 'm_product.id', '=', 't_pricelist.product_id')
+                                    ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')
                                     ->where('sp_id', $data['row']->sp_id)
                                     ->where('t_sp_detail.deleted', 0)
                                     ->where('t_sp.deleted', 0)->get();

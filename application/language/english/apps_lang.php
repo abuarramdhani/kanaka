@@ -511,3 +511,10 @@ $lang['pack'] = 'Pack';
 $lang['nominal'] = 'Nominal';
 ## END STOCK ##
 
+## PROFIT AND LOSS ##
+$lang['profit_loss'] = 'Profit and Loss';
+$lang['start_date'] = 'Start Date';
+$lang['end_date'] = 'End Date';
+$lang['period'] = "Period";
+## END PROFIT AND LOSS ##
+

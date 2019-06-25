@@ -293,7 +293,7 @@ class Suratpesanans extends MX_Controller {
                                                 'product_id'             => $this->input->post('product_id')[$i],
                                                 'order_amount_in_ctn'    => $this->input->post('order_amount_in_ctn')[$i],
                                                 'order_price_before_tax' => $this->input->post('order_price_before_tax')[$i],
-                                                'order_price_after_tax'  => $this->input->post('order_price_after_tax')[$i],
+                                                'order_price_after_tax'  => $this->input->post('order_price_after_tax_tmp')[$i],
                                                 'order_amount_after_tax' => $this->input->post('order_amount_after_tax')[$i],
                                                 'date_created'           => date('Y-m-d'),
                                                 'time_created'           => date('H:i:s'),

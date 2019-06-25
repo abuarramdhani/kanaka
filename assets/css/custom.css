@@ -316,3 +316,11 @@ li.product-item {
 .btn-collapse > a:focus  {
     text-decoration:none;
 }
+
+.filter-field{
+    margin: 0;
+}
+
+.filter-field .form-group {
+    margin: 15px 0;
+}

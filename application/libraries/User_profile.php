@@ -364,6 +364,24 @@ class User_profile {
     }
     return $num.'th';
   }
+
+	function get_sum_jurnal($start_date,$end_date,$where)
+	{
+    if($this->ci->ion_auth->user()->row()->group_id != 1){
+      $this->ci->db->where('user_created', $this->ci->ion_auth->user()->row()->id);
+    }
+    $this->ci->db->where('jurnal_date >=', $start_date);
+    $this->ci->db->where('jurnal_date <=', $end_date);
+    $this->ci->db->where($where);
+		$this->ci->db->select_sum('total');
+		$query = $this->ci->db->get('t_jurnal');
+		if ($query->num_rows() > 0){
+		$row = $query->row();
+  		 return $row->total;
+		} else{
+			return 0;
+		}
+	}
   
 }
 

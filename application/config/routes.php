@@ -243,3 +243,9 @@ $route['catalogproduct/buildingblock'] = 'product/products/buildingblock';
 * STOCK
 */
 $route['reports/stock'] = 'companyreport/companyreports/stock';
+
+/**
+* PROFIT AND LOSS
+*/
+$route['reports/profitloss'] = 'profitloss/profitlosses/index';
+$route['reports/profitloss/show'] = 'profitloss/profitlosses/show';

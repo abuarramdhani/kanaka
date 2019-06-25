@@ -66,9 +66,9 @@
                                 <th rowspan="3" class="text-center"><?=lang('weight')?></th>
                                 <th rowspan="3" class="text-center"><?=lang('normal_price')?></th>
                                 <th colspan="5" class="text-center"><?=lang('kanaka')?></th>
-                                <th colspan="5" class="text-center">DIST-POINT (DIPO)<span class="discount-value"><?=$discount->dipo_discount?>%</span></th>
-                                <th colspan="5" class="text-center"><?=lang('mitra')?><span class="discount-value"><?=$discount->mitra_discount?>%</span></th>
-                                <th colspan="7" class="text-center"><?=lang('customer')?><span class="discount-value"><?=$discount->customer_discount?>%</span></th>
+                                <th colspan="5" class="text-center">DIST-POINT (DIPO)<span class="discount-value"><?php if(!empty($discount)) echo $discount->dipo_discount?>%</span></th>
+                                <th colspan="5" class="text-center"><?=lang('mitra')?><span class="discount-value"><?php if(!empty($discount)) echo$discount->mitra_discount?>%</span></th>
+                                <th colspan="7" class="text-center"><?=lang('customer')?><span class="discount-value"><?php if(!empty($discount)) echo$discount->customer_discount?>%</span></th>
                                 <th rowspan="3" class="text-center"><?=lang('created_date')?></th>
                                 <th rowspan="3" width="13%"><?=lang('options')?></th>
                             </tr>

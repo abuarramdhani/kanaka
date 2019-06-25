@@ -1150,52 +1150,64 @@ class Companyreports extends MX_Controller {
         $data['add_access'] = $this->user_profile->get_user_access('Created', 'product');
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');
+        $data['dipos'] = Dipo::where('deleted', '0')->where('type', 'dipo')->get();
+        $data['mitras'] = Dipo::where('deleted', '0')->where('type', 'partner')->get();
+        $data['products'] = Product::where('deleted', '0')->get();
 
-        $data['stocks_dipo'] = $this->get_data_stock('dipo');;
-        $data['stocks_mitra'] = $this->get_data_stock('partner');;
+        $condition = '';
+        $dipo_id = '';
+        $product_id = '';
+
+        if(!empty($_POST['dipo_id'])){
+            $dipo_id = $_POST['dipo_id'];
+            $condition .= " AND m_dipo_partner.id = '".$dipo_id."'";
+        }
+
+        if(!empty($_POST['product_id'])){
+            $product_id = $_POST['product_id'];
+            $condition .= " AND m_product.id = '".$product_id."'";
+        }
+
+        $data['dipo_id'] = $dipo_id;
+        $data['product_id'] = $product_id;
+
+        $data['stocks_dipo'] = $this->get_data_stock('dipo', $condition);
+        $data['stocks_mitra'] = $this->get_data_stock('partner', $condition);
 
         $this->load->blade('companyreport.views.companyreport.stock', $data);
     }
 
-    public function get_data_stock($type){
+    public function get_data_stock($type, $condition){
         $dataSellIn = array();
         $dataSellOut = array();
         $allDataSell = array();
 
-        $sell_in = $this->db->where('t_sell_in_company.deleted', '0')
-                          ->where('m_dipo_partner.type', $type)
-                          ->select('m_product.id as product_id')
-                          ->select('m_dipo_partner.id as customer_id')
-                          ->select('m_product.name as product_name')
-                          ->select('m_dipo_partner.name as customer_name')
-                          ->select('net_price_in_ctn_after_tax as nominal')
-                          ->select_sum('total_order_in_ctn', 'pax')
-                          ->join('m_product', 't_sell_in_company.product_id = m_product.id')
-                          ->join('m_dipo_partner', 't_sell_in_company.customer_id = m_dipo_partner.id')
-                          ->group_by('product_id')
-                          ->group_by('customer_id')
-                          ->group_by('nominal')
-                          ->get('t_sell_in_company')->result();
+        $sell_in = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+                                   FROM t_sell_in_company
+                                   INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id
+                                   INNER JOIN m_dipo_partner ON t_sell_in_company.customer_id = m_dipo_partner.id
+                                   WHERE t_sell_in_company.deleted = 0
+                                   AND m_dipo_partner.type = '$type'
+                                   $condition
+                                   GROUP BY product_id, customer_id, nominal
+                                 ;")->result();
         $arraySellIn = json_decode(json_encode($sell_in), True);
+
         foreach($arraySellIn as $in){
             $dataSellIn[] = array_merge($in, array("type"=>"in"));
         }
         
-        $sell_out = $this->db->where('t_sell_out_company.deleted', '0')
-                          ->where('m_dipo_partner.type', $type)
-                          ->select('m_product.id as product_id')
-                          ->select('m_dipo_partner.id as customer_id')
-                          ->select('m_product.name as product_name')
-                          ->select('m_dipo_partner.name as customer_name')
-                          ->select('net_price_in_ctn_after_tax as nominal')
-                          ->select_sum('total_order_in_ctn', 'pax')
-                          ->join('m_product', 't_sell_out_company.product_id = m_product.id')
-                          ->join('m_dipo_partner', 't_sell_out_company.customer_id = m_dipo_partner.id')
-                          ->group_by('product_id')
-                          ->group_by('customer_id')
-                          ->group_by('nominal')
-                          ->get('t_sell_out_company')->result();
+        $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+                                   FROM t_sell_out_company
+                                   INNER JOIN m_product ON t_sell_out_company.product_id = m_product.id
+                                   INNER JOIN m_dipo_partner ON t_sell_out_company.customer_id = m_dipo_partner.id
+                                   WHERE t_sell_out_company.deleted = 0
+                                   AND m_dipo_partner.type = '$type'
+                                   $condition
+                                   GROUP BY product_id, customer_id, nominal
+                                 ;")->result();
         $arraySellOut = json_decode(json_encode($sell_out), True);
+
         foreach($arraySellOut as $out){
             $dataSellOut[] = array_merge($out, array("type"=>"out"));
         }

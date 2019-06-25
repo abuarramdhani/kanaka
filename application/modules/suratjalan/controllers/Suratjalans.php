@@ -10,6 +10,10 @@ class Suratjalans extends MX_Controller {
             redirect('login', 'refresh');
         }
 
+        if(!$this->user_profile->get_user_access('Availabled', 'suratjalan')){
+            redirect('dashboard', 'refresh');            
+        }
+        
         $this->load->model('suratjalan');
     }
 

@@ -10,6 +10,10 @@ class Suratpesanans extends MX_Controller {
             redirect('login', 'refresh');
         }
 
+        if(!$this->user_profile->get_user_access('Availabled', 'suratpesanan')){
+            redirect('dashboard', 'refresh');            
+        }
+        
         $this->load->model('suratpesanan');
     }
 

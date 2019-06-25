@@ -10,6 +10,10 @@ class Products extends MX_Controller {
             redirect('login', 'refresh');
         }
 
+        if(!$this->user_profile->get_user_access('Availabled', 'product')){
+            redirect('dashboard', 'refresh');            
+        }
+        
         $this->load->model('product');
     }
 

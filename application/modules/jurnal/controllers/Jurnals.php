@@ -9,6 +9,11 @@ class Jurnals extends MX_Controller {
         if (!$this->ion_auth->logged_in()) {
             redirect('login', 'refresh');
         }
+
+        if(!$this->user_profile->get_user_access('Availabled', 'jurnal')){
+            redirect('dashboard', 'refresh');            
+        }
+
     }
 
     public function index() {
@@ -22,6 +27,8 @@ class Jurnals extends MX_Controller {
     }
 
     public function fetch_data() {
+        $user = $this->ion_auth->user()->row();
+
         $database_columns = array(
             'jurnal_date',
             'month',
@@ -50,6 +57,10 @@ class Jurnals extends MX_Controller {
 
         $from = "t_jurnal";
         $where = "t_jurnal.deleted = 0 AND m_chart_of_accounts.deleted = 0";
+        if($user->group_id != '1'){
+            $where .= " AND t_jurnal.user_created = ". $user->id;
+        }
+
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
         $join[] = array('m_chart_of_accounts', 't_jurnal.coa_id = m_chart_of_accounts.id', 'left');

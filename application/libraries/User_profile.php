@@ -267,7 +267,10 @@ class User_profile {
     $this->ci->db->where('menu_link', $menu_link);
     $query_menu = $this->ci->db->get('menu');        
     $get_menu = $query_menu->row();
-    $menu_id = $get_menu->menu_id;
+    if(isset($get_menu->menu_id))
+      $menu_id = $get_menu->menu_id;
+    else
+      $menu_id = 0;
 
     if($menu_id > 0){
       $user_id = $this->ci->ion_auth->user()->row()->id;

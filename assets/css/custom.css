@@ -324,3 +324,12 @@ li.product-item {
 .filter-field .form-group {
     margin: 15px 0;
 }
+
+.form-horizontal .table .form-group {
+    margin: 0;
+}
+
+.table .form-group span.error{
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}

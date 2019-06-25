@@ -46,8 +46,7 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    {{ lang('period') }} : 
-                    <h4>{{ $start_date }} {{ strtolower(lang('to')) }} {{ $end_date }}</h4>
+                    <h4>{{ lang('period') }} {{ $period }}</h4>
 
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%">
                         <tr>

@@ -44,24 +44,21 @@
                 <div class="portlet-body">
                     {{ form_open(base_url().'reports/profitloss/show',array('id' => 'form-profit-loss', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
                         <div class="form-group form-md-line-input">
-                            <label class="col-lg-4 control-label"><?=lang('start_date')?><span class="text-danger">*</span></label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm datepicker" name="start_date" id="start_date" placeholder="<?=lang('start_date')?>" value="<?= date('d-m-Y') ?>" maxlength="10" required="required" />
+                            <label class="col-lg-3 control-label"><?=lang('period')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-5">
+                                <select class="form-control input-sm" name="period" id="period" required="required">
+                                    <option value=""><?= lang('select_your_option') ?></option>
+                                    @for($i=2019; $i<=date('Y'); $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
+                                </select>
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
                         
                         <div class="form-group form-md-line-input">
-                            <label class="col-lg-4 control-label"><?=lang('end_date')?><span class="text-danger">*</span></label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm datepicker" name="end_date" id="end_date" placeholder="<?=lang('end_date')?>" maxlength="10" value="<?= date('d-m-Y') ?>" required="required" />
-                                <div class="form-control-focus"> </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group form-md-line-input">
-                            <label class="col-lg-4 control-label">&nbsp;</label>
-                            <div class="col-lg-7">
+                            <label class="col-lg-3 control-label">&nbsp;</label>
+                            <div class="col-lg-5">
                                 <button type="submit" id="btnOk" class="btn btn-primary">{{ lang('submit') }}</button>
                                 <button type="reset" class="btn btn-default">{{ lang('reset') }}</button>
                             </div>

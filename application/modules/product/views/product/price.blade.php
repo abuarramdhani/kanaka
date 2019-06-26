@@ -90,14 +90,14 @@
                                                         </tr>
                                                         <tr>
                                                             <td rowspan="9">
-                                                            <b><?= $prod->product_code ?></b>
+                                                            <b><?= $prod->product_code ?></b><br/>
                                                             <?php 
-                                                                $productImage = ProductImage::where('product_id', $prod->product_id)->where('deleted', '0')->limit(1)->get();
+                                                                $productImage = ProductImage::where('product_id', $prod->id)->where('deleted', '0')->limit(1)->get();
 
                                                                     if(count($productImage) > 0){
                                                                         foreach($productImage as $prodImg){
                                                                     ?>
-                                                                        <img width="180" height="180" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/<?= $prodImg->image ?>">
+                                                                        <img width="100" height="100" src="{{ base_url() }}uploads/images/products/<?= $prodImg->image ?>">
                                                                     <?php 
                                                                         } 
                                                                     }else{
@@ -209,14 +209,14 @@
                                                         </tr>
                                                         <tr>
                                                             <td rowspan="9">
-                                                            <b><?= $prod->product_code ?></b>
+                                                            <b><?= $prod->product_code ?></b><br/>
                                                             <?php 
-                                                                $productImage = ProductImage::where('product_id', $prod->product_id)->where('deleted', '0')->limit(1)->get();
+                                                                $productImage = ProductImage::where('product_id', $prod->id)->where('deleted', '0')->limit(1)->get();
 
                                                                     if(count($productImage) > 0){
                                                                         foreach($productImage as $prodImg){
                                                                     ?>
-                                                                        <img width="180" height="180" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/<?= $prodImg->image ?>">
+                                                                        <img width="100" height="100" src="{{ base_url() }}uploads/images/products/<?= $prodImg->image ?>">
                                                                     <?php 
                                                                         } 
                                                                     }else{

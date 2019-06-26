@@ -216,7 +216,7 @@ class Products extends MX_Controller {
                     if(!empty($this->input->post('price_value'))){
                         $priceCount = count($this->input->post('price_value'));
                         for($x = 0; $x < $priceCount; $x++){ 
-                            $dataComparison = array('product_id'             => $id_product,
+                            $dataPrice = array('product_id'             => $id_product,
                                                     'area'                   => $this->input->post('price_area')[$x],
                                                     'description'            => $this->input->post('price_description')[$x],
                                                     'type'                   => $this->input->post('price_type')[$x],
@@ -224,7 +224,7 @@ class Products extends MX_Controller {
                                                     'date_created'           => date('Y-m-d'),
                                                     'time_created'           => date('H:i:s'),
                                                     'user_created'           => $user->id);
-                                $saveComparison = $this->db->insert('m_product_price', $dataComparison);
+                            $savePrice = $this->db->insert('m_product_price', $dataPrice);
                         }
                     }
 
@@ -457,6 +457,34 @@ class Products extends MX_Controller {
                     }
                 }
 
+                if(!empty($this->input->post('price_value'))){
+                    $priceCount = count($this->input->post('price_value'));
+                    for($x = 0; $x < $priceCount; $x++){ 
+                        $get_price = ProductPrice::where('id' , $this->input->post('price_id')[$x])->where('deleted', 0)->first();
+                        if (empty($get_price)) {
+                            $dataPrice = array('product_id'             => $id_product,
+                                                'area'                   => $this->input->post('price_area')[$x],
+                                                'description'            => $this->input->post('price_description')[$x],
+                                                'type'                   => $this->input->post('price_type')[$x],
+                                                'value'                  => $this->input->post('price_value')[$x],
+                                                'date_created'           => date('Y-m-d'),
+                                                'time_created'           => date('H:i:s'),
+                                                'user_created'           => $user->id);
+                            $savePrice = $this->db->insert('m_product_price', $dataPrice);
+                        }else{
+                            $modelPrice = ProductPrice::find($this->input->post('price_id')[$x]);
+                            $modelPrice->area           = $this->input->post('price_area')[$x];
+                            $modelPrice->description    = $this->input->post('price_description')[$x];
+                            $modelPrice->type           = $this->input->post('price_type')[$x];
+                            $modelPrice->value          = $this->input->post('price_value')[$x];
+                            $modelPrice->user_modified  = $user->id;
+                            $modelPrice->date_modified  = date('Y-m-d');
+                            $modelPrice->time_modified  = date('H:i:s');
+                            $updatePrice                = $modelPrice->save();
+                        }
+                    }
+                }
+
                 if(!empty($this->input->post('brand'))){
                     $productCount = count($this->input->post('brand'));
                     for($i = 0; $i < $productCount; $i++){ 
@@ -481,8 +509,6 @@ class Products extends MX_Controller {
                                     // Uploaded file data
                                     $fileDataComp                       = $this->upload->data();
                                     $uploadDataComp[$i]['file_name']    = $fileDataComp['file_name'];
-                            
-                                    print_r($uploadDataComp[$i]['file_name']);exit;
                                 
                                     $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
@@ -649,7 +675,12 @@ class Products extends MX_Controller {
                                                     ->where('m_product_comparison.product_id', $id)
                                                     ->where('m_product_comparison.deleted', 0)
                                                     ->where('m_product.deleted', 0)->get();
-            $model = array('status' => 'success', 'data' => Product::find($id), 'image' => ProductImage::where('product_id', $id)->where('deleted', '0')->get(), 'dataComparison' => $dataComparison);
+            $dataPrice = ProductPrice::select('m_product_price.*')
+                                            ->join('m_product', 'm_product.id', '=', 'm_product_price.product_id')
+                                            ->where('m_product_price.product_id', $id)
+                                            ->where('m_product_price.deleted', 0)
+                                            ->where('m_product.deleted', 0)->get();
+            $model = array('status' => 'success', 'data' => Product::find($id), 'image' => ProductImage::where('product_id', $id)->where('deleted', '0')->get(), 'dataComparison' => $dataComparison, 'dataPrice' => $dataPrice);
         } else {
             $model = array('status' => 'error', 'message' => 'Not Found.');
         }

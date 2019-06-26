@@ -246,231 +246,231 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Harga Beli Per-pcs</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                       <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_0" maxlength="50" />
                        <input type="hidden" class="form-control input-sm" name="price_area[]" value="jabodetabek" maxlength="50" />
                        <input type="hidden" class="form-control input-sm" name="price_description[]" value="harga_beli_per_pcs" maxlength="50" />
                        <input type="hidden" class="form-control input-sm" name="price_type[]" value="kanaka" maxlength="50" />
-                       <input type="number" class="form-control input-sm" name="price_value[]" placeholder="Kanaka" maxlength="50" />
+                       <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_0" placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_1" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]" value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]" value="harga_beli_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]" value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]" placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_1" placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_2" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]" value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]" value="harga_beli_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]" value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]" placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_2" placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_3" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]" value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]" value="harga_beli_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]" value="customer" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]" placeholder="<?=lang('customer')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_3" placeholder="<?=lang('customer')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Harga Beli Per-ctn</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_4" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]" value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]" value="harga_beli_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]" value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]" placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_4" placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_5" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]" value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]" value="harga_beli_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]" value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]" placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_5" placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_6" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]" value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]" value="harga_beli_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]" value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]" placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_6" placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_7" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]" value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]" value="harga_beli_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]" value="customer" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]" placeholder="<?=lang('customer')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_7" placeholder="<?=lang('customer')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Harga Jual Per-pcs</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_8" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]" value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]" value="harga_jual_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]" value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]" placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_8" placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_9" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_9"  placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_10" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_10"  placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Harga Jual Per-ctn</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_11" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                        <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_ctn" maxlength="50" />
                        <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                       <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                       <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_11" placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_12" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_12" placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_13" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_13" placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Margin (In Value) Per-pcs</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_14" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_14"  placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_15" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_15"  placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_16" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_16"  placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Margin (In Value) Per-ctn</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_17" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_17"  placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_18" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_18"  placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_19" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_19"  placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Margin (In Percent) Per-pcs</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_20" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />    
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_20"  placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_21" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_21"  placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_22" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_22"  placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Margin (In Percent) Per-ctn</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_23" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />    
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_23"  placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_24" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_24"  placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_25" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_25"  placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">TOP</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_26" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="top" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_26"  placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_27" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="top" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_27"  placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_28" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="top" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_28"  placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
             </fieldset>
@@ -482,231 +482,231 @@
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Harga Beli Per-pcs</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_29" maxlength="50" />
                        <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                        <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_beli_per_pcs" maxlength="50" />
                        <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                       <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                       <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_29"  placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_30" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_beli_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_30"  placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_31" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_beli_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_31"  placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_32" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_beli_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="customer" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('customer')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_32"  placeholder="<?=lang('customer')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Harga Beli Per-ctn</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_33" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_beli_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_33"  placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_34" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_beli_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_34"  placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_35" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_beli_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_35"  placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_36" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_beli_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="customer" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('customer')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_36"  placeholder="<?=lang('customer')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Harga Jual Per-pcs</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_37" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_37"  placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_38" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_38"  placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_39" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_39"  placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Harga Jual Per-ctn</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_40" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                        <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_ctn" maxlength="50" />
                        <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                       <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                       <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_40"  placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_41" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_41"  placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_42" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="harga_jual_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_42"  placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Margin (In Value) Per-pcs</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_43" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_43" placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_44" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_44" placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_45" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_45" placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Margin (In Value) Per-ctn</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_46" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_46" placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_47" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_47" placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_48" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_value_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_48" placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Margin (In Percent) Per-pcs</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_49" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />    
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_49" placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_50" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_50" placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_51" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_pcs" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_51" placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Margin (In Percent) Per-ctn</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_52" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />    
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_52" placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_53" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_53" placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_54" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="margin_percent_per_ctn" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_54" placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">TOP</label>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_55" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="top" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="kanaka" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="Kanaka" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_55" placeholder="Kanaka" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_56" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="top" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="dipo" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('dipo')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_56" placeholder="<?=lang('dipo')?>" maxlength="50" />
                     </div>
                     <div class="col-lg-2">
-                        <input type="hidden" class="form-control input-sm" name="price_id[]" maxlength="50" />
+                        <input type="hidden" class="form-control input-sm" name="price_id[]" id="price_id_57" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_area[]"  value="non_jabodetabek" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_description[]"  value="top" maxlength="50" />
                         <input type="hidden" class="form-control input-sm" name="price_type[]"  value="mitra" maxlength="50" />
-                        <input type="number" class="form-control input-sm" name="price_value[]"  placeholder="<?=lang('mitra')?>" maxlength="50" />
+                        <input type="number" class="form-control input-sm" name="price_value[]" id="price_value_57" placeholder="<?=lang('mitra')?>" maxlength="50" />
                     </div>
                 </div>
             </fieldset>
@@ -990,6 +990,7 @@
             if(json.status == "success"){
                 var row = json.data;
                 var rowImage = json.image;
+                var rowPrice= json.dataPrice;
                 var i;
                 var html = "";
 
@@ -1015,6 +1016,13 @@
                 $('[name="cbp_per_karton"]').val(row.cbp_per_karton);
                 $('[name="harga"]').val(row.harga);
                 $('[name="tipe_kemasan"]').val(row.tipe_kemasan);
+
+                if(rowPrice.length > 0){
+                    for(u=0; u<rowPrice.length; u++){
+                        $('#price_value_'+u).val(rowPrice[u].value);
+                        $('#price_id_'+u).val(rowPrice[u].id);
+                    }
+                }
 
                 for(i=0; i<rowImage.length; i++){
                     html += '<div class="product-image"> <a href="javascript:void()" onclick="deleteImage(' + rowImage[i].id + ')" class="btn btn-danger btn-icon-only btn-circle" title="DELETE"><i class="fa fa-trash-o"></i></a><img width="150" style="padding: 10px;" src="{{ base_url() }}uploads/images/products/' + rowImage[i].image + '"></div>';

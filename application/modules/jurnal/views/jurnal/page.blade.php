@@ -90,7 +90,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label">Tanggal<span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm datepicker" name="tanggal" id="tanggal" placeholder="<?=lang('tanggal')?>" maxlength="50" />
+                <input type="text" class="form-control input-sm datepicker" name="tanggal" id="tanggal" placeholder="<?=lang('tanggal')?>" maxlength="10" value="<?= date('d-m-Y') ?>" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -231,28 +231,20 @@
         },
         errorElement: "span",
         rules: {
-            dipo_id: "required",
-            code: "required",
-            name: "required",
-            address: "required",
-            phone: "required",
-            city: "required",
-            subdistrict: "required",
-            zona_id: "required",
-            pic: "required",
-            top: "required",
+            tanggal: "required",
+            month: "required",
+            keterangan: "required",
+            d_k: "required",
+            coa_id: "required",
+            total: "required",
         },
         messages: {
-            dipo_id: "{{lang('dipo')}}" + " {{lang('not_empty')}}",
-            code: "{{lang('code')}}" + " {{lang('not_empty')}}",
-            name: "{{lang('name')}}" + " {{lang('not_empty')}}",
-            address: "{{lang('address')}}" + " {{lang('not_empty')}}",
-            phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
-            city: "{{lang('city')}}" + " {{lang('not_empty')}}",
-            subdistrict: "{{lang('subdistrict')}}" + " {{lang('not_empty')}}",
-            zona_id: "{{lang('zona')}}" + " {{lang('not_empty')}}",
-            pic: "{{lang('pic')}}" + " {{lang('not_empty')}}",
-            top: "{{lang('top')}}" + " {{lang('not_empty')}}",
+            tanggal: "{{lang('tanggal')}}" + " {{lang('not_empty')}}",
+            month: "{{lang('month')}}" + " {{lang('not_empty')}}",
+            keterangan: "{{lang('keterangan')}}" + " {{lang('not_empty')}}",
+            d_k: "{{lang('d_k')}}" + " {{lang('not_empty')}}",
+            coa_id: "{{lang('coa_id')}}" + " {{lang('not_empty')}}",
+            total: "{{lang('total')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({

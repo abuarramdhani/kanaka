@@ -170,7 +170,7 @@ class Jurnals extends MX_Controller {
                         // 'PIC' => $pic,
                         'Total' => $total,
                     );
-                    $message = "Add " . lang('jurnal') . " " . $jurnal_date . " succesfully by " . $user->full_name;
+                    $message = "Add " . lang('jurnal') . " " . $description . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 17);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
@@ -225,7 +225,7 @@ class Jurnals extends MX_Controller {
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
-                    $message = "Update " . lang('jurnal') . " " .  $model->jurnal_date . " succesfully by " . $user->full_name;
+                    $message = "Update " . lang('jurnal') . " " .  $model->description . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 17);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
@@ -272,7 +272,7 @@ class Jurnals extends MX_Controller {
                     // 'PIC' => $model->pic,
                     'Total' => $model->total,
                 );
-                $message = "Delete " . lang('jurnal') . " " .  $model->name . " succesfully by " . $user->full_name;
+                $message = "Delete " . lang('jurnal') . " " .  $model->description . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 17);
                 $status = array('status' => 'success');
             } else {

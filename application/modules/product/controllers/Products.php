@@ -231,7 +231,7 @@ class Products extends MX_Controller {
                     if(!empty($this->input->post('brand'))){
                         $productCount = count($this->input->post('brand'));
                         for($i = 0; $i < $productCount; $i++){ 
-                            if(!empty($_FILES['image_comparison']['name'])){
+                            if(!empty($_FILES['image_comparison']['name'][$i])){
                                 $_FILES['image']['name']      = $_FILES['image_comparison']['name'][$i]; 
                                 $_FILES['image']['type']      = $_FILES['image_comparison']['type'][$i]; 
                                 $_FILES['image']['tmp_name']  = $_FILES['image_comparison']['tmp_name'][$i]; 
@@ -251,7 +251,7 @@ class Products extends MX_Controller {
                                     $fileDataComp                       = $this->upload->data();
                                     $uploadDataComp[$i]['file_name']    = $fileDataComp['file_name'];
                                 
-                                    $dataComparison = array('product_id'         => $id_product,
+                                    $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
                                                         // 'description'            => $this->input->post('desc_comparison')[$i],
                                                         'image'                  => $uploadDataComp[$i]['file_name'],
@@ -269,7 +269,7 @@ class Products extends MX_Controller {
                                     $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
                                                         // 'description'            => $this->input->post('desc_comparison')[$i],
-                                                        'image'                  => 'default.jpg',
+                                                        'image'                  => 'default.png',
                                                         'packing_size'           => $this->input->post('packing_size_comp')[$i],
                                                         'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
                                                         'tipe_kemasan'           => $this->input->post('tipe_kemasan_comp')[$i],
@@ -528,7 +528,7 @@ class Products extends MX_Controller {
                                     $dataComparison = array('product_id'        => $id_product,
                                                         'brand'                  => $this->input->post('brand')[$i],
                                                         // 'description'            => $this->input->post('desc_comparison')[$i],
-                                                        'image'                  => 'default.jpg',
+                                                        'image'                  => 'default.png',
                                                         'packing_size'           => $this->input->post('packing_size_comp')[$i],
                                                         'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
                                                         'tipe_kemasan'           => $this->input->post('tipe_kemasan_comp')[$i],
@@ -544,7 +544,7 @@ class Products extends MX_Controller {
                                 $dataComparison = array('product_id'        => $id_product,
                                                     'brand'                  => $this->input->post('brand')[$i],
                                                     // 'description'            => $this->input->post('desc_comparison')[$i],
-                                                    'image'                  => 'default.jpg',
+                                                    'image'                  => 'default.png',
                                                     'packing_size'           => $this->input->post('packing_size_comp')[$i],
                                                     'qty_per_ctn'            => $this->input->post('qty_comp')[$i],
                                                     'tipe_kemasan'           => $this->input->post('tipe_kemasan_comp')[$i],

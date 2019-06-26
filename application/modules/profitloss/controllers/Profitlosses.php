@@ -81,7 +81,7 @@ class Profitlosses extends MX_Controller {
 
         $start_date = date($period.'-01-01');
         $end_date = date($period.'-12-31');
-
+        
         $data['penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 4, 'd_k' => 'D'));
         $data['retur_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 5, 'd_k' => 'D'));
         $data['penjualan_bersih'] = $data['penjualan'] - $data['retur_penjualan'];

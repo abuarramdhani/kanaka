@@ -11,7 +11,7 @@
 		}
 		
 		@page { margin: 10px 10px; }
-		#header { left: 0px; top: 0px; right: 0px; text-align: center;  }
+		#header { left: 0px; top: 0px; right: 0px; text-align: left;  }
 		#footer { left: 0px; bottom: 30px; right: 0px; font-size: 11px; font-family: sans-serif; text-align:right; }	
 		#content{
 			border-bottom:0px solid #000000;
@@ -27,9 +27,9 @@
 <body>
 	<div id="header">
 		<img src="<?=base_url()?>assets/img/logo.png" alt="Logo Kanaka" width="200" />
-		<h2 style="text-align: left;">PT. KANAKA GRAHA PARAMITHA</h2>
-		<h4 style="text-align: left;"><?php echo lang('profit_loss'); ?></h4>
-		<h4 style="text-align: left;"><?php echo lang('period') . ' ' . $period ?></h4>
+		<h2>PT. KANAKA GRAHA PARAMITHA</h2>
+		<h3><?php echo strtoupper(lang('profit_loss')); ?></h3>
+		<h3><?php echo lang('period_of') . ' ' . $period ?></h3>
 	</div>
 
 	<div id="content" style="text-align:center;">

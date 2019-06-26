@@ -58,8 +58,8 @@
                 </div>
                 <div class="portlet-body">
                     <img src="<?=base_url()?>assets/img/logo.png" alt="Logo Kanaka" width="300" />
-                    <h3 style="text-align: left;">PT. KANAKA GRAHA PARAMITHA</h3>    
-                    <h4>{{ lang('period') }} {{ $period }}</h4>
+                    <h3>PT. KANAKA GRAHA PARAMITHA</h3>    
+                    <h3>{{ lang('period_of') }} {{ $period }}</h3>
 
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%">
                         <tr>

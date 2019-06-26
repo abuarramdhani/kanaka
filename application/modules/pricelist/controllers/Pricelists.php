@@ -598,11 +598,21 @@ class Pricelists extends MX_Controller {
     }
 
     function pdf(){
-        $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->orderBy('t_pricelist.id', 'DESC')->get();
-        $discount = $this->db->select('*')
-                  ->order_by('id', 'DESC')
-                  ->get_where('t_pricelist', array('deleted' => 0))
-                  ->row();
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->where('t_pricelist.user_created', $user->id)->orderBy('t_pricelist.id', 'DESC')->get();
+            $discount = $this->db->select('*')
+                      ->order_by('id', 'DESC')
+                      ->get_where('t_pricelist', array('deleted' => 0, 't_pricelist.user_created' => $user->id))
+                      ->row();
+        }
+        else{
+            $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->orderBy('t_pricelist.id', 'DESC')->get();
+            $discount = $this->db->select('*')
+                      ->order_by('id', 'DESC')
+                      ->get_where('t_pricelist', array('deleted' => 0))
+                      ->row();
+        }
         
         $data['discount'] = $discount;
 
@@ -613,12 +623,22 @@ class Pricelists extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=pricelist.xls");
-        $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->orderBy('t_pricelist.id', 'DESC')->get();
 
-        $discount = $this->db->select('*')
-                  ->order_by('id', 'DESC')
-                  ->get_where('t_pricelist', array('deleted' => 0))
-                  ->row();
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->where('t_pricelist.user_created', $user->id)->orderBy('t_pricelist.id', 'DESC')->get();
+            $discount = $this->db->select('*')
+                      ->order_by('id', 'DESC')
+                      ->get_where('t_pricelist', array('deleted' => 0, 't_pricelist.user_created' => $user->id))
+                      ->row();
+        }
+        else{
+            $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->orderBy('t_pricelist.id', 'DESC')->get();
+            $discount = $this->db->select('*')
+                      ->order_by('id', 'DESC')
+                      ->get_where('t_pricelist', array('deleted' => 0))
+                      ->row();
+        }
         
         $data['discount'] = $discount;
         

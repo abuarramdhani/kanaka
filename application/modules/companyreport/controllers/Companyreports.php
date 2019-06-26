@@ -1149,7 +1149,9 @@ class Companyreports extends MX_Controller {
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=sell_in_company.xls");
 
-        $data['companyreports'] = Companyreport::select(
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['companyreports'] = Companyreport::select(
                                     't_sell_in_company.*',
                                     't_invoice.invoice_no as invoice_no',
                                     't_sp.sp_no as sp_no',
@@ -1167,8 +1169,33 @@ class Companyreports extends MX_Controller {
                                 ->join('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
                                 ->join('t_sp', 't_sell_in_company.sp_id', '=' ,'t_sp.id')
                                 ->where('t_sell_in_company.deleted', 0)
+                                ->where('t_sell_in_company.user_created', $user->id)
                                 ->orderBy('t_sell_in_company.id', 'DESC')
                                 ->get();
+        }
+        else{
+            $data['companyreports'] = Companyreport::select(
+                't_sell_in_company.*',
+                't_invoice.invoice_no as invoice_no',
+                't_sp.sp_no as sp_no',
+                'm_principle.code as principle_code',
+                'm_principle.name as principle_name',
+                'm_product.product_code as product_code',
+                'm_product.name as product_name',
+                'm_dipo_partner.code as customer_code',
+                'm_dipo_partner.name as customer_name',
+                'm_principle.top as top'
+            )
+            ->join('m_principle', 't_sell_in_company.principle_id', '=' ,'m_principle.id')
+            ->join('m_product', 't_sell_in_company.product_id', '=' ,'m_product.id')
+            ->join('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+            ->join('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
+            ->join('t_sp', 't_sell_in_company.sp_id', '=' ,'t_sp.id')
+            ->where('t_sell_in_company.deleted', 0)
+            ->orderBy('t_sell_in_company.id', 'DESC')
+            ->get();
+        }
+
         $this->load->view('companyreport/companyreport/companyreport_pdf', $data);
     }
 
@@ -1176,7 +1203,27 @@ class Companyreports extends MX_Controller {
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=sell_out_company.xls");
 
-        $data['companyreports'] = Companyreportout::select(
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['companyreports'] = Companyreportout::select(
+                                    't_sell_out_company.*',
+                                    't_invoice.invoice_no as invoice_no',
+                                    'm_product.product_code as product_code',
+                                    'm_product.name as product_name',
+                                    'm_dipo_partner.code as customer_code',
+                                    'm_dipo_partner.name as customer_name',
+                                    'm_dipo_partner.top as top'
+                                )
+                                ->join('m_product', 't_sell_out_company.product_id', '=' ,'m_product.id')
+                                ->join('m_dipo_partner', 't_sell_out_company.customer_id', '=' ,'m_dipo_partner.id')
+                                ->join('t_invoice', 't_sell_out_company.invoice_id', '=' ,'t_invoice.id')
+                                ->where('t_sell_out_company.deleted', 0)
+                                ->where('t_sell_out_company.user_created', $user->id)
+                                ->orderBy('t_sell_out_company.id', 'DESC')
+                                ->get();
+        }
+        else{
+            $data['companyreports'] = Companyreportout::select(
                                     't_sell_out_company.*',
                                     't_invoice.invoice_no as invoice_no',
                                     'm_product.product_code as product_code',
@@ -1191,6 +1238,8 @@ class Companyreports extends MX_Controller {
                                 ->where('t_sell_out_company.deleted', 0)
                                 ->orderBy('t_sell_out_company.id', 'DESC')
                                 ->get();
+        }
+
         $this->load->view('companyreport/companyreport/companyreportout_pdf', $data);
     }
 

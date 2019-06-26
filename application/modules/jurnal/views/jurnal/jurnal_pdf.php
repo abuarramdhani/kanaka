@@ -30,11 +30,10 @@
 				<th  align="center" width="5%" height="20px">No</th>
 				<th  align="center">Tanggal</th>
 				<th  align="center">Bulan</th>
-				<th  align="center">Reff</th>
 				<th  align="center">Code</th>
+				<th  align="center">Akun</th>
 				<th  align="center">Keterangan</th>
 				<th  align="center">D/K</th>
-				<th  align="center"><?=lang('pic')?></th>
 				<th  align="center"><?=lang('debet')?></th>
 				<th  align="center"><?=lang('kredit')?></th>
 				<th  align="center"><?=lang('created_date')?></th>
@@ -53,20 +52,19 @@
 					<td align="center"><?= $i ?></td>
 					<td><?= date('d-m-Y',strtotime($row->jurnal_date)) ?></td>
 					<td><?= $row->month ?></td>
-					<td><?= $row->reff ?></td>
 					<td align="center"><?= $row->coa_code ?></td>
 					<td><?= $row->coa_name ?></td>
+					<td><?= $row->description ?></td>
 					<td align="center"><?= $row->d_k ?></td>
-					<td><?= $row->pic ?></td>
 					<?php
 						if($row->d_k == 'D'){
-							$total_debit = $row->total;
+							$total_debit += $row->total;
 							echo "
 								<td align='right'>" . number_format($row->total, 0) . "</td>
 								<td align='right'>0</td>
 							";
 						}elseif($row->d_k == 'K'){
-							$total_kredit = $row->total;
+							$total_kredit += $row->total;
 							echo "
 								<td align='right'>0</td>
 								<td align='right'>" . number_format($row->total, 0) . "</td>
@@ -80,7 +78,7 @@
 			?>
 				<tfoot>
 					<tr>
-						<td align="right" colspan="8">Total &nbsp; </td>
+						<td align="right" colspan="7">Total &nbsp; </td>
 						<td align="right"><?= number_format($total_debit, 0) ?></td>
 						<td align="right"><?= number_format($total_kredit, 0) ?></td>
 						<td>&nbsp;</td>
@@ -91,7 +89,7 @@
 			else{
 			?>
 				<tr style="font-size:9px">
-					<td align="center" colspan="11"><?= lang('no_data_available') ?></td>
+					<td align="center" colspan="10"><?= lang('no_data_available') ?></td>
 				</tr>
 			<?php
 			}

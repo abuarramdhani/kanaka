@@ -249,3 +249,5 @@ $route['reports/stock'] = 'companyreport/companyreports/stock';
 */
 $route['reports/profitloss'] = 'profitloss/profitlosses/index';
 $route['reports/profitloss/show'] = 'profitloss/profitlosses/show';
+$route['reports/profitloss/pdf/(:num)'] = 'profitloss/profitlosses/pdf/$1';
+$route['reports/profitloss/excel/(:num)'] = 'profitloss/profitlosses/excel/$1';

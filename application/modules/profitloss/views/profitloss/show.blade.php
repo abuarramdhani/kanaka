@@ -42,11 +42,24 @@
                         <span class="caption-subject">{{lang('profit_loss')}}</span>
                     </div>
                     <div class="tools">
-                        <a href="{{ base_url() }}reports/profitloss">{{lang('back') }}</a>
+                        <button onclick="return window.location='{{ base_url() }}reports/profitloss'" class="btn btn-default btn-sm">
+                            <i class="fa fa-chevron-left"></i> {{ lang('back') }}
+                        </button>
+
+                        @if($print_limited_access == 1 || $print_unlimited_access == 1)
+                            <button onclick="return window.open('{{base_url()}}reports/profitloss/pdf/{{ $period }}')" class="btn btn-danger btn-sm">
+                                <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
+                            </button>
+                            <button onclick="return window.open('{{base_url()}}reports/profitloss/excel/{{ $period }}')" class="btn btn-success btn-sm">
+                                <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
+                            </button>
+                        @endif
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <h4>{{ lang('period') }} {{ $period }}</h4>
+                    <img src="<?=base_url()?>assets/img/logo.png" alt="Logo Kanaka" width="300" />
+                    <h3>PT. KANAKA GRAHA PARAMITHA</h3>    
+                    <h3>{{ lang('period_of') }} {{ $period }}</h3>
 
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%">
                         <tr>

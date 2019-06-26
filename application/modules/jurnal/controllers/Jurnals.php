@@ -170,7 +170,7 @@ class Jurnals extends MX_Controller {
                         // 'PIC' => $pic,
                         'Total' => $total,
                     );
-                    $message = "Add " . lang('jurnal') . " " . $jurnal_date . " succesfully by " . $user->full_name;
+                    $message = "Add " . lang('jurnal') . " " . $description . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 17);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
@@ -225,7 +225,7 @@ class Jurnals extends MX_Controller {
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
-                    $message = "Update " . lang('jurnal') . " " .  $model->jurnal_date . " succesfully by " . $user->full_name;
+                    $message = "Update " . lang('jurnal') . " " .  $model->description . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_new), json_encode($data_old), json_encode($data_change), $message, 'U', 17);
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
@@ -272,7 +272,7 @@ class Jurnals extends MX_Controller {
                     // 'PIC' => $model->pic,
                     'Total' => $model->total,
                 );
-                $message = "Delete " . lang('jurnal') . " " .  $model->name . " succesfully by " . $user->full_name;
+                $message = "Delete " . lang('jurnal') . " " .  $model->description . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 17);
                 $status = array('status' => 'success');
             } else {
@@ -286,7 +286,14 @@ class Jurnals extends MX_Controller {
     }
 
     function pdf(){
-        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->where('t_jurnal.user_created', $user->id)->orderBy('t_jurnal.id', 'DESC')->get();
+        }
+        else{
+            $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();            
+        }
+
         $html = $this->load->view('jurnal/jurnal/jurnal_pdf', $data, true);
         $this->pdf_generator->generate($html, 'jurnal pdf', $orientation='Landscape');
     }
@@ -294,7 +301,15 @@ class Jurnals extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=jurnal.xls");
-        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
+
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->where('t_jurnal.user_created', $user->id)->orderBy('t_jurnal.id', 'DESC')->get();
+        }
+        else{
+            $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();            
+        }
+
         $this->load->view('jurnal/jurnal/jurnal_pdf', $data);
     }
 

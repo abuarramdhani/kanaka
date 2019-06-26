@@ -195,9 +195,9 @@ class Companyreports extends MX_Controller {
             $row_value = array();
 
             $btn_action = '';
-            if($this->user_profile->get_user_access('Updated', 'companyreport')){
-                $btn_action .= '<a href="javascript:void()" onclick="viewData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
-            }
+            // if($this->user_profile->get_user_access('Updated', 'companyreport')){
+            //     $btn_action .= '<a href="javascript:void()" onclick="viewData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
+            // }
             if($this->user_profile->get_user_access('Deleted', 'companyreport')){
                 $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
@@ -388,9 +388,9 @@ class Companyreports extends MX_Controller {
             $row_value = array();
 
             $btn_action = '';
-            if($this->user_profile->get_user_access('Updated', 'companyreport')){
-                $btn_action .= '<a href="javascript:void()" onclick="viewDataOut(\'' . uri_encrypt($row->id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
-            }
+            // if($this->user_profile->get_user_access('Updated', 'companyreport')){
+            //     $btn_action .= '<a href="javascript:void()" onclick="viewDataOut(\'' . uri_encrypt($row->id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
+            // }
             if($this->user_profile->get_user_access('Deleted', 'companyreport')){
                 $btn_action .= '<a href="javascript:void()" onclick="deleteDataOut(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
@@ -552,6 +552,34 @@ class Companyreports extends MX_Controller {
                     );
                     $message = "Add Sell In " . strtolower(lang('companyreport')) . " " . Invoice::find($invoice_id)->invoice_no . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 9);
+
+                    $model_jurnal = new Jurnal();
+                    $model_jurnal->jurnal_date = date('Y-m-d');
+                    $model_jurnal->month = date('F');
+                    $model_jurnal->reff_id = $model->id;
+                    $model_jurnal->description = Invoice::find($invoice_id)->invoice_no;
+                    $model_jurnal->d_k = 'K';
+                    $model_jurnal->coa_id = 2;
+                    $model_jurnal->total = $total_value_order_in_ctn_after_tax;
+                    
+                    $model_jurnal->user_created = $user->id;
+                    $model_jurnal->date_created = date('Y-m-d');
+                    $model_jurnal->time_created = date('H:i:s');
+                    $save_jurnal = $model_jurnal->save();
+
+                    if($save_jurnal){
+                        $data_notif = array(
+                            'Tanggal' => date('Y-m-d'),
+                            'Bulan' => date('F'),
+                            'Keterangan' => Invoice::find($invoice_id)->invoice_no,
+                            'D/K' => 'K',
+                            'Chart Of Account' => Chartofaccount::find(2)->code,
+                            'Total' => $total_value_order_in_ctn_after_tax,
+                        );
+                        $message = "Add " . lang('jurnal') . " " . Invoice::find($invoice_id)->invoice_no . " succesfully by " . $user->full_name;
+                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 17);
+                    }
+
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
                     $status = array('status' => 'error', 'message' => lang('message_save_failed'));
@@ -793,6 +821,34 @@ class Companyreports extends MX_Controller {
                     );
                     $message = "Add Sell Out " . strtolower(lang('companyreport')) . " " . Invoice::find($invoice_id)->invoice_no . " succesfully by " . $user->full_name;
                     $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 12);
+
+                    $model_jurnal = new Jurnal();
+                    $model_jurnal->jurnal_date = date('Y-m-d');
+                    $model_jurnal->month = date('F');
+                    $model_jurnal->reff_id = $model->id;
+                    $model_jurnal->description = Invoice::find($invoice_id)->invoice_no;
+                    $model_jurnal->d_k = 'D';
+                    $model_jurnal->coa_id = 4;
+                    $model_jurnal->total = $total_value_order_in_ctn_after_tax;
+                    
+                    $model_jurnal->user_created = $user->id;
+                    $model_jurnal->date_created = date('Y-m-d');
+                    $model_jurnal->time_created = date('H:i:s');
+                    $save_jurnal = $model_jurnal->save();
+
+                    if($save_jurnal){
+                        $data_notif = array(
+                            'Tanggal' => date('Y-m-d'),
+                            'Bulan' => date('F'),
+                            'Keterangan' => Invoice::find($invoice_id)->invoice_no,
+                            'D/K' => 'D',
+                            'Chart Of Account' => Chartofaccount::find(4)->code,
+                            'Total' => $total_value_order_in_ctn_after_tax,
+                        );
+                        $message = "Add " . lang('jurnal') . " " . Invoice::find($invoice_id)->invoice_no . " succesfully by " . $user->full_name;
+                        $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 17);
+                    }
+
                     $status = array('status' => 'success', 'message' => lang('message_save_success'));
                 } else {
                     $status = array('status' => 'error', 'message' => lang('message_save_failed'));
@@ -988,6 +1044,26 @@ class Companyreports extends MX_Controller {
                 );
                 $message = "Delete Sell In " . strtolower(lang('companyreport')) . " " .  Invoice::find($model->invoice_id)->invoice_no . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 9);
+
+                // DELETE JURNAL
+                $model_jurnal = Jurnal::where('reff_id', $id)->where('description', Invoice::find($model->invoice_id)->invoice_no)->where('coa_id', 2)->where('d_k', 'K')->where('deleted', 0)->first();
+                $model_jurnal->deleted = 1;
+                $model_jurnal->user_deleted = $user->id;
+                $model_jurnal->date_deleted = date('Y-m-d');
+                $model_jurnal->time_deleted = date('H:i:s');
+                $model_jurnal->save();
+
+                $data_notif = array(
+                    'Tanggal' => $model_jurnal->jurnal_date,
+                    'Bulan' => $model_jurnal->month,
+                    'Keterangan' => $model_jurnal->description,
+                    'D/K' => $model_jurnal->d_k,
+                    'Chart Of Account' => Chartofaccount::find($model_jurnal->coa_id)->code,
+                    'Total' => $model_jurnal->total,
+                );
+                $message = "Delete " . lang('jurnal') . " " . Invoice::find($model->invoice_id)->invoice_no . " succesfully by " . $user->full_name;
+                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 17);
+
                 $status = array('status' => 'success');
             } else {
                 $status = array('status' => 'error');
@@ -1038,6 +1114,26 @@ class Companyreports extends MX_Controller {
                 );
                 $message = "Delete Sell Out " . strtolower(lang('companyreport')) . " " .  Invoice::find($model->invoice_id)->invoice_no . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 12);
+
+                // DELETE JURNAL
+                $model_jurnal = Jurnal::where('reff_id', $id)->where('description', Invoice::find($model->invoice_id)->invoice_no)->where('coa_id', 4)->where('d_k', 'D')->where('deleted', 0)->first();
+                $model_jurnal->deleted = 1;
+                $model_jurnal->user_deleted = $user->id;
+                $model_jurnal->date_deleted = date('Y-m-d');
+                $model_jurnal->time_deleted = date('H:i:s');
+                $model_jurnal->save();
+
+                $data_notif = array(
+                    'Tanggal' => $model_jurnal->jurnal_date,
+                    'Bulan' => $model_jurnal->month,
+                    'Keterangan' => $model_jurnal->description,
+                    'D/K' => $model_jurnal->d_k,
+                    'Chart Of Account' => Chartofaccount::find($model_jurnal->coa_id)->code,
+                    'Total' => $model_jurnal->total,
+                );
+                $message = "Delete " . lang('jurnal') . " " . Invoice::find($model->invoice_id)->invoice_no . " succesfully by " . $user->full_name;
+                $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 17);
+
                 $status = array('status' => 'success');
             } else {
                 $status = array('status' => 'error');

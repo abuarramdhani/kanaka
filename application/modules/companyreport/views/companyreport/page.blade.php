@@ -1465,7 +1465,7 @@
                             s:1000 };	
             
             // return Math.floor( diff/divideBy[datepart]);
-            return parseInt(Math.round( diff/divideBy[datepart])) + 1;
+            return parseInt(Math.round( diff/divideBy[datepart]));
         }
 
         var toYyMmDd = function(input) {

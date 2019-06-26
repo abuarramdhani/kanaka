@@ -246,18 +246,50 @@ li.product-item {
 }
 
 .pricelist-title {
-    padding: 0px 20px;
+    padding: 0px 10px;
 }
 
 .product-pricelist .logo-kanaka img {
-    padding: 20px;
+    padding: 20px 0;
+}
+
+.row.pricelist-title .col-md-4 {
+    padding: 0;
 }
 
 .table-product-pricelist {
-    padding: 0 20px;
+    padding: 0 10px;
+}
+
+td.td-block {
+    background-color: aliceblue;
+    color: #000000;
+}
+
+.table-header-blue{
+    background-color: #337ab7 !important;
+    color: white;
+}
+
+.table-product-pricelist table th, .table-product-pricelist table td {
+    font-size: 12px;
+}
+
+.title-price-area {
+    margin-bottom: 5px;
+    float: left;
+}
+
+.title-after-tax {
+    text-align: right;
+    margin-bottom: 5px;
 }
 
 @media (min-width: 768px){
+    a.btn.btn-sm.btn-primary.btn-comparison {
+        width: 98.5%;
+    }
+
     .catalog-item .product-image {
         height: 260px;
     }
@@ -268,6 +300,10 @@ li.product-item {
 }
 
 @media (max-width: 767px){
+    a.btn.btn-sm.btn-primary.btn-comparison {
+        width: 97% !important;
+    }
+
     .catalog-item {
         width: 100%;
         margin: 10px 0;

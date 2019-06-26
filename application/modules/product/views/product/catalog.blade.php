@@ -115,8 +115,8 @@
                                                 <div class="action-button-catalog">
                                                     <a href="{{ base_url() }}catalogproduct/salestalk/?id=<?= $c->product_id ?>" class="btn btn-sm btn-primary">Sales Talk</a>
                                                     <a href="{{ base_url() }}catalogproduct/price/?id=<?= $c->product_id ?>" class="btn btn-sm btn-primary">Price</a>
-                                                    <a href="{{ base_url() }}catalogproduct/comparison/?id=<?= $c->product_id ?>" class="btn btn-sm btn-primary">Comparison</a>
-                                                    <a href="{{ base_url() }}catalogproduct/buildingblock/?id=<?= $c->product_id ?>" class="btn btn-sm btn-primary">Building Block</a>
+                                                    <a href="{{ base_url() }}catalogproduct/comparison/?id=<?= $c->product_id ?>" class="btn btn-sm btn-primary btn-comparison">Comparison</a>
+                                                    <!-- <a href="{{ base_url() }}catalogproduct/buildingblock/?id=<?= $c->product_id ?>" class="btn btn-sm btn-primary">Building Block</a> -->
                                                 </div>
                                             </div>
                                         </div>

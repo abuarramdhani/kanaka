@@ -509,6 +509,7 @@ $lang['price'] = 'Price';
 $lang['stock'] = 'Stock';
 $lang['pack'] = 'Pack';
 $lang['nominal'] = 'Nominal';
+$lang['price_after_tax'] = 'Price After Tax';
 ## END STOCK ##
 
 ## PROFIT AND LOSS ##

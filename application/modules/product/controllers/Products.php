@@ -775,7 +775,36 @@ class Products extends MX_Controller {
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');
         $data['product'] = Product::where('m_product.id', $id)->where('m_product.deleted', '0')->get();
-        $data['prices_jabodetabek'] = ProductPrice::join('m_product', 'm_product_price.product_id', '=', 'm_product.id')->where('product_id', $id)->where('area', 'jabodetabek')->where('m_product_price.deleted', '0')->where('m_product.deleted', '0')->get();
+        $data['harga_beli_pcs_jabodetabeks'] = $this->getPrice($id, 'jabodetabek', 'harga_beli_per_pcs');
+        $data['harga_beli_ctn_jabodetabeks'] = $this->getPrice($id, 'jabodetabek', 'harga_beli_per_ctn');
+        $data['harga_jual_pcs_jabodetabeks'] = $this->getPrice($id, 'jabodetabek', 'harga_jual_per_pcs');
+        $data['harga_jual_ctn_jabodetabeks'] = $this->getPrice($id, 'jabodetabek', 'harga_jual_per_ctn');
+        $data['margin_value_pcs_jabodetabeks'] = $this->getPrice($id, 'jabodetabek', 'margin_value_per_pcs');
+        $data['margin_value_ctn_jabodetabeks'] = $this->getPrice($id, 'jabodetabek', 'margin_value_per_ctn');
+        $data['margin_percent_pcs_jabodetabeks'] = $this->getPrice($id, 'jabodetabek', 'margin_percent_per_pcs');
+        $data['margin_percent_ctn_jabodetabeks'] = $this->getPrice($id, 'jabodetabek', 'margin_percent_per_ctn');
+        $data['top_jabodetabeks'] = $this->getPrice($id, 'jabodetabek', 'top');
+
+        $data['harga_beli_pcs_nons'] = $this->getPrice($id, 'non_jabodetabek', 'harga_beli_per_pcs');
+        $data['harga_beli_ctn_nons'] = $this->getPrice($id, 'non_jabodetabek', 'harga_beli_per_ctn');
+        $data['harga_jual_pcs_nons'] = $this->getPrice($id, 'non_jabodetabek', 'harga_jual_per_pcs');
+        $data['harga_jual_ctn_nons'] = $this->getPrice($id, 'non_jabodetabek', 'harga_jual_per_ctn');
+        $data['margin_value_pcs_nons'] = $this->getPrice($id, 'non_jabodetabek', 'margin_value_per_pcs');
+        $data['margin_value_ctn_nons'] = $this->getPrice($id, 'non_jabodetabek', 'margin_value_per_ctn');
+        $data['margin_percent_pcs_nons'] = $this->getPrice($id, 'non_jabodetabek', 'margin_percent_per_pcs');
+        $data['margin_percent_ctn_nons'] = $this->getPrice($id, 'non_jabodetabek', 'margin_percent_per_ctn');
+        $data['top_nons'] = $this->getPrice($id, 'non_jabodetabek', 'top');
         $this->load->blade('product.views.product.price', $data);
+    }
+
+    public function getPrice($id, $area, $type){
+        $data = ProductPrice::select('m_product_price.type', 'value')->join('m_product', 'm_product_price.product_id', '=', 'm_product.id')
+                    ->where('product_id', $id)
+                    ->where('area', $area)
+                    ->where('m_product_price.description', $type)
+                    ->where('m_product_price.deleted', '0')
+                    ->where('m_product.deleted', '0')->get();
+
+        return($data);
     }
 }

@@ -286,7 +286,14 @@ class Jurnals extends MX_Controller {
     }
 
     function pdf(){
-        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->where('t_jurnal.user_created', $user->id)->orderBy('t_jurnal.id', 'DESC')->get();
+        }
+        else{
+            $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();            
+        }
+
         $html = $this->load->view('jurnal/jurnal/jurnal_pdf', $data, true);
         $this->pdf_generator->generate($html, 'jurnal pdf', $orientation='Landscape');
     }
@@ -294,7 +301,15 @@ class Jurnals extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=jurnal.xls");
-        $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();
+
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->where('t_jurnal.user_created', $user->id)->orderBy('t_jurnal.id', 'DESC')->get();
+        }
+        else{
+            $data['jurnals'] = Jurnal::select('t_jurnal.*', 'm_chart_of_accounts.description as coa_description', 'm_chart_of_accounts.code as coa_code', 'm_chart_of_accounts.description as coa_name')->join('m_chart_of_accounts', 'm_chart_of_accounts.id', '=', 't_jurnal.coa_id')->where('t_jurnal.deleted', 0)->orderBy('t_jurnal.id', 'DESC')->get();            
+        }
+
         $this->load->view('jurnal/jurnal/jurnal_pdf', $data);
     }
 

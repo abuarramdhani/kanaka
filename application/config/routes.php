@@ -251,3 +251,10 @@ $route['reports/profitloss'] = 'profitloss/profitlosses/index';
 $route['reports/profitloss/show'] = 'profitloss/profitlosses/show';
 $route['reports/profitloss/pdf/(:num)'] = 'profitloss/profitlosses/pdf/$1';
 $route['reports/profitloss/excel/(:num)'] = 'profitloss/profitlosses/excel/$1';
+
+/**
+* ACCOUNT PAYABLE
+*/
+$route['reports/accountpayable'] = 'accountpayable/accountpayables/index';
+$route['reports/accountpayable/pdf'] = 'accountpayable/accountpayables/pdf';
+$route['reports/accountpayable/excel'] = 'accountpayable/accountpayables/excel';

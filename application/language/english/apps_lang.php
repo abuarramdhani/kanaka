@@ -520,3 +520,7 @@ $lang['period'] = "Period";
 $lang['period_of'] = "Period of";
 ## END PROFIT AND LOSS ##
 
+## ACCOUNT PAYABLE ##
+$lang['accountpayable'] = 'Account  Payable';
+## END ACCOUNT PAYABLE ##
+

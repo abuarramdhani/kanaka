@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2019-06-26 23:20:45
+Date: 2019-06-27 05:56:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,7 @@ CREATE TABLE `menu` (
   `date_created` datetime DEFAULT NULL,
   `date_modified` datetime DEFAULT NULL,
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of menu
@@ -61,3 +61,4 @@ INSERT INTO `menu` VALUES ('22', '22', 'Jurnal', 'jurnal', null, '3', 'jurnal', 
 INSERT INTO `menu` VALUES ('23', '23', 'Stock', 'stock', null, '3', 'stock', '1', '2019-06-24 10:25:53', '2019-06-24 10:25:53');
 INSERT INTO `menu` VALUES ('24', '24', 'Profit and Loss', 'profitloss', null, '3', 'profit_loss', '1', '2019-06-25 14:02:38', '2019-06-25 14:02:38');
 INSERT INTO `menu` VALUES ('25', '25', 'Account Payable', 'accountpayable', null, '3', 'accountpayable', '1', '2019-06-26 22:54:05', '2019-06-26 22:54:05');
+INSERT INTO `menu` VALUES ('26', '26', 'Account Receivable', 'accountreceivable', null, '3', 'accountreceivable', '1', '2019-06-27 05:56:04', '2019-06-27 05:56:04');

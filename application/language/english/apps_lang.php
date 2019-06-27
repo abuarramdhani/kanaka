@@ -521,6 +521,10 @@ $lang['period_of'] = "Period of";
 ## END PROFIT AND LOSS ##
 
 ## ACCOUNT PAYABLE ##
-$lang['accountpayable'] = 'Account  Payable';
+$lang['accountpayable'] = 'Account Payable';
+$lang['due_date'] = "Due Date";
 ## END ACCOUNT PAYABLE ##
 
+## ACCOUNT RECEIVABLE ##
+$lang['accountreceivable'] = 'Account Receivable';
+## END ACCOUNT RECEIVABLE ##

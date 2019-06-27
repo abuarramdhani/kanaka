@@ -52,20 +52,14 @@
                     <table id="table-accountpayable" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
-                                <th><?=lang('code')?></th>
-                                <th><?=lang('name')?></th>
-                                <th><?=lang('address')?></th>
-                                <th><?=lang('phone')?></th>
-                                <th><?=lang('email')?></th>
-                                <th><?=lang('city')?></th>
-                                <th><?=lang('subdistrict')?></th>
-                                <th><?=lang('zona')?></th>
-                                <th><?=lang('latitude')?></th>
-                                <th><?=lang('longitude')?></th>
-                                <th><?=lang('pic')?></th>
-                                <th><?=lang('top')?></th>
-                                <th><?=lang('created_date')?></th>
-                                <th width="13%"><?=lang('options')?></th>
+                                <th style="text-align: center;"><?=lang('name')?></th>
+                                <th style="text-align: center;"><?=lang('nominal')?></th>
+                                <th style="text-align: center;"><?=lang('due_date')?></th>
+                                <th style="text-align: center;"><?=lang('status')?></th>
+                                <th style="text-align: center;">0-30</th>
+                                <th style="text-align: center;">31-60</th>
+                                <th style="text-align: center;">61-90</th>
+                                <th style="text-align: center;">>90</th>
                             </tr>
                         </thead>
                     </table>
@@ -93,8 +87,9 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}accountpayable/accountpayables/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [12, 13]},
-            {"targets": [12, 13], "orderable": false}
+            {"className": "dt-center", "targets": [2, 3]},
+            {"className": "dt-right", "targets": [4, 5, 6, 7]},
+            {"targets": [1, 2, 3, 4, 5, 6, 7], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);

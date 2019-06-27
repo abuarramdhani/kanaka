@@ -170,7 +170,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <option value="dipo"><?= lang('distribution_point') ?></option>
                                     <option value="partner"><?= lang('partner') ?></option>
                                     <option value="independent_partner"><?= lang('independent_partner') ?></option>
-                                    <option value="customer"><?= lang('customer') ?></option>
+                                    <!-- <option value="customer"><?= lang('customer') ?></option> -->
                                 </select>
                                 <div class="form-control-focus"> </div>
                             </div>
@@ -179,7 +179,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input dipo_field">
                             <label class="col-lg-4 control-label"><?=lang('dipo')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <select class="form-control input-sm" name="dipo_id" id="dipo_id" style="width: 100%;">
+                                <select class="form-control input-sm select2" name="dipo_id" id="dipo_id" style="width: 100%;">
                                     @foreach($dipos as $dipo)
                                         <option value="{{ $dipo->id }}">{{ $dipo->name }}</option>
                                     @endforeach
@@ -878,39 +878,42 @@ License: You must have a valid license purchased only from themeforest(the above
             });
 
             $('#code_customer').change(function(){
-                $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
-                    if(json.status == "error"){
-                        toastr.error(json.message,'{{ lang("notification") }}');
-                        $('#code_customer').val('');
-                        $('#code_customer').focus();
-                    }
-                    else{
-                        toastr.success(json.message,'{{ lang("notification") }}');                        
-                    }
-                    App.unblockUI('#form-wrapper');
-                });
+                if($('#code_customer').val() != ""){
+                    $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
+                        if(json.status == "error"){
+                            toastr.error(json.message,'{{ lang("notification") }}');
+                            $('#code_customer').val('');
+                            $('#code_customer').focus();
+                        }
+                        else{
+                            toastr.success(json.message,'{{ lang("notification") }}');                        
+                        }
+                        App.unblockUI('#form-wrapper');
+                    });
+                }
             });
 
             $('#type_customer').change(function(){
-                $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
-                    if(json.status == "error"){
-                        toastr.error(json.message,'{{ lang("notification") }}');
-                        $('#code_customer').val('');
-                        $('#code_customer').focus();
-                    }
-                    else{
-                        toastr.success(json.message,'{{ lang("notification") }}');                        
-                    }
-                    App.unblockUI('#form-wrapper');
-                });
+                if($('#code_customer').val() != ""){
+                    $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
+                        if(json.status == "error"){
+                            toastr.error(json.message,'{{ lang("notification") }}');
+                            $('#code_customer').val('');
+                            $('#code_customer').focus();
+                        }
+                        else{
+                            toastr.success(json.message,'{{ lang("notification") }}');                        
+                        }
+                        App.unblockUI('#form-wrapper');
+                    });
+                }
 
                 if($('#type_customer').val() == 'partner'){
-                    $('.dipo_field').show();
-                }
-                else{
                     $('.dipo_field').hide();
                 }
-
+                else{
+                    $('.dipo_field').show();
+                }
             });
 
             $('#city').change(function(){

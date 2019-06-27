@@ -540,12 +540,17 @@ class Users extends MX_Controller {
 
     public function check_code_customer() {
         if ($this->input->is_ajax_request()) {
-            $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $this->input->get('type'))->where('deleted', 0)->first();
+            $type_tmp = $this->input->get('type');
+            if($type_tmp == 'independent_partner'){
+                $type_tmp = 'dipo';
+            }
+
+            $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $type_tmp)->where('deleted', 0)->first();
             if (count($get_code) == 0) {
                 $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('not_registered'));
             }
             else{
-                $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $this->input->get('type'))->where('status', 1)->where('deleted', 0)->first();
+                $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $type_tmp)->where('status', 1)->where('deleted', 0)->first();
                 if (count($get_code) > 0) {
                     $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('already_used'));
                 }
@@ -582,12 +587,17 @@ class Users extends MX_Controller {
 
     public function register_customer() {
         if ($this->input->is_ajax_request()) {
-            $get_code = Code::where('code' , $this->input->post('code'))->where('type' , $this->input->post('type'))->where('deleted', 0)->first();
+            $type_tmp = $this->input->post('type');
+            if($type_tmp == 'independent_partner'){
+                $type_tmp = 'dipo';
+            }
+
+            $get_code = Code::where('code' , $this->input->post('code'))->where('type' , $type_tmp)->where('deleted', 0)->first();
             if (count($get_code) == 0) {
                 $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('not_registered'));
             }
             else{
-                $get_code = Code::where('code' , $this->input->post('code'))->where('type' , $this->input->post('type'))->where('status', 1)->where('deleted', 0)->first();
+                $get_code = Code::where('code' , $this->input->post('code'))->where('type' , $type_tmp)->where('status', 1)->where('deleted', 0)->first();
                 if (count($get_code) > 0) {
                     $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('already_used'));
                 }

@@ -63,10 +63,10 @@
                                 <th><?=lang('email')?></th>
                                 <th><?=lang('city')?></th>
                                 <th><?=lang('subdistrict')?></th>
-                                <th><?=lang('zona')?></th>
+                                <!-- <th><?=lang('zona')?></th> -->
                                 <th><?=lang('latitude')?></th>
                                 <th><?=lang('longitude')?></th>
-                                <th><?=lang('pic')?></th>
+                                <!-- <th><?=lang('pic')?></th> -->
                                 <th><?=lang('top')?></th>
                                 <th><?=lang('created_date')?></th>
                                 <th width="13%"><?=lang('options')?></th>
@@ -383,7 +383,7 @@
         $('[name="city"]').val('').change();
         $('[name="subdistrict"]').val('').change();
         $('[name="zona_id"]').val('').change();
-        // $('[name="code"').attr('readonly',false);
+        $('[name="code"').attr('readonly',false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
 
@@ -396,8 +396,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}dipo/dipos/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [12, 13]},
-            {"targets": [12, 13], "orderable": false}
+            {"className": "dt-center", "targets": [11]},
+            {"targets": [11], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
@@ -493,13 +493,23 @@
                 $('[name="billing_address"]').val(row.billing_address);
                 $('[name="city"]').val(row.city).change();
                 $('[name="subdistrict"]').val(row.subdistrict).change();
-                $('[name="zona_id"]').val(row.zona_id).change();
+                $('[name="postal_code"]').val(row.postal_code);
                 $('[name="latitude"]').val(row.latitude);
                 $('[name="longitude"]').val(row.longitude);
-                $('[name="pic"]').val(row.pic);
-                $('[name="top"]').val(row.top);
+                $('[name="purchase_price_type"]').val(row.purchase_price_type).change();
+                $('[name="taxable"]').val(row.taxable).change();
+                $('[name="npwp"]').val(row.npwp);
+                $('[name="tax_name"]').val(row.tax_name);
+                $('[name="tax_invoice_address"]').val(row.tax_invoice_address);
+                $('[name="tax_payment_method"]').val(row.tax_payment_method).change();
+                $('[name="top"]').val(row.top).change();
+                $('[name="tax_credit_ceiling"]').val(row.tax_credit_ceiling);
+                $('[name="account_number"]').val(row.account_number);
+                $('[name="account_name"]').val(row.account_name);
+                $('[name="bank_name"]').val(row.bank_name);
+                $('[name="bank_code"]').val(row.bank_code);
+                $('[name="account_address"]').val(row.account_address);
 
-                // $('[name="code"').attr('readonly',true);
                 $.getJSON('{{base_url()}}get-district-by-city', {city_id: row.city}, function(json_district, textStatus) {
                     if(json_district.status == "error"){
                         toastr.error(json_district.message,'{{ lang("notification") }}');
@@ -512,6 +522,7 @@
                     App.unblockUI('#form-wrapper');
                 });
                 
+                $('[name="code"').attr('readonly',true);
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_dipo')?>'); 
             }else if(json.status == "error"){
@@ -556,6 +567,22 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
+
+    $('#code').change(function(){
+        if($('#code').val() != ""){
+            $.getJSON('{{base_url()}}check-code-customer', {code: $('#code').val(), type: 'dipo'}, function(json, textStatus) {
+                if(json.status == "error"){
+                    toastr.error(json.message,'{{ lang("notification") }}');
+                    $('#code').val('');
+                    $('#code').focus();
+                }
+                else{
+                    toastr.success(json.message,'{{ lang("notification") }}');                        
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
+    });
 
     $('#city').change(function(){
         $.getJSON('{{base_url()}}get-district-by-city', {city_id: $('#city').val()}, function(json, textStatus) {

@@ -39,10 +39,10 @@ class Dipos extends MX_Controller {
             'm_city.name as city_name',
             'm_district.name as subdistrict',
             // 'm_zona.name as zona_name',
-            'm_dipo_partner.zona_id',
+            // 'm_dipo_partner.zona_id',
             'latitude',
             'longitude',
-            'pic',
+            // 'pic',
             'top',
             'm_dipo_partner.date_created',
         );
@@ -56,10 +56,10 @@ class Dipos extends MX_Controller {
             'city_name',
             'subdistrict',
             // 'zona_name',
-            'm_dipo_partner.zona_id',
+            // 'm_dipo_partner.zona_id',
             'latitude',
             'longitude',
-            'pic',
+            // 'pic',
             'top',
             'm_dipo_partner.date_created',
         );
@@ -88,7 +88,7 @@ class Dipos extends MX_Controller {
             // $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "latitude LIKE '%" . $sSearch . "%' OR ";
             $where .= "longitude LIKE '%" . $sSearch . "%' OR ";
-            $where .= "pic LIKE '%" . $sSearch . "%' OR ";
+            // $where .= "pic LIKE '%" . $sSearch . "%' OR ";
             $where .= "top LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.date_created LIKE '%" . $sSearch . "%'";
             $where .= ")";
@@ -123,10 +123,10 @@ class Dipos extends MX_Controller {
             $row_value[] = $row->city_name == "" ? "-" : ucwords(strtolower($row->city_name));
             $row_value[] = $row->subdistrict == "" ? "-" : $row->subdistrict;
             // $row_value[] = $row->zona_name;
-            $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
+            // $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
             $row_value[] = $row->latitude == "" ? "-" : $row->latitude;
             $row_value[] = $row->longitude == "" ? "-" : $row->longitude;
-            $row_value[] = $row->pic == "" ? "-" : $row->pic;
+            // $row_value[] = $row->pic == "" ? "-" : $row->pic;
             $row_value[] = $row->top == "" ? "-" : strtoupper($row->top);
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
@@ -288,6 +288,13 @@ class Dipos extends MX_Controller {
                     $model->time_created = date('H:i:s');
                     $save = $model->save();
                     if ($save) {
+                        $model_code = Code::where('code', $code)->where('type', $type)->first();
+                        $model_code->status = 1;
+                        $model_code->user_modified = $user->id;
+                        $model_code->date_modified = date('Y-m-d');
+                        $model_code->time_modified = date('H:i:s');
+                        $model_code->save();
+                        
                         $data_notif = array(
                             'Code' => $code == "" ? "-" : $code,
                             'Type' => $type == "" ? "-" : ucwords(str_replace('_', ' ', $type)),

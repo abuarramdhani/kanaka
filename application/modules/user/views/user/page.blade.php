@@ -112,6 +112,12 @@
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
+                        <div class="form-group form-md-line-input">
+                            <label class="col-md-12"><?=lang('company_name')?></label>
+                            <div class="col-md-12">
+                                <input type="text" class="input-sm form-control" value="<?=set_value('company')?>" name="company" placeholder="Company Name"> 
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-md-line-input">
@@ -129,23 +135,30 @@
                             </div>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <label class="col-md-12"><?=lang('company_name')?></label>
-                            <div class="col-md-12">
-                                <input type="text" class="input-sm form-control" value="<?=set_value('company')?>" name="company" placeholder="Company Name"> 
-                            </div>
-                        </div>
-                        <div class="form-group form-md-line-input">
                             <label class="col-md-12"><?=lang('role')?></label>
                             <div class="col-md-12">
-                                <select name="role" class="form-control">
+                                <select name="role" id="role" class="form-control">
                                 <?php
                                     if (!empty($roles)) {
-                                        foreach ($roles as $r) { ?>
-                                        <option value="<?=$r->id?>"><?=ucfirst($r->description)?></option>
-                                <?php } } ?>
+                                        foreach ($roles as $r) { 
+                                ?>
+                                            <option value="<?=$r->id?>"><?=ucfirst($r->description)?></option>
+                                <?php 
+                                        }
+                                    } 
+                                ?>
                                 </select>  
                             </div>     
                         </div>
+
+                        <div class="form-group form-md-line-input dipo_partner_field">
+                            <label class="col-md-12"><span id="txt_customer"><?=lang('dipo')?></span><span class="text-danger">*</span></label>
+                            <div class="col-md-12">
+                                <select class="form-control input-sm select2" name="dipo_partner_id" id="dipo_partner_id" style="width: 100%;"></select>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
                     </div> 
                 </div>
             </div>
@@ -211,12 +224,12 @@
             <div class="form-group form-edit form-md-line-input">
                 <label class="col-lg-3 control-label"><?=lang('role')?> <span class="text-danger">*</span></label>
                 <div class="col-lg-8">
-                    <select name="role_id" class="form-control">
+                    <select name="role_id" id="role_edit" class="form-control">
                         <?php
                             if (!empty($roles)) {
                                 foreach ($roles as $r) { 
                         ?>
-                                <option value="<?=$r->id?>"><?=ucfirst($r->description)?></option>
+                                    <option value="<?=$r->id?>"><?=ucfirst($r->description)?></option>
                         <?php 
                                 } 
                             } 
@@ -224,6 +237,15 @@
                     </select>
                 </div>
             </div>
+
+            <div class="form-group form-md-line-input dipo_partner_edit_field">
+                <label class="col-lg-3 control-label"><span id="txt_customer_edit"><?=lang('dipo')?></span><span class="text-danger">*</span></label>
+                <div class="col-lg-8">
+                    <select class="form-control input-sm select2" name="dipo_partner_id" id="dipo_partner_id_edit" style="width: 100%;"></select>
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
         </div>
         <div class="modal-footer"> 
             <button type="submit" class="btn btn-primary"><?=lang('save')?></button>
@@ -241,6 +263,9 @@
     // Pengaturan awal halaman 
     $('.number').mask('000000000000000000');
 
+    $('.dipo_partner_field').hide();
+    $('.dipo_partner_edit_field').hide();
+    
      $("#chk_status").bootstrapSwitch({
         'onText' : 'Active',
         'offText' : 'Not',
@@ -320,7 +345,7 @@
 
                 App.unblockUI('#form-wrapper');
                 setTimeout(function(){
-                    // window.location.reload()
+                    window.location.reload()
                 },1000);
             } 
             return false;
@@ -397,6 +422,26 @@
                 $('[name="city"]').val(row.city);
                 $('[name="address"]').val(row.address);
                 $('[name="role_id"]').val(row.group_id);
+
+                if($('#role_edit').val() == '2' || $('#role_edit').val() == '3'){
+                    $('.dipo_partner_edit_field').show();
+
+                    $.getJSON('{{base_url()}}get-customer-by-role', {role: $('#role_edit').val()}, function(json, textStatus) {
+                        if(json.status == "error"){
+                            toastr.error(json.message,'{{ lang("notification") }}');
+                        }
+                        else{
+                            $('#dipo_partner_id_edit').html(json.tag_html);
+                            $('#dipo_partner_id_edit').val(row.dipo_partner_id).change();
+                        }
+                        App.unblockUI('#form-wrapper');
+                    });
+                }
+                else{
+                    $('.dipo_partner_edit_field').hide();
+                }
+
+                $('#txt_customer_edit').text($('#role_edit option:selected').text());
 
                 $('#dep_name').empty().append(json.dep_name);
                 $('#modalEditUser').modal('show');
@@ -485,5 +530,50 @@
         $('#link_'+id).hide();
         $('#save_'+id).show();
     }
+
+    $('#role').change(function(){
+        if($('#role').val() == '2' || $('#role').val() == '3'){
+            $('.dipo_partner_field').show();
+
+            $.getJSON('{{base_url()}}get-customer-by-role', {role: $('#role').val()}, function(json, textStatus) {
+                if(json.status == "error"){
+                    toastr.error(json.message,'{{ lang("notification") }}');
+                }
+                else{
+                    $('#dipo_partner_id').html(json.tag_html);
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
+        else{
+            $('.dipo_partner_field').hide();
+        }
+
+        $('#dipo_partner_id').val('').change();        
+        $('#txt_customer').text($('#role option:selected').text());
+    });
+
+    $('#role_edit').change(function(){
+        if($('#role_edit').val() == '2' || $('#role_edit').val() == '3'){
+            $('.dipo_partner_edit_field').show();
+
+            $.getJSON('{{base_url()}}get-customer-by-role', {role: $('#role_edit').val()}, function(json, textStatus) {
+                if(json.status == "error"){
+                    toastr.error(json.message,'{{ lang("notification") }}');
+                }
+                else{
+                    $('#dipo_partner_id_edit').html(json.tag_html);
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
+        else{
+            $('.dipo_partner_edit_field').hide();
+        }
+
+        $('#dipo_partner_id_edit').val('').change();        
+        $('#txt_customer_edit').text($('#role_edit option:selected').text());
+    });
+
 </script>
 @stop

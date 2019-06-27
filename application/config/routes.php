@@ -93,6 +93,7 @@ $route['master/users/view']	= 'user/users/view';
 $route['master/users/update'] = 'user/users/update';
 $route['master/users/delete'] = 'user/users/delete';
 $route['master/users/reset-password'] = 'user/users/reset_password';
+$route['get-customer-by-role']	= "user/users/get_customer_by_role";
 
 /**
 * USER MENU

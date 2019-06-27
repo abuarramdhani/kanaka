@@ -65,7 +65,7 @@ class Users extends MX_Controller {
         $data['user'] = $this->ion_auth->user()->row();
         $data['comp_name'] = $this->config->item('comp_name');
         $data['roles'] = Group::all();
-
+        
         $this->load->blade('user.views.user.page', $data);
     }
 
@@ -171,6 +171,7 @@ class Users extends MX_Controller {
                         "full_name" => $this->input->post('fullname'),
                         "company" => $this->input->post('company'),
                         "group_id" => $this->input->post('role'),
+                        "dipo_partner_id" => $this->input->post('dipo_partner_id'),
                         "phone" => str_replace("_", "", $this->input->post('phone')),
                         "created_date" => date('Y-m-d H:i:s'),
                         "avatar" => 'default_avatar.jpg'
@@ -180,6 +181,7 @@ class Users extends MX_Controller {
                             "Full Name" => $this->input->post('fullname'),
                             "Email" => $email,
                             "Role" => Group::find($this->input->post('role'))->description,
+                            "Customer" => $this->input->post('dipo_partner_id') > 0 ? Dipo::find($this->input->post('dipo_partner_id'))->name : '-',
                             "Company" => $this->input->post('company'),
                             "Phone" => str_replace("_", "", $this->input->post('phone')),
                         );
@@ -222,7 +224,8 @@ class Users extends MX_Controller {
                     "Phone" => str_replace("_", "", $user->phone),
                     "City" => $user->city,
                     "Address" => $user->address,
-                    "Role " => Group::find($user->group_id)->description,
+                    "Role" => Group::find($user->group_id)->description,
+                    "Customer" => $user->dipo_partner_id > 0 ? Dipo::find($user->dipo_partner_id)->name : '-',
                 );
                 $data = array(
                     "full_name" => $this->input->post('fullname'),
@@ -232,6 +235,7 @@ class Users extends MX_Controller {
                     "city" => $this->input->post('city'),
                     "address" => $this->input->post('address'),
                     "group_id" => $this->input->post('role_id'),
+                    "dipo_partner_id" => $this->input->post('dipo_partner_id'),
                 );
                 if ($this->ion_auth->update($id, $data)) {
                     if ($user_group->id != $group) {
@@ -245,7 +249,8 @@ class Users extends MX_Controller {
                         "Phone" => str_replace("_", "", $this->input->post('phone')),
                         "City" => $this->input->post('city'),
                         "Address" => $this->input->post('address'),
-                        "Role " => Group::find($this->input->post('role_id'))->description,
+                        "Role" => Group::find($this->input->post('role_id'))->description,
+                        "Customer" => $this->input->post('dipo_partner_id') > 0 ? Dipo::find($this->input->post('dipo_partner_id'))->name : '-',
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
@@ -762,6 +767,7 @@ class Users extends MX_Controller {
                                 "full_name" => $name,
                                 "company" => 'Kanaka',
                                 "group_id" => $group_id,
+                                "dipo_partner_id" => $model->id,
                                 "address" => $address,
                                 "city" => $city,
                                 "phone" => str_replace("_", "", $phone),
@@ -969,6 +975,28 @@ class Users extends MX_Controller {
         }
     }
     
+    public function get_customer_by_role() {
+        if ($this->input->is_ajax_request()) {
+            $type = '';
+            if($this->input->get('role') == '2'){
+                $type = 'dipo';
+            }
+            else if($this->input->get('role') == '3'){
+                $type = 'partner';                
+            }
+            $get_customer = Dipo::where('type' , $type)->where('deleted', 0)->orderBy('name', 'asc')->get();
+            $html = '<option value="">' . lang('select_your_option') . '</option>';
+            foreach($get_customer as $row){
+                $html .= '<option value="' . $row->id . '">' . ucwords(strtolower($row->name)) . '</option>';
+            }
+
+            $status = array('status' => 'success', 'tag_html' => $html);
+        }
+
+        $data = $status;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
 }
 
 /* End of file Dashboard.php */

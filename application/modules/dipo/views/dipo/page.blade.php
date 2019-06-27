@@ -80,135 +80,283 @@
     </div>
 </div>
  <div class="modal fade" id="modal_form" role="dialog">
-  <div class="modal-dialog" style="width:50%;">
+  <div class="modal-dialog" style="width:80%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title"><?=lang('new_dipo')?></h3>
       </div>
       {{ form_open(null,array('id' => 'form-dipo', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
-      <div class="modal-body">
-        <input type="hidden" name="id" value="">
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="code" id="code" placeholder="<?=lang('code')?>" maxlength="10" />
-                <div class="form-control-focus"> </div>
+      <div class="row modal-body">
+        <div class="col-md-6">
+            <input type="hidden" name="id" value="">
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="code" id="code" placeholder="<?=lang('code')?>" maxlength="10" />
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('address')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="address" id="address" placeholder="<?=lang('address')?>" maxlength="150" />
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('phone')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm number" name="phone" id="phone" placeholder="<?=lang('phone')?>" maxlength="20" />
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('phone')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm number" name="phone" id="phone" placeholder="<?=lang('phone')?>" maxlength="20" />
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('fax')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm number" name="fax" id="fax_customer" placeholder="<?=lang('fax')?>" maxlength="20" />
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('email')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="email" class="form-control input-sm" name="email" id="email" placeholder="<?=lang('email')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('email')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="email" class="form-control input-sm" name="email" id="email" placeholder="<?=lang('email')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('city')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <select class="form-control input-sm select2" name="city" id="city" style="width: 100%;">
-                    <option value=""><?= lang('select_your_option') ?></option>
-                    @foreach($cities as $city)
-                        <option value="{{ $city->id }}">{{ ucwords(strtolower($city->name)) }}</option>
-                    @endforeach
-                </select>
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('shipping_address')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="address" id="address_customer" placeholder="<?=lang('shipping_address')?>" maxlength="150" />
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('subdistrict')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <select class="form-control input-sm select2" name="subdistrict" id="subdistrict" style="width: 100%;">
-                    <option value=""><?= lang('select_your_option') ?></option>
-                </select>
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('billing_address')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="billing_address" id="billing_address" placeholder="<?=lang('billing_address')?>" maxlength="150" />
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('zona')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <select class="form-control input-sm select2" name="zona_id" id="zona_id" style="width: 100%;">
-                    <option value=""><?= lang('select_your_option') ?></option>
-                    @foreach($zonas as $zona)
-                        <option value="{{ $zona->id }}">{{ $zona->name }}</option>
-                    @endforeach
-                </select>
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('city')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <select class="form-control input-sm select2" name="city" id="city" style="width: 100%;">
+                        <option value=""><?= lang('select_your_option') ?></option>
+                        @foreach($cities as $city)
+                            <option value="{{ $city->id }}">{{ ucwords(strtolower($city->name)) }}</option>
+                        @endforeach
+                    </select>
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('latitude')?></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="latitude" id="latitude" placeholder="<?=lang('latitude')?>" maxlength="30" />
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('subdistrict')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <select class="form-control input-sm select2" name="subdistrict" id="subdistrict" style="width: 100%;">
+                        <option value=""><?= lang('select_your_option') ?></option>
+                    </select>
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('longitude')?></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="longitude" id="longitude" placeholder="<?=lang('longitude')?>" maxlength="30" />
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('postal_code')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm number" name="postal_code" id="postal_code_customer" placeholder="<?=lang('postal_code')?>" maxlength="5" />
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('pic')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="pic" id="pic" placeholder="<?=lang('pic')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('latitude')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="latitude" id="latitude_customer" placeholder="<?=lang('latitude')?>" maxlength="30" />
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('top')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <select class="form-control input-sm" name="top" id="top" style="width: 100%;">
-                    <option value=""><?= lang('select_your_option') ?></option>
-                    <option value="cbd"><?= lang('cbd') ?></option>
-                    <option value="cod"><?= lang('cod') ?></option>
-                    <option value="3"><?= lang('3_days') ?></option>
-                    <option value="7"><?= lang('7_days') ?></option>
-                    <option value="14"><?= lang('14_days') ?></option>
-                    <option value="21"><?= lang('21_days') ?></option>
-                    <option value="30"><?= lang('30_days') ?></option>
-                    <option value="45"><?= lang('45_days') ?></option>
-                    <option value="60"><?= lang('60_days') ?></option>
-                </select>
-                <div class="form-control-focus"> </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('longitude')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="longitude" id="longitude_customer" placeholder="<?=lang('longitude')?>" maxlength="30" />
+                    <div class="form-control-focus"> </div>
+                </div>
             </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('purchase_price_type')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <select class="form-control input-sm" name="purchase_price_type" id="purchase_price_type" style="width: 100%;">
+                        <option value=""><?= lang('select_your_option') ?></option>
+                        <option value="dipo"><?= lang('distribution_point') ?></option>
+                        <option value="partner"><?= lang('partner') ?></option>
+                        <option value="customer"><?= lang('customer') ?></option>
+                    </select>
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('taxable')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <select class="form-control input-sm" name="taxable" id="taxable_customer" style="width: 100%;">
+                        <option value=""><?= lang('select_your_option') ?></option>
+                        <option value="0"><?= lang('no') ?></option>
+                        <option value="1"><?= lang('yes') ?></option>
+                    </select>
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
         </div>
-        
+        <div class="col-md-6">
+            <h5>{{ lang('text_identitas_npwp') }}</h5>
+                        
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('npwp')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm number" name="npwp" id="npwp_customer" placeholder="<?=lang('npwp')?>" maxlength="15" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('name')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="tax_name" id="tax_name_customer" placeholder="<?=lang('name')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('tax_invoice_address')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="tax_invoice_address" id="tax_invoice_address" placeholder="<?=lang('tax_invoice_address')?>" maxlength="150" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('payment_method')?></label>
+                <div class="col-lg-7">
+                    <select class="form-control input-sm" name="tax_payment_method" id="tax_payment_method_customer" style="width: 100%;">
+                        <option value=""><?= lang('select_your_option') ?></option>
+                        <option value="cash"><?= lang('cash') ?></option>
+                        <option value="credit"><?= lang('credit') ?></option>
+                        <option value="central_ar"><?= lang('central_ar') ?></option>
+                    </select>
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('payment_time')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <select class="form-control input-sm" name="top" id="top_customer" style="width: 100%;">
+                        <option value=""><?= lang('select_your_option') ?></option>
+                        <option value="cbd"><?= lang('cbd') ?></option>
+                        <option value="cod"><?= lang('cod') ?></option>
+                        <option value="3"><?= lang('3_days') ?></option>
+                        <option value="7"><?= lang('7_days') ?></option>
+                        <option value="14"><?= lang('14_days') ?></option>
+                        <option value="21"><?= lang('21_days') ?></option>
+                        <option value="30"><?= lang('30_days') ?></option>
+                        <option value="45"><?= lang('45_days') ?></option>
+                        <option value="60"><?= lang('60_days') ?></option>
+                    </select>
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('credit_ceiling')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="tax_credit_ceiling" id="tax_credit_ceiling_customer" placeholder="<?=lang('credit_ceiling')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <hr>
+
+            <h5>{{ lang('bank_account') }}</h5>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('account_number')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm number" name="account_number" id="account_number_customer" placeholder="<?=lang('account_number')?>" maxlength="25" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('account_name')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="account_name" id="account_name_customer" placeholder="<?=lang('account_name')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('bank_name')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="bank_name" id="bank_name_customer" placeholder="<?=lang('bank_name')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('bank_code')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm number" name="bank_code" id="bank_code_customer" placeholder="<?=lang('bank_code')?>" maxlength="3" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('account_address')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="account_address" id="account_address_customer" placeholder="<?=lang('account_address')?>" maxlength="150" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
+            <hr>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('customer_photo')?></label>
+                <div class="col-lg-7">
+                    <input type="file" class="form-control" name="customer_photo" id="customer_photo" accept="image/*">
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('house_photo')?></label>
+                <div class="col-lg-7">
+                    <input type="file" class="form-control" name="house_photo" id="house_photo" accept="image/*">
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('warehouse_photo')?></label>
+                <div class="col-lg-7">
+                    <input type="file" class="form-control" name="warehouse_photo" id="warehouse_photo" accept="image/*">
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+        </div>
       </div>
       <div class="modal-footer">
         <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
@@ -263,26 +411,30 @@
         rules: {
             code: "required",
             name: "required",
-            address: "required",
             phone: "required",
             email: "required",
+            address: "required",
+            billing_address: "required",
             city: "required",
             subdistrict: "required",
-            zona_id: "required",
-            pic: "required",
+            postal_code: "required",
+            purchase_price_type: "required",
+            taxable: "required",
             top: "required",
         },
         messages: {
             code: "{{lang('code')}}" + " {{lang('not_empty')}}",
             name: "{{lang('name')}}" + " {{lang('not_empty')}}",
-            address: "{{lang('address')}}" + " {{lang('not_empty')}}",
             phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
             email: "{{lang('email')}}" + " {{lang('not_empty')}}",
+            address: "{{lang('address')}}" + " {{lang('not_empty')}}",
+            billing_address: "{{lang('billing_address')}}" + " {{lang('not_empty')}}",
             city: "{{lang('city')}}" + " {{lang('not_empty')}}",
             subdistrict: "{{lang('subdistrict')}}" + " {{lang('not_empty')}}",
-            zona_id: "{{lang('zona')}}" + " {{lang('not_empty')}}",
-            pic: "{{lang('pic')}}" + " {{lang('not_empty')}}",
-            top: "{{lang('top')}}" + " {{lang('not_empty')}}",
+            postal_code: "{{lang('postal_code')}}" + " {{lang('not_empty')}}",
+            purchase_price_type: "{{lang('purchase_price_type')}}" + " {{lang('not_empty')}}",
+            taxable: "{{lang('taxable')}}" + " {{lang('not_empty')}}",
+            top: "{{lang('payment_time')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -334,10 +486,13 @@
                 $('[name="id"]').val(row.id);
                 $('[name="code"]').val(row.code);
                 $('[name="name"]').val(row.name);
-                $('[name="address"]').val(row.address);
                 $('[name="phone"]').val(row.phone);
+                $('[name="fax"]').val(row.fax);
                 $('[name="email"]').val(row.email);
+                $('[name="address"]').val(row.address);
+                $('[name="billing_address"]').val(row.billing_address);
                 $('[name="city"]').val(row.city).change();
+                $('[name="subdistrict"]').val(row.subdistrict).change();
                 $('[name="zona_id"]').val(row.zona_id).change();
                 $('[name="latitude"]').val(row.latitude);
                 $('[name="longitude"]').val(row.longitude);

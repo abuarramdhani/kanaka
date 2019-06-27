@@ -816,7 +816,7 @@ class Users extends MX_Controller {
                                 'Account Address' => $account_address == "" ? "-" : $account_address,
                                 'Customer Photo' => $customer_photo == "" ? "-" : $customer_photo,
                                 'House Photo' => $house_photo == "" ? "-" : $house_photo,
-                                'Harehouse Photo' => $warehouse_photo == "" ? "-" : $warehouse_photo,
+                                'Warehouse Photo' => $warehouse_photo == "" ? "-" : $warehouse_photo,
                             );
     
                             $type_log = 0;

@@ -330,6 +330,12 @@ $lang['edit_dipo_report'] = "Edit DIPO";
 $lang['dipo_report_name'] = "DIPO Name";
 $lang['saving_dipo_report_successfully'] = 'Saving data DIPO succesfully';
 $lang['deleting_dipo_report_successfully'] = 'Deleting data DIPO succesfully';
+$lang['guarantee_collateral'] = 'Guarantee / Collateral';
+$lang['guarantee_form'] = 'Jaminan Berupa';
+$lang['guarantee_receipt'] = 'No Tanda Terima Jaminan';
+$lang['safety_box'] = 'Safety Box';
+$lang['guarantee_photo'] = 'Guarantee Photo';
+
 ## END DIPO Report ##
 
 ## Partner Report ##

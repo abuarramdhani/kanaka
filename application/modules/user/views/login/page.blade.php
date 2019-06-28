@@ -308,8 +308,8 @@ License: You must have a valid license purchased only from themeforest(the above
                             </div>
                         </div>
 
-                    </div>
-                    <div class="col-md-6">
+                        <hr>
+
                         <h5>{{ lang('text_identitas_npwp') }}</h5>
                         
                         <div class="form-group form-md-line-input">
@@ -376,8 +376,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </div>
                         </div>
                         
-                        <hr>
-
+                    </div>
+                    <div class="col-md-6">
+                    
                         <h5>{{ lang('bank_account') }}</h5>
                         
                         <div class="form-group form-md-line-input">
@@ -416,6 +417,42 @@ License: You must have a valid license purchased only from themeforest(the above
                             <label class="col-lg-4 control-label"><?=lang('account_address')?></label>
                             <div class="col-lg-7">
                                 <input type="text" class="form-control input-sm" name="account_address" id="account_address_customer" placeholder="<?=lang('account_address')?>" maxlength="150" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        
+                        <h5>{{ lang('guarantee_collateral') }}</h5>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('guarantee_form')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="guarantee_form" id="guarantee_form" placeholder="<?=lang('guarantee_form')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('guarantee_receipt')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="guarantee_receipt" id="guarantee_receipt" placeholder="<?=lang('guarantee_receipt')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('safety_box')?></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="safety_box" id="safety_box" placeholder="<?=lang('safety_box')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('guarantee_photo')?></label>
+                            <div class="col-lg-7">
+                                <input type="file" class="form-control" name="guarantee_photo" id="guarantee_photo" accept="image/*">
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>

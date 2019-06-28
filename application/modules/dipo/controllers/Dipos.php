@@ -173,7 +173,36 @@ class Dipos extends MX_Controller {
                     $bank_name = $this->input->post('bank_name');
                     $bank_code = $this->input->post('bank_code');
                     $account_address = $this->input->post('account_address');
-                    
+                    $guarantee_form = $this->input->post('guarantee_form');
+                    $guarantee_receipt = $this->input->post('guarantee_receipt');
+                    $safety_box = $this->input->post('safety_box');
+
+                    $guarantee_photo = '';
+                    if(!empty($_FILES['guarantee_photo']['name'])){
+                        $_FILES['file']['name']     = $_FILES['guarantee_photo']['name'];
+                        $_FILES['file']['type']     = $_FILES['guarantee_photo']['type'];
+                        $_FILES['file']['tmp_name'] = $_FILES['guarantee_photo']['tmp_name'];
+                        $_FILES['file']['error']     = $_FILES['guarantee_photo']['error'];
+                        $_FILES['file']['size']     = $_FILES['guarantee_photo']['size'];
+                        
+                        // File upload configuration
+                        $uploadPath = 'uploads/images/guarantees/';
+                        $config['upload_path'] = $uploadPath;
+                        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                        $config['file_name'] = date('YmdHis').rand(10,99);
+
+                        // Load and initialize upload library
+                        $this->load->library('upload', $config);
+                        $this->upload->initialize($config);
+                        
+                        // Upload file to server
+                        if($this->upload->do_upload('file')){
+                            // Uploaded file data
+                            $fileData = $this->upload->data();
+                            $guarantee_photo = $fileData['file_name'];
+                        }
+                    }
+
                     $customer_photo = '';
                     if(!empty($_FILES['customer_photo']['name'])){
                         $_FILES['file']['name']     = $_FILES['customer_photo']['name'];
@@ -279,6 +308,10 @@ class Dipos extends MX_Controller {
                     $model->bank_name = $bank_name;
                     $model->bank_code = $bank_code;
                     $model->account_address = $account_address;
+                    $model->guarantee_form = $guarantee_form;
+                    $model->guarantee_receipt = $guarantee_receipt;
+                    $model->safety_box = $safety_box;
+                    $model->guarantee_photo = $guarantee_photo;
                     $model->customer_photo = $customer_photo;
                     $model->house_photo = $house_photo;
                     $model->warehouse_photo = $warehouse_photo;
@@ -322,6 +355,10 @@ class Dipos extends MX_Controller {
                             'Bank Name' => $bank_name == "" ? "-" : $bank_name,
                             'Bank Code' => $bank_code == "" ? "-" : $bank_code,
                             'Account Address' => $account_address == "" ? "-" : $account_address,
+                            'Guarantee Form' => $guarantee_form == "" ? "-" : $guarantee_form,
+                            'Guarantee Receipt' => $guarantee_receipt == "" ? "-" : $guarantee_receipt,
+                            'Safety Box' => $safety_box == "" ? "-" : $safety_box,
+                            'Guarantee Photo' => $guarantee_photo == "" ? "-" : $guarantee_photo,
                             'Customer Photo' => $customer_photo == "" ? "-" : $customer_photo,
                             'House Photo' => $house_photo == "" ? "-" : $house_photo,
                             'Warehouse Photo' => $warehouse_photo == "" ? "-" : $warehouse_photo,
@@ -361,7 +398,36 @@ class Dipos extends MX_Controller {
                 $bank_name = $this->input->post('bank_name');
                 $bank_code = $this->input->post('bank_code');
                 $account_address = $this->input->post('account_address');
+                $guarantee_form = $this->input->post('guarantee_form');
+                $guarantee_receipt = $this->input->post('guarantee_receipt');
+                $safety_box = $this->input->post('safety_box');
             
+                $guarantee_photo = $model->guarantee_photo;
+                if(!empty($_FILES['guarantee_photo']['name'])){
+                    $_FILES['file']['name']     = $_FILES['guarantee_photo']['name'];
+                    $_FILES['file']['type']     = $_FILES['guarantee_photo']['type'];
+                    $_FILES['file']['tmp_name'] = $_FILES['guarantee_photo']['tmp_name'];
+                    $_FILES['file']['error']     = $_FILES['guarantee_photo']['error'];
+                    $_FILES['file']['size']     = $_FILES['guarantee_photo']['size'];
+                    
+                    // File upload configuration
+                    $uploadPath = 'uploads/images/guarantees/';
+                    $config['upload_path'] = $uploadPath;
+                    $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                    $config['file_name'] = date('YmdHis').rand(10,99);
+
+                    // Load and initialize upload library
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    
+                    // Upload file to server
+                    if($this->upload->do_upload('file')){
+                        // Uploaded file data
+                        $fileData = $this->upload->data();
+                        $guarantee_photo = $fileData['file_name'];
+                    }
+                }
+
                 $customer_photo = $model->customer_photo;
                 if(!empty($_FILES['customer_photo']['name'])){
                     $_FILES['file']['name']     = $_FILES['customer_photo']['name'];
@@ -467,6 +533,10 @@ class Dipos extends MX_Controller {
                     'Bank Name' => $model->bank_name == "" ? "-" : $model->bank_name,
                     'Bank Code' => $model->bank_code == "" ? "-" : $model->bank_code,
                     'Account Address' => $model->account_address == "" ? "-" : $model->account_address,
+                    'Guarantee Form' => $model->guarantee_form == "" ? "-" : $model->guarantee_form,
+                    'Guarantee Receipt' => $model->guarantee_receipt == "" ? "-" : $model->guarantee_receipt,
+                    'Safety Box' => $model->safety_box == "" ? "-" : $model->safety_box,
+                    'Guarantee Photo' => $model->guarantee_photo == "" ? "-" : $model->guarantee_photo,
                     'Customer Photo' => $model->customer_photo == "" ? "-" : $model->customer_photo,
                     'House Photo' => $model->house_photo == "" ? "-" : $model->house_photo,
                     'Warehouse Photo' => $model->warehouse_photo == "" ? "-" : $model->warehouse_photo,
@@ -497,6 +567,10 @@ class Dipos extends MX_Controller {
                 $model->bank_name = $bank_name;
                 $model->bank_code = $bank_code;
                 $model->account_address = $account_address;
+                $model->guarantee_form = $guarantee_form;
+                $model->guarantee_receipt = $guarantee_receipt;
+                $model->safety_box = $safety_box;
+                $model->guarantee_photo = $guarantee_photo;
                 $model->customer_photo = $customer_photo;
                 $model->house_photo = $house_photo;
                 $model->warehouse_photo = $warehouse_photo;
@@ -533,6 +607,10 @@ class Dipos extends MX_Controller {
                         'Bank Name' => $bank_name == "" ? "-" : $bank_name,
                         'Bank Code' => $bank_code == "" ? "-" : $bank_code,
                         'Account Address' => $account_address == "" ? "-" : $account_address,
+                        'Guarantee Form' => $guarantee_form == "" ? "-" : $guarantee_form,
+                        'Guarantee Receipt' => $guarantee_receipt == "" ? "-" : $guarantee_receipt,
+                        'Safety Box' => $safety_box == "" ? "-" : $safety_box,
+                        'Guarantee Photo' => $guarantee_photo == "" ? "-" : $guarantee_photo,
                         'Customer Photo' => $customer_photo == "" ? "-" : $customer_photo,
                         'House Photo' => $house_photo == "" ? "-" : $house_photo,
                         'Warehouse Photo' => $warehouse_photo == "" ? "-" : $warehouse_photo,
@@ -603,6 +681,10 @@ class Dipos extends MX_Controller {
                     'Bank Name' => $model->bank_name == "" ? "-" : $model->bank_name,
                     'Bank Code' => $model->bank_code == "" ? "-" : $model->bank_code,
                     'Account Address' => $model->account_address == "" ? "-" : $model->account_address,
+                    'Guarantee Form' => $model->guarantee_form == "" ? "-" : $model->guarantee_form,
+                    'Guarantee Receipt' => $model->guarantee_receipt == "" ? "-" : $model->guarantee_receipt,
+                    'Safety Box' => $model->safety_box == "" ? "-" : $model->safety_box,
+                    'Guarantee Photo' => $model->guarantee_photo == "" ? "-" : $model->guarantee_photo,
                     'Customer Photo' => $model->customer_photo == "" ? "-" : $model->customer_photo,
                     'House Photo' => $model->house_photo == "" ? "-" : $model->house_photo,
                     'Warehouse Photo' => $model->warehouse_photo == "" ? "-" : $model->warehouse_photo,

@@ -90,6 +90,7 @@
       <div class="row modal-body">
         <div class="col-md-6">
             <input type="hidden" name="id" value="">
+
             <div class="form-group form-md-line-input">
                 <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
                 <div class="col-lg-7">
@@ -218,8 +219,8 @@
                 </div>
             </div>
 
-        </div>
-        <div class="col-md-6">
+            <hr>
+
             <h5>{{ lang('text_identitas_npwp') }}</h5>
                         
             <div class="form-group form-md-line-input">
@@ -286,7 +287,8 @@
                 </div>
             </div>
             
-            <hr>
+        </div>
+        <div class="col-md-6">
 
             <h5>{{ lang('bank_account') }}</h5>
             
@@ -331,6 +333,42 @@
             </div>
 
             <hr>
+                        
+            <h5>{{ lang('guarantee_collateral') }}</h5>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('guarantee_form')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="guarantee_form" id="guarantee_form" placeholder="<?=lang('guarantee_form')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('guarantee_receipt')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="guarantee_receipt" id="guarantee_receipt" placeholder="<?=lang('guarantee_receipt')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('safety_box')?></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="safety_box" id="safety_box" placeholder="<?=lang('safety_box')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('guarantee_photo')?></label>
+                <div class="col-lg-7">
+                    <input type="file" class="form-control" name="guarantee_photo" id="guarantee_photo" accept="image/*">
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
+            <hr>
             
             <div class="form-group form-md-line-input">
                 <label class="col-lg-4 control-label"><?=lang('customer_photo')?></label>
@@ -359,7 +397,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
+        <button type="submit" id="btnSave" class="btn btn-primary">{{ lang('save') }}</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">{{ lang('close') }}</button>
       </div>
       {{ form_close() }}
@@ -382,7 +420,6 @@
         $('[name="id"]').val('');
         $('[name="city"]').val('').change();
         $('[name="subdistrict"]').val('').change();
-        $('[name="zona_id"]').val('').change();
         $('[name="code"').attr('readonly',false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
@@ -509,6 +546,9 @@
                 $('[name="bank_name"]').val(row.bank_name);
                 $('[name="bank_code"]').val(row.bank_code);
                 $('[name="account_address"]').val(row.account_address);
+                $('[name="guarantee_form"]').val(row.guarantee_form);
+                $('[name="guarantee_receipt"]').val(row.guarantee_receipt);
+                $('[name="safety_box"]').val(row.safety_box);
 
                 $.getJSON('{{base_url()}}get-district-by-city', {city_id: row.city}, function(json_district, textStatus) {
                     if(json_district.status == "error"){
@@ -577,7 +617,7 @@
                     $('#code').focus();
                 }
                 else{
-                    toastr.success(json.message,'{{ lang("notification") }}');                        
+                    toastr.success(json.message,'{{ lang("notification") }}');
                 }
                 App.unblockUI('#form-wrapper');
             });

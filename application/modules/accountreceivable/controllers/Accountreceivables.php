@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Accountpayables extends MX_Controller {
+class Accountreceivables extends MX_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -10,21 +10,21 @@ class Accountpayables extends MX_Controller {
             redirect('login', 'refresh');
         }
 
-        if(!$this->user_profile->get_user_access('Availabled', 'accountpayable')){
+        if(!$this->user_profile->get_user_access('Availabled', 'accountreceivable')){
             redirect('dashboard', 'refresh');            
         }
 
     }
 
     public function index() {
-        $data['add_access'] = $this->user_profile->get_user_access('Created', 'accountpayable');
-        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'accountpayable');
-        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'accountpayable');
+        $data['add_access'] = $this->user_profile->get_user_access('Created', 'accountreceivable');
+        $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'accountreceivable');
+        $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'accountreceivable');
 
         $data['cities'] = City::where('deleted', 0)->get();        
         $data['zonas'] = Zona::where('deleted', 0)->get();
 
-        $this->load->blade('accountpayable.views.accountpayable.page', $data);
+        $this->load->blade('accountreceivable.views.accountreceivable.page', $data);
     }
 
     public function fetch_data() {
@@ -78,7 +78,7 @@ class Accountpayables extends MX_Controller {
         $new_aa_data = array();
         
         foreach ($aa_data as $row) {
-            $row_si = Companyreport::selectRaw('SUM(difference) as nominal')
+            $row_si = Companyreportout::selectRaw('SUM(difference) as nominal')
                         ->where('customer_id', '=', $row->id)
                         ->where('payment_status', '!=', 3)
                         ->where('deleted', '=', 0)
@@ -96,7 +96,7 @@ class Accountpayables extends MX_Controller {
             }
 
             $btn_action = '';
-            if($this->user_profile->get_user_access('Viewed', 'accountpayable')){
+            if($this->user_profile->get_user_access('Viewed', 'accountreceivable')){
                 $btn_action .= '<a href="javascript:void()" onclick="viewData(\'' . uri_encrypt($row->id) . '\')" class="btn btn-info btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-eye"></i> </a>';
             }
 
@@ -114,18 +114,18 @@ class Accountpayables extends MX_Controller {
     }
     
     function pdf(){
-        $data['accountpayables'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['accountreceivables'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
         $data['quote'] = "";
-        $html = $this->load->view('accountpayable/accountpayable/accountpayable_pdf', $data, true);
+        $html = $this->load->view('accountreceivable/accountreceivable/accountreceivable_pdf', $data, true);
         $this->pdf_generator->generate($html, 'account payable pdf', $orientation='Landscape');
     }
 
     function excel(){
         header("Content-type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=accountpayable.xls");
-        $data['accountpayables'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        header("Content-Disposition: attachment; filename=accountreceivable.xls");
+        $data['accountreceivables'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
         $data['quote'] = "'";
-        $this->load->view('accountpayable/accountpayable/accountpayable_pdf', $data);
+        $this->load->view('accountreceivable/accountreceivable/accountreceivable_pdf', $data);
     }
 
 }

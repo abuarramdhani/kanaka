@@ -295,7 +295,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input customer_id_field">
-                    <label class="col-lg-4 control-label"><?=lang('ship_to_delivery')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('ship_to_delivery')?></label>
                     <div class="col-lg-7">
                         <select class="form-control input-sm select2" name="customer_id" id="customer_id" style="width: 100%;">
                             <option value=""><?= lang('select_your_option') ?></option>
@@ -846,7 +846,6 @@
         rules: {
             po_date: "required",
             receive_date: "required",
-            customer_id: "required",
 
             @if($user->group_id == '1')
                 check_status: "required",
@@ -854,6 +853,8 @@
                 tax_no: "required",
                 sp_id: "required",
                 principle_id: "required",
+            @else
+                customer_id: "required",
             @endif
 
             invoice_id: "required",
@@ -866,7 +867,6 @@
         messages: {
             po_date: "{{lang('po_date')}}" + " {{lang('not_empty')}}",
             receive_date: "{{lang('receive_date')}}" + " {{lang('not_empty')}}",
-            customer_id: "{{lang('ship_to_delivery')}}" + " {{lang('not_empty')}}",
 
             @if($user->group_id == '1')            
                 check_status: "{{lang('check_status')}}" + " {{lang('not_empty')}}",
@@ -874,6 +874,8 @@
                 tax_no: "{{lang('tax_no')}}" + " {{lang('not_empty')}}",
                 sp_id: "{{lang('sp_id')}}" + " {{lang('not_empty')}}",
                 principle_id: "{{lang('principle_id')}}" + " {{lang('not_empty')}}",
+            @else
+                customer_id: "{{lang('ship_to_delivery')}}" + " {{lang('not_empty')}}",
             @endif
                 
             invoice_id: "{{lang('invoice_id')}}" + " {{lang('not_empty')}}",

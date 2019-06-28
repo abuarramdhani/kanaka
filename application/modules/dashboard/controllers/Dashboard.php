@@ -15,6 +15,8 @@ class Dashboard extends MX_Controller {
 		$total_saldo    = 0;
 		$total_hutang   = 0;
         $total_piutang  = 0;
+        $total_in       = 0;
+        $total_out      = 0;
         
         $row_si = Companyreport::selectRaw('SUM(difference) as nominal')
                         ->where('payment_status', '!=', 3)
@@ -31,6 +33,18 @@ class Dashboard extends MX_Controller {
         foreach($row_so as $so){
             $total_piutang = $so->nominal;
         }
+
+        $row_total_in = Jurnal::selectRaw('SUM(total) as total')->where('t_jurnal.deleted', 0)->where('t_jurnal.d_k', 'd')->get();
+        foreach($row_total_in as $in){
+            $total_in = $in->total;
+        }
+
+        $row_total_out = Jurnal::selectRaw('SUM(total) as total')->where('t_jurnal.deleted', 0)->where('t_jurnal.d_k', 'k')->get();
+        foreach($row_total_out as $out){
+            $total_out = $out->total;
+        }
+
+        $total_saldo = $total_in-$total_out;
 
         $data['total_saldo'] = number_format($total_saldo);
         $data['total_hutang'] = number_format($total_hutang);

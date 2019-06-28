@@ -16,6 +16,7 @@
         </ul>
         
     </div>
+
     <!-- END PAGE BAR -->
     <!-- BEGIN PAGE TITLE-->
     <h3 class="page-title">{{ lang('dashboard') }}</h3>
@@ -33,7 +34,48 @@
                     <div class="tools"></div>
                 </div>
                 <div class="portlet-body">
-                  
+                    <!-- TOTAL BOXS -->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                                <div class="visual">
+                                    <i class="glyphicon glyphicon-list-alt"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="total">
+                                        <span>Rp.<?= $total_saldo ?></span>
+                                    </div>
+                                    <div class="desc"> Total Saldo </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                                <div class="visual">
+                                    <i class="glyphicon glyphicon-list-alt"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="total">
+                                        <span>Rp.<?= $total_piutang ?></span>
+                                    </div>
+                                    <div class="desc"> Total Piutang </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                                <div class="visual">
+                                    <i class="glyphicon glyphicon-list-alt"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="total">
+                                        <span>Rp.<?= $total_hutang ?></span>
+                                    </div>
+                                    <div class="desc"> Total Hutang </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->

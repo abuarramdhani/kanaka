@@ -385,14 +385,14 @@ $lang['deleting_pricelist_successfully'] = 'Deleting data Price List succesfully
 ## END Price List ##
 
 ## Company Report ##
-$lang['companyreport'] = 'Company Report';
+$lang['companyreport'] = 'Report Penjualan dan Pembelian';
 $lang['sell'] = 'Sell';
-$lang['sell_in'] = 'Sell In';
-$lang['sell_out'] = 'Sell Out';
-$lang['new_sell_in_company'] = "New Sell In Company";
-$lang['new_sell_out_company'] = "New Sell Out Company";
-$lang['edit_sell_in_company'] = "Edit Sell In Company";
-$lang['edit_sell_out_company'] = "Edit Sell Out Company";
+$lang['sell_in'] = 'Pembelian';
+$lang['sell_out'] = 'Penjualan';
+$lang['new_sell_in_company'] = "Tambah Pembelian Baru";
+$lang['new_sell_out_company'] = "Tambah Penjualan Baru";
+$lang['edit_sell_in_company'] = "Ubah Penjualan";
+$lang['edit_sell_out_company'] = "Ubah Pembelian";
 $lang['companyreport_name'] = "Company Name";
 $lang['po_date'] = "PO Date";
 $lang['receive_date'] = "Received Date";

@@ -390,3 +390,8 @@ td.td-block {
     margin-left: 0 !important;
     padding-left: 0 !important;
 }
+
+.total {
+    font-size: 30px;
+    color: #ffffff;
+}

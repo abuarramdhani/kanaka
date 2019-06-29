@@ -93,13 +93,6 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td>Potongan Pembelian</td>
-				<td class="text-right"><?php echo number_format($potongan_pembelian, 0) ?></td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
 				<td>Retur Pembelian</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
@@ -164,22 +157,8 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td>Beban Asuransi Toko</td>
-				<td class="text-right"><?php echo number_format($beban_asuransi_toko, 0) ?></td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
 				<td>Beban Iklan</td>
 				<td class="text-right"><?php echo number_format($beban_iklan, 0) ?></td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>Baban Perlengkapan Toko</td>
-				<td class="text-right"><?php echo number_format($beban_perlengkapan_toko, 0) ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
@@ -216,22 +195,8 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td>Beban Perlengkapan Kantor</td>
-				<td class="text-right"><?php echo number_format($beban_perlengkapan_kantor, 0) ?></td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
 				<td>Beban Sewa</td>
 				<td class="text-right"><?php echo number_format($beban_sewa, 0) ?></td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>Beban Penyusutan</td>
-				<td class="text-right"><?php echo number_format($beban_penyusutan, 0) ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
@@ -248,13 +213,6 @@
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td class="text-right"><?php echo number_format($total_beban_operasional, 0) ?></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>Rugi Operational</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($rugi_operasional, 0) ?></td>
 			</tr>
 
 			<tr>

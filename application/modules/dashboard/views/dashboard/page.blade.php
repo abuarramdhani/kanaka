@@ -273,10 +273,15 @@
                                 </div>
                                 <div class="panel-body">
                                     <?php
+                                        $receive_date = array();
+                                        $total = array();
                                         /* Mengambil query report*/
-                                        foreach($report_si as $si){
-                                            $receive_date[] = $si->receive_date;
-                                            $total[] = (float) $si->total;
+                                        if(!empty($report_si))
+                                        {
+                                            foreach($report_si as $si){
+                                                $receive_date[] = $si->receive_date;
+                                                $total[] = (float) $si->total;
+                                            }
                                         }
                                         /* end mengambil query*/
                                         
@@ -295,10 +300,15 @@
                                 </div>
                                 <div class="panel-body">
                                     <?php
+                                        $receive_date_so = array();
+                                        $total_so = array();
                                         /* Mengambil query report*/
-                                        foreach($report_so as $so){
-                                            $receive_date_so[] = $so->receive_date;
-                                            $total_so[] = (float) $so->total;
+                                        if(!empty($report_so))
+                                        {
+                                            foreach($report_so as $so){
+                                                $receive_date_so[] = $so->receive_date;
+                                                $total_so[] = (float) $so->total;
+                                            }
                                         }
                                         /* end mengambil query*/
                                         

@@ -1,7 +1,7 @@
 <?php
 ## SYSTEM DESCRIPTIONS  ##
-$lang['system_name'] = 'Kanaka Online Shop';
-$lang['system_description'] = 'Kanaka Online Shop';
+$lang['system_name'] = 'Kanaka Backend System';
+$lang['system_description'] = 'Kanaka Backend System';
 $lang['system_author'] = 'Kanaka';
 $lang['system_keywords'] = 'Developed by Octavian Panggestu - Debby Syilvia';
 $lang['system_production_year'] = '2019';

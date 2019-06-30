@@ -259,6 +259,9 @@ $route['reports/profitloss/excel/(:num)'] = 'profitloss/profitlosses/excel/$1';
 $route['reports/accountpayable'] = 'accountpayable/accountpayables/index';
 $route['reports/accountpayable/pdf'] = 'accountpayable/accountpayables/pdf';
 $route['reports/accountpayable/excel'] = 'accountpayable/accountpayables/excel';
+$route['reports/accountpayable/detail/(:any)'] = 'accountpayable/accountpayables/detail/$1';
+$route['reports/accountpayable/pdf_detail/(:any)'] = 'accountpayable/accountpayables/pdf_detail/$1';
+$route['reports/accountpayable/excel_detail/(:any)'] = 'accountpayable/accountpayables/excel_detail/$1';
 
 /**
 * ACCOUNT RECEIVABLE
@@ -266,3 +269,6 @@ $route['reports/accountpayable/excel'] = 'accountpayable/accountpayables/excel';
 $route['reports/accountreceivable'] = 'accountreceivable/accountreceivables/index';
 $route['reports/accountreceivable/pdf'] = 'accountreceivable/accountreceivables/pdf';
 $route['reports/accountreceivable/excel'] = 'accountreceivable/accountreceivables/excel';
+$route['reports/accountreceivable/detail/(:any)'] = 'accountreceivable/accountreceivables/detail/$1';
+$route['reports/accountreceivable/pdf_detail/(:any)'] = 'accountreceivable/accountreceivables/pdf_detail/$1';
+$route['reports/accountreceivable/excel_detail/(:any)'] = 'accountreceivable/accountreceivables/excel_detail/$1';

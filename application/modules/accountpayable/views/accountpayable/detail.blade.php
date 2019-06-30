@@ -25,7 +25,7 @@
     </div>
     <!-- END PAGE BAR -->
     <!-- BEGIN PAGE TITLE-->
-    <h3 class="page-title"> {{lang('accountpayable')}} </h3>
+    <h3 class="page-title"> {{lang('accountpayable')}} - {{ ucwords($customer->name) }} </h3>
     <!-- END PAGE TITLE-->
     <!-- END PAGE HEADERs-->
     <div class="row">
@@ -38,24 +38,33 @@
                         <span class="caption-subject">{{lang('accountpayable')}}</span>
                     </div>
                     <div class="tools">
+                        <button onclick="return window.location='{{ base_url() }}reports/accountpayable'" class="btn btn-default btn-sm">
+                            <i class="fa fa-chevron-left"></i> {{ lang('back') }}
+                        </button>
+
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}reports/accountpayable/pdf')" class="btn btn-danger btn-sm">
+                            <button onClick="return window.open('{{base_url()}}reports/accountpayable/pdf_detail/{{ $customer_id }}')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
-                            <button onClick="return window.open('{{base_url()}}reports/accountpayable/excel')" class="btn btn-success btn-sm">
+                            <button onClick="return window.open('{{base_url()}}reports/accountpayable/excel_detail/{{ $customer_id }}')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
                             </button>
                         @endif
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <table id="table-accountpayable" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+                    <table id="table-accountpayable-detail" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
+                                <th style="text-align: center;">No</th>
                                 <th style="text-align: center;"><?=lang('name')?></th>
                                 <th style="text-align: center;"><?=lang('nominal')?></th>
-                                <th style="text-align: center;"><?=lang('status')?></th>
-                                <th width="13%"><?=lang('options')?></th>
+                                <th style="text-align: center;"><?=lang('invoice_no')?></th>
+                                <th style="text-align: center;"><?=lang('due_date')?></th>
+                                <th style="text-align: center;">0-30</th>
+                                <th style="text-align: center;">31-60</th>
+                                <th style="text-align: center;">61-90</th>
+                                <th style="text-align: center;">> 90</th>
                             </tr>
                         </thead>
                     </table>
@@ -75,17 +84,17 @@
     });
 
     // Pengaturan Datatable 
-    var oTable =$('#table-accountpayable').dataTable({
+    var oTable =$('#table-accountpayable-detail').dataTable({
         "responsive": false,
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,
         "sServerMethod": "GET",
-        "sAjaxSource": "{{ base_url() }}accountpayable/accountpayables/fetch_data",
+        "sAjaxSource": "{{ base_url() }}accountpayable/accountpayables/fetch_data_detail/{{ $customer_id }}",
         "columnDefs": [
-            {"className": "dt-center", "targets": [3]},
-            {"className": "dt-right", "targets": [1]},
-            {"targets": [1, 3], "orderable": false}
+            {"className": "dt-center", "targets": [3, 4]},
+            {"className": "dt-right", "targets": [2, 5, 6, 7, 8]},
+            {"targets": [2, 5, 6, 7, 8], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);

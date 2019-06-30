@@ -83,9 +83,9 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}accountreceivable/accountreceivables/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [2, 3]},
+            {"className": "dt-center", "targets": [3]},
             {"className": "dt-right", "targets": [1]},
-            {"targets": [1, 2, 3], "orderable": false}
+            {"targets": [1, 3], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);

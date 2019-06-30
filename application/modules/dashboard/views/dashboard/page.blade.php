@@ -329,16 +329,14 @@
 
 @section('scripts')
 <script type="text/javascript">
-     $(function(){
+    $(function () {
         @if($user->group_id != '1')
             $('#tab_dipo').hide();
             $('#nav_dipo').hide();
             $('#nav_mitra').addClass('active');
             $('#tab_mitra').show();
         @endif
-    });
-
-    $(function () {
+        
         $('#report_si').highcharts({
             chart: {
                 type: 'line',

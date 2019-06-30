@@ -1296,6 +1296,8 @@ class Companyreports extends MX_Controller {
     }
 
     function stock(){
+        $user = $this->ion_auth->user()->row();
+        
         $data['user'] = $this->ion_auth->user()->row();
         $data['add_access'] = $this->user_profile->get_user_access('Created', 'product');
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
@@ -1317,6 +1319,10 @@ class Companyreports extends MX_Controller {
             $condition .= " AND m_product.id = '".$product_id."'";
         }
 
+        if($user->group_id != '1'){
+            $condition .= " AND t_sell_in_company.user_created = '".$user->id."'";
+        }
+
         $data['dipo_id'] = $dipo_id;
         $data['product_id'] = $product_id;
 
@@ -1330,7 +1336,7 @@ class Companyreports extends MX_Controller {
         $dataSellIn = array();
         $dataSellOut = array();
         $allDataSell = array();
-
+         
         $sell_in = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
                                    FROM t_sell_in_company
                                    INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id

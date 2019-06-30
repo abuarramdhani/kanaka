@@ -437,6 +437,7 @@ $lang['lunas'] = "Lunas";
 $lang['cicil'] = "Cicil";
 $lang['belum_bayar'] = "Belum Bayar";
 $lang['sudah_lewat_jatuh_tempo'] = "Sudah Lewat Jatuh Tempo";
+$lang['tambah_pembayaran'] = "Tambah Pembayaran";
 
 $lang['saving_companyreport_successfully'] = 'Proses menyimpan data Pembelian/Penjualan berhasil';
 $lang['deleting_companyreport_successfully'] = 'Proses menghapus data Pembelian/Penjualan berhasil';

@@ -486,6 +486,32 @@
                 </div>
             </div>
         </div>
+        
+        <hr>
+
+        <div class="row table-payment-sell-field">
+            <div class="col-md-12">
+                <p><button type="button" class="btn btn-sm btn-success" id="btn_add_payment_sell_in"><i class="fa fa-plus"></i> {{ lang('tambah_pembayaran') }}</button>
+                </p>
+                <div class="block-table-payment-sell">
+                    <table id="table-payment-sell-in" class="table table-striped table-bordered table-hover dt-responsive" width="100%">
+                        <thead>
+                            <tr>
+                                <td align="center" width="10%">#</td>
+                                <td>{{ lang('nominal') }}</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <td>{{ lang('total') }}</td>
+                                <td><span id="total-payment-sell-in"></span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
@@ -747,6 +773,7 @@
 @section('scripts')
 <script type="text/javascript">
     $(function(){
+        $('.table-payment-sell-field').hide();
         
         @if($user->group_id != '1')
             $('.selling_price_field').hide();
@@ -1501,6 +1528,28 @@
 
         $('#discount_value_out').val(discount_value);
     });
+    
+    
+    $('#payment_status').change(function(){
+        var payment_status = $('#payment_status').val();
+        if(payment_status == 3){
+            $('.table-payment-sell-field').hide();
+        }
+        else{
+            $('.table-payment-sell-field').show();
+        }
+    });
+    
+    var row_no_sell_in = 1; 
+    $('#btn_add_payment_sell_in').click(function(){
+        var html = "<tr>"+
+                        "<td align='center'>" + row_no_sell_in++ + "</td>"+
+                        '<td><input type="number" class="form-control input-sm currency" name="amount[]" id="amount" placeholder="{{ lang('nominal') }}" />'+
+                        "</td>"+
+                    "</tr>";
 
+        $('#table-payment-sell-in tbody').append(html);
+    });
+    
 </script>
 @stop

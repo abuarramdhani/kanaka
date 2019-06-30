@@ -154,8 +154,8 @@
                                 </div>
                                 <div class="panel-body">
                                     <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#tab_dipo" data-toggle="tab" aria-expanded="true"> <?= lang('dipo') ?> </a></li>
-                                        <li class=""><a href="#tab_mitra" data-toggle="tab" aria-expanded="false"> <?= lang('mitra') ?> </a></li>
+                                        <li id="nav_dipo" class="active"><a href="#tab_dipo" data-toggle="tab" aria-expanded="true"> <?= lang('dipo') ?> </a></li>
+                                        <li id="nav_mitra" class=""><a href="#tab_mitra" data-toggle="tab" aria-expanded="false"> <?= lang('mitra') ?> </a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab_dipo">
@@ -165,9 +165,9 @@
                                                     <tr>
                                                         <th class="text-center"><?=lang('dipo')?></th>
                                                         <th class="text-center"><?=lang('code')?></th>
-                                                        <!-- <th class="text-center"><?=lang('address')?></th>
-                                                        <th class="text-center"><?=lang('phone')?></th> -->
-                                                        <th class="text-center"><?=lang('email')?></th>
+                                                        <!-- <th class="text-center"><?=lang('address')?></th> -->
+                                                        <th class="text-center"><?=lang('phone')?></th>
+                                                        <!-- <th class="text-center"><?=lang('email')?></th> -->
                                                     </tr>
                                                     <?php 
                                                         foreach($stocks_dipo as $stock_dipo){ 
@@ -177,9 +177,9 @@
                                                             <tr>
                                                                 <td class="btn-collapse"><a data-toggle="collapse" data-parent="#table-stock-dipo" aria-expanded="true" style="cursor:pointer" data-toggle="collapse" data-target="#accordion_<?= $stock_dipo['customer_id'] ?>" class="clickable collapsed"><?= $dipo->name ?></a></td>
                                                                 <td><?= $dipo->code ?></td>
-                                                                <!-- <td><?= $dipo->address ?></td>
-                                                                <td><?= $dipo->phone ?></td> -->
-                                                                <td><?= $dipo->email ?></td>
+                                                                <!-- <td><?= $dipo->address ?></td> -->
+                                                                <td><?= $dipo->phone ?></td>
+                                                                <!-- <td><?= $dipo->email ?></td> -->
                                                             </tr>
                                                             <tr id="accordion_<?= $stock_dipo['customer_id'] ?>" class="collapse panel-collapse">
                                                                 <td colspan="5">
@@ -216,9 +216,9 @@
                                                     <tr>
                                                         <th class="text-center"><?=lang('mitra')?></th>
                                                         <th class="text-center"><?=lang('code')?></th>
-                                                        <th class="text-center"><?=lang('address')?></th>
+                                                        <!-- <th class="text-center"><?=lang('address')?></th> -->
                                                         <th class="text-center"><?=lang('phone')?></th>
-                                                        <th class="text-center"><?=lang('email')?></th>
+                                                        <!-- <th class="text-center"><?=lang('email')?></th> -->
                                                     </tr>
                                                     <?php 
                                                         foreach($stocks_mitra as $stock_mitra){ 
@@ -228,9 +228,9 @@
                                                             <tr>
                                                                 <td class="btn-collapse"><a data-toggle="collapse" data-parent="#table-stock-mitra" aria-expanded="true" style="cursor:pointer" data-toggle="collapse" data-target="#accordion_<?= $stock_mitra['customer_id'] ?>" class="clickable collapsed"><?= $mitra->name ?></a></td>
                                                                 <td><?= $mitra->code ?></td>
-                                                                <td><?= $mitra->address ?></td>
+                                                                <!-- <td><?= $mitra->address ?></td> -->
                                                                 <td><?= $mitra->phone ?></td>
-                                                                <td><?= $mitra->email ?></td>
+                                                                <!-- <td><?= $mitra->email ?></td> -->
                                                             </tr>
                                                             <tr id="accordion_<?= $stock_mitra['customer_id'] ?>" class="collapse panel-collapse">
                                                                 <td colspan="5">
@@ -329,6 +329,15 @@
 
 @section('scripts')
 <script type="text/javascript">
+     $(function(){
+        @if($user->group_id != '1')
+            $('#tab_dipo').hide();
+            $('#nav_dipo').hide();
+            $('#nav_mitra').addClass('active');
+            $('#tab_mitra').show();
+        @endif
+    });
+
     $(function () {
         $('#report_si').highcharts({
             chart: {

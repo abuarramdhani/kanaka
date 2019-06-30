@@ -12,6 +12,7 @@ class Dashboard extends MX_Controller {
     }
 
 	public function index(){
+        $user = $this->ion_auth->user()->row();
 		$total_saldo    = 0;
 		$total_hutang   = 0;
         $total_piutang  = 0;
@@ -20,26 +21,45 @@ class Dashboard extends MX_Controller {
         
         $row_si = Companyreport::selectRaw('SUM(difference) as nominal')
                         ->where('payment_status', '!=', 3)
-                        ->where('deleted', '=', 0)
-                        ->get();
+                        ->where('deleted', '=', 0);
+        if($user->group_id != '1'){
+            $row_si->where('user_created', '=', $user->id);
+        }
+        $row_si->get();
+
         foreach($row_si as $si){
             $total_hutang = $si->nominal;
         }
 
         $row_so = Companyreportout::selectRaw('SUM(difference) as nominal')
                         ->where('payment_status', '!=', 3)
-                        ->where('deleted', '=', 0)
-                        ->get();
+                        ->where('deleted', '=', 0);
+        if($user->group_id != '1'){
+            $row_so->where('user_created', '=', $user->id);
+        }
+        $row_so->get();
         foreach($row_so as $so){
             $total_piutang = $so->nominal;
         }
 
-        $row_total_in = Jurnal::selectRaw('SUM(total) as total')->where('t_jurnal.deleted', 0)->where('t_jurnal.d_k', 'd')->get();
+        $row_total_in = Jurnal::selectRaw('SUM(total) as total')
+                                ->where('t_jurnal.deleted', 0)
+                                ->where('t_jurnal.d_k', 'd');
+        if($user->group_id != '1'){
+            $row_total_in->where('user_created', '=', $user->id);
+        }
+        $row_total_in->get();
         foreach($row_total_in as $in){
             $total_in = $in->total;
         }
 
-        $row_total_out = Jurnal::selectRaw('SUM(total) as total')->where('t_jurnal.deleted', 0)->where('t_jurnal.d_k', 'k')->get();
+        $row_total_out = Jurnal::selectRaw('SUM(total) as total')
+                                ->where('t_jurnal.deleted', 0)
+                                ->where('t_jurnal.d_k', 'k');
+        if($user->group_id != '1'){
+            $row_total_out->where('user_created', '=', $user->id);
+        }
+        $row_total_out->get();
         foreach($row_total_out as $out){
             $total_out = $out->total;
         }
@@ -47,7 +67,6 @@ class Dashboard extends MX_Controller {
         $total_saldo = $total_in-$total_out;
 
         // NERACA SALDO
-        $user = $this->ion_auth->user()->row();
         if($user->group_id != '1'){
             $data['jurnals'] = $this->db->query("SELECT SUM(total) as total, t_jurnal.d_k, m_chart_of_accounts.code as coa_code, m_chart_of_accounts.description as coa_name
                                     FROM t_jurnal
@@ -68,15 +87,11 @@ class Dashboard extends MX_Controller {
                                     ;")->result();
         }
 
-        // STOCK
-        $condition = '';
-        if($user->group_id != '1'){
-            $condition .= " AND t_sell_in_company.user_created = '".$user->id."'";
-        }
-        
-        $data['stocks_dipo'] = $this->get_data_stock('dipo', $condition);
-        $data['stocks_mitra'] = $this->get_data_stock('partner', $condition);
+        // STOCK      
+        $data['stocks_dipo'] = $this->get_data_stock('dipo');
+        $data['stocks_mitra'] = $this->get_data_stock('partner');
 
+        $data['user'] = $this->ion_auth->user()->row();
         $data['report_si'] = $this->grafik_si();
         $data['report_so'] = $this->grafik_so();
         $data['total_saldo'] = number_format($total_saldo);
@@ -128,35 +143,59 @@ class Dashboard extends MX_Controller {
         }
     }
 
-    public function get_data_stock($type, $condition){
+    public function get_data_stock($type){
+        $user = $this->ion_auth->user()->row();
         $dataSellIn = array();
         $dataSellOut = array();
         $allDataSell = array();
-         
-        $sell_in = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+        
+        if($user->group_id != '1'){
+            $sell_in = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
                                    FROM t_sell_in_company
                                    INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id
                                    INNER JOIN m_dipo_partner ON t_sell_in_company.customer_id = m_dipo_partner.id
                                    WHERE t_sell_in_company.deleted = 0
                                    AND m_dipo_partner.type = '$type'
-                                   $condition
+                                   AND t_sell_in_company.user_created = $user->id
                                    GROUP BY product_id, customer_id, nominal
                                  ;")->result();
+        }else{
+            $sell_in = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+                                    FROM t_sell_in_company
+                                    INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id
+                                    INNER JOIN m_dipo_partner ON t_sell_in_company.customer_id = m_dipo_partner.id
+                                    WHERE t_sell_in_company.deleted = 0
+                                    AND m_dipo_partner.type = '$type'
+                                    GROUP BY product_id, customer_id, nominal
+                                ;")->result();
+        }
         $arraySellIn = json_decode(json_encode($sell_in), True);
 
         foreach($arraySellIn as $in){
             $dataSellIn[] = array_merge($in, array("type"=>"in"));
         }
         
-        $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+        if($user->group_id != '1'){
+            $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
                                    FROM t_sell_out_company
                                    INNER JOIN m_product ON t_sell_out_company.product_id = m_product.id
                                    INNER JOIN m_dipo_partner ON t_sell_out_company.customer_id = m_dipo_partner.id
                                    WHERE t_sell_out_company.deleted = 0
                                    AND m_dipo_partner.type = '$type'
-                                   $condition
+                                   AND t_sell_out_company.user_created = $user->id
                                    GROUP BY product_id, customer_id, nominal
                                  ;")->result();
+        }else{
+            $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+                                   FROM t_sell_out_company
+                                   INNER JOIN m_product ON t_sell_out_company.product_id = m_product.id
+                                   INNER JOIN m_dipo_partner ON t_sell_out_company.customer_id = m_dipo_partner.id
+                                   WHERE t_sell_out_company.deleted = 0
+                                   AND m_dipo_partner.type = '$type'
+                                   GROUP BY product_id, customer_id, nominal
+                                 ;")->result();
+        }
+        
         $arraySellOut = json_decode(json_encode($sell_out), True);
 
         foreach($arraySellOut as $out){

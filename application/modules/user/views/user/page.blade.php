@@ -94,7 +94,7 @@
                         <div class="form-group form-md-line-input">
                             <label class="col-md-12"><?=lang('username')?><span class="text-danger">*</span></label>
                             <div class="col-md-12">
-                                <input type="text" name="username" placeholder="Min. 4 & Max. 20 Character" value="<?=set_value('username')?>" class="input-sm form-control" required>
+                                <input type="text" name="username" placeholder="Min. 4 & Max. 20 <?=lang('character')?>" value="<?=set_value('username')?>" class="input-sm form-control" required>
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>

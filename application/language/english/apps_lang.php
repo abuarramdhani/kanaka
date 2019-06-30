@@ -535,3 +535,7 @@ $lang['due_date'] = "Due Date";
 ## ACCOUNT RECEIVABLE ##
 $lang['accountreceivable'] = 'Account Receivable';
 ## END ACCOUNT RECEIVABLE ##
+
+## DASHBOARD ##
+$lang['saldo'] = 'Saldo';
+## END DASHBOARD ##

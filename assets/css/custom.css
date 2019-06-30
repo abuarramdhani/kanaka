@@ -395,3 +395,7 @@ td.td-block {
     font-size: 30px;
     color: #ffffff;
 }
+
+.row.dashboard-row-2 {
+    padding-top: 30px;
+}

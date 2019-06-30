@@ -107,8 +107,8 @@
                         </div>
                     </div>
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab_dipo" data-toggle="tab" aria-expanded="true"> <?= lang('dipo') ?> </a></li>
-                        <li class=""><a href="#tab_mitra" data-toggle="tab" aria-expanded="false"> <?= lang('mitra') ?> </a></li>
+                        <li id="nav_dipo" class="active"><a href="#tab_dipo" data-toggle="tab" aria-expanded="true"> <?= lang('dipo') ?> </a></li>
+                        <li id="nav_mitra" class=""><a href="#tab_mitra" data-toggle="tab" aria-expanded="false"> <?= lang('mitra') ?> </a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_dipo">
@@ -223,6 +223,14 @@
 
 @section('scripts')
 <script type="text/javascript">
+    $(function(){
+        @if($user->group_id != '1')
+            $('#tab_dipo').hide();
+            $('#nav_dipo').hide();
+            $('#nav_mitra').addClass('active');
+            $('#tab_mitra').show();
+        @endif
+    });
 
     function myFunctionReset() {
         document.getElementById('dipo_id').value = '';

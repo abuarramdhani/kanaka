@@ -1333,11 +1333,24 @@ class Companyreports extends MX_Controller {
     }
 
     public function get_data_stock($type, $condition){
+        $user = $this->ion_auth->user()->row();
         $dataSellIn = array();
         $dataSellOut = array();
         $allDataSell = array();
-         
-        $sell_in = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+        
+        if($user->group_id != '1'){
+            $sell_in = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+                                   FROM t_sell_in_company
+                                   INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id
+                                   INNER JOIN m_dipo_partner ON t_sell_in_company.customer_id = m_dipo_partner.id
+                                   WHERE t_sell_in_company.deleted = 0
+                                   AND m_dipo_partner.type = '$type'
+                                   AND t_sell_in_company.user_created = $user->id
+                                   $condition
+                                   GROUP BY product_id, customer_id, nominal
+                                 ;")->result();
+        }else{
+            $sell_in = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
                                    FROM t_sell_in_company
                                    INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id
                                    INNER JOIN m_dipo_partner ON t_sell_in_company.customer_id = m_dipo_partner.id
@@ -1346,13 +1359,26 @@ class Companyreports extends MX_Controller {
                                    $condition
                                    GROUP BY product_id, customer_id, nominal
                                  ;")->result();
+        }
         $arraySellIn = json_decode(json_encode($sell_in), True);
 
         foreach($arraySellIn as $in){
             $dataSellIn[] = array_merge($in, array("type"=>"in"));
         }
         
-        $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+        if($user->group_id != '1'){
+            $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+                                   FROM t_sell_out_company
+                                   INNER JOIN m_product ON t_sell_out_company.product_id = m_product.id
+                                   INNER JOIN m_dipo_partner ON t_sell_out_company.customer_id = m_dipo_partner.id
+                                   WHERE t_sell_out_company.deleted = 0
+                                   AND m_dipo_partner.type = '$type'
+                                   AND t_sell_out_company.user_created = $user->id
+                                   $condition
+                                   GROUP BY product_id, customer_id, nominal
+                                 ;")->result();
+        }else{
+            $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
                                    FROM t_sell_out_company
                                    INNER JOIN m_product ON t_sell_out_company.product_id = m_product.id
                                    INNER JOIN m_dipo_partner ON t_sell_out_company.customer_id = m_dipo_partner.id
@@ -1361,6 +1387,7 @@ class Companyreports extends MX_Controller {
                                    $condition
                                    GROUP BY product_id, customer_id, nominal
                                  ;")->result();
+        }
         $arraySellOut = json_decode(json_encode($sell_out), True);
 
         foreach($arraySellOut as $out){

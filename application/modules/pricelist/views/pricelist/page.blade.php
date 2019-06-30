@@ -449,7 +449,12 @@
 @section('scripts')
 <script type="text/javascript">
     $(function(){
-        
+        @if($user->group_id == '1')
+            $('#fieldset-dipo').hide();
+            $('#fieldset-mitra').hide();
+            $('#fieldset-customer').hide();
+        @endif
+
         @if($user->group_id == '2')
             $('#fieldset-kanaka').hide();
             $('#fieldset-mitra').hide();

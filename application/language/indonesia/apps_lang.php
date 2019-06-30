@@ -186,6 +186,7 @@ $lang['company_name'] = 'Nama Perusahaan';
 $lang['city'] = 'Kota';
 $lang['address'] = 'Alamat';
 $lang['details_my_profile'] = 'Rincian Profil Saya';
+$lang['character'] = 'Karakter';
 ## END USER ##
 
 ## USER MENU ##

@@ -87,14 +87,14 @@
                         <div class="form-group form-md-line-input">
                             <label class="col-md-12"><?=lang('full_name')?><span class="text-danger">*</span></label>
                             <div class="col-md-12">
-                                <input type="text" class="input-sm form-control" value="<?=set_value('fullname')?>" placeholder="Full Name" name="fullname" required>
+                                <input type="text" class="input-sm form-control" value="<?=set_value('fullname')?>" placeholder="<?=lang('full_name')?>" name="fullname" required>
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
                         <div class="form-group form-md-line-input">
                             <label class="col-md-12"><?=lang('username')?><span class="text-danger">*</span></label>
                             <div class="col-md-12">
-                                <input type="text" name="username" placeholder="Min. 4 & Max. 20 Character" value="<?=set_value('username')?>" class="input-sm form-control" required>
+                                <input type="text" name="username" placeholder="Min. 4 & Max. 20 <?=lang('character')?>" value="<?=set_value('username')?>" class="input-sm form-control" required>
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -108,14 +108,14 @@
                         <div class="form-group form-md-line-input">
                             <label class="col-md-12"><?=lang('phone')?></label>
                             <div class="col-md-12">
-                                <input type="text" class="input-sm form-control number" value="<?=set_value('phone')?>" name="phone" placeholder="Phone Number">
+                                <input type="text" class="input-sm form-control number" value="<?=set_value('phone')?>" name="phone" placeholder="<?=lang('phone')?>">
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
                         <div class="form-group form-md-line-input">
                             <label class="col-md-12"><?=lang('company_name')?></label>
                             <div class="col-md-12">
-                                <input type="text" class="input-sm form-control" value="<?=set_value('company')?>" name="company" placeholder="Company Name"> 
+                                <input type="text" class="input-sm form-control" value="<?=set_value('company')?>" name="company" placeholder="<?=lang('company_name')?>"> 
                             </div>
                         </div>
                     </div>

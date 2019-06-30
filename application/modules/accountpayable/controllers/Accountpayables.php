@@ -114,7 +114,9 @@ class Accountpayables extends MX_Controller {
     }
     
     function pdf(){
-        $data['accountpayables'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['accountpayables'] = Companyreport::select('t_sell_in_company.customer_id as id',
+            'm_dipo_partner.name',
+            't_sell_in_company.payment_status')->where('t_sell_in_company.deleted', 0)->where('t_sell_in_company.payment_status', '!=', 3)->orderBy('m_dipo_partner.name', 'DESC')->get();
         $data['quote'] = "";
         $html = $this->load->view('accountpayable/accountpayable/accountpayable_pdf', $data, true);
         $this->pdf_generator->generate($html, 'account payable pdf', $orientation='Landscape');
@@ -123,7 +125,9 @@ class Accountpayables extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=accountpayable.xls");
-        $data['accountpayables'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $data['accountpayables'] = Dipo::select('t_sell_in_company.customer_id as id',
+            'm_dipo_partner.name',
+            't_sell_in_company.payment_status')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
         $data['quote'] = "'";
         $this->load->view('accountpayable/accountpayable/accountpayable_pdf', $data);
     }

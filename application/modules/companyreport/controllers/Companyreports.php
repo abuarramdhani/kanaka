@@ -517,7 +517,21 @@ class Companyreports extends MX_Controller {
                 $model->date_created = date('Y-m-d');
                 $model->time_created = date('H:i:s');
                 $save = $model->save();
-                if ($save) {
+                if ($save) {                    
+                    $amount = $this->input->post('amount_in');
+
+                    for($row_detail=0;$row_detail<count($amount);$row_detail++){	
+                        if($amount[$row_detail] > 0){
+                            $model_detail = new Companyreportdetail();
+                            $model_detail->sell_in_id = $model->id;
+                            $model_detail->amount = $amount[$row_detail];
+                            $model_detail->user_created = $user->id;
+                            $model_detail->date_created = date('Y-m-d');
+                            $model_detail->time_created = date('H:i:s');
+                            $model_detail->save();
+                        }
+                    }
+
                     $data_notif = array(
                         'PO Date' => date('d-m-Y', strtotime($po_date)),
                         'Receive Date' => date('d-m-Y', strtotime($receive_date)),
@@ -794,6 +808,20 @@ class Companyreports extends MX_Controller {
                 $model->time_created = date('H:i:s');
                 $save = $model->save();
                 if ($save) {
+                    $amount = $this->input->post('amount_out');
+
+                    for($row_detail=0;$row_detail<count($amount);$row_detail++){	
+                        if($amount[$row_detail] > 0){
+                            $model_detail = new Companyreportoutdetail();
+                            $model_detail->sell_out_id = $model->id;
+                            $model_detail->amount = $amount[$row_detail];
+                            $model_detail->user_created = $user->id;
+                            $model_detail->date_created = date('Y-m-d');
+                            $model_detail->time_created = date('H:i:s');
+                            $model_detail->save();
+                        }
+                    }
+
                     $data_notif = array(
                         'Receive Date' => date('d-m-Y', strtotime($receive_date)),
                         'Monthly Period' => $monthly_period,
@@ -1004,11 +1032,19 @@ class Companyreports extends MX_Controller {
             $user = $this->ion_auth->user()->row();
             $model = Companyreport::find($id);
             if (!empty($model)) {
+                
                 $model->deleted = 1;
                 $model->user_deleted = $user->id;
                 $model->date_deleted = date('Y-m-d');
                 $model->time_deleted = date('H:i:s');
                 $delete = $model->save();
+
+                $model_detail = Companyreportdetail::where('sell_in_id', $id)->update([
+                    'deleted' => 1,
+                    'user_deleted' => $user->id,
+                    'date_deleted' => date('Y-m-d'),
+                    'time_deleted' => date('H:i:s')
+                ]);
 
                 $data_notif = array(
                     'PO Date' => date('d-m-Y', strtotime($model->po_date)),
@@ -1086,6 +1122,13 @@ class Companyreports extends MX_Controller {
                 $model->date_deleted = date('Y-m-d');
                 $model->time_deleted = date('H:i:s');
                 $delete = $model->save();
+
+                $model_detail = Companyreportoutdetail::where('sell_out_id', $id)->update([
+                    'deleted' => 1,
+                    'user_deleted' => $user->id,
+                    'date_deleted' => date('Y-m-d'),
+                    'time_deleted' => date('H:i:s')
+                ]);
 
                 $data_notif = array(
                     'Receive Date' => date('d-m-Y', strtotime($model->receive_date)),

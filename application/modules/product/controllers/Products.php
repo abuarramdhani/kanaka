@@ -18,6 +18,7 @@ class Products extends MX_Controller {
     }
 
     public function index() {
+        $data['user'] = $this->ion_auth->user()->row();
         $data['add_access'] = $this->user_profile->get_user_access('Created', 'product');
         $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'product');
         $data['print_unlimited_access'] = $this->user_profile->get_user_access('PrintUnlimited', 'product');

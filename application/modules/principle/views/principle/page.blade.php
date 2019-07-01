@@ -59,14 +59,14 @@
                                 <th rowspan="2" class="text-center"><?=lang('code')?></th>
                                 <th rowspan="2" class="text-center"><?=lang('name')?></th>
                                 <th rowspan="2" class="text-center"><?=lang('address')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('product')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('brand')?></th>
+                                <!-- <th rowspan="2" class="text-center"><?=lang('product')?></th> -->
+                                <!-- <th rowspan="2" class="text-center"><?=lang('brand')?></th> -->
                                 <th rowspan="2" class="text-center"><?=lang('top')?></th>
                                 <th rowspan="2" class="text-center"><?=lang('pic')?></th>
                                 <th colspan="3" class="text-center"><?=lang('phone')?></th>
-                                <th colspan="2" class="text-center"><?=lang('email')?></th>
-                                <th rowspan="2" class="text-center"><?=lang('web')?></th>
-                                <th colspan="4" class="text-center"><?=lang('discount')?></th>
+                                <th rowspan="2" class="text-center"><?=lang('email')?></th>
+                                <!-- <th rowspan="2" class="text-center"><?=lang('web')?></th> -->
+                                <!-- <th colspan="4" class="text-center"><?=lang('discount')?></th> -->
                                 <th rowspan="2" class="text-center"><?=lang('created_date')?></th>
                                 <th rowspan="2" width="13%"><?=lang('options')?></th>
                             </tr>
@@ -74,12 +74,12 @@
                                 <th><?=lang('office')?></th>
                                 <th><?=lang('personal')?></th> 
                                 <th><?=lang('fax')?></th> 
-                                <th><?=lang('office')?></th>
-                                <th><?=lang('personal')?></th> 
-                                <th>Reg Disc</th>
-                                <th>Add Disc 1</th> 
-                                <th>Add Disc 2</th> 
-                                <th>BTW Disc</th> 
+                                <!-- <th><?=lang('office')?></th> -->
+                                <!-- <th><?=lang('personal')?></th>  -->
+                                <!-- <th>Reg Disc</th> -->
+                                <!-- <th>Add Disc 1</th>  -->
+                                <!-- <th>Add Disc 2</th>  -->
+                                <!-- <th>BTW Disc</th>  -->
                             </tr>
                         </thead>
                     </table>
@@ -414,10 +414,10 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}principle/principles/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [18]},
-            {"targets": [18], "orderable": false}
+            {"className": "dt-center", "targets": [10]},
+            {"targets": [10], "orderable": false}
         ],
-        "order": [17,"desc"],
+        "order": [9,"desc"],
     }).fnSetFilteringDelay(1000);
 
     // Pengaturan Form Validation 

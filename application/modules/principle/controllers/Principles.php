@@ -51,20 +51,20 @@ class Principles extends MX_Controller {
             'code',
             'name',
             'address',
-            'product',
-            'brand',
+            // 'product',
+            // 'brand',
             'top',
             'pic',
             'phone_office',
             'phone_personal',
             'fax',
             'email_office',
-            'email_personal',
-            'web',
-            'reg_disc',
-            'add_disc_1',
-            'add_disc_2',
-            'btw_disc',
+            // 'email_personal',
+            // 'web',
+            // 'reg_disc',
+            // 'add_disc_1',
+            // 'add_disc_2',
+            // 'btw_disc',
             'date_created'
         );
 
@@ -118,20 +118,20 @@ class Principles extends MX_Controller {
             $row_value[] = $row->code;
             $row_value[] = $row->name;
             $row_value[] = $row->address;
-            $row_value[] = $row->product;
-            $row_value[] = $row->brand;
+            // $row_value[] = $row->product;
+            // $row_value[] = $row->brand;
             $row_value[] = $row->top;
             $row_value[] = $row->pic;
             $row_value[] = $row->phone_office;
             $row_value[] = $row->phone_personal;
             $row_value[] = $row->fax;
             $row_value[] = $row->email_office;
-            $row_value[] = $row->email_personal;
-            $row_value[] = $row->web;
-            $row_value[] = $row->reg_disc;
-            $row_value[] = $row->add_disc_1;
-            $row_value[] = $row->add_disc_2;
-            $row_value[] = $row->btw_disc;
+            // $row_value[] = $row->email_personal;
+            // $row_value[] = $row->web;
+            // $row_value[] = $row->reg_disc;
+            // $row_value[] = $row->add_disc_1;
+            // $row_value[] = $row->add_disc_2;
+            // $row_value[] = $row->btw_disc;
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
             

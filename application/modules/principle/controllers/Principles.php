@@ -146,71 +146,120 @@ class Principles extends MX_Controller {
         if ($this->input->is_ajax_request()) {
             $user = $this->ion_auth->user()->row();
             $id_principle = $this->input->post('id');
-            $get_principle = Principle::where('name' , $this->input->post('name'))->where('deleted', 0)->first();
+            $get_principle = Principle::where('code' , $this->input->post('code'))->where('deleted', 0)->first();
             if (empty($id_principle)) {
                 if (!empty($get_principle->name)) {
                     $status = array('status' => 'unique', 'message' => lang('already_exist'));
                 }else{
                     $code = strtoupper($this->input->post('code'));
                     $name = ucwords($this->input->post('name'));
-                    $address = $this->input->post('address');
-                    $product = $this->input->post('product');
-                    $brand = $this->input->post('brand');
-                    $top = $this->input->post('top');
-                    $pic = $this->input->post('pic');
                     $phone_office = $this->input->post('phone_office');
-                    $phone_personal = $this->input->post('phone_personal');
                     $fax = $this->input->post('fax');
                     $email_office = $this->input->post('email_office');
-                    $email_personal = $this->input->post('email_personal');
-                    $web = $this->input->post('web');
-                    $reg_disc = $this->input->post('reg_disc');
-                    $add_disc_1 = $this->input->post('add_disc_1');
-                    $add_disc_2 = $this->input->post('add_disc_2');
-                    $btw_disc = $this->input->post('btw_disc');
+                    $address = $this->input->post('address');
+                    $postal_code = $this->input->post('postal_code');
+                    $latitude = $this->input->post('latitude');
+                    $longitude = $this->input->post('longitude');
+                    $pic_operational = $this->input->post('pic_operational');
+                    $pic = $this->input->post('pic');
+                    $phone_personal = $this->input->post('phone_personal');
+                    $pic_finance = $this->input->post('pic_finance');
+                    $pic_finance_name = $this->input->post('pic_finance_name');
+                    $pic_finance_phone = $this->input->post('pic_finance_phone');
+                    $taxable = $this->input->post('taxable');
+                    $npwp = $this->input->post('npwp');
+                    $tax_name = $this->input->post('tax_name');
+                    $tdp = $this->input->post('tdp');
+                    $siup = $this->input->post('siup');
+                    $sppkp = $this->input->post('sppkp');
+                    $tax_company_name = $this->input->post('tax_company_name');
+                    $tax_company_address = $this->input->post('tax_company_address');
+                    $tax_payment_method = $this->input->post('tax_payment_method');
+                    $top = $this->input->post('top');
+                    $tax_credit_ceiling = $this->input->post('tax_credit_ceiling');
+                    $account_number = $this->input->post('account_number');
+                    $account_name = $this->input->post('account_name');
+                    $bank_name = $this->input->post('bank_name');
+                    $bank_code = $this->input->post('bank_code');
+                    $account_address = $this->input->post('account_address');
                     
                     $model = new principle();
                     $model->code = $code;
                     $model->name = $name;
-                    $model->address = $address;
-                    $model->product = $product;
-                    $model->brand = $brand;
-                    $model->top = $top;
-                    $model->pic = $pic;
                     $model->phone_office = $phone_office;
-                    $model->phone_personal = $phone_personal;
                     $model->fax = $fax;
                     $model->email_office = $email_office;
-                    $model->email_personal = $email_personal;
-                    $model->web = $web;
-                    $model->reg_disc = $reg_disc;
-                    $model->add_disc_1 = $add_disc_1;
-                    $model->add_disc_2 = $add_disc_2;
-                    $model->btw_disc = $btw_disc;
+                    $model->address = $address;
+                    $model->postal_code = $postal_code;
+                    $model->latitude = $latitude;
+                    $model->longitude = $longitude;
+                    $model->pic_operational = $pic_operational;
+                    $model->pic = $pic;
+                    $model->phone_personal = $phone_personal;
+                    $model->pic_finance = $pic_finance;
+                    $model->pic_finance_name = $pic_finance_name;
+                    $model->pic_finance_phone = $pic_finance_phone;
+                    $model->taxable = $taxable;
+                    $model->npwp = $npwp;
+                    $model->tax_name = $tax_name;
+                    $model->tdp = $tdp;
+                    $model->siup = $siup;
+                    $model->sppkp = $sppkp;
+                    $model->tax_company_name = $tax_company_name;
+                    $model->tax_company_address = $tax_company_address;
+                    $model->tax_payment_method = $tax_payment_method;
+                    $model->top = $top;
+                    $model->tax_credit_ceiling = $tax_credit_ceiling;
+                    $model->account_number = $account_number;
+                    $model->account_name = $account_name;
+                    $model->bank_name = $bank_name;
+                    $model->bank_code = $bank_code;
+                    $model->account_address = $account_address;
                     
                     $model->user_created = $user->id;
                     $model->date_created = date('Y-m-d');
                     $model->time_created = date('H:i:s');
                     $save = $model->save();
                     if ($save) {
+                        $model_code = Code::where('code', $code)->where('type', 'principal')->first();
+                        $model_code->status = 1;
+                        $model_code->user_modified = $user->id;
+                        $model_code->date_modified = date('Y-m-d');
+                        $model_code->time_modified = date('H:i:s');
+                        $model_code->save();
+
                         $data_notif = array(
-                            'Code' => $code,
-                            'Name' => $name,
-                            'Address' => $address,
-                            'Product' => $product,
-                            'Brand' => $brand,
-                            'TOP' => $top,
-                            'PIC' => $pic,
-                            'Phone Office' => $phone_office,
-                            'Phone Personal' => $phone_personal,
-                            'Fax' => $fax,
-                            'Email Office' => $email_office,
-                            'Email Persoal' => $email_personal,
-                            'Web' => $web,
-                            'Reg Disc' => $reg_disc,
-                            'Add Disc 1' => $add_disc_1,
-                            'Add Disc 2' => $add_disc_2,
-                            'BTW Disc' => $btw_disc,
+                            'Code' => $code == "" ? "-" : $code,
+                            'Name' => $name == "" ? "-" : $name,
+                            'Phone' => $phone_office == "" ? "-" : $phone_office,
+                            'Fax' => $fax == "" ? "-" : $fax,
+                            'Email' => $email_office == "" ? "-" : $email_office,
+                            'Address' => $address == "" ? "-" : $address,
+                            'Postal Code' => $postal_code == "" ? "-" : $postal_code,
+                            'Latitude' => $latitude == "" ? "-" : $latitude,
+                            'Longitude' => $longitude == "" ? "-" : $longitude,
+                            'PIC Operational' => $pic_operational == "" ? "-" : $pic_operational,
+                            'PIC Name' => $pic == "" ? "-" : $pic,
+                            'PIC Phone' => $phone_personal == "" ? "-" : $phone_personal,
+                            'PIC Finance' => $pic_finance == "" ? "-" : $pic_finance,
+                            'PIC Finance Name' => $pic_finance_name == "" ? "-" : $pic_finance_name,
+                            'PIC Finance Phone' => $pic_finance_phone == "" ? "-" : $pic_finance_phone,
+                            'Taxable' => $taxable == "0" ? lang('no') : lang('yes'),
+                            'NPWP' => $npwp == "" ? "-" : $npwp,
+                            'Tax Name' => $tax_name == "" ? "-" : $tax_name,
+                            'TDP' => $tdp == "" ? "-" : $tdp,
+                            'SIUP' => $siup == "" ? "-" : $siup,
+                            'SPPKP' => $sppkp == "" ? "-" : $sppkp,
+                            'Tax Company Name' => $tax_company_name == "" ? "-" : $tax_company_name,
+                            'Tax Company Address' => $tax_company_address == "" ? "-" : $tax_company_address,
+                            'Tax Payment Method' => $tax_payment_method == "" ? "-" : ucwords(str_replace('_', ' ', $tax_payment_method)),
+                            'TOP' => $top == "" ? "-" : strtoupper($top),
+                            'Tax Credit Ceiling' => $tax_credit_ceiling == "" ? "-" : $tax_credit_ceiling,
+                            'Account Number' => $account_number == "" ? "-" : $account_number,
+                            'Account Name' => $account_name == "" ? "-" : $account_name,
+                            'Bank Name' => $bank_name == "" ? "-" : $bank_name,
+                            'Bank Code' => $bank_code == "" ? "-" : $bank_code,
+                            'Account Address' => $account_address == "" ? "-" : $account_address,
                         );
                         $message = "Add " . lang('principle') . " " . $name . " succesfully by " . $user->full_name;
                         $this->activity_log->create($user->id, json_encode($data_notif), NULL, NULL, $message, 'C', 10);
@@ -223,59 +272,101 @@ class Principles extends MX_Controller {
                 $model = Principle::find($id_principle);
                 $code = strtoupper($this->input->post('code'));
                 $name = ucwords($this->input->post('name'));
-                $address = $this->input->post('address');
-                $product = $this->input->post('product');
-                $brand = $this->input->post('brand');
-                $top = $this->input->post('top');
-                $pic = $this->input->post('pic');
                 $phone_office = $this->input->post('phone_office');
-                $phone_personal = $this->input->post('phone_personal');
                 $fax = $this->input->post('fax');
                 $email_office = $this->input->post('email_office');
-                $email_personal = $this->input->post('email_personal');
-                $web = $this->input->post('web');
-                $reg_disc = $this->input->post('reg_disc');
-                $add_disc_1 = $this->input->post('add_disc_1');
-                $add_disc_2 = $this->input->post('add_disc_2');
-                $btw_disc = $this->input->post('btw_disc');
+                $address = $this->input->post('address');
+                $postal_code = $this->input->post('postal_code');
+                $latitude = $this->input->post('latitude');
+                $longitude = $this->input->post('longitude');
+                $pic_operational = $this->input->post('pic_operational');
+                $pic = $this->input->post('pic');
+                $phone_personal = $this->input->post('phone_personal');
+                $pic_finance = $this->input->post('pic_finance');
+                $pic_finance_name = $this->input->post('pic_finance_name');
+                $pic_finance_phone = $this->input->post('pic_finance_phone');
+                $taxable = $this->input->post('taxable');
+                $npwp = $this->input->post('npwp');
+                $tax_name = $this->input->post('tax_name');
+                $tdp = $this->input->post('tdp');
+                $siup = $this->input->post('siup');
+                $sppkp = $this->input->post('sppkp');
+                $tax_company_name = $this->input->post('tax_company_name');
+                $tax_company_address = $this->input->post('tax_company_address');
+                $tax_payment_method = $this->input->post('tax_payment_method');
+                $top = $this->input->post('top');
+                $tax_credit_ceiling = $this->input->post('tax_credit_ceiling');
+                $account_number = $this->input->post('account_number');
+                $account_name = $this->input->post('account_name');
+                $bank_name = $this->input->post('bank_name');
+                $bank_code = $this->input->post('bank_code');
+                $account_address = $this->input->post('account_address');
             
                 $data_old = array(
-                    'Code' => $model->code,
-                    'Name' => $model->name,
-                    'Address' => $model->address,
-                    'Product' => $model->product,
-                    'Brand' => $model->brand,
-                    'TOP' => $model->top,
-                    'PIC' => $model->pic,
-                    'Phone Office' => $model->phone_office,
-                    'Phone Personal' => $model->phone_personal,
-                    'Fax' => $model->fax,
-                    'Email Office' => $model->email_office,
-                    'Email Persoal' => $model->email_personal,
-                    'Web' => $model->web,
-                    'Reg Disc' => $model->reg_disc,
-                    'Add Disc 1' => $model->add_disc_1,
-                    'Add Disc 2' => $model->add_disc_2,
-                    'BTW Disc' => $model->btw_disc,
+                    'Code' => $model->code == "" ? "-" : $model->code,
+                    'Name' => $model->name == "" ? "-" : $model->name,
+                    'Phone' => $model->phone_office == "" ? "-" : $model->phone_office,
+                    'Fax' => $model->fax == "" ? "-" : $model->fax,
+                    'Email' => $model->email_office == "" ? "-" : $model->email_office,
+                    'Address' => $model->address == "" ? "-" : $model->address,
+                    'Postal Code' => $model->postal_code == "" ? "-" : $model->postal_code,
+                    'Latitude' => $model->latitude == "" ? "-" : $model->latitude,
+                    'Longitude' => $model->longitude == "" ? "-" : $model->longitude,
+                    'PIC Operational' => $model->pic_operational == "" ? "-" : $model->pic_operational,
+                    'PIC Name' => $model->pic == "" ? "-" : $model->pic,
+                    'PIC Phone' => $model->phone_personal == "" ? "-" : $model->phone_personal,
+                    'PIC Finance' => $model->pic_finance == "" ? "-" : $model->pic_finance,
+                    'PIC Finance Name' => $model->pic_finance_name == "" ? "-" : $model->pic_finance_name,
+                    'PIC Finance Phone' => $model->pic_finance_phone == "" ? "-" : $model->pic_finance_phone,
+                    'Taxable' => $model->taxable == "0" ? lang('no') : lang('yes'),
+                    'NPWP' => $model->npwp == "" ? "-" : $model->npwp,
+                    'Tax Name' => $model->tax_name == "" ? "-" : $model->tax_name,
+                    'TDP' => $model->tdp == "" ? "-" : $model->tdp,
+                    'SIUP' => $model->siup == "" ? "-" : $model->siup,
+                    'SPPKP' => $model->sppkp == "" ? "-" : $model->sppkp,
+                    'Tax Company Name' => $model->tax_company_name == "" ? "-" : $model->tax_company_name,
+                    'Tax Company Address' => $model->tax_company_address == "" ? "-" : $model->tax_company_address,
+                    'Tax Payment Method' => $model->tax_payment_method == "" ? "-" : ucwords(str_replace('_', ' ', $model->tax_payment_method)),
+                    'TOP' => $model->top == "" ? "-" : strtoupper($model->top),
+                    'Tax Credit Ceiling' => $model->tax_credit_ceiling == "" ? "-" : $model->tax_credit_ceiling,
+                    'Account Number' => $model->account_number == "" ? "-" : $model->account_number,
+                    'Account Name' => $model->account_name == "" ? "-" : $model->account_name,
+                    'Bank Name' => $model->bank_name == "" ? "-" : $model->bank_name,
+                    'Bank Code' => $model->bank_code == "" ? "-" : $model->bank_code,
+                    'Account Address' => $model->account_address == "" ? "-" : $model->account_address,
                 );
 
                 $model->code = $code;
                 $model->name = $name;
-                $model->address = $address;
-                $model->product = $product;
-                $model->brand = $brand;
-                $model->top = $top;
-                $model->pic = $pic;
                 $model->phone_office = $phone_office;
-                $model->phone_personal = $phone_personal;
                 $model->fax = $fax;
                 $model->email_office = $email_office;
-                $model->email_personal = $email_personal;
-                $model->web = $web;
-                $model->reg_disc = $reg_disc;
-                $model->add_disc_1 = $add_disc_1;
-                $model->add_disc_2 = $add_disc_2;
-                $model->btw_disc = $btw_disc;
+                $model->address = $address;
+                $model->postal_code = $postal_code;
+                $model->latitude = $latitude;
+                $model->longitude = $longitude;
+                $model->pic_operational = $pic_operational;
+                $model->pic = $pic;
+                $model->phone_personal = $phone_personal;
+                $model->pic_finance = $pic_finance;
+                $model->pic_finance_name = $pic_finance_name;
+                $model->pic_finance_phone = $pic_finance_phone;
+                $model->taxable = $taxable;
+                $model->npwp = $npwp;
+                $model->tax_name = $tax_name;
+                $model->tdp = $tdp;
+                $model->siup = $siup;
+                $model->sppkp = $sppkp;
+                $model->tax_company_name = $tax_company_name;
+                $model->tax_company_address = $tax_company_address;
+                $model->tax_payment_method = $tax_payment_method;
+                $model->top = $top;
+                $model->tax_credit_ceiling = $tax_credit_ceiling;
+                $model->account_number = $account_number;
+                $model->account_name = $account_name;
+                $model->bank_name = $bank_name;
+                $model->bank_code = $bank_code;
+                $model->account_address = $account_address;
 
                 $model->user_modified = $user->id;
                 $model->date_modified = date('Y-m-d');
@@ -283,23 +374,37 @@ class Principles extends MX_Controller {
                 $update = $model->save();
                 if ($update) {
                     $data_new = array(
-                        'Code' => $code,
-                        'Name' => $name,
-                        'Address' => $address,
-                        'Product' => $product,
-                        'Brand' => $brand,
-                        'TOP' => $top,
-                        'PIC' => $pic,
-                        'Phone Office' => $phone_office,
-                        'Phone Personal' => $phone_personal,
-                        'Fax' => $fax,
-                        'Email Office' => $email_office,
-                        'Email Persoal' => $email_personal,
-                        'Web' => $web,
-                        'Reg Disc' => $reg_disc,
-                        'Add Disc 1' => $add_disc_1,
-                        'Add Disc 2' => $add_disc_2,
-                        'BTW Disc' => $btw_disc,
+                        'Code' => $code == "" ? "-" : $code,
+                        'Name' => $name == "" ? "-" : $name,
+                        'Phone' => $phone_office == "" ? "-" : $phone_office,
+                        'Fax' => $fax == "" ? "-" : $fax,
+                        'Email' => $email_office == "" ? "-" : $email_office,
+                        'Address' => $address == "" ? "-" : $address,
+                        'Postal Code' => $postal_code == "" ? "-" : $postal_code,
+                        'Latitude' => $latitude == "" ? "-" : $latitude,
+                        'Longitude' => $longitude == "" ? "-" : $longitude,
+                        'PIC Operational' => $pic_operational == "" ? "-" : $pic_operational,
+                        'PIC Name' => $pic == "" ? "-" : $pic,
+                        'PIC Phone' => $phone_personal == "" ? "-" : $phone_personal,
+                        'PIC Finance' => $pic_finance == "" ? "-" : $pic_finance,
+                        'PIC Finance Name' => $pic_finance_name == "" ? "-" : $pic_finance_name,
+                        'PIC Finance Phone' => $pic_finance_phone == "" ? "-" : $pic_finance_phone,
+                        'Taxable' => $taxable == "0" ? lang('no') : lang('yes'),
+                        'NPWP' => $npwp == "" ? "-" : $npwp,
+                        'Tax Name' => $tax_name == "" ? "-" : $tax_name,
+                        'TDP' => $tdp == "" ? "-" : $tdp,
+                        'SIUP' => $siup == "" ? "-" : $siup,
+                        'SPPKP' => $sppkp == "" ? "-" : $sppkp,
+                        'Tax Company Name' => $tax_company_name == "" ? "-" : $tax_company_name,
+                        'Tax Company Address' => $tax_company_address == "" ? "-" : $tax_company_address,
+                        'Tax Payment Method' => $tax_payment_method == "" ? "-" : ucwords(str_replace('_', ' ', $tax_payment_method)),
+                        'TOP' => $top == "" ? "-" : strtoupper($top),
+                        'Tax Credit Ceiling' => $tax_credit_ceiling == "" ? "-" : $tax_credit_ceiling,
+                        'Account Number' => $account_number == "" ? "-" : $account_number,
+                        'Account Name' => $account_name == "" ? "-" : $account_name,
+                        'Bank Name' => $bank_name == "" ? "-" : $bank_name,
+                        'Bank Code' => $bank_code == "" ? "-" : $bank_code,
+                        'Account Address' => $account_address == "" ? "-" : $account_address,
                     );
 
                     $data_change = array_diff_assoc($data_new, $data_old);
@@ -341,19 +446,37 @@ class Principles extends MX_Controller {
                 $delete = $model->save();
 
                 $data_notif = array(
-                    'Code' => $code,
-                    'Name' => $name,
-                    'Address' => $address,
-                    'Product' => $product,
-                    'Brand' => $brand,
-                    'TOP' => $top,
-                    'PIC' => $pic,
-                    'Phone Office' => $phone_office,
-                    'Phone Personal' => $phone_personal,
-                    'Fax' => $fax,
-                    'Email Office' => $email_office,
-                    'Email Persoal' => $email_personal,
-                    'Web' => $web,
+                    'Code' => $model->code == "" ? "-" : $model->code,
+                    'Name' => $model->name == "" ? "-" : $model->name,
+                    'Phone' => $model->phone_office == "" ? "-" : $model->phone_office,
+                    'Fax' => $model->fax == "" ? "-" : $model->fax,
+                    'Email' => $model->email_office == "" ? "-" : $model->email_office,
+                    'Address' => $model->address == "" ? "-" : $model->address,
+                    'Postal Code' => $model->postal_code == "" ? "-" : $model->postal_code,
+                    'Latitude' => $model->latitude == "" ? "-" : $model->latitude,
+                    'Longitude' => $model->longitude == "" ? "-" : $model->longitude,
+                    'PIC Operational' => $model->pic_operational == "" ? "-" : $model->pic_operational,
+                    'PIC Name' => $model->pic == "" ? "-" : $model->pic,
+                    'PIC Phone' => $model->phone_personal == "" ? "-" : $model->phone_personal,
+                    'PIC Finance' => $model->pic_finance == "" ? "-" : $model->pic_finance,
+                    'PIC Finance Name' => $model->pic_finance_name == "" ? "-" : $model->pic_finance_name,
+                    'PIC Finance Phone' => $model->pic_finance_phone == "" ? "-" : $model->pic_finance_phone,
+                    'Taxable' => $model->taxable == "0" ? lang('no') : lang('yes'),
+                    'NPWP' => $model->npwp == "" ? "-" : $model->npwp,
+                    'Tax Name' => $model->tax_name == "" ? "-" : $model->tax_name,
+                    'TDP' => $model->tdp == "" ? "-" : $model->tdp,
+                    'SIUP' => $model->siup == "" ? "-" : $model->siup,
+                    'SPPKP' => $model->sppkp == "" ? "-" : $model->sppkp,
+                    'Tax Company Name' => $model->tax_company_name == "" ? "-" : $model->tax_company_name,
+                    'Tax Company Address' => $model->tax_company_address == "" ? "-" : $model->tax_company_address,
+                    'Tax Payment Method' => $model->tax_payment_method == "" ? "-" : ucwords(str_replace('_', ' ', $model->tax_payment_method)),
+                    'TOP' => $model->top == "" ? "-" : strtoupper($model->top),
+                    'Tax Credit Ceiling' => $model->tax_credit_ceiling == "" ? "-" : $model->tax_credit_ceiling,
+                    'Account Number' => $model->account_number == "" ? "-" : $model->account_number,
+                    'Account Name' => $model->account_name == "" ? "-" : $model->account_name,
+                    'Bank Name' => $model->bank_name == "" ? "-" : $model->bank_name,
+                    'Bank Code' => $model->bank_code == "" ? "-" : $model->bank_code,
+                    'Account Address' => $model->account_address == "" ? "-" : $model->account_address,
                 );
                 $message = "Delete " . lang('principle') . " " .  $model->name . " succesfully by " . $user->full_name;
                 $this->activity_log->create($user->id, NULL, json_encode($data_notif), NULL, $message, 'D', 10);

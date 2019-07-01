@@ -89,132 +89,296 @@
         </div>
     </div>
 </div>
- <div class="modal fade" id="modal_form" role="dialog">
-  <div class="modal-dialog" style="width:50%;">
+<div class="modal fade" id="modal_form" role="dialog">
+  <div class="modal-dialog" style="width:80%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title"><?=lang('new_principle')?></h3>
       </div>
       {{ form_open(null,array('id' => 'form-principle', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
-      <div class="modal-body">
-        <input type="hidden" name="id" value="">
+      <div class="row modal-body">
+            <div class="col-md-6">
+                <input type="hidden" name="id" value="">
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="code" id="code_principal" placeholder="<?=lang('code')?>" maxlength="10" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="name" id="name_principal" placeholder="<?=lang('name')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('phone')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="phone_office" id="phone_office" placeholder="<?=lang('phone')?>" maxlength="20" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('fax')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="fax" id="fax_principal" placeholder="<?=lang('fax')?>" maxlength="20" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('email')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="email" class="form-control input-sm" name="email_office" id="email_office" placeholder="<?=lang('email')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('address')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="address" id="address_principal" placeholder="<?=lang('shipping_address')?>" maxlength="150" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('postal_code')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="postal_code" id="postal_code_principal" placeholder="<?=lang('postal_code')?>" maxlength="5" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('latitude')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="latitude" id="latitude_principal" placeholder="<?=lang('latitude')?>" maxlength="30" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('longitude')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="longitude" id="longitude_principal" placeholder="<?=lang('longitude')?>" maxlength="30" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="code" id="code" placeholder="<?=lang('code')?>" maxlength="10" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('address')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="address" id="address" placeholder="<?=lang('address')?>" maxlength="150" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
+                <h5>{{ lang('text_pic_company') }}</h5>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('pic_operational')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="pic_operational" id="pic_operational" placeholder="<?=lang('pic_operational')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('product')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="product" id="product" placeholder="<?=lang('product')?>" maxlength="150" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('pic_name')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="pic" id="pic" placeholder="<?=lang('pic_name')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('brand')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="brand" id="brand" placeholder="<?=lang('brand')?>" maxlength="150" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('pic_phone')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="phone_personal" id="phone_personal" placeholder="<?=lang('pic_phone')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('top')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="top" id="top" placeholder="<?=lang('top')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('pic_finance')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="pic_finance" id="pic_finance" placeholder="<?=lang('pic_finance')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('pic')?><span class="text-danger">*</span></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="pic" id="pic" placeholder="<?=lang('pic')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('pic_finance_name')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="pic_finance_name" id="pic_finance_name" placeholder="<?=lang('pic_finance_name')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('phone')?></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm number" name="phone_office" id="phone_office" placeholder="<?=lang('office')?>" maxlength="20" />
-                <input type="text" class="form-control input-sm number" name="phone_personal" id="phone_personal" placeholder="<?=lang('personal')?>" maxlength="20" />
-                <input type="text" class="form-control input-sm number" name="fax" id="fax" placeholder="<?=lang('fax')?>" maxlength="20" />
-                <div class="form-control-focus"> </div>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('pic_finance_phone')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="pic_finance_phone" id="pic_finance_phone" placeholder="<?=lang('pic_finance_phone')?>" maxlength="20" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
             </div>
-        </div>
+            <div class="col-md-6">
+                <h5>{{ lang('text_identitas_npwp') }}</h5>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('taxable')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <select class="form-control input-sm" name="taxable" id="taxable_principal" style="width: 100%;">
+                            <option value=""><?= lang('select_your_option') ?></option>
+                            <option value="0"><?= lang('no') ?></option>
+                            <option value="1"><?= lang('yes') ?></option>
+                        </select>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('email')?></label>
-            <div class="col-lg-7">
-                <input type="email" class="form-control input-sm" name="email_office" id="email_office" placeholder="<?=lang('office')?>" maxlength="50" />
-                <input type="email" class="form-control input-sm" name="email_personal" id="email_personal" placeholder="<?=lang('personal')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('web')?></label>
-            <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="web" id="web" placeholder="<?=lang('web')?>" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('npwp')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="npwp" id="npwp_principal" placeholder="<?=lang('npwp')?>" maxlength="15" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('name')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="tax_name" id="tax_name_principal" placeholder="<?=lang('name')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('tdp')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="tdp" id="tdp" placeholder="<?=lang('tdp')?>" maxlength="20" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('siup')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="siup" id="siup" placeholder="<?=lang('siup')?>" maxlength="20" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('sppkp')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="sppkp" id="sppkp" placeholder="<?=lang('sppkp')?>" maxlength="20" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('company_name')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="tax_company_name" id="tax_company_name" placeholder="<?=lang('company_name')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('company_address')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="tax_company_address" id="tax_company_address" placeholder="<?=lang('company_address')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('payment_method')?></label>
+                    <div class="col-lg-7">
+                        <select class="form-control input-sm" name="tax_payment_method" id="tax_payment_method_principal" style="width: 100%;">
+                            <option value=""><?= lang('select_your_option') ?></option>
+                            <option value="cash"><?= lang('cash') ?></option>
+                            <option value="credit"><?= lang('credit') ?></option>
+                            <option value="central_ar"><?= lang('central_ar') ?></option>
+                        </select>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Reg Disc</label>
-            <div class="col-lg-7">
-                <input type="number" class="form-control input-sm" name="reg_disc" id="reg_disc" placeholder="Reg Disc" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('payment_time')?><span class="text-danger">*</span></label>
+                    <div class="col-lg-7">
+                        <select class="form-control input-sm" name="top" id="top_principal" style="width: 100%;">
+                            <option value=""><?= lang('select_your_option') ?></option>
+                            <option value="cbd"><?= lang('cbd') ?></option>
+                            <option value="cod"><?= lang('cod') ?></option>
+                            <option value="3"><?= lang('3_days') ?></option>
+                            <option value="7"><?= lang('7_days') ?></option>
+                            <option value="14"><?= lang('14_days') ?></option>
+                            <option value="21"><?= lang('21_days') ?></option>
+                            <option value="30"><?= lang('30_days') ?></option>
+                            <option value="45"><?= lang('45_days') ?></option>
+                            <option value="60"><?= lang('60_days') ?></option>
+                        </select>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Add Disc 1</label>
-            <div class="col-lg-7">
-                <input type="number" class="form-control input-sm" name="add_disc_1" id="add_disc_1" placeholder="Add Disc 1" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('credit_ceiling')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="tax_credit_ceiling" id="tax_credit_ceiling_principal" placeholder="<?=lang('credit_ceiling')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <hr>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">Add Disc 2</label>
-            <div class="col-lg-7">
-                <input type="number" class="form-control input-sm" name="add_disc_2" id="add_disc_2" placeholder="Add Disc 2" maxlength="50" />
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
+                <h5>{{ lang('bank_account') }}</h5>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('account_number')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="account_number" id="account_number_principal" placeholder="<?=lang('account_number')?>" maxlength="25" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('account_name')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="account_name" id="account_name_principal" placeholder="<?=lang('account_name')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
 
-        <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label">BTW Disc</label>
-            <div class="col-lg-7">
-                <input type="number" class="form-control input-sm" name="btw_disc" id="btw_disc" placeholder="BTW Disc" maxlength="50" />
-                <div class="form-control-focus"> </div>
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('bank_name')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="bank_name" id="bank_name_principal" placeholder="<?=lang('bank_name')?>" maxlength="50" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('bank_code')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm number" name="bank_code" id="bank_code_principal" placeholder="<?=lang('bank_code')?>" maxlength="3" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+                <div class="form-group form-md-line-input">
+                    <label class="col-lg-4 control-label"><?=lang('account_address')?></label>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control input-sm" name="account_address" id="account_address_principal" placeholder="<?=lang('account_address')?>" maxlength="150" />
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-        
       </div>
       <div class="modal-footer">
         <button type="submit" id="btnSave"  class="btn btn-primary">{{ lang('save') }}</button>
@@ -253,7 +417,7 @@
             {"className": "dt-center", "targets": [18]},
             {"targets": [18], "orderable": false}
         ],
-        "order": [0,"asc"],
+        "order": [17,"desc"],
     }).fnSetFilteringDelay(1000);
 
     // Pengaturan Form Validation 
@@ -265,20 +429,22 @@
         rules: {
             code: "required",
             name: "required",
+            phone_office: "required",
+            email_office: "required",
             address: "required",
-            product: "required",
-            brand: "required",
+            postal_code: "required",
+            taxable: "required",
             top: "required",
-            pic: "required",
         },
         messages: {
             code: "{{lang('code')}}" + " {{lang('not_empty')}}",
             name: "{{lang('name')}}" + " {{lang('not_empty')}}",
+            phone_office: "{{lang('phone')}}" + " {{lang('not_empty')}}",
+            email_office: "{{lang('email')}}" + " {{lang('not_empty')}}",
             address: "{{lang('address')}}" + " {{lang('not_empty')}}",
-            product: "{{lang('product')}}" + " {{lang('not_empty')}}",
-            brand: "{{lang('brand')}}" + " {{lang('not_empty')}}",
-            top: "{{lang('top')}}" + " {{lang('not_empty')}}",
-            pic: "{{lang('pic')}}" + " {{lang('not_empty')}}",
+            postal_code: "{{lang('postal_code')}}" + " {{lang('not_empty')}}",
+            taxable: "{{lang('taxable')}}" + " {{lang('not_empty')}}",
+            top: "{{lang('payment_time')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -329,21 +495,35 @@
                 $('[name="id"]').val(row.id);
                 $('[name="code"]').val(row.code);
                 $('[name="name"]').val(row.name);
-                $('[name="address"]').val(row.address);
-                $('[name="product"]').val(row.product);
-                $('[name="brand"]').val(row.brand);
-                $('[name="top"]').val(row.top);
-                $('[name="pic"]').val(row.pic);
-                $('[name="phone_office"]').val(row.phone_office).change();
-                $('[name="phone_personal"]').val(row.phone_personal);
+                $('[name="phone_office"]').val(row.phone_office);
                 $('[name="fax"]').val(row.fax);
                 $('[name="email_office"]').val(row.email_office);
-                $('[name="email_personal"]').val(row.email_personal);
-                $('[name="web"]').val(row.web);
-                $('[name="reg_disc"]').val(row.reg_disc);
-                $('[name="add_disc_1"]').val(row.add_disc_1);
-                $('[name="add_disc_2"]').val(row.add_disc_2);
-                $('[name="btw_disc"]').val(row.btw_disc);
+                $('[name="address"]').val(row.address);
+                $('[name="postal_code"]').val(row.postal_code);
+                $('[name="latitude"]').val(row.latitude);
+                $('[name="longitude"]').val(row.longitude);
+                $('[name="pic_operational"]').val(row.pic_operational);
+                $('[name="pic"]').val(row.pic);
+                $('[name="phone_personal"]').val(row.phone_personal);
+                $('[name="pic_finance"]').val(row.pic_finance);
+                $('[name="pic_finance_name"]').val(row.pic_finance_name);
+                $('[name="pic_finance_phone"]').val(row.pic_finance_phone);
+                $('[name="taxable"]').val(row.taxable).change();
+                $('[name="npwp"]').val(row.npwp);
+                $('[name="tax_name"]').val(row.tax_name);
+                $('[name="tdp"]').val(row.tdp);
+                $('[name="siup"]').val(row.siup);
+                $('[name="sppkp"]').val(row.sppkp);
+                $('[name="tax_company_name"]').val(row.tax_company_name);
+                $('[name="tax_company_address"]').val(row.tax_company_address);
+                $('[name="tax_payment_method"]').val(row.tax_payment_method).change();
+                $('[name="top"]').val(row.top).change();
+                $('[name="tax_credit_ceiling"]').val(row.tax_credit_ceiling);
+                $('[name="account_number"]').val(row.account_number);
+                $('[name="account_name"]').val(row.account_name);
+                $('[name="bank_name"]').val(row.bank_name);
+                $('[name="bank_code"]').val(row.bank_code);
+                $('[name="account_address"]').val(row.account_address);
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_principle')?>'); 
@@ -389,5 +569,20 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
+    
+    $('#code_principal').change(function(){
+        $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_principal').val(), type: 'principal'}, function(json, textStatus) {
+            if(json.status == "error"){
+                toastr.error(json.message,'{{ lang("notification") }}');
+                $('#code_principal').val('');
+                $('#code_principal').focus();
+            }
+            else{
+                toastr.success(json.message,'{{ lang("notification") }}');                        
+            }
+            App.unblockUI('#form-wrapper');
+        });
+    });
+
 </script>
 @stop

@@ -1338,6 +1338,25 @@ class Companyreports extends MX_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
+    function getsellin(){
+        if ($this->input->is_ajax_request()) {
+            $id = (int)$this->input->get('id');
+            $user = $this->ion_auth->user()->row();
+            if($user->group_id == 1){
+                $sell_in_detail = Companyreportdetail::where('sell_in_id',$id)->where('deleted',0)->orderBy('id', 'ASC')->get();
+            }
+            else{
+                $sell_in_detail = Companyreportdetail::where('sell_in_id',$id)->where('deleted',0)->where('user_created', $user->id)->orderBy('id', 'ASC')->get();                
+            }
+
+            $model = array('status' => 'success', 'data' => $sell_in_detail);
+        } else {
+            $model = array('status' => 'error', 'message' => lang('data_not_found'));
+        }
+        $data = $model;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
     function stock(){
         $user = $this->ion_auth->user()->row();
         

@@ -477,7 +477,7 @@
         </div>
 
         <div class="form-group form-md-line-input">
-            <fieldset id="fieldset-price-jabodetabek">
+            <fieldset id="fieldset-price-non-jabodetabek">
                 <legend class="text-center">Catalog Product (Guidance) <br/> Non Jabodetabek</legend>
                 <div class="form-group form-md-line-input">
                     <label class="col-lg-3 control-label">Harga Beli Per-pcs</label>
@@ -737,6 +737,13 @@
 
 @section('scripts')
 <script type="text/javascript">
+
+    $(function(){
+        @if($user->group_id != '1')
+            $('#fieldset-price-jabodetabek').hide();
+            $('#fieldset-price-non-jabodetabek').hide();
+        @endif
+    });
 
     $('#description').ckeditor();
     $('#feature').ckeditor();

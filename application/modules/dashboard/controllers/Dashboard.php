@@ -25,8 +25,7 @@ class Dashboard extends MX_Controller {
         if($user->group_id != '1'){
             $row_si->where('user_created', '=', $user->id);
         }
-        $row_si->get();
-
+        $row_si =  $row_si->get();
         foreach($row_si as $si){
             $total_hutang = $si->nominal;
         }
@@ -37,7 +36,7 @@ class Dashboard extends MX_Controller {
         if($user->group_id != '1'){
             $row_so->where('user_created', '=', $user->id);
         }
-        $row_so->get();
+        $row_so = $row_so->get();
         foreach($row_so as $so){
             $total_piutang = $so->nominal;
         }
@@ -48,7 +47,7 @@ class Dashboard extends MX_Controller {
         if($user->group_id != '1'){
             $row_total_in->where('user_created', '=', $user->id);
         }
-        $row_total_in->get();
+        $row_total_in = $row_total_in->get();
         foreach($row_total_in as $in){
             $total_in = $in->total;
         }
@@ -59,7 +58,7 @@ class Dashboard extends MX_Controller {
         if($user->group_id != '1'){
             $row_total_out->where('user_created', '=', $user->id);
         }
-        $row_total_out->get();
+        $row_total_out = $row_total_out->get();
         foreach($row_total_out as $out){
             $total_out = $out->total;
         }

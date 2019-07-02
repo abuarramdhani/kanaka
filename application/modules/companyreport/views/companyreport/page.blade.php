@@ -871,7 +871,7 @@
             {"className": "dt-center", "targets": [37]},
             {"targets": [26, 27, 28, 37], "orderable": false}
         ],
-        "order": [0,"asc"],
+        "order": [0,"desc"],
     }).fnSetFilteringDelay(1000);
     
     var oTable =$('#table-companyreport-out').dataTable({
@@ -890,7 +890,7 @@
             {"className": "dt-center", "targets": [28]},
             {"targets": [21, 22, 23, 28], "orderable": false}
         ],
-        "order": [0,"asc"],
+        "order": [0,"desc"],
     }).fnSetFilteringDelay(1000);
 
     // Pengaturan Form Validation 
@@ -1093,6 +1093,45 @@
                 $('[name="margin_percented"]').val(row.margin_percented);
                 $('[name="payment_value"]').val(row.payment_value);
                 // $('[name="difference"]').val(row.difference);
+
+                // $.getJSON('{{base_url()}}companyreport/companyreports/getsellin', {id: row.id}, function(json, textStatus) {
+                //     if(json.status == "success"){
+                //         var row_detail = json.data;
+                //         var html_detail = '';
+
+                //         $.each(row_detail, function(){
+                //             var val_id = '';
+                //             var val_amount = '';
+                //             $.each(this, function(name, value){
+                //                 if(name == 'id')
+                //                     val_id = value;
+
+                //                 if(name == 'amount')
+                //                     val_amount = value;
+            
+                //             });
+
+                //             html_detail += "<tr id='row_sell_in_" + row_no_sell_in + "'>"+
+                //                                 "<td align='center'><button type='button' class='btn btn-danger btn-xs delete' id='delete_sell_in_"+ row_no_sell_in +"'><i class='fa fa-times'></i></button></td>"+
+                //                                 '<td><input type="number" class="form-control input-sm currency" name="amount_in[]"  id="amount_sell_in_' + row_no_sell_in + '" placeholder="{{ lang('nominal') }}" onkeyup="calc_sell_in()" value="' + val_amount + ' />'+
+                //                                 '<input type="hidden" name="id_detail_sell_in[]" id="id_detail_sell_in_' + row_no_sell_in + '" value="' + val_id + '">'+
+                //                                 "</td>"+
+                //                             "</tr>";
+                                            
+                //             row_no_sell_in++;
+
+                //         });
+
+                //         $('#table-payment-sell-in tbody').append(html_detail);
+                //         $('#amount_sell_in_' + row_no_sell_in).focus();
+
+                //     }else if(json.status == "error"){
+                //         toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                //     }
+                //     App.unblockUI('#form-wrapper');
+                // });
+
+                // calc_sell_in();
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_sell_in_company')?>'); 

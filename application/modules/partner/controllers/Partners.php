@@ -59,10 +59,10 @@ class Partners extends MX_Controller {
             'city_name',
             'subdistrict',
             // 'zona_name',
-            'm_dipo_partner.zona_id',
+            // 'm_dipo_partner.zona_id',
             'm_dipo_partner.latitude',
             'm_dipo_partner.longitude',
-            'm_dipo_partner.pic',
+            // 'm_dipo_partner.pic',
             'm_dipo_partner.top',
             'm_dipo_partner.date_created',
         );
@@ -129,10 +129,10 @@ class Partners extends MX_Controller {
             $row_value[] = $row->city_name == "" ? "-" : ucwords(strtolower($row->city_name));
             $row_value[] = $row->subdistrict == "" ? "-" : $row->subdistrict;
             // $row_value[] = $row->zona_name;
-            $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
+            // $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
             $row_value[] = $row->latitude == "" ? "-" : $row->latitude;
             $row_value[] = $row->longitude == "" ? "-" : $row->longitude;
-            $row_value[] = $row->pic == "" ? "-" : $row->pic;
+            // $row_value[] = $row->pic == "" ? "-" : $row->pic;
             $row_value[] = $row->top == "" ? "-" : strtoupper($row->top);
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;

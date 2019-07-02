@@ -64,10 +64,8 @@
                                 <th><?=lang('email')?></th>
                                 <th><?=lang('city')?></th>
                                 <th><?=lang('subdistrict')?></th>
-                                <th><?=lang('zona')?></th>
                                 <th><?=lang('latitude')?></th>
                                 <th><?=lang('longitude')?></th>
-                                <th><?=lang('pic')?></th>
                                 <th><?=lang('top')?></th>
                                 <th><?=lang('created_date')?></th>
                                 <th width="13%"><?=lang('options')?></th>
@@ -448,8 +446,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}partner/partners/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [13, 14]},
-            {"targets": [13, 14], "orderable": false}
+            {"className": "dt-center", "targets": [12]},
+            {"targets": [12], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);

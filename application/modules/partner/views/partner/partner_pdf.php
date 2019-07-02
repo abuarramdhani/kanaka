@@ -94,7 +94,7 @@
 					<td><?= $partner->account_number == "" ? "-" : $quote.$partner->account_number ?></td>
 					<td><?= $partner->account_name == "" ? "-" : $partner->account_name ?></td>
 					<td><?= $partner->bank_name == "" ? "-" : $partner->bank_name ?></td>
-					<td><?= $partner->bank_code == "" ? "-" : $partner->bank_code ?></td>
+					<td><?= $partner->bank_code == "" ? "-" : $quote.$partner->bank_code ?></td>
 					<td><?= $partner->account_address == "" ? "-" : $partner->account_address ?></td>
 					<td><?= $partner->guarantee_form == "" ? "-" : $partner->guarantee_form ?></td>
 					<td><?= $partner->guarantee_receipt == "" ? "-" : $partner->guarantee_receipt ?></td>

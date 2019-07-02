@@ -94,7 +94,7 @@
 					<td><?= $dipo->account_number == "" ? "-" : $quote.$dipo->account_number ?></td>
 					<td><?= $dipo->account_name == "" ? "-" : $dipo->account_name ?></td>
 					<td><?= $dipo->bank_name == "" ? "-" : $dipo->bank_name ?></td>
-					<td><?= $dipo->bank_code == "" ? "-" : $dipo->bank_code ?></td>
+					<td><?= $dipo->bank_code == "" ? "-" : $quote.$dipo->bank_code ?></td>
 					<td><?= $dipo->account_address == "" ? "-" : $dipo->account_address ?></td>
 					<td><?= $dipo->guarantee_form == "" ? "-" : $dipo->guarantee_form ?></td>
 					<td><?= $dipo->guarantee_receipt == "" ? "-" : $dipo->guarantee_receipt ?></td>

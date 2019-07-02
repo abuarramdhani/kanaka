@@ -91,11 +91,11 @@
             <label class="col-lg-4 control-label"><?=lang('to')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
                <select id="dipo_partner_id" name="dipo_partner_id" class="form-control select2">
-                    <option selected disabled value=""><?=lang('select_your_option')?></option>
+                    <option selected value=""><?=lang('select_your_option')?></option>
                     <?php
                         if (!empty($dipos)) {
                             foreach ($dipos as $c) { ?>
-                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
+                            <option value="<?=$c->id?>"><?=ucwords($c->code . ' - ' . $c->name)?></option>
                     <?php } } ?>
                 </select>  
             </div>
@@ -401,48 +401,50 @@
     var i = 1;
 
     $('#dipo_partner_id').change(function(){
-        $.getJSON('{{base_url()}}invoice/invoices/getDipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data;
-                var i;
-                var html = "";
+        if($('#dipo_partner_id').val() != ""){
+            $.getJSON('{{base_url()}}invoice/invoices/getDipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
+                if(json.status == "success"){
+                    var row = json.data;
+                    var i;
+                    var html = "";
 
-                $('[name="dipo_name"]').val(row.name);
-                $('[name="dipo_address"]').val(row.address);
-                $('[name="dipo_top"]').val(row.top);
-                
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-        });
+                    $('[name="dipo_name"]').val(row.name);
+                    $('[name="dipo_address"]').val(row.address);
+                    $('[name="dipo_top"]').val(row.top);
+                    
+                }else if(json.status == "error"){
+                    toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
 
-        $.getJSON('{{base_url()}}invoice/invoices/getsjbydipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data;
-                var html = '<option value=""><?= lang('select_your_option') ?></option>';
+            $.getJSON('{{base_url()}}invoice/invoices/getsjbydipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
+                if(json.status == "success"){
+                    var row = json.data;
+                    var html = '<option value=""><?= lang('select_your_option') ?></option>';
 
-                $.each(row, function(){
-                    var val_id = '';
-                    var val_text = '';
-                    $.each(this, function(name, value){
-                        if(name == 'id')
-                            val_id = value;
+                    $.each(row, function(){
+                        var val_id = '';
+                        var val_text = '';
+                        $.each(this, function(name, value){
+                            if(name == 'id')
+                                val_id = value;
 
-                        if(name == 'sj_no')
-                            val_text = value;
-    
+                            if(name == 'sj_no')
+                                val_text = value;
+        
+                        });
+                        html += '<option value="' + val_id + '">' + val_text + '</option>';
                     });
-                    html += '<option value="' + val_id + '">' + val_text + '</option>';
-                });
 
-                $('#sj_id').html(html);
+                    $('#sj_id').html(html);
 
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-        });
+                }else if(json.status == "error"){
+                    toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
     });
 
     $('#sj_id').change(function(){

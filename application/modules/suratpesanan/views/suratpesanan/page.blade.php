@@ -88,12 +88,12 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label">Kepada<span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <select id="principle_id" name="principle_id" class="form-control">
+                <select id="principle_id" name="principle_id" class="form-control select2">
                     <option selected disabled value=""><?=lang('select')?> <?=lang('principle_code')?></option>
                     <?php
                         if (!empty($principles)) {
                             foreach ($principles as $c) { ?>
-                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
+                            <option value="<?=$c->id?>"><?=ucwords($c->code . ' - ' . $c->name)?></option>
                     <?php } } ?>
                 </select>  
                 <input readonly type="text" class="form-control input-sm" name="principle_name" id="principle_name" placeholder="<?=lang('principle_name')?>" />
@@ -839,7 +839,7 @@
                 var dataLength = rowDetail.length;
 
                 $('[name="sp_id"]').val(row.id);
-                $('#principle_id').val(row.principle_id);
+                $('#principle_id').val(row.principle_id).change();
                 $('#dipo_partner_id').val(row.dipo_id);
                 $('[name="principle_code"]').val(row.principle_code);
                 $('[name="principle_name"]').val(row.principle_name);

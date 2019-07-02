@@ -94,7 +94,7 @@
                     <?php
                         if (!empty($dipos)) {
                             foreach ($dipos as $c) { ?>
-                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
+                            <option value="<?=$c->id?>"><?=ucwords($c->code . ' - ' . $c->name)?></option>
                     <?php } } ?>
                 </select>  
             </div>

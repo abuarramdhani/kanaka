@@ -113,12 +113,12 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('ship_to')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-               <select id="dipo_partner_id" name="dipo_partner_id" class="form-control">
+               <select id="dipo_partner_id" name="dipo_partner_id" class="form-control select2">
                     <option selected disabled value=""><?=lang('select')?> <?=lang('dipo_code')?></option>
                     <?php
                         if (!empty($dipos)) {
                             foreach ($dipos as $c) { ?>
-                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
+                            <option value="<?=$c->id?>"><?=ucwords($c->code . ' - ' . $c->name)?></option>
                     <?php } } ?>
                 </select>  
                 <input readonly type="text" class="form-control input-sm" name="dipo_name" id="dipo_name" placeholder="<?=lang('dipo_name')?>" />
@@ -840,7 +840,7 @@
 
                 $('[name="sp_id"]').val(row.id);
                 $('#principle_id').val(row.principle_id).change();
-                $('#dipo_partner_id').val(row.dipo_id);
+                $('#dipo_partner_id').val(row.dipo_id).change();
                 $('[name="principle_code"]').val(row.principle_code);
                 $('[name="principle_name"]').val(row.principle_name);
                 $('[name="principle_pic"]').val(row.principle_pic);

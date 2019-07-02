@@ -111,7 +111,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('sj_no')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <select id="sj_id" name="sj_id" class="form-control">
+                <select id="sj_id" name="sj_id" class="form-control select2">
                     <option selected disabled value=""><?=lang('select_your_option')?></option>
                 </select>  
                 <div class="form-control-focus"> </div>
@@ -535,6 +535,9 @@
 
         $('[name="invoice_id"]').val('');
         $('[name="dipo_partner_id"]').val('').change();
+        $('[name="sj_id"]').val('').change();
+        $("#add-table-surat tbody").html('');
+        
         $('[name="invoice_no"]').attr('readonly', false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
@@ -636,7 +639,7 @@
                         var i;
                         var html = "";
     
-                        $('[name="sj_id"]').val(row.sj_id);
+                        $('[name="sj_id"]').val(row.sj_id).change();
                         $('[name="sp_no"]').val(row_sj.sp_no);
                         $('[name="date_issued"]').val(formatDate(row_sj.sp_date));
                         $('[name="receive_date"]').val(formatDate(row_sj.sp_date));

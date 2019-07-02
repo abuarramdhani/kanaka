@@ -154,11 +154,34 @@
                                 </div>
                                 <div class="panel-body">
                                     <ul class="nav nav-tabs">
-                                        <li id="nav_dipo" class="active"><a href="#tab_dipo" data-toggle="tab" aria-expanded="true"> <?= lang('dipo') ?> </a></li>
+                                        <li id="nav_kanaka" class="active"><a href="#tab_kanaka" data-toggle="tab" aria-expanded="true">Kanaka</a></li>
+                                        <li id="nav_dipo" ><a href="#tab_dipo" data-toggle="tab" aria-expanded="true"> <?= lang('dipo') ?> </a></li>
                                         <li id="nav_mitra" class=""><a href="#tab_mitra" data-toggle="tab" aria-expanded="false"> <?= lang('mitra') ?> </a></li>
                                     </ul>
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="tab_dipo">
+                                        <div class="tab-pane active" id="tab_kanaka">
+                                            <table id="table-stock-kanaka"class="table table-striped table-bordered table-hover dt-responsive" width="100%">
+                                                <tr>
+                                                    <th class="text-center"><?=lang('product_name')?></th>
+                                                    <th class="text-center"><?=lang('pack')?></th>
+                                                    <th class="text-center"><?=lang('nominal')?></th>
+                                                </tr>
+                                                <?php if(!empty($stocks_kanaka)): ?>
+                                                <?php foreach($stocks_kanaka as $kanaka){ ?>
+                                                <tr>
+                                                    <td><?= $kanaka['product_name']?></td>
+                                                    <td class="text-center"><?= $kanaka['pax'] ?></td>
+                                                    <td class="text-center"><?= number_format($kanaka['nominal']) ?></td>
+                                                </tr>
+                                                <?php } ?>
+                                                <?php else:?>
+                                                    <tr>
+                                                        <td colspan="5" align="center">Tidak ada data yang tersedia</td>
+                                                    </tr>
+                                                <?php endif;?>
+                                            </table>
+                                        </div>
+                                        <div class="tab-pane" id="tab_dipo">
                                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
                                             <table id="table-stock-dipo" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                                                 <thead>
@@ -339,6 +362,8 @@
 <script type="text/javascript">
      $(function(){
         @if($user->group_id != '1')
+            $('#tab_kanaka').hide();
+            $('#nav_kanaka').hide();
             $('#tab_dipo').hide();
             $('#nav_dipo').hide();
             $('#nav_mitra').addClass('active');

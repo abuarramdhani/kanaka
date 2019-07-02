@@ -304,13 +304,13 @@ class Dashboard extends MX_Controller {
                                  ;")->result();
         }else{
             $sell_in = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
-                                    FROM t_sell_in_company
-                                    INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id
-                                    INNER JOIN m_dipo_partner ON t_sell_in_company.customer_id = m_dipo_partner.id
-                                    WHERE t_sell_in_company.deleted = 0
-                                    AND m_dipo_partner.type = '$type'
-                                    GROUP BY product_id, customer_id, nominal
-                                ;")->result();
+                                   FROM t_sell_in_company
+                                   INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id
+                                   INNER JOIN m_dipo_partner ON t_sell_in_company.customer_id = m_dipo_partner.id
+                                   WHERE t_sell_in_company.deleted = 0
+                                   AND m_dipo_partner.type = '$type'
+                                   GROUP BY product_id, customer_id, nominal
+                                 ;")->result();
         }
         $arraySellIn = json_decode(json_encode($sell_in), True);
 
@@ -322,7 +322,8 @@ class Dashboard extends MX_Controller {
             $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
                                    FROM t_sell_out_company
                                    INNER JOIN m_product ON t_sell_out_company.product_id = m_product.id
-                                   INNER JOIN m_dipo_partner ON t_sell_out_company.customer_id = m_dipo_partner.id
+                                   INNER JOIN users ON t_sell_out_company.user_created = users.id
+                                   INNER JOIN m_dipo_partner ON users.dipo_partner_id = m_dipo_partner.id
                                    WHERE t_sell_out_company.deleted = 0
                                    AND m_dipo_partner.type = '$type'
                                    AND t_sell_out_company.user_created = $user->id
@@ -332,7 +333,8 @@ class Dashboard extends MX_Controller {
             $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
                                    FROM t_sell_out_company
                                    INNER JOIN m_product ON t_sell_out_company.product_id = m_product.id
-                                   INNER JOIN m_dipo_partner ON t_sell_out_company.customer_id = m_dipo_partner.id
+                                   INNER JOIN users ON t_sell_out_company.user_created = users.id
+                                   INNER JOIN m_dipo_partner ON users.dipo_partner_id = m_dipo_partner.id
                                    WHERE t_sell_out_company.deleted = 0
                                    AND m_dipo_partner.type = '$type'
                                    GROUP BY product_id, customer_id, nominal
@@ -396,12 +398,20 @@ class Dashboard extends MX_Controller {
                 
             }
 
+            if($type_data == 'out'){
+                $real_nominal =  0-$nominal_tmp;
+                $real_pax =  0-$pax_tmp;
+            }else{
+                $real_nominal =  $nominal_tmp;
+                $real_pax =  $pax_tmp;
+            }
             $result_data_sell_tmp = array('product_id' => $product_id_data, 
                                         'customer_id' => $customer_id_data,
                                         'product_name' => $product_name_data,
                                         'customer_name' => $customer_name_data,
-                                        'nominal' => $nominal_tmp,
-                                        'pax' => $pax_tmp);
+                                        'nominal' => $real_nominal,
+                                        'pax' => $real_pax,
+                                        'type' => $type_data);
             array_push($result_data_sell,$result_data_sell_tmp);
 
             $i += ($x-1);
@@ -423,6 +433,7 @@ class Dashboard extends MX_Controller {
             $customer_name_arr = $result_data_sell[$i]['customer_name'];
             $nominal_arr = $result_data_sell[$i]['nominal'];
             $pax_arr = $result_data_sell[$i]['pax'];
+            $type_arr = $result_data_sell[$i]['type'];
             
             $pax_arr_tmp = 0;
             $nominal_arr_tmp = 0;
@@ -448,7 +459,8 @@ class Dashboard extends MX_Controller {
                                         'product_name' => $product_name_arr,
                                         'customer_name' => $customer_name_arr,
                                         'nominal' => $nominal_arr_tmp,
-                                        'pax' => $pax_arr_tmp);
+                                        'pax' => $pax_arr_tmp,
+                                        'type' => $type_arr);
             array_push($data_sell_arr,$data_sell_arr_tmp);
 
             $i += ($x-1);

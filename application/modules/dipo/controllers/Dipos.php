@@ -28,6 +28,8 @@ class Dipos extends MX_Controller {
     }
 
     public function fetch_data() {
+        $user = $this->ion_auth->user()->row();
+
         $database_columns = array(
             'm_dipo_partner.id',
             'm_dipo_partner.type',
@@ -66,6 +68,10 @@ class Dipos extends MX_Controller {
 
         $from = "m_dipo_partner";
         $where = "m_dipo_partner.type = 'dipo' AND m_dipo_partner.deleted = 0";
+        if($user->group_id != '1'){
+            $where .= " AND m_dipo_partner.user_created = ". $user->id;
+        }
+
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
         $join[] = array('m_city', 'm_city.id = m_dipo_partner.city', 'left');
@@ -712,7 +718,15 @@ class Dipos extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=dipo.xls");
-        $data['dipos'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['dipos'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.user_created', $user->id)->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        }
+        else{
+            $data['dipos'] = Dipo::select('m_dipo_partner.*')->where('m_dipo_partner.type', 'dipo')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        }
+
         $data['quote'] = "'";
         $this->load->view('dipo/dipo/dipo_pdf', $data);
     }

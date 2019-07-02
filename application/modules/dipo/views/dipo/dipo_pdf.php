@@ -30,16 +30,36 @@
 				<th  align="center" width="5%" height="20px">No</th>
 				<th  align="center"><?=lang('code')?></th>
 				<th  align="center"><?=lang('name')?></th>
-				<th  align="center"><?=lang('address')?></th>
 				<th  align="center"><?=lang('phone')?></th>
+				<th  align="center"><?=lang('fax')?></th>
 				<th  align="center"><?=lang('email')?></th>
+				<th  align="center"><?=lang('shipping_address')?></th>
+				<th  align="center"><?=lang('billing_address')?></th>
 				<th  align="center"><?=lang('city')?></th>
 				<th  align="center"><?=lang('subdistrict')?></th>
-				<th  align="center"><?=lang('zona')?></th>
+				<th  align="center"><?=lang('postal_code')?></th>
 				<th  align="center"><?=lang('latitude')?></th>
 				<th  align="center"><?=lang('longitude')?></th>
-				<th  align="center"><?=lang('pic')?></th>
-				<th  align="center"><?=lang('top')?></th>
+				<th  align="center"><?=lang('purchase_price_type')?></th>
+				<th  align="center"><?=lang('taxable')?></th>
+				<th  align="center"><?=lang('npwp')?></th>
+				<th  align="center"><?=lang('name')?></th>
+				<th  align="center"><?=lang('tax_invoice_address')?></th>
+				<th  align="center"><?=lang('payment_method')?></th>
+				<th  align="center"><?=lang('payment_time')?></th>
+				<th  align="center"><?=lang('credit_ceiling')?></th>
+				<th  align="center"><?=lang('account_number')?></th>
+				<th  align="center"><?=lang('account_name')?></th>
+				<th  align="center"><?=lang('bank_name')?></th>
+				<th  align="center"><?=lang('bank_code')?></th>
+				<th  align="center"><?=lang('account_address')?></th>
+				<th  align="center"><?=lang('guarantee_form')?></th>
+				<th  align="center"><?=lang('guarantee_receipt')?></th>
+				<th  align="center"><?=lang('safety_box')?></th>
+				<th  align="center"><?=lang('guarantee_photo')?></th>
+				<th  align="center"><?=lang('customer_photo')?></th>
+				<th  align="center"><?=lang('house_photo')?></th>
+				<th  align="center"><?=lang('guarantee_photo')?></th>
 				<th  align="center"><?=lang('created_date')?></th>
 			</tr>
 			<?php 
@@ -53,16 +73,36 @@
 					<td align="center"><?= $i ?></td>
 					<td><?= $dipo->code ?></td>
 					<td><?= $dipo->name ?></td>
-					<td><?= $dipo->address ?></td>
-					<td><?= $quote.$dipo->phone ?></td>
-					<td><?= $dipo->email ?></td>
-					<td><?= $dipo->city == "" ? "-" : ucwords(strtolower(City::find($dipo->city)->name)) ?></td>
-					<td><?= $dipo->subdistrict ?></td>
-					<td><?= $dipo->zona_id == "" ? "-" : Zona::find($dipo->zona_id)->name ?></td>
-					<td><?= $dipo->latitude ?></td>
-					<td><?= $dipo->longitude ?></td>
-					<td><?= $dipo->pic ?></td>
+					<td><?= $dipo->phone == "" ? "-" : $quote.$dipo->phone ?></td>
+					<td><?= $dipo->fax == "" ? "-" : $quote.$dipo->fax ?></td>
+					<td><?= $dipo->email == "" ? "-" : $dipo->email ?></td>
+					<td><?= $dipo->address == "" ? "-" : $dipo->address ?></td>
+					<td><?= $dipo->billing_address == "" ? "-" : $dipo->billing_address ?></td>
+					<td><?= $dipo->city == 0 ? "-" : ucwords(strtolower(City::find($dipo->city)->name)) ?></td>
+					<td><?= $dipo->subdistrict == 0 ? "-" : District::find($dipo->subdistrict)->name ?></td>
+					<td><?= $dipo->postal_code == "" ? "-" : $dipo->postal_code ?></td>
+					<td><?= $dipo->latitude == "" ? "-" : $quote.$dipo->latitude ?></td>
+					<td><?= $dipo->longitude == "" ? "-" : $quote.$dipo->longitude ?></td>
+					<td><?= $dipo->purchase_price_type == "" ? "-" : ucwords(str_replace('_', ' ', $dipo->purchase_price_type)) ?></td>
+					<td><?= $dipo->taxable == "0" ? lang('no') : lang('yes') ?></td>
+					<td><?= $dipo->npwp == "" ? "-" : $quote.$dipo->npwp ?></td>
+					<td><?= $dipo->tax_name == "" ? "-" : $dipo->tax_name ?></td>
+					<td><?= $dipo->tax_invoice_address == "" ? "-" : $dipo->tax_invoice_address ?></td>
+					<td><?= $dipo->tax_payment_method == "" ? "-" : ucwords(str_replace('_', ' ', $dipo->tax_payment_method)) ?></td>
 					<td><?= strtoupper($dipo->top) ?></td>
+					<td><?= $dipo->tax_credit_ceiling == "" ? "-" : $dipo->tax_credit_ceiling ?></td>
+					<td><?= $dipo->account_number == "" ? "-" : $quote.$dipo->account_number ?></td>
+					<td><?= $dipo->account_name == "" ? "-" : $dipo->account_name ?></td>
+					<td><?= $dipo->bank_name == "" ? "-" : $dipo->bank_name ?></td>
+					<td><?= $dipo->bank_code == "" ? "-" : $dipo->bank_code ?></td>
+					<td><?= $dipo->account_address == "" ? "-" : $dipo->account_address ?></td>
+					<td><?= $dipo->guarantee_form == "" ? "-" : $dipo->guarantee_form ?></td>
+					<td><?= $dipo->guarantee_receipt == "" ? "-" : $dipo->guarantee_receipt ?></td>
+					<td><?= $dipo->safety_box == "" ? "-" : $dipo->safety_box ?></td>
+					<td><?= $dipo->guarantee_photo == "" ? "-" : $dipo->guarantee_photo ?></td>
+					<td><?= $dipo->customer_photo == "" ? "-" : $dipo->customer_photo ?></td>
+					<td><?= $dipo->house_photo == "" ? "-" : $dipo->house_photo ?></td>
+					<td><?= $dipo->warehouse_photo == "" ? "-" : $dipo->warehouse_photo ?></td>
 					<td><?= date('d-m-Y',strtotime($dipo->date_created)) ?></td>
 				</tr>
 			<?php 
@@ -71,7 +111,7 @@
 			else{
 			?>
 				<tr style="font-size:9px">
-					<td align="center" colspan="14"><?= lang('no_data_available') ?></td>
+					<td align="center" colspan="34"><?= lang('no_data_available') ?></td>
 				</tr>
 			<?php
 			}

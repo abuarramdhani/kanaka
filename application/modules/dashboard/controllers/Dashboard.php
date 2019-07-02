@@ -87,6 +87,7 @@ class Dashboard extends MX_Controller {
         }
 
         // STOCK      
+        $data['stocks_kanaka'] = $this->get_kanaka_stock();
         $data['stocks_dipo'] = $this->get_data_stock('dipo');
         $data['stocks_mitra'] = $this->get_data_stock('partner');
 
@@ -142,6 +143,149 @@ class Dashboard extends MX_Controller {
         }
     }
 
+    public function get_kanaka_stock(){
+        $user = $this->ion_auth->user()->row();
+        $dataSellIn = array();
+        $dataSellOut = array();
+        $allDataSell = array();
+        
+        $sell_in = $this->db->query("SELECT m_product.id as product_id, m_product.name as product_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+                                    FROM t_sell_in_company
+                                    INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id
+                                    WHERE customer_id = 0
+                                    AND t_sell_in_company.deleted = 0
+                                    GROUP BY product_id, nominal
+                                ;")->result();
+        $arraySellIn = json_decode(json_encode($sell_in), True);
+
+        foreach($arraySellIn as $in){
+            $dataSellIn[] = array_merge($in, array("type"=>"in"));
+        }
+        
+        $sell_out = $this->db->query("SELECT m_product.id as product_id, m_product.name as product_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
+                                    FROM t_sell_out_company
+                                    INNER JOIN m_product ON t_sell_out_company.product_id = m_product.id
+                                    INNER JOIN users ON t_sell_out_company.user_created = users.id
+                                    WHERE t_sell_out_company.deleted = 0
+                                    AND users.group_id = 1
+                                    GROUP BY product_id, nominal
+                                ;")->result();
+        $arraySellOut = json_decode(json_encode($sell_out), True);
+
+        foreach($arraySellOut as $out){
+            $dataSellOut[] = array_merge($out, array("type"=>"out"));
+        }
+
+        $allDataSell = array_merge($allDataSell, $dataSellIn, $dataSellOut);
+
+        $vc_array_product_id = [];
+        $vc_array_nominal = [];
+        $vc_array_type = [];
+        foreach ($allDataSell as $key => $row){
+            $vc_array_product_id[$key] = $row['product_id'];
+            $vc_array_nominal[$key] = $row['nominal'];
+            $vc_array_type[$key] = $row['type'];
+        }
+        array_multisort($vc_array_product_id, SORT_ASC, $vc_array_nominal, SORT_ASC, $vc_array_type, SORT_ASC, $allDataSell);
+
+        $result_data_sell = array();
+        $result = array();
+        $product_id_tmp = '';
+        $pax_tmp = 0;
+        $nominal_tmp = 0;
+
+        $totalData = count($allDataSell);
+
+        for($i = 0; $i < $totalData; $i++){
+            $product_id_data = $allDataSell[$i]['product_id'];
+            $product_name_data = $allDataSell[$i]['product_name'];
+            $nominal_data = $allDataSell[$i]['nominal'];
+            $pax_data = $allDataSell[$i]['pax'];
+            $type_data = $allDataSell[$i]['type'];
+            
+            $pax_tmp = 0;
+            $nominal_tmp = 0;
+            $x = 0; 
+
+            for($j = 0; $j < $totalData; $j++){
+            
+                if($product_id_data == $allDataSell[$j]['product_id'] && $nominal_data == $allDataSell[$j]['nominal']){
+                    if($pax_tmp == 0 && $nominal_tmp == 0){
+                        $pax_tmp = $allDataSell[$j]['pax'];
+                        $nominal_tmp = $allDataSell[$j]['nominal'];
+                    }else{
+                        $pax_tmp = $pax_tmp - $allDataSell[$j]['pax'];
+                        $nominal_tmp = $nominal_tmp * $pax_tmp;  
+                    }
+                    $x++;
+                }
+                
+            }
+
+            if($type_data == 'out'){
+                $real_nominal =  0-$nominal_tmp;
+                $real_pax =  0-$pax_tmp;
+            }else{
+                $real_nominal =  $nominal_tmp;
+                $real_pax =  $pax_tmp;
+            }
+            $result_data_sell_tmp = array('product_id' => $product_id_data, 
+                                        'product_name' => $product_name_data,
+                                        'nominal' => $real_nominal,
+                                        'pax' => $real_pax,
+                                        'type' => $type_data);
+            array_push($result_data_sell,$result_data_sell_tmp);
+
+            $i += ($x-1);
+        } 
+        
+        $data_sell_arr = array();
+        $result_arr = array();
+        $product_id_arr_tmp = '';
+        $pax_arr_tmp = 0;
+        $nominal_arr_tmp = 0;
+
+        $totalDataArr = count($result_data_sell);
+
+        for($i = 0; $i < $totalDataArr; $i++){
+            $product_id_arr = $result_data_sell[$i]['product_id'];
+            $product_name_arr = $result_data_sell[$i]['product_name'];
+            $nominal_arr = $result_data_sell[$i]['nominal'];
+            $pax_arr = $result_data_sell[$i]['pax'];
+            $type_arr = $result_data_sell[$i]['type'];
+            
+            $pax_arr_tmp = 0;
+            $nominal_arr_tmp = 0;
+            $x = 0; 
+
+            for($j = 0; $j < $totalDataArr; $j++){
+            
+                if($product_id_arr == $result_data_sell[$j]['product_id']){
+                    if($pax_arr_tmp == 0 && $nominal_arr_tmp == 0){
+                        $pax_arr_tmp = $result_data_sell[$j]['pax'];
+                        $nominal_arr_tmp = $result_data_sell[$j]['nominal'];
+                    }else{
+                        $pax_arr_tmp = $pax_arr_tmp + $result_data_sell[$j]['pax'];
+                        $nominal_arr_tmp = $nominal_arr_tmp + $result_data_sell[$j]['nominal'];
+                    }
+                    $x++;
+                }
+                
+            }
+
+            $data_sell_arr_tmp = array('product_id' => $product_id_arr, 
+                                        'product_name' => $product_name_arr,
+                                        'nominal' => $nominal_arr_tmp,
+                                        'pax' => $pax_arr_tmp,
+                                        'type' => $type_arr);
+            array_push($data_sell_arr,$data_sell_arr_tmp);
+
+            $i += ($x-1);
+        }
+
+        return $data_sell_arr;
+    }
+
     public function get_data_stock($type){
         $user = $this->ion_auth->user()->row();
         $dataSellIn = array();
@@ -160,13 +304,13 @@ class Dashboard extends MX_Controller {
                                  ;")->result();
         }else{
             $sell_in = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
-                                    FROM t_sell_in_company
-                                    INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id
-                                    INNER JOIN m_dipo_partner ON t_sell_in_company.customer_id = m_dipo_partner.id
-                                    WHERE t_sell_in_company.deleted = 0
-                                    AND m_dipo_partner.type = '$type'
-                                    GROUP BY product_id, customer_id, nominal
-                                ;")->result();
+                                   FROM t_sell_in_company
+                                   INNER JOIN m_product ON t_sell_in_company.product_id = m_product.id
+                                   INNER JOIN m_dipo_partner ON t_sell_in_company.customer_id = m_dipo_partner.id
+                                   WHERE t_sell_in_company.deleted = 0
+                                   AND m_dipo_partner.type = '$type'
+                                   GROUP BY product_id, customer_id, nominal
+                                 ;")->result();
         }
         $arraySellIn = json_decode(json_encode($sell_in), True);
 
@@ -178,7 +322,8 @@ class Dashboard extends MX_Controller {
             $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
                                    FROM t_sell_out_company
                                    INNER JOIN m_product ON t_sell_out_company.product_id = m_product.id
-                                   INNER JOIN m_dipo_partner ON t_sell_out_company.customer_id = m_dipo_partner.id
+                                   INNER JOIN users ON t_sell_out_company.user_created = users.id
+                                   INNER JOIN m_dipo_partner ON users.dipo_partner_id = m_dipo_partner.id
                                    WHERE t_sell_out_company.deleted = 0
                                    AND m_dipo_partner.type = '$type'
                                    AND t_sell_out_company.user_created = $user->id
@@ -188,7 +333,8 @@ class Dashboard extends MX_Controller {
             $sell_out = $this->db->query("SELECT m_product.id as product_id, m_dipo_partner.id as customer_id, m_product.name as product_name, m_dipo_partner.name as customer_name, net_price_in_ctn_after_tax as nominal, SUM(total_order_in_ctn) as pax
                                    FROM t_sell_out_company
                                    INNER JOIN m_product ON t_sell_out_company.product_id = m_product.id
-                                   INNER JOIN m_dipo_partner ON t_sell_out_company.customer_id = m_dipo_partner.id
+                                   INNER JOIN users ON t_sell_out_company.user_created = users.id
+                                   INNER JOIN m_dipo_partner ON users.dipo_partner_id = m_dipo_partner.id
                                    WHERE t_sell_out_company.deleted = 0
                                    AND m_dipo_partner.type = '$type'
                                    GROUP BY product_id, customer_id, nominal
@@ -252,12 +398,20 @@ class Dashboard extends MX_Controller {
                 
             }
 
+            if($type_data == 'out'){
+                $real_nominal =  0-$nominal_tmp;
+                $real_pax =  0-$pax_tmp;
+            }else{
+                $real_nominal =  $nominal_tmp;
+                $real_pax =  $pax_tmp;
+            }
             $result_data_sell_tmp = array('product_id' => $product_id_data, 
                                         'customer_id' => $customer_id_data,
                                         'product_name' => $product_name_data,
                                         'customer_name' => $customer_name_data,
-                                        'nominal' => $nominal_tmp,
-                                        'pax' => $pax_tmp);
+                                        'nominal' => $real_nominal,
+                                        'pax' => $real_pax,
+                                        'type' => $type_data);
             array_push($result_data_sell,$result_data_sell_tmp);
 
             $i += ($x-1);
@@ -279,6 +433,7 @@ class Dashboard extends MX_Controller {
             $customer_name_arr = $result_data_sell[$i]['customer_name'];
             $nominal_arr = $result_data_sell[$i]['nominal'];
             $pax_arr = $result_data_sell[$i]['pax'];
+            $type_arr = $result_data_sell[$i]['type'];
             
             $pax_arr_tmp = 0;
             $nominal_arr_tmp = 0;
@@ -304,7 +459,8 @@ class Dashboard extends MX_Controller {
                                         'product_name' => $product_name_arr,
                                         'customer_name' => $customer_name_arr,
                                         'nominal' => $nominal_arr_tmp,
-                                        'pax' => $pax_arr_tmp);
+                                        'pax' => $pax_arr_tmp,
+                                        'type' => $type_arr);
             array_push($data_sell_arr,$data_sell_arr_tmp);
 
             $i += ($x-1);

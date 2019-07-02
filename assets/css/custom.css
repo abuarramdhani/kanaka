@@ -286,6 +286,16 @@ td.td-block {
 }
 
 @media (min-width: 768px){
+    .catalog-item li.product-item {
+        padding: 10px;
+        min-height: 520px;
+    }
+
+    .catalog-item table.table-desc {
+        width: 100%;
+        min-height: 210px;
+    }
+
     a.btn.btn-sm.btn-primary.btn-comparison {
         width: 98.5%;
     }

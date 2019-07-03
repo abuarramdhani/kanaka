@@ -447,6 +447,7 @@
         }
     });
 
+    var total_row = 0;
     $('#sj_id').change(function(){
         if($('#sj_id').val() != ""){
             $.getJSON('{{base_url()}}invoice/invoices/getsjbyid', {id: $('#sj_id').val()}, function(json, textStatus) {
@@ -484,7 +485,7 @@
                                         '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'" readonly/></td>' +
                                         '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'" readonly/></td>' +
                                         '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'" readonly/>' +
-                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'" readonly/></td>' +
+                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'" onkeyup="calcRow('+i+')" /></td>' +
                                         '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
                                     '</tr>'
                                 );
@@ -507,6 +508,9 @@
                                 total_price_before_tax = total_price_before_tax + price_before_tax;
                                 total_price_after_tax = total_price_after_tax + price_after_tax;
                                 total_amount_after_tax = total_amount_after_tax + amount_after_tax;
+
+                                total_row++;
+                                    
                             }
 
                             $('#total_order_amount_in_ctn').val(total_order);
@@ -869,6 +873,51 @@
 
     function printExcel(){
         return window.open('{{base_url()}}reports/invoice/excel/?id='+$('[name="invoice_id"]').val());
+    }
+
+    function calcRow(row){
+        var order = $('#order_amount_in_ctn_'+row).val();
+        var price_after_tax = $('#order_price_after_tax_'+row).val();
+        if(isNaN(price_after_tax))
+            price_after_tax = 0;
+
+        var price_before_tax = price_after_tax / 1.1;
+        var amount_after_tax = order * price_after_tax;
+        
+        $('#order_price_before_tax_'+row).val(price_before_tax.toFixed(0));
+        $('#order_amount_after_tax_'+row).val(amount_after_tax.toFixed(0));
+        
+        calcTotal();
+    }
+
+    function calcTotal(){
+
+        var total_order = 0;
+        var total_price_before_tax = 0;
+        var total_price_after_tax = 0;
+        var total_amount_after_tax = 0;
+
+        for(i=1; i<=total_row; i++){
+            
+            var order = parseInt($('#order_amount_in_ctn_'+i).val());
+            var price_after_tax = parseInt($('#order_price_after_tax_'+i).val());
+            if(isNaN(price_after_tax))
+                price_after_tax = 0;
+
+            var price_before_tax = price_after_tax / 1.1;
+            var amount_after_tax = order * price_after_tax;
+            
+            total_order = total_order + order;
+            total_price_before_tax = total_price_before_tax + price_before_tax;
+            total_price_after_tax = total_price_after_tax + price_after_tax;
+            total_amount_after_tax = total_amount_after_tax + amount_after_tax;
+        }
+
+        $('#total_order_amount_in_ctn').val(total_order);
+        $('#total_order_price_before_tax').val(total_price_before_tax.toFixed(0));
+        $('#total_order_price_after_tax').val(total_price_after_tax.toFixed(0));
+        $('#total_order_amount_after_tax').val(total_amount_after_tax.toFixed(0));
+
     }
 
 </script>

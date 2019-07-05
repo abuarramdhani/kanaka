@@ -1,5 +1,5 @@
 
-	<div id="kepala-surat">
+	<div id="kepala-surat" style="padding-top:-30px;">
 		<table width="100%" cellpadding="1" cellspacing="0" style="border-bottom:1px solid black;">
 			<tr style="font-size:14px" align="left">
 				<th align="left" colspan="6">PT. KANAKA GRAHA PARAMITHA</th>
@@ -17,13 +17,13 @@
 		</table>
 	</div>
 
-	<div id="header">
+	<div id="header" style="padding-top:-10px;">
 		<h2 style="text-align:center;"><?= lang('invoice') ?></h2>
 	</div>
 
-	<div id="content" style="text-align:center;">
+	<div id="content" style="text-align:center; padding-top:-20px;">
 
-		<table width="50%" cellpadding="1" cellspacing="0">
+		<table width="50%" cellpadding="1" cellspacing="0" >
 			<tr style="font-size:12px">
 				<th align="left"><?=lang('to')?></th>
 				<th align="left" style="border-bottom: 1px solid black">
@@ -123,7 +123,7 @@
 
 		<br/>
 
-		<table width="100%" cellpadding="1" cellspacing="0">
+		<table width="100%" cellpadding="1" cellspacing="0" style="padding-top:-20px;">
 			<tr>
 				<th colspan="7">&nbsp;</th>
 			</tr>

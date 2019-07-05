@@ -478,11 +478,37 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('difference')?></label>
+                    <label class="col-lg-4 control-label"><?=lang('difference')?><span class="text-danger">*</span></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="difference" id="difference" placeholder="<?=lang('difference')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <hr>
+
+        <div class="row table-payment-sell-in-field">
+            <div class="col-md-12">
+                <p><button type="button" class="btn btn-sm btn-success" id="btn_add_payment_sell_in"><i class="fa fa-plus"></i> {{ lang('tambah_pembayaran') }}</button>
+                </p>
+                <div class="block-table-payment-sell">
+                    <table id="table-payment-sell-in" class="table table-striped table-bordered table-hover dt-responsive table_sell_in" width="100%">
+                        <thead>
+                            <tr>
+                                <td align="center" width="10%">#</td>
+                                <td>{{ lang('nominal') }}</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <td>{{ lang('total') }}</td>
+                                <td><span id="total-payment-sell-in"></span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
@@ -628,7 +654,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group form-md-line-input price_hna_per_ctn_before_tax_field">
-                    <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_before_tax')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_before_tax')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="price_hna_per_ctn_before_tax_out" id="price_hna_per_ctn_before_tax_out" placeholder="<?=lang('price_hna_per_ctn_before_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -636,7 +662,7 @@
                 </div>
                 
                 <div class="form-group form-md-line-input price_hna_per_ctn_after_tax_field">
-                    <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_after_tax')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('price_hna_per_ctn_after_tax')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="price_hna_per_ctn_after_tax_out" id="price_hna_per_ctn_after_tax_out" placeholder="<?=lang('price_hna_per_ctn_after_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -644,7 +670,7 @@
                 </div>
                 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('discount')?> (%)<span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('discount')?> (%)</label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm" name="discount_out" id="discount_out" placeholder="<?=lang('discount')?>" maxlength="3" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -652,7 +678,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('discount_value')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('discount_value')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="discount_value_out" id="discount_value_out" placeholder="<?=lang('discount_value')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -660,7 +686,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input ppn_field">
-                    <label class="col-lg-4 control-label"><?=lang('ppn')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('ppn')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="ppn_out" id="ppn_out" placeholder="<?=lang('ppn')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -668,7 +694,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input net_price_in_ctn_before_tax_field">
-                    <label class="col-lg-4 control-label"><?=lang('net_price_in_ctn_before_tax')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('net_price_in_ctn_before_tax')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="net_price_in_ctn_before_tax_out" id="net_price_in_ctn_before_tax_out" placeholder="<?=lang('net_price_in_ctn_before_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -676,7 +702,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input total_value_order_in_ctn_before_tax_field">
-                    <label class="col-lg-4 control-label"><?=lang('total_value_order_in_ctn_before_tax')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('total_value_order_in_ctn_before_tax')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="total_value_order_in_ctn_before_tax_out" id="total_value_order_in_ctn_before_tax_out" placeholder="<?=lang('total_value_order_in_ctn_before_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -684,7 +710,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('total_value_order_in_ctn_after_tax')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('total_value_order_in_ctn_after_tax')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="total_value_order_in_ctn_after_tax_out" id="total_value_order_in_ctn_after_tax_out" placeholder="<?=lang('total_value_order_in_ctn_after_tax')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -716,7 +742,7 @@
                 </div>
 
                 <div class="form-group form-md-line-input">
-                    <label class="col-lg-4 control-label"><?=lang('payment_value')?><span class="text-danger">*</span></label>
+                    <label class="col-lg-4 control-label"><?=lang('payment_value')?></label>
                     <div class="col-lg-7">
                         <input type="text" class="form-control input-sm currency" name="payment_value_out" id="payment_value_out" placeholder="<?=lang('payment_value')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
@@ -729,6 +755,32 @@
                         <input type="text" class="form-control input-sm currency" name="difference_out" id="difference_out" placeholder="<?=lang('difference')?>" readonly="readonly" />
                         <div class="form-control-focus"> </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <hr>
+
+        <div class="row table-payment-sell-out-field">
+            <div class="col-md-12">
+                <p><button type="button" class="btn btn-sm btn-success" id="btn_add_payment_sell_out"><i class="fa fa-plus"></i> {{ lang('tambah_pembayaran') }}</button>
+                </p>
+                <div class="block-table-payment-sell">
+                    <table id="table-payment-sell-out" class="table table-striped table-bordered table-hover dt-responsive table_sell_out" width="100%">
+                        <thead>
+                            <tr>
+                                <td align="center" width="10%">#</td>
+                                <td>{{ lang('nominal') }}</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <td>{{ lang('total') }}</td>
+                                <td><span id="total-payment-sell-out"></span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
@@ -747,6 +799,8 @@
 @section('scripts')
 <script type="text/javascript">
     $(function(){
+        $('.table-payment-sell-in-field').hide();
+        $('.table-payment-sell-out-field').hide();
         
         @if($user->group_id != '1')
             $('.selling_price_field').hide();
@@ -779,6 +833,7 @@
         $('[name="principle_id"]').val('').change();
         $('[name="product_id"]').val('').change();
         $('[name="customer_id"]').val('').change();
+        $('[name="payment_status"]').val('').change();
         $('[name="po_date"]').val('<?= date('d-m-Y') ?>');
         $('[name="receive_date"]').val('<?= date('d-m-Y') ?>');
     }
@@ -792,6 +847,7 @@
         $('[name="invoice_id_out"]').val('').change();
         $('[name="product_id_out"]').val('').change();
         $('[name="customer_id_out"]').val('').change();
+        $('[name="payment_status_out"]').val('').change();
         $('[name="receive_date_out"]').val('<?= date('d-m-Y') ?>');
     }
 
@@ -815,7 +871,7 @@
             {"className": "dt-center", "targets": [37]},
             {"targets": [26, 27, 28, 37], "orderable": false}
         ],
-        "order": [0,"asc"],
+        "order": [0,"desc"],
     }).fnSetFilteringDelay(1000);
     
     var oTable =$('#table-companyreport-out').dataTable({
@@ -834,7 +890,7 @@
             {"className": "dt-center", "targets": [28]},
             {"targets": [21, 22, 23, 28], "orderable": false}
         ],
-        "order": [0,"asc"],
+        "order": [0,"desc"],
     }).fnSetFilteringDelay(1000);
 
     // Pengaturan Form Validation 
@@ -863,6 +919,7 @@
             total_order_in_ctn: "required",
             top: "required",
             payment_status: "required",
+            difference: "required",
         },
         messages: {
             po_date: "{{lang('po_date')}}" + " {{lang('not_empty')}}",
@@ -884,6 +941,7 @@
             total_order_in_ctn: "{{lang('total_order_in_ctn')}}" + " {{lang('not_empty')}}",
             top: "{{lang('top')}}" + " {{lang('not_empty')}}",
             payment_status: "{{lang('payment_status')}}" + " {{lang('not_empty')}}",
+            difference: "{{lang('difference')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -940,6 +998,7 @@
             total_order_in_ctn_out: "required",
             top_out: "required",
             payment_status_out: "required",
+            difference_out: "required",
         },
         messages: {
             receive_date_out: "{{lang('receive_date')}}" + " {{lang('not_empty')}}",
@@ -956,6 +1015,7 @@
             total_order_in_ctn_out: "{{lang('total_order_in_ctn')}}" + " {{lang('not_empty')}}",
             top_out: "{{lang('top')}}" + " {{lang('not_empty')}}",
             payment_status_out: "{{lang('payment_status')}}" + " {{lang('not_empty')}}",
+            difference_out: "{{lang('difference')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -1032,7 +1092,46 @@
                 $('[name="margin_value"]').val(row.margin_value);
                 $('[name="margin_percented"]').val(row.margin_percented);
                 $('[name="payment_value"]').val(row.payment_value);
-                $('[name="difference"]').val(row.difference);
+                // $('[name="difference"]').val(row.difference);
+
+                // $.getJSON('{{base_url()}}companyreport/companyreports/getsellin', {id: row.id}, function(json, textStatus) {
+                //     if(json.status == "success"){
+                //         var row_detail = json.data;
+                //         var html_detail = '';
+
+                //         $.each(row_detail, function(){
+                //             var val_id = '';
+                //             var val_amount = '';
+                //             $.each(this, function(name, value){
+                //                 if(name == 'id')
+                //                     val_id = value;
+
+                //                 if(name == 'amount')
+                //                     val_amount = value;
+            
+                //             });
+
+                //             html_detail += "<tr id='row_sell_in_" + row_no_sell_in + "'>"+
+                //                                 "<td align='center'><button type='button' class='btn btn-danger btn-xs delete' id='delete_sell_in_"+ row_no_sell_in +"'><i class='fa fa-times'></i></button></td>"+
+                //                                 '<td><input type="number" class="form-control input-sm currency" name="amount_in[]"  id="amount_sell_in_' + row_no_sell_in + '" placeholder="{{ lang('nominal') }}" onkeyup="calc_sell_in()" value="' + val_amount + ' />'+
+                //                                 '<input type="hidden" name="id_detail_sell_in[]" id="id_detail_sell_in_' + row_no_sell_in + '" value="' + val_id + '">'+
+                //                                 "</td>"+
+                //                             "</tr>";
+                                            
+                //             row_no_sell_in++;
+
+                //         });
+
+                //         $('#table-payment-sell-in tbody').append(html_detail);
+                //         $('#amount_sell_in_' + row_no_sell_in).focus();
+
+                //     }else if(json.status == "error"){
+                //         toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                //     }
+                //     App.unblockUI('#form-wrapper');
+                // });
+
+                // calc_sell_in();
 
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_sell_in_company')?>'); 
@@ -1076,7 +1175,7 @@
                 $('[name="total_value_order_in_ctn_before_tax_out"]').val(row.total_value_order_in_ctn_before_tax);
                 $('[name="total_value_order_in_ctn_after_tax_out"]').val(row.total_value_order_in_ctn_after_tax);
                 $('[name="payment_value_out"]').val(row.payment_value);
-                $('[name="difference_out"]').val(row.difference);
+                // $('[name="difference_out"]').val(row.difference);
 
                 $('#modal_form_out').modal('show');
                 $('.modal-title').text('<?=lang('edit_sell_out_company')?>'); 
@@ -1364,7 +1463,7 @@
         difference = payment_value - total_value_order_in_ctn_after_tax;
 
         $('#payment_value').val(payment_value);
-        $('#difference').val(difference);
+        // $('#difference').val(difference);
 
     });
     
@@ -1385,7 +1484,7 @@
         difference = payment_value - total_value_order_in_ctn_after_tax;
 
         $('#payment_value_out').val(payment_value);
-        $('#difference_out').val(difference);
+        // $('#difference_out').val(difference);
 
     });
 
@@ -1501,6 +1600,138 @@
 
         $('#discount_value_out').val(discount_value);
     });
+    
+    $('#payment_status').change(function(){
+        var payment_status = $('#payment_status').val();
+        if(payment_status != ""){
+            if(payment_status == 3){
+                $('.table-payment-sell-in-field').hide();
+                $('#table-payment-sell-in tbody').html('');
+            }
+            else{
+                $('.table-payment-sell-in-field').show();
+            }
+
+            calc_sell_in();
+        }
+        else{
+            $('.table-payment-sell-in-field').hide();
+            $('#table-payment-sell-in tbody').html('');
+        }
+    });
+    
+    var row_no_sell_in = 1; 
+    $('#btn_add_payment_sell_in').click(function(){
+        var html = "<tr id='row_sell_in_" + row_no_sell_in + "'>"+
+                        "<td align='center'><button type='button' class='btn btn-danger btn-xs delete' id='delete_sell_in_"+ row_no_sell_in +"'><i class='fa fa-times'></i></button></td>"+
+                        '<td><input type="number" class="form-control input-sm currency" name="amount_in[]"  id="amount_sell_in_' + row_no_sell_in + '" placeholder="{{ lang('nominal') }}" onkeyup="calc_sell_in()" />'+
+                        "</td>"+
+                    "</tr>";
+
+        $('#table-payment-sell-in tbody').append(html);
+        $('#amount_sell_in_' + row_no_sell_in).focus();
+        row_no_sell_in++;
+    });
+        
+    $('.table_sell_in').on('click', '.delete', function(e) {
+        e.preventDefault();
+        if (confirm("Apakah anda yakin akan menghapus data ini ?") == true) {
+            var id = this.id.substr(15);
+            // console.log(id);
+            $(this).parent().parent().remove();
+            $(this).parent().parent().empty();
+            $('#row_sell_in_'+id).closest("tr").remove(); 
+
+            calc_sell_in();
+        }
+    });
+
+    function calc_sell_in(){
+        var total_amount = 0;
+
+		for(var i=parseInt(1);i<=row_no_sell_in;i++){
+			if($("#amount_sell_in_"+i).length > 0){
+				var amount_tmp = document.getElementById("amount_sell_in_"+i).value;
+				var amount_value = amount_tmp.replace(".","");
+				var amount_value2 = amount_value.replace(".","");
+				var amount = parseInt(amount_value2.replace(".",""));
+				
+				if(isNaN(amount))
+					amount = 0;
+					
+				total_amount += amount;
+			}
+		}
+
+        $('#difference').val(total_amount).change();
+
+    }
+
+    $('#payment_status_out').change(function(){
+        var payment_status = $('#payment_status_out').val();
+        if(payment_status != ""){
+            if(payment_status == 3){
+                $('.table-payment-sell-out-field').hide();
+                $('#table-payment-sell-out tbody').html('');
+            }
+            else{
+                $('.table-payment-sell-out-field').show();
+            }
+
+            calc_sell_out();
+        }
+        else{
+            $('.table-payment-sell-out-field').hide();
+            $('#table-payment-sell-out tbody').html('');
+        }
+    });
+    
+    var row_no_sell_out = 1; 
+    $('#btn_add_payment_sell_out').click(function(){
+        var html = "<tr id='row_sell_out_" + row_no_sell_out + "'>"+
+                        "<td align='center'><button type='button' class='btn btn-danger btn-xs delete' id='delete_sell_out_"+ row_no_sell_out +"'><i class='fa fa-times'></i></button></td>"+
+                        '<td><input type="number" class="form-control input-sm currency" name="amount_out[]"  id="amount_sell_out_' + row_no_sell_out + '" placeholder="{{ lang('nominal') }}" onkeyup="calc_sell_out()" />'+
+                        "</td>"+
+                    "</tr>";
+
+        $('#table-payment-sell-out tbody').append(html);
+        $('#amount_sell_out_' + row_no_sell_out).focus();
+        row_no_sell_out++;
+    });
+        
+    $('.table_sell_out').on('click', '.delete', function(e) {
+        e.preventDefault();
+        if (confirm("Apakah anda yakin akan menghapus data ini ?") == true) {
+            var id = this.id.substr(16);
+            // console.log(id);
+            $(this).parent().parent().remove();
+            $(this).parent().parent().empty();
+            $('#row_sell_out_'+id).closest("tr").remove(); 
+
+            calc_sell_out();
+        }
+    });
+
+    function calc_sell_out(){
+        var total_amount = 0;
+
+		for(var i=parseInt(1);i<=row_no_sell_out;i++){
+			if($("#amount_sell_out_"+i).length > 0){
+				var amount_tmp = document.getElementById("amount_sell_out_"+i).value;
+				var amount_value = amount_tmp.replace(".","");
+				var amount_value2 = amount_value.replace(".","");
+				var amount = parseInt(amount_value2.replace(".",""));
+				
+				if(isNaN(amount))
+					amount = 0;
+					
+				total_amount += amount;
+			}
+		}
+
+        $('#difference_out').val(total_amount).change();
+
+    }
 
 </script>
 @stop

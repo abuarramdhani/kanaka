@@ -540,12 +540,45 @@ class Users extends MX_Controller {
 
     public function check_code_customer() {
         if ($this->input->is_ajax_request()) {
+            $username = $this->input->get('username');
             $type_tmp = $this->input->get('type');
             if($type_tmp == 'independent_partner'){
                 $type_tmp = 'dipo';
             }
 
-            $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $type_tmp)->where('deleted', 0)->first();
+            $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $type_tmp)->where('username' , $username)->where('deleted', 0)->first();
+            if (count($get_code) == 0) {
+                $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('not_registered'));
+            }
+            else{
+                $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $type_tmp)->where('username' , $username)->where('status', 1)->where('deleted', 0)->first();
+                if (count($get_code) > 0) {
+                    $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('already_used'));
+                }
+                else{
+                    $get_partner = Partner::where('code' , $this->input->get('code'))->where('deleted', 0)->first();
+                    if (count($get_partner) > 0) {
+                        $status = array('status' => 'error', 'message' => lang('already_exist'));
+                    }
+                    else{
+                        $status = array('status' => 'success', 'message' => lang('code_is_valid'));
+                    }
+                }
+            }
+        }
+
+        $data = $status;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    public function check_code_principal() {
+        if ($this->input->is_ajax_request()) {
+            $type_tmp = $this->input->get('type');
+            if($type_tmp == 'independent_partner'){
+                $type_tmp = 'dipo';
+            }
+
+            $get_code = Code::where('code' , $this->input->get('code'))->where('type' , $type_tmp)->where('status', 0)->where('deleted', 0)->first();
             if (count($get_code) == 0) {
                 $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('not_registered'));
             }
@@ -592,12 +625,12 @@ class Users extends MX_Controller {
                 $type_tmp = 'dipo';
             }
 
-            $get_code = Code::where('code' , $this->input->post('code'))->where('type' , $type_tmp)->where('deleted', 0)->first();
+            $get_code = Code::where('code' , $this->input->post('code'))->where('username' , $this->input->post('username_customer'))->where('type' , $type_tmp)->where('deleted', 0)->first();
             if (count($get_code) == 0) {
                 $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('not_registered'));
             }
             else{
-                $get_code = Code::where('code' , $this->input->post('code'))->where('type' , $type_tmp)->where('status', 1)->where('deleted', 0)->first();
+                $get_code = Code::where('code' , $this->input->post('code'))->where('username' , $this->input->post('username_customer'))->where('type' , $type_tmp)->where('status', 1)->where('deleted', 0)->first();
                 if (count($get_code) > 0) {
                     $status = array('status' => 'error', 'message' => lang('code') . ' ' . lang('already_used'));
                 }
@@ -612,6 +645,7 @@ class Users extends MX_Controller {
                         $type = $this->input->post('type');
                         $dipo_id = $this->input->post('dipo_id');
                         $name = ucwords($this->input->post('name'));
+                        $pic = ucwords($this->input->post('pic_customer'));
                         $phone = $this->input->post('phone');
                         $fax = $this->input->post('fax');
                         $email = $this->input->post('email');
@@ -751,6 +785,7 @@ class Users extends MX_Controller {
                         $model->type = $type;
                         $model->dipo_id = $dipo_id;
                         $model->name = $name;
+                        $model->pic = $pic;
                         $model->phone = $phone;
                         $model->fax = $fax;
                         $model->email = $email;
@@ -787,13 +822,14 @@ class Users extends MX_Controller {
                         $model->time_created = date('H:i:s');
                         $save = $model->save();                
                         if ($save) {
-                            $model_code = Code::where('code', $code)->where('type', $type)->first();
+                            $model_code = Code::where('code', $code)->where('username', $username)->where('type', $type)->first();
                             $model_code->status = 1;
                             $model_code->user_modified = 0;
                             $model_code->date_modified = date('Y-m-d');
                             $model_code->time_modified = date('H:i:s');
                             $model_code->save();
-    
+                            
+                            // CREATE USER
                             if($type == "dipo") {
                                 $group_id = 2;
                             }
@@ -824,6 +860,7 @@ class Users extends MX_Controller {
                                 'Code' => $code == "" ? "-" : $code,
                                 'Type' => $type == "" ? "-" : ucwords(str_replace('_', ' ', $type)),
                                 'Name' => $name == "" ? "-" : $name,
+                                'PIC Name' => $pic == "" ? "-" : $pic,
                                 'Phone' => $phone == "" ? "-" : $phone,
                                 'Fax' => $fax == "" ? "-" : $fax,
                                 'Email' => $email == "" ? "-" : $email,

@@ -40,10 +40,11 @@
 		<th rowspan="2" align="center"><?=lang('qty_per_ctn')?></th>
 		<th colspan="4" align="center"><?=lang('carton_dimension')?></th>
 		<th rowspan="2" align="center"><?=lang('weight')?></th>
-		<th rowspan="2" align="center"><?=lang('category')?></th>
+		<th rowspan="2" align="center"><?=lang('image')?></th>
+		<!-- <th rowspan="2" align="center"><?=lang('category')?></th>
 		<th rowspan="2" align="center"><?=lang('view_total')?></th>
 		<th rowspan="2" align="center"><?=lang('description')?></th>
-		<th rowspan="2" align="center"><?=lang('feature')?></th>
+		<th rowspan="2" align="center"><?=lang('feature')?></th> -->
 		<th rowspan="2" align="center"><?=lang('created_date')?></th>
 	</tr>
 	<tr>
@@ -58,6 +59,11 @@
     $i=0;
     if(count($products) > 0){
 	   foreach($products as $product){
+			$product_image = '';
+			$images = ProductImage::where('m_product_image.deleted', 0)->where('product_id', $product->product_id)->limit(1)->get();
+			foreach($images as $image){
+				$product_image = $image->image;
+			}
 	   $i++;
    	?>
 					
@@ -74,10 +80,11 @@
 		<td><?=$product->height?></td>
 		<td><?=$product->volume?></td>
 		<td><?=$product->weight?></td>
-		<td><?=$product->category_name?></td>
+		<td><?php if(!empty($product_image)) { echo base_url().'uploads/images/products/'.$product_image; }?></td>
+		<!-- <td><?=$product->category_name?></td>
 		<td><?=$product->view_total?></td>
 		<td><?=$product->description?></td>
-		<td><?=$product->feature?></td>
+		<td><?=$product->feature?></td> -->
 		<td><?=date('d-m-Y',strtotime($product->date_created))?></td>
 	</tr>
 	<?php 

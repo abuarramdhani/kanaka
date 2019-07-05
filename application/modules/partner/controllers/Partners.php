@@ -35,11 +35,12 @@ class Partners extends MX_Controller {
             'm_dipo.name as dipo_name',
             'm_dipo_partner.code',
             'm_dipo_partner.name',
+            'm_dipo_partner.pic',
             'm_dipo_partner.address',
             'm_dipo_partner.phone',
             'm_dipo_partner.email',
             'm_city.name as city_name',
-            'm_district.name as subdistrict',
+            'm_district.name as subdistrict_name',
             // 'm_zona.name as zona_name',
             'm_dipo_partner.zona_id',            
             'm_dipo_partner.latitude',
@@ -53,16 +54,17 @@ class Partners extends MX_Controller {
             'm_dipo_partner.code',
             'm_dipo_partner.name',
             'm_dipo.name',
+            'm_dipo_partner.pic',
             'm_dipo_partner.address',
             'm_dipo_partner.phone',
             'm_dipo_partner.email',
             'city_name',
-            'subdistrict',
+            'subdistrict_name',
             // 'zona_name',
-            'm_dipo_partner.zona_id',
+            // 'm_dipo_partner.zona_id',
             'm_dipo_partner.latitude',
             'm_dipo_partner.longitude',
-            'm_dipo_partner.pic',
+            // 'm_dipo_partner.pic',
             'm_dipo_partner.top',
             'm_dipo_partner.date_created',
         );
@@ -85,11 +87,12 @@ class Partners extends MX_Controller {
             $where .= "m_dipo_partner.code LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo.name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_dipo_partner.pic LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.address LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.phone LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.email LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_city.name LIKE '%" . $sSearch . "%' OR ";
-            $where .= "subdistrict LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_district.name LIKE '%" . $sSearch . "%' OR ";
             // $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.latitude LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.longitude LIKE '%" . $sSearch . "%' OR ";
@@ -123,16 +126,17 @@ class Partners extends MX_Controller {
             $row_value[] = $row->code;
             $row_value[] = $row->name;
             $row_value[] = $row->dipo_name == "" ? "-" : $row->dipo_name;
+            $row_value[] = $row->pic;
             $row_value[] = $row->address;
             $row_value[] = $row->phone;
             $row_value[] = $row->email == "" ? "-" : $row->email;
             $row_value[] = $row->city_name == "" ? "-" : ucwords(strtolower($row->city_name));
-            $row_value[] = $row->subdistrict == "" ? "-" : $row->subdistrict;
+            $row_value[] = $row->subdistrict_name == "" ? "-" : $row->subdistrict_name;
             // $row_value[] = $row->zona_name;
-            $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
+            // $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
             $row_value[] = $row->latitude == "" ? "-" : $row->latitude;
             $row_value[] = $row->longitude == "" ? "-" : $row->longitude;
-            $row_value[] = $row->pic == "" ? "-" : $row->pic;
+            // $row_value[] = $row->pic == "" ? "-" : $row->pic;
             $row_value[] = $row->top == "" ? "-" : strtoupper($row->top);
             $row_value[] = date('d-m-Y',strtotime($row->date_created));
             $row_value[] = $btn_action;
@@ -155,8 +159,10 @@ class Partners extends MX_Controller {
                 }else{
                     $code = strtoupper($this->input->post('code'));
                     $type = 'partner';
+                    $username = $this->input->post('username');
                     $dipo_id = $this->input->post('dipo_id');
                     $name = ucwords($this->input->post('name'));
+                    $pic = ucwords($this->input->post('pic'));
                     $phone = $this->input->post('phone');
                     $fax = $this->input->post('fax');
                     $email = $this->input->post('email');
@@ -293,6 +299,7 @@ class Partners extends MX_Controller {
                     $model->dipo_id = $dipo_id;
                     $model->code = $code;
                     $model->name = $name;
+                    $model->pic = $pic;
                     $model->phone = $phone;
                     $model->fax = $fax;
                     $model->email = $email;
@@ -329,18 +336,46 @@ class Partners extends MX_Controller {
                     $model->time_created = date('H:i:s');
                     $save = $model->save();
                     if ($save) {
-                        $model_code = Code::where('code', $code)->where('type', $type)->first();
+                        $model_code = Code::where('code', $code)->where('username', $username)->where('type', $type)->first();
                         $model_code->status = 1;
                         $model_code->user_modified = $user->id;
                         $model_code->date_modified = date('Y-m-d');
                         $model_code->time_modified = date('H:i:s');
                         $model_code->save();
                         
+                        // CREATE USER
+                        if($type == "dipo") {
+                            $group_id = 2;
+                        }
+                        else if($type == "customer") {
+                            $group_id = 4;
+                        }
+                        else {
+                            $group_id = 3;                                
+                        }
+
+                        $group = array($group_id);
+                        
+                        $data = array(
+                            "full_name" => $name,
+                            "company" => 'Kanaka',
+                            "group_id" => $group_id,
+                            "dipo_partner_id" => $model->id,
+                            "address" => $address,
+                            "city" => $city,
+                            "phone" => str_replace("_", "", $phone),
+                            "created_date" => date('Y-m-d H:i:s'),
+                            "avatar" => 'default_avatar.jpg'
+                        );
+
+                        $this->ion_auth->register($username, $code, $email, $data, $group);
+
                         $data_notif = array(
                             'Code' => $code == "" ? "-" : $code,
                             'Type' => $type == "" ? "-" : ucwords(str_replace('_', ' ', $type)),
                             'DIPO' => $dipo_id == "" ? "-" : Dipo::find($dipo_id)->name,
                             'Name' => $name == "" ? "-" : $name,
+                            'PIC Name' => $pic == "" ? "-" : $pic,
                             'Phone' => $phone == "" ? "-" : $phone,
                             'Fax' => $fax == "" ? "-" : $fax,
                             'Email' => $email == "" ? "-" : $email,
@@ -385,6 +420,7 @@ class Partners extends MX_Controller {
                 $type = 'partner';
                 $dipo_id = $this->input->post('dipo_id');
                 $name = ucwords($this->input->post('name'));
+                $pic = ucwords($this->input->post('pic'));
                 $phone = $this->input->post('phone');
                 $fax = $this->input->post('fax');
                 $email = $this->input->post('email');
@@ -521,6 +557,7 @@ class Partners extends MX_Controller {
                     'Type' => $model->type == "" ? "-" : ucwords(str_replace('_', ' ', $model->type)),
                     'DIPO' => $model->dipo_id == "" ? "-" : Dipo::find($model->dipo_id)->name,
                     'Name' => $model->name == "" ? "-" : $model->name,
+                    'PIC Name' => $model->pic == "" ? "-" : $model->pic,
                     'Phone' => $model->phone == "" ? "-" : $model->phone,
                     'Fax' => $model->fax == "" ? "-" : $model->fax,
                     'Email' => $model->email == "" ? "-" : $model->email,
@@ -556,6 +593,7 @@ class Partners extends MX_Controller {
                 $model->dipo_id = $dipo_id;
                 $model->code = $code;
                 $model->name = $name;
+                $model->pic = $pic;
                 $model->phone = $phone;
                 $model->fax = $fax;
                 $model->email = $email;
@@ -597,6 +635,7 @@ class Partners extends MX_Controller {
                         'Type' => $type == "" ? "-" : ucwords(str_replace('_', ' ', $type)),
                         'DIPO' => $dipo_id == "" ? "-" : Dipo::find($dipo_id)->name,
                         'Name' => $name == "" ? "-" : $name,
+                        'PIC Name' => $pic == "" ? "-" : $pic,
                         'Phone' => $phone == "" ? "-" : $phone,
                         'Fax' => $fax == "" ? "-" : $fax,
                         'Email' => $email == "" ? "-" : $email,
@@ -672,6 +711,7 @@ class Partners extends MX_Controller {
                     'Type' => $model->type == "" ? "-" : ucwords(str_replace('_', ' ', $model->type)),
                     'DIPO' => $model->dipo_id == "" ? "-" : Dipo::find($model->dipo_id)->name,
                     'Name' => $model->name == "" ? "-" : $model->name,
+                    'PIC Name' => $model->pic == "" ? "-" : $model->pic,
                     'Phone' => $model->phone == "" ? "-" : $model->phone,
                     'Fax' => $model->fax == "" ? "-" : $model->fax,
                     'Email' => $model->email == "" ? "-" : $model->email,
@@ -726,7 +766,15 @@ class Partners extends MX_Controller {
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=partner.xls");
-        $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.user_created', $user->id)->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        }
+        else{
+            $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        }
+
         $data['quote'] = "'";
         $this->load->view('partner/partner/partner_pdf', $data);
     }

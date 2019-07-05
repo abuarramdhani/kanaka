@@ -94,7 +94,7 @@
                     <?php
                         if (!empty($dipos)) {
                             foreach ($dipos as $c) { ?>
-                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
+                            <option value="<?=$c->id?>"><?=ucwords($c->code . ' - ' . $c->name)?></option>
                     <?php } } ?>
                 </select>  
             </div>
@@ -111,7 +111,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('sp_no')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-               <select id="sp_id" name="sp_id" class="form-control">
+               <select id="sp_id" name="sp_id" class="form-control select2">
                     <option selected disabled value=""><?=lang('select_your_option')?></option>
                 </select>  
             </div>
@@ -448,6 +448,9 @@
 
         $('[name="sj_id"]').val('');
         $('[name="dipo_partner_id"]').val('').change();
+        $('[name="sp_id"]').val('').change();
+        $("#add-table-surat tbody").html('');
+
         $('[name="sj_no"]').attr('readonly', false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
@@ -548,7 +551,7 @@
                         var i;
                         var html = "";
 
-                        $('[name="sp_id"]').val(row.sp_id);
+                        $('[name="sp_id"]').val(row.sp_id).change();
                         $('[name="sp_date"]').val(formatDate(row_sp.sp_date));
 
                         $.getJSON('{{base_url()}}suratjalan/suratjalans/viewdetailsp', {id: row.sp_id}, function(json, textStatus) {

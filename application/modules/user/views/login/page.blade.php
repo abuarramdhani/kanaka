@@ -150,7 +150,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="form-group form-md-line-input">
                             <label class="col-lg-4 control-label"><?=lang('username')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control input-sm" name="username_customer" id="username_customer" placeholder="<?=lang('username')?>" maxlength="20" />
+                                <input type="text" class="form-control input-sm" name="username_customer" id="username_customer" placeholder="<?=lang('username')?>" maxlength="15" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -192,6 +192,14 @@ License: You must have a valid license purchased only from themeforest(the above
                             <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
                             <div class="col-lg-7">
                                 <input type="text" class="form-control input-sm" name="name" id="name_customer" placeholder="<?=lang('name')?>" maxlength="50" />
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-md-line-input">
+                            <label class="col-lg-4 control-label"><?=lang('pic_name')?><span class="text-danger">*</span></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control input-sm" name="pic_customer" id="pic_customer" placeholder="<?=lang('pic_name')?>" maxlength="50" />
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -853,6 +861,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     code: "required",
                     type: "required",
                     name: "required",
+                    pic_customer: "required",
                     phone: "required",
                     email: "required",
                     address: "required",
@@ -869,6 +878,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     code: "{{lang('code')}}" + " {{lang('not_empty')}}",
                     type: "{{lang('cooperation_system')}}" + " {{lang('not_empty')}}",
                     name: "{{lang('name')}}" + " {{lang('not_empty')}}",
+                    pic_customer: "{{lang('pic_name')}}" + " {{lang('not_empty')}}",
                     phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
                     email: "{{lang('email')}}" + " {{lang('not_empty')}}",
                     address: "{{lang('address')}}" + " {{lang('not_empty')}}",
@@ -914,9 +924,25 @@ License: You must have a valid license purchased only from themeforest(the above
                 }
             });
 
+            $('#username_customer').change(function(){
+                if($('#username_customer').val() != "" && $('#code_customer').val() != ""){
+                    $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), username: $('#username_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
+                        if(json.status == "error"){
+                            toastr.error(json.message,'{{ lang("notification") }}');
+                            $('#username_customer').val('');
+                            $('#username_customer').focus();
+                        }
+                        else{
+                            toastr.success(json.message,'{{ lang("notification") }}');                        
+                        }
+                        App.unblockUI('#form-wrapper');
+                    });
+                }
+            });
+
             $('#code_customer').change(function(){
-                if($('#code_customer').val() != ""){
-                    $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
+                if($('#username_customer').val() != "" && $('#code_customer').val() != ""){
+                    $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), username: $('#username_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
                         if(json.status == "error"){
                             toastr.error(json.message,'{{ lang("notification") }}');
                             $('#code_customer').val('');
@@ -931,12 +957,13 @@ License: You must have a valid license purchased only from themeforest(the above
             });
 
             $('#type_customer').change(function(){
-                if($('#code_customer').val() != ""){
-                    $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
+                if($('#username_customer').val() != "" && $('#code_customer').val() != ""){
+                    $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_customer').val(), username: $('#username_customer').val(), type: $('#type_customer').val()}, function(json, textStatus) {
                         if(json.status == "error"){
                             toastr.error(json.message,'{{ lang("notification") }}');
+                            $('#username_customer').val('');
                             $('#code_customer').val('');
-                            $('#code_customer').focus();
+                            $('#username_customer').focus();
                         }
                         else{
                             toastr.success(json.message,'{{ lang("notification") }}');                        
@@ -976,7 +1003,7 @@ License: You must have a valid license purchased only from themeforest(the above
             }
             
             $('#code_principal').change(function(){
-                $.getJSON('{{base_url()}}check-code-customer', {code: $('#code_principal').val(), type: 'principal'}, function(json, textStatus) {
+                $.getJSON('{{base_url()}}check-code-principal', {code: $('#code_principal').val(), type: 'principal'}, function(json, textStatus) {
                     if(json.status == "error"){
                         toastr.error(json.message,'{{ lang("notification") }}');
                         $('#code_principal').val('');

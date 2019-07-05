@@ -357,7 +357,7 @@ class Invoices extends MX_Controller {
     public function viewdetailsj() {
         if ($this->input->is_ajax_request()) {
             $id = (int) $this->input->get('id');
-            $dataDetail = Spdetail::select('t_sp.*', 't_sp_detail.*', 't_sp_detail.id as spdetail_id', 'm_product.*', 't_pricelist.dipo_after_tax_ctn as price_after_tax')
+            $dataDetail = Spdetail::select('t_sp.*', 't_sp_detail.*', 't_sp_detail.id as spdetail_id', 'm_product.*', 't_sp_detail.order_price_dipo_after_tax as price_after_tax')
                                     ->join('t_sp', 't_sp.id', '=', 't_sp_detail.sp_id')
                                     ->join('t_sj', 't_sj.sp_id', '=', 't_sp.id')
                                     ->join('m_product', 'm_product.id', '=', 't_sp_detail.product_id')

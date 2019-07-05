@@ -43,9 +43,9 @@
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}master/partner/pdf')" class="btn btn-danger btn-sm">
+                            <!-- <button onClick="return window.open('{{base_url()}}master/partner/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
-                            </button>
+                            </button> -->
                             <button onClick="return window.open('{{base_url()}}master/partner/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
                             </button>
@@ -59,15 +59,14 @@
                                 <th><?=lang('code')?></th>
                                 <th><?=lang('name')?></th>
                                 <th><?=lang('dipo_name')?></th>
+                                <th><?=lang('pic_name')?></th>
                                 <th><?=lang('address')?></th>
                                 <th><?=lang('phone')?></th>
                                 <th><?=lang('email')?></th>
                                 <th><?=lang('city')?></th>
                                 <th><?=lang('subdistrict')?></th>
-                                <th><?=lang('zona')?></th>
                                 <th><?=lang('latitude')?></th>
                                 <th><?=lang('longitude')?></th>
-                                <th><?=lang('pic')?></th>
                                 <th><?=lang('top')?></th>
                                 <th><?=lang('created_date')?></th>
                                 <th width="13%"><?=lang('options')?></th>
@@ -105,6 +104,14 @@
                 </div>
             </div>
 
+            <div class="form-group form-md-line-input username_field">
+                <label class="col-lg-4 control-label"><?=lang('username')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="username" id="username" placeholder="<?=lang('username')?>" maxlength="15" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
             <div class="form-group form-md-line-input">
                 <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
                 <div class="col-lg-7">
@@ -117,6 +124,14 @@
                 <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
                 <div class="col-lg-7">
                     <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('pic_name')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="pic" id="pic" placeholder="<?=lang('pic_name')?>" maxlength="50" />
                     <div class="form-control-focus"> </div>
                 </div>
             </div>
@@ -436,7 +451,9 @@
         $('[name="city"]').val('').change();
         $('[name="subdistrict"]').val('').change();
         $('[name="code"').attr('readonly',false);
+        $('.username_field').show();
     }
+
     toastr.options = { "positionClass": "toast-top-right", };
 
     // Pengaturan Datatable 
@@ -448,8 +465,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}partner/partners/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [13, 14]},
-            {"targets": [13, 14], "orderable": false}
+            {"className": "dt-center", "targets": [13]},
+            {"targets": [13], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
@@ -464,6 +481,7 @@
             dipo_id: "required",
             code: "required",
             name: "required",
+            pic: "required",
             phone: "required",
             email: "required",
             address: "required",
@@ -479,6 +497,7 @@
             dipo_id: "{{lang('dipo')}}" + " {{lang('not_empty')}}",
             code: "{{lang('code')}}" + " {{lang('not_empty')}}",
             name: "{{lang('name')}}" + " {{lang('not_empty')}}",
+            pic: "{{lang('pic_name')}}" + " {{lang('not_empty')}}",
             phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
             email: "{{lang('email')}}" + " {{lang('not_empty')}}",
             address: "{{lang('address')}}" + " {{lang('not_empty')}}",
@@ -541,6 +560,7 @@
                 $('[name="dipo_id"]').val(row.dipo_id).change();
                 $('[name="code"]').val(row.code);
                 $('[name="name"]').val(row.name);
+                $('[name="pic"]').val(row.pic);
                 $('[name="phone"]').val(row.phone);
                 $('[name="fax"]').val(row.fax);
                 $('[name="email"]').val(row.email);
@@ -581,6 +601,8 @@
                 });
                 
                 $('[name="code"').attr('readonly',true);
+                $('.username_field').hide();
+
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_partner')?>'); 
             }else if(json.status == "error"){
@@ -626,9 +648,25 @@
         });
     }
 
+    $('#username').change(function(){
+        if($('#username').val() != "" && $('#code').val() != ""){
+            $.getJSON('{{base_url()}}check-code-customer', {code: $('#code').val(), username: $('#username').val(), type: 'partner'}, function(json, textStatus) {
+                if(json.status == "error"){
+                    toastr.error(json.message,'{{ lang("notification") }}');
+                    $('#username').val('');
+                    $('#username').focus();
+                }
+                else{
+                    toastr.success(json.message,'{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
+    });
+
     $('#code').change(function(){
-        if($('#code').val() != ""){
-            $.getJSON('{{base_url()}}check-code-customer', {code: $('#code').val(), type: 'partner'}, function(json, textStatus) {
+        if($('#username').val() != "" && $('#code').val() != ""){
+            $.getJSON('{{base_url()}}check-code-customer', {code: $('#code').val(), username: $('#username').val(), type: 'partner'}, function(json, textStatus) {
                 if(json.status == "error"){
                     toastr.error(json.message,'{{ lang("notification") }}');
                     $('#code').val('');

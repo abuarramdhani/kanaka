@@ -407,7 +407,7 @@ $lang['invoice_no'] = "No Invoice";
 $lang['invoice_id'] = "ID Invoice";
 $lang['sp_no'] = "No SP";
 $lang['sp_id'] = "ID SP";
-$lang['principle_name'] = 'Nama Suppplier';
+$lang['principle_name'] = 'Nama Supplier';
 $lang['customer_code'] = 'Kode Konsumen';
 $lang['price_hna_per_ctn_before_tax'] = "Harga HNA Per Karton (Sebelum Pajak)";
 $lang['price_hna_per_ctn_after_tax'] = "Harga HNA Per Karton (Sesudah Pajak)";
@@ -437,6 +437,7 @@ $lang['lunas'] = "Lunas";
 $lang['cicil'] = "Cicil";
 $lang['belum_bayar'] = "Belum Bayar";
 $lang['sudah_lewat_jatuh_tempo'] = "Sudah Lewat Jatuh Tempo";
+$lang['tambah_pembayaran'] = "Tambah Pembayaran";
 
 $lang['saving_companyreport_successfully'] = 'Proses menyimpan data Pembelian/Penjualan berhasil';
 $lang['deleting_companyreport_successfully'] = 'Proses menghapus data Pembelian/Penjualan berhasil';

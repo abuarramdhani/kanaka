@@ -91,11 +91,11 @@
             <label class="col-lg-4 control-label"><?=lang('to')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
                <select id="dipo_partner_id" name="dipo_partner_id" class="form-control select2">
-                    <option selected disabled value=""><?=lang('select_your_option')?></option>
+                    <option selected value=""><?=lang('select_your_option')?></option>
                     <?php
                         if (!empty($dipos)) {
                             foreach ($dipos as $c) { ?>
-                            <option value="<?=$c->id?>"><?=ucfirst($c->code)?></option>
+                            <option value="<?=$c->id?>"><?=ucwords($c->code . ' - ' . $c->name)?></option>
                     <?php } } ?>
                 </select>  
             </div>
@@ -111,7 +111,7 @@
         <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label"><?=lang('sj_no')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <select id="sj_id" name="sj_id" class="form-control">
+                <select id="sj_id" name="sj_id" class="form-control select2">
                     <option selected disabled value=""><?=lang('select_your_option')?></option>
                 </select>  
                 <div class="form-control-focus"> </div>
@@ -401,50 +401,53 @@
     var i = 1;
 
     $('#dipo_partner_id').change(function(){
-        $.getJSON('{{base_url()}}invoice/invoices/getDipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data;
-                var i;
-                var html = "";
+        if($('#dipo_partner_id').val() != ""){
+            $.getJSON('{{base_url()}}invoice/invoices/getDipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
+                if(json.status == "success"){
+                    var row = json.data;
+                    var i;
+                    var html = "";
 
-                $('[name="dipo_name"]').val(row.name);
-                $('[name="dipo_address"]').val(row.address);
-                $('[name="dipo_top"]').val(row.top);
-                
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-        });
+                    $('[name="dipo_name"]').val(row.name);
+                    $('[name="dipo_address"]').val(row.address);
+                    $('[name="dipo_top"]').val(row.top);
+                    
+                }else if(json.status == "error"){
+                    toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
 
-        $.getJSON('{{base_url()}}invoice/invoices/getsjbydipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data;
-                var html = '<option value=""><?= lang('select_your_option') ?></option>';
+            $.getJSON('{{base_url()}}invoice/invoices/getsjbydipo', {id: $('#dipo_partner_id').val()}, function(json, textStatus) {
+                if(json.status == "success"){
+                    var row = json.data;
+                    var html = '<option value=""><?= lang('select_your_option') ?></option>';
 
-                $.each(row, function(){
-                    var val_id = '';
-                    var val_text = '';
-                    $.each(this, function(name, value){
-                        if(name == 'id')
-                            val_id = value;
+                    $.each(row, function(){
+                        var val_id = '';
+                        var val_text = '';
+                        $.each(this, function(name, value){
+                            if(name == 'id')
+                                val_id = value;
 
-                        if(name == 'sj_no')
-                            val_text = value;
-    
+                            if(name == 'sj_no')
+                                val_text = value;
+        
+                        });
+                        html += '<option value="' + val_id + '">' + val_text + '</option>';
                     });
-                    html += '<option value="' + val_id + '">' + val_text + '</option>';
-                });
 
-                $('#sj_id').html(html);
+                    $('#sj_id').html(html);
 
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-        });
+                }else if(json.status == "error"){
+                    toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
     });
 
+    var total_row = 0;
     $('#sj_id').change(function(){
         if($('#sj_id').val() != ""){
             $.getJSON('{{base_url()}}invoice/invoices/getsjbyid', {id: $('#sj_id').val()}, function(json, textStatus) {
@@ -482,7 +485,7 @@
                                         '<td class="text-center"><input type="text" class="form-control input-sm" name="product_name[]" id="product_name_'+i+'" readonly/></td>' +
                                         '<td class="text-center"><input type="text" class="form-control input-sm" name="order_amount_in_ctn[]" id="order_amount_in_ctn_'+i+'" readonly/></td>' +
                                         '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_before_tax[]" id="order_price_before_tax_'+i+'" readonly/>' +
-                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'" readonly/></td>' +
+                                        '<td class="text-center"><input type="text" class="form-control input-sm" name="order_price_after_tax[]" id="order_price_after_tax_'+i+'" onkeyup="calcRow('+i+')" /></td>' +
                                         '<td class="text-center"><input readonly type="text" class="form-control input-sm" name="order_amount_after_tax[]" id="order_amount_after_tax_'+i+'"/></td>' +
                                     '</tr>'
                                 );
@@ -505,6 +508,9 @@
                                 total_price_before_tax = total_price_before_tax + price_before_tax;
                                 total_price_after_tax = total_price_after_tax + price_after_tax;
                                 total_amount_after_tax = total_amount_after_tax + amount_after_tax;
+
+                                total_row++;
+                                    
                             }
 
                             $('#total_order_amount_in_ctn').val(total_order);
@@ -533,6 +539,9 @@
 
         $('[name="invoice_id"]').val('');
         $('[name="dipo_partner_id"]').val('').change();
+        $('[name="sj_id"]').val('').change();
+        $("#add-table-surat tbody").html('');
+        
         $('[name="invoice_no"]').attr('readonly', false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
@@ -634,7 +643,7 @@
                         var i;
                         var html = "";
     
-                        $('[name="sj_id"]').val(row.sj_id);
+                        $('[name="sj_id"]').val(row.sj_id).change();
                         $('[name="sp_no"]').val(row_sj.sp_no);
                         $('[name="date_issued"]').val(formatDate(row_sj.sp_date));
                         $('[name="receive_date"]').val(formatDate(row_sj.sp_date));
@@ -864,6 +873,51 @@
 
     function printExcel(){
         return window.open('{{base_url()}}reports/invoice/excel/?id='+$('[name="invoice_id"]').val());
+    }
+
+    function calcRow(row){
+        var order = $('#order_amount_in_ctn_'+row).val();
+        var price_after_tax = $('#order_price_after_tax_'+row).val();
+        if(isNaN(price_after_tax))
+            price_after_tax = 0;
+
+        var price_before_tax = price_after_tax / 1.1;
+        var amount_after_tax = order * price_after_tax;
+        
+        $('#order_price_before_tax_'+row).val(price_before_tax.toFixed(0));
+        $('#order_amount_after_tax_'+row).val(amount_after_tax.toFixed(0));
+        
+        calcTotal();
+    }
+
+    function calcTotal(){
+
+        var total_order = 0;
+        var total_price_before_tax = 0;
+        var total_price_after_tax = 0;
+        var total_amount_after_tax = 0;
+
+        for(i=1; i<=total_row; i++){
+            
+            var order = parseInt($('#order_amount_in_ctn_'+i).val());
+            var price_after_tax = parseInt($('#order_price_after_tax_'+i).val());
+            if(isNaN(price_after_tax))
+                price_after_tax = 0;
+
+            var price_before_tax = price_after_tax / 1.1;
+            var amount_after_tax = order * price_after_tax;
+            
+            total_order = total_order + order;
+            total_price_before_tax = total_price_before_tax + price_before_tax;
+            total_price_after_tax = total_price_after_tax + price_after_tax;
+            total_amount_after_tax = total_amount_after_tax + amount_after_tax;
+        }
+
+        $('#total_order_amount_in_ctn').val(total_order);
+        $('#total_order_price_before_tax').val(total_price_before_tax.toFixed(0));
+        $('#total_order_price_after_tax').val(total_price_after_tax.toFixed(0));
+        $('#total_order_amount_after_tax').val(total_amount_after_tax.toFixed(0));
+
     }
 
 </script>

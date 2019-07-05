@@ -759,15 +759,15 @@ class Products extends MX_Controller {
     }
 
     function pdf(){
-        $data['products'] = Product::join('m_category', 'm_product.category_id', '=', 'm_category.id')->where('m_product.deleted', 0)->where('m_category.deleted', 0)->orderBy('m_product.id', 'DESC')->get();
+        $data['products'] = Product::select('m_product.*', 'm_product.id as product_id')->join('m_category', 'm_product.category_id', '=', 'm_category.id')->where('m_product.deleted', 0)->where('m_category.deleted', 0)->orderBy('m_product.id', 'DESC')->get();
         $html = $this->load->view('product/product/product_pdf', $data, true);
-        $this->pdf_generator->generate($html, 'product pdf', $orientation='Portrait');
+        $this->pdf_generator->generate($html, 'product pdf', $orientation='Landscape');
     }
 
     function excel(){
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=product.xls");
-        $data['products'] = Product::join('m_category', 'm_product.category_id', '=', 'm_category.id')->where('m_product.deleted', 0)->where('m_category.deleted', 0)->orderBy('m_product.id', 'DESC')->get();
+        $data['products'] = Product::select('m_product.*', 'm_product.id as product_id')->join('m_category', 'm_product.category_id', '=', 'm_category.id')->where('m_product.deleted', 0)->where('m_category.deleted', 0)->orderBy('m_product.id', 'DESC')->get();
         $this->load->view('product/product/product_pdf', $data);
     }
 

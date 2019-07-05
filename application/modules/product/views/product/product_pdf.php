@@ -59,6 +59,11 @@
     $i=0;
     if(count($products) > 0){
 	   foreach($products as $product){
+			$product_image = '';
+			$images = ProductImage::where('m_product_image.deleted', 0)->where('product_id', $product->product_id)->limit(1)->get();
+			foreach($images as $image){
+				$product_image = $image->image;
+			}
 	   $i++;
    	?>
 					
@@ -75,7 +80,7 @@
 		<td><?=$product->height?></td>
 		<td><?=$product->volume?></td>
 		<td><?=$product->weight?></td>
-		<td><?php if(!empty($product->image)) { echo base_url().'uploads/images/products/'.$product->image; }?></td>
+		<td><?php if(!empty($product_image)) { echo base_url().'uploads/images/products/'.$product_image; }?></td>
 		<!-- <td><?=$product->category_name?></td>
 		<td><?=$product->view_total?></td>
 		<td><?=$product->description?></td>

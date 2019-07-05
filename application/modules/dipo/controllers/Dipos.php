@@ -35,11 +35,12 @@ class Dipos extends MX_Controller {
             'm_dipo_partner.type',
             'code',
             'm_dipo_partner.name',
+            'pic',
             'address',
             'phone',
             'email',
             'm_city.name as city_name',
-            'm_district.name as subdistrict',
+            'm_district.name as subdistrict_name',
             // 'm_zona.name as zona_name',
             // 'm_dipo_partner.zona_id',
             'latitude',
@@ -52,11 +53,12 @@ class Dipos extends MX_Controller {
         $header_columns = array(
             'code',
             'm_dipo_partner.name',
+            'pic',
             'address',
             'phone',
             'email',
             'city_name',
-            'subdistrict',
+            'subdistrict_name',
             // 'zona_name',
             // 'm_dipo_partner.zona_id',
             'latitude',
@@ -86,11 +88,12 @@ class Dipos extends MX_Controller {
             $where .= " AND (";
             $where .= "code LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "pic LIKE '%" . $sSearch . "%' OR ";
             $where .= "address LIKE '%" . $sSearch . "%' OR ";
             $where .= "phone LIKE '%" . $sSearch . "%' OR ";
             $where .= "email LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_city.name LIKE '%" . $sSearch . "%' OR ";
-            $where .= "subdistrict LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_district.name LIKE '%" . $sSearch . "%' OR ";
             // $where .= "m_zona.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "latitude LIKE '%" . $sSearch . "%' OR ";
             $where .= "longitude LIKE '%" . $sSearch . "%' OR ";
@@ -123,11 +126,12 @@ class Dipos extends MX_Controller {
 
             $row_value[] = $row->code;
             $row_value[] = $row->name;
+            $row_value[] = $row->pic;
             $row_value[] = $row->address;
             $row_value[] = $row->phone;
             $row_value[] = $row->email == "" ? "-" : $row->email;
             $row_value[] = $row->city_name == "" ? "-" : ucwords(strtolower($row->city_name));
-            $row_value[] = $row->subdistrict == "" ? "-" : $row->subdistrict;
+            $row_value[] = $row->subdistrict_name == "" ? "-" : $row->subdistrict_name;
             // $row_value[] = $row->zona_name;
             // $row_value[] = $row->zona_id == 0 ? "-" : Zona::find($row->zona_id)->name;
             $row_value[] = $row->latitude == "" ? "-" : $row->latitude;
@@ -155,7 +159,9 @@ class Dipos extends MX_Controller {
                 }else{
                     $code = strtoupper($this->input->post('code'));
                     $type = 'dipo';
+                    $username = $this->input->post('username');
                     $name = ucwords($this->input->post('name'));
+                    $pic = ucwords($this->input->post('pic'));
                     $phone = $this->input->post('phone');
                     $fax = $this->input->post('fax');
                     $email = $this->input->post('email');
@@ -291,6 +297,7 @@ class Dipos extends MX_Controller {
                     $model->type = $type;
                     $model->code = $code;
                     $model->name = $name;
+                    $model->pic = $pic;
                     $model->phone = $phone;
                     $model->fax = $fax;
                     $model->email = $email;
@@ -327,17 +334,45 @@ class Dipos extends MX_Controller {
                     $model->time_created = date('H:i:s');
                     $save = $model->save();
                     if ($save) {
-                        $model_code = Code::where('code', $code)->where('type', $type)->first();
+                        $model_code = Code::where('code', $code)->where('username', $username)->where('type', $type)->first();
                         $model_code->status = 1;
                         $model_code->user_modified = $user->id;
                         $model_code->date_modified = date('Y-m-d');
                         $model_code->time_modified = date('H:i:s');
                         $model_code->save();
+
+                        // CREATE USER
+                        if($type == "dipo") {
+                            $group_id = 2;
+                        }
+                        else if($type == "customer") {
+                            $group_id = 4;
+                        }
+                        else {
+                            $group_id = 3;                                
+                        }
+
+                        $group = array($group_id);
                         
+                        $data = array(
+                            "full_name" => $name,
+                            "company" => 'Kanaka',
+                            "group_id" => $group_id,
+                            "dipo_partner_id" => $model->id,
+                            "address" => $address,
+                            "city" => $city,
+                            "phone" => str_replace("_", "", $phone),
+                            "created_date" => date('Y-m-d H:i:s'),
+                            "avatar" => 'default_avatar.jpg'
+                        );
+
+                        $this->ion_auth->register($username, $code, $email, $data, $group);
+
                         $data_notif = array(
                             'Code' => $code == "" ? "-" : $code,
                             'Type' => $type == "" ? "-" : ucwords(str_replace('_', ' ', $type)),
                             'Name' => $name == "" ? "-" : $name,
+                            'PIC Name' => $pic == "" ? "-" : $pic,
                             'Phone' => $phone == "" ? "-" : $phone,
                             'Fax' => $fax == "" ? "-" : $fax,
                             'Email' => $email == "" ? "-" : $email,
@@ -381,6 +416,7 @@ class Dipos extends MX_Controller {
                 $code = strtoupper($this->input->post('code'));
                 $type = 'dipo';
                 $name = ucwords($this->input->post('name'));
+                $pic = ucwords($this->input->post('pic'));
                 $phone = $this->input->post('phone');
                 $fax = $this->input->post('fax');
                 $email = $this->input->post('email');
@@ -516,6 +552,7 @@ class Dipos extends MX_Controller {
                     'Code' => $model->code == "" ? "-" : $model->code,
                     'Type' => $model->type == "" ? "-" : ucwords(str_replace('_', ' ', $model->type)),
                     'Name' => $model->name == "" ? "-" : $model->name,
+                    'PIC Name' => $model->pic == "" ? "-" : $model->pic,
                     'Phone' => $model->phone == "" ? "-" : $model->phone,
                     'Fax' => $model->fax == "" ? "-" : $model->fax,
                     'Email' => $model->email == "" ? "-" : $model->email,
@@ -550,6 +587,7 @@ class Dipos extends MX_Controller {
 
                 $model->code = $code;
                 $model->name = $name;
+                $model->pic = $pic;
                 $model->phone = $phone;
                 $model->fax = $fax;
                 $model->email = $email;
@@ -590,6 +628,7 @@ class Dipos extends MX_Controller {
                         'Code' => $code == "" ? "-" : $code,
                         'Type' => $type == "" ? "-" : ucwords(str_replace('_', ' ', $type)),
                         'Name' => $name == "" ? "-" : $name,
+                        'PIC Name' => $pic == "" ? "-" : $pic,
                         'Phone' => $phone == "" ? "-" : $phone,
                         'Fax' => $fax == "" ? "-" : $fax,
                         'Email' => $email == "" ? "-" : $email,
@@ -664,6 +703,7 @@ class Dipos extends MX_Controller {
                     'Code' => $model->code == "" ? "-" : $model->code,
                     'Type' => $model->type == "" ? "-" : ucwords(str_replace('_', ' ', $model->type)),
                     'Name' => $model->name == "" ? "-" : $model->name,
+                    'PIC Name' => $model->pic == "" ? "-" : $model->pic,
                     'Phone' => $model->phone == "" ? "-" : $model->phone,
                     'Fax' => $model->fax == "" ? "-" : $model->fax,
                     'Email' => $model->email == "" ? "-" : $model->email,

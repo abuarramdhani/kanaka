@@ -70,6 +70,7 @@ $route['forgot-password']	= "user/users/forgot_password";
 $route['reset-password/(:any)'] = "user/users/reset_password/$1";
 $route['register-customer']	= "user/users/register_customer";
 $route['check-code-customer']	= "user/users/check_code_customer";
+$route['check-code-principal']	= "user/users/check_code_principal";
 $route['get-district-by-city']	= "user/users/get_district_by_city_id";
 $route['register-principal']	= "user/users/register_principal";
 

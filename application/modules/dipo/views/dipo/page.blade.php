@@ -58,6 +58,7 @@
                             <tr>
                                 <th><?=lang('code')?></th>
                                 <th><?=lang('name')?></th>
+                                <th><?=lang('pic_name')?></th>
                                 <th><?=lang('address')?></th>
                                 <th><?=lang('phone')?></th>
                                 <th><?=lang('email')?></th>
@@ -91,6 +92,14 @@
         <div class="col-md-6">
             <input type="hidden" name="id" value="">
 
+            <div class="form-group form-md-line-input username_field">
+                <label class="col-lg-4 control-label"><?=lang('username')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="username" id="username" placeholder="<?=lang('username')?>" maxlength="15" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
             <div class="form-group form-md-line-input">
                 <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
                 <div class="col-lg-7">
@@ -103,6 +112,14 @@
                 <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
                 <div class="col-lg-7">
                     <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+            
+            <div class="form-group form-md-line-input">
+                <label class="col-lg-4 control-label"><?=lang('pic_name')?><span class="text-danger">*</span></label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control input-sm" name="pic" id="pic" placeholder="<?=lang('pic_name')?>" maxlength="50" />
                     <div class="form-control-focus"> </div>
                 </div>
             </div>
@@ -421,7 +438,9 @@
         $('[name="city"]').val('').change();
         $('[name="subdistrict"]').val('').change();
         $('[name="code"').attr('readonly',false);
+        $('.username_field').show();
     }
+
     toastr.options = { "positionClass": "toast-top-right", };
 
     // Pengaturan Datatable 
@@ -433,8 +452,8 @@
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}dipo/dipos/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [11]},
-            {"targets": [11], "orderable": false}
+            {"className": "dt-center", "targets": [12]},
+            {"targets": [12], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
@@ -448,6 +467,7 @@
         rules: {
             code: "required",
             name: "required",
+            pic: "required",
             phone: "required",
             email: "required",
             address: "required",
@@ -462,6 +482,7 @@
         messages: {
             code: "{{lang('code')}}" + " {{lang('not_empty')}}",
             name: "{{lang('name')}}" + " {{lang('not_empty')}}",
+            pic: "{{lang('pic_name')}}" + " {{lang('not_empty')}}",
             phone: "{{lang('phone')}}" + " {{lang('not_empty')}}",
             email: "{{lang('email')}}" + " {{lang('not_empty')}}",
             address: "{{lang('address')}}" + " {{lang('not_empty')}}",
@@ -523,6 +544,7 @@
                 $('[name="id"]').val(row.id);
                 $('[name="code"]').val(row.code);
                 $('[name="name"]').val(row.name);
+                $('[name="pic"]').val(row.pic);
                 $('[name="phone"]').val(row.phone);
                 $('[name="fax"]').val(row.fax);
                 $('[name="email"]').val(row.email);
@@ -563,6 +585,8 @@
                 });
                 
                 $('[name="code"').attr('readonly',true);
+                $('.username_field').hide();
+
                 $('#modal_form').modal('show');
                 $('.modal-title').text('<?=lang('edit_dipo')?>'); 
             }else if(json.status == "error"){
@@ -608,9 +632,25 @@
         });
     }
 
+    $('#username').change(function(){
+        if($('#username').val() != "" && $('#code').val() != ""){
+            $.getJSON('{{base_url()}}check-code-customer', {code: $('#code').val(), username: $('#username').val(), type: 'dipo'}, function(json, textStatus) {
+                if(json.status == "error"){
+                    toastr.error(json.message,'{{ lang("notification") }}');
+                    $('#username').val('');
+                    $('#username').focus();
+                }
+                else{
+                    toastr.success(json.message,'{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
+    });
+
     $('#code').change(function(){
-        if($('#code').val() != ""){
-            $.getJSON('{{base_url()}}check-code-customer', {code: $('#code').val(), type: 'dipo'}, function(json, textStatus) {
+        if($('#username').val() != "" && $('#code').val() != ""){
+            $.getJSON('{{base_url()}}check-code-customer', {code: $('#code').val(), username: $('#username').val(), type: 'dipo'}, function(json, textStatus) {
                 if(json.status == "error"){
                     toastr.error(json.message,'{{ lang("notification") }}');
                     $('#code').val('');

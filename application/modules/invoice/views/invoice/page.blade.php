@@ -62,6 +62,7 @@
                                 <th class="text-center"><?=lang('sp_no')?></th>
                                 <th class="text-center"><?=lang('customer_name')?></th>
                                 <th class="text-center"><?=lang('address')?></th>
+                                <th class="text-center"><?=lang('pic')?></th>
                                 <th class="text-center"><?=lang('payment_method')?></th>
                                 <th class="text-center"><?=lang('issue_date')?></th>
                                 <th class="text-center"><?=lang('receive_date')?></th>
@@ -137,6 +138,14 @@
             <label class="col-lg-4 control-label">{{ lang('delivery_to') }}</label>
             <div class="col-lg-7">
                 <input readonly type="text" class="form-control input-sm" name="dipo_address" id="dipo_address" placeholder="<?=lang('dipo_address')?>" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('pic') }}</label>
+            <div class="col-lg-7">
+                <input readonly type="text" class="form-control input-sm" name="dipo_pic" id="dipo_pic" placeholder="<?=lang('pic')?>" />
                <div class="form-control-focus"> </div>
             </div>
         </div>
@@ -281,6 +290,14 @@
         </div>
 
         <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label">{{ lang('pic') }}</label>
+            <div class="col-lg-7">
+                <input readonly type="text" class="form-control input-sm" name="dipo_pic" id="dipo_pic" placeholder="<?=lang('pic')?>" />
+               <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input">
             <label class="col-lg-4 control-label">{{ lang('date_issued') }}</label>
             <div class="col-lg-7">
                 <input type="text" class="form-control input-sm" name="date_issued" id="date_issued" placeholder="<?=lang('date_issued')?>" readonly="readonly" maxlength="10" />
@@ -411,6 +428,7 @@
                     $('[name="dipo_name"]').val(row.name);
                     $('[name="dipo_address"]').val(row.address);
                     $('[name="dipo_top"]').val(row.top);
+                    $('[name="dipo_pic"]').val(row.pic);
                     
                 }else if(json.status == "error"){
                     toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
@@ -635,6 +653,7 @@
                 $('[name="note"]').val(row.note);
                 $('[name="dipo_name"]').val(row.dipo_name);
                 $('[name="dipo_address"]').val(row.dipo_address);
+                $('[name="dipo_pic"]').val(row.dipo_pic);
                 $('[name="dipo_top"]').val(row.dipo_top);
 
                 $.getJSON('{{base_url()}}invoice/invoices/getsjbyid', {id: row.sj_id}, function(json, textStatus) {
@@ -919,6 +938,14 @@
         $('#total_order_amount_after_tax').val(total_amount_after_tax.toFixed(0));
 
     }
+
+    $('#modal_detail').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+
+    $('#modal_form').on('hidden.bs.modal', function () {
+        location.reload();
+    })
 
 </script>
 @stop

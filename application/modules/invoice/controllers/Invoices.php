@@ -36,6 +36,7 @@ class Invoices extends MX_Controller {
             'm_dipo_partner.name as dipo_name',
             'm_dipo_partner.address as dipo_address',
             'm_dipo_partner.top as top',
+            'm_dipo_partner.pic as dipo_pic',
             't_invoice.due_date',
             't_invoice.date_created',
         );
@@ -47,6 +48,7 @@ class Invoices extends MX_Controller {
             'm_dipo_partner.name',
             'm_dipo_partner.address',
             'm_dipo_partner.top',
+            'm_dipo_partner.pic',
             't_sp.sp_date',
             't_sp.sp_date',
             't_invoice.due_date',
@@ -72,6 +74,7 @@ class Invoices extends MX_Controller {
             $where .= "m_dipo_partner.name LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.address LIKE '%" . $sSearch . "%' OR ";
             $where .= "m_dipo_partner.top LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_dipo_partner.pic LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_sp.sp_date LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_sp.sp_date LIKE '%" . $sSearch . "%' OR ";
             $where .= "t_invoice.due_date LIKE '%" . $sSearch . "%' OR ";
@@ -106,6 +109,7 @@ class Invoices extends MX_Controller {
             $row_value[] = $row->sp_no;
             $row_value[] = $row->dipo_name;
             $row_value[] = $row->dipo_address;
+            $row_value[] = $row->dipo_pic;
             $row_value[] = $row->top;
             $row_value[] = date('d-m-Y',strtotime($row->sp_date));
             $row_value[] = date('d-m-Y',strtotime($row->sp_date));

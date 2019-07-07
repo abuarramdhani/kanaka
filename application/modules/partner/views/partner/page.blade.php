@@ -91,7 +91,7 @@
         <div class="col-md-6">
             <input type="hidden" name="id" value="">
         
-            <div class="form-group form-md-line-input">
+            <div class="form-group form-md-line-input dipo_field">
                 <label class="col-lg-4 control-label"><?=lang('dipo')?><span class="text-danger">*</span></label>
                 <div class="col-lg-7">
                     <select class="form-control input-sm select2" name="dipo_id" id="dipo_id" style="width: 100%;">
@@ -438,6 +438,9 @@
 @section('scripts')
 <script type="text/javascript">
     $(function(){
+        @if($user->group_id != '1')
+            $('.dipo_field').hide();
+        @endif
 
     });
 
@@ -452,6 +455,11 @@
         $('[name="subdistrict"]').val('').change();
         $('[name="code"').attr('readonly',false);
         $('.username_field').show();
+
+        @if($user->group_id != '1')
+            $('[name="dipo_id"]').val('{{ $user->dipo_partner_id }}').change();
+        @endif
+
     }
 
     toastr.options = { "positionClass": "toast-top-right", };

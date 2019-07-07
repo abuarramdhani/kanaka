@@ -24,6 +24,7 @@ class Partners extends MX_Controller {
         $data['cities'] = City::where('deleted', 0)->get();        
         $data['zonas'] = Zona::where('deleted', 0)->get();
         $data['dipos'] = Dipo::where('type', 'dipo')->where('deleted', 0)->get();
+        $data['user'] = $this->ion_auth->user()->row();
 
         $this->load->blade('partner.views.partner.page', $data);
     }
@@ -71,6 +72,11 @@ class Partners extends MX_Controller {
 
         $from = "m_dipo_partner";
         $where = "m_dipo_partner.type = 'partner' AND m_dipo_partner.deleted = 0";
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $where .= " AND m_dipo_partner.user_created = ". $user->id;
+        }
+
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
 
         $join[] = array('m_city', 'm_dipo_partner.city = m_city.id', 'left');
@@ -757,7 +763,14 @@ class Partners extends MX_Controller {
     }
 
     function pdf(){
-        $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id != '1'){
+            $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.user_created', $user->id)->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        }
+        else{
+            $data['partners'] = Partner::select('m_dipo_partner.*', 'm_dipo.name as dipo_name')->join('m_dipo_partner as m_dipo', 'm_dipo_partner.dipo_id', '=' ,'m_dipo.id')->where('m_dipo_partner.type', 'partner')->where('m_dipo_partner.deleted', 0)->orderBy('m_dipo_partner.id', 'DESC')->get();
+        }
+
         $data['quote'] = "";
         $html = $this->load->view('partner/partner/partner_pdf', $data, true);
         $this->pdf_generator->generate($html, 'partner pdf', $orientation='Landscape');

@@ -120,7 +120,7 @@ class Companyreports extends MX_Controller {
         $from = "t_sell_in_company";
         $where = "t_sell_in_company.deleted = 0";
         if($user->group_id == '2'){
-            $where .= " AND (t_sell_in_company.user_created = ". $user->id . " OR users.dipo_partner_id = ". $user->dipo_partner_id .")";
+            $where .= " AND (t_sell_in_company.user_created = ". $user->id . " OR tbl_dipo.dipo_id = ". $user->dipo_partner_id .")";
         }
         else if($user->group_id == '3'){
             $where .= " AND t_sell_in_company.user_created = ". $user->id;
@@ -135,7 +135,7 @@ class Companyreports extends MX_Controller {
         $join[] = array('t_sp', 't_sell_in_company.sp_id = t_sp.id', 'left');
         if($user->group_id == '2'){
             $join[] = array('users', 't_sell_in_company.user_created = users.id', 'left');
-            $join[] = array('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.dipo_id', 'left');
+            $join[] = array('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.id', 'left');
         }
 
         if ($this->input->get('sSearch') != '') {
@@ -334,7 +334,10 @@ class Companyreports extends MX_Controller {
 
         $from = "t_sell_out_company";
         $where = "t_sell_out_company.deleted = 0";
-        if($user->group_id != '1'){
+        if($user->group_id == '2'){
+            $where .= " AND (t_sell_out_company.user_created = ". $user->id . " OR tbl_dipo.dipo_id = ". $user->dipo_partner_id .")";
+        }
+        else if($user->group_id == '3'){
             $where .= " AND t_sell_out_company.user_created = ". $user->id;
         }
 
@@ -343,6 +346,10 @@ class Companyreports extends MX_Controller {
         $join[] = array('m_product', 't_sell_out_company.product_id = m_product.id', 'left');
         $join[] = array('m_dipo_partner', 't_sell_out_company.customer_id = m_dipo_partner.id', 'left');
         $join[] = array('t_invoice', 't_sell_out_company.invoice_id = t_invoice.id', 'left');
+        if($user->group_id == '2'){
+            $join[] = array('users', 't_sell_out_company.user_created = users.id', 'left');
+            $join[] = array('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.id', 'left');
+        }
         
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));

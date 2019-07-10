@@ -133,8 +133,8 @@ class Companyreports extends MX_Controller {
         $join[] = array('m_dipo_partner', 't_sell_in_company.customer_id = m_dipo_partner.id', 'left');
         $join[] = array('t_invoice', 't_sell_in_company.invoice_id = t_invoice.id', 'left');
         $join[] = array('t_sp', 't_sell_in_company.sp_id = t_sp.id', 'left');
+        $join[] = array('users', 't_sell_in_company.user_created = users.id', 'left');
         if($user->group_id == '2'){
-            $join[] = array('users', 't_sell_in_company.user_created = users.id', 'left');
             $join[] = array('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.id', 'left');
         }
 
@@ -346,8 +346,8 @@ class Companyreports extends MX_Controller {
         $join[] = array('m_product', 't_sell_out_company.product_id = m_product.id', 'left');
         $join[] = array('m_dipo_partner', 't_sell_out_company.customer_id = m_dipo_partner.id', 'left');
         $join[] = array('t_invoice', 't_sell_out_company.invoice_id = t_invoice.id', 'left');
+        $join[] = array('users', 't_sell_out_company.user_created = users.id', 'left');
         if($user->group_id == '2'){
-            $join[] = array('users', 't_sell_out_company.user_created = users.id', 'left');
             $join[] = array('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.id', 'left');
         }
         
@@ -1253,6 +1253,7 @@ class Companyreports extends MX_Controller {
                                 ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
                                 ->leftJoin('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
                                 ->leftJoin('t_sp', 't_sell_in_company.sp_id', '=' ,'t_sp.id')
+                                ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
                                 ->where('t_sell_in_company.deleted', 0)
                                 ->where('t_sell_in_company.user_created', $user->id)
                                 ->orderBy('t_sell_in_company.id', 'DESC')
@@ -1276,6 +1277,7 @@ class Companyreports extends MX_Controller {
             ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
             ->leftJoin('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
             ->leftJoin('t_sp', 't_sell_in_company.sp_id', '=' ,'t_sp.id')
+            ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
             ->where('t_sell_in_company.deleted', 0)
             ->orderBy('t_sell_in_company.id', 'DESC')
             ->get();
@@ -1325,6 +1327,7 @@ class Companyreports extends MX_Controller {
                                 ->leftJoin('m_product', 't_sell_out_company.product_id', '=' ,'m_product.id')
                                 ->leftJoin('m_dipo_partner', 't_sell_out_company.customer_id', '=' ,'m_dipo_partner.id')
                                 ->leftJoin('t_invoice', 't_sell_out_company.invoice_id', '=' ,'t_invoice.id')
+                                ->leftJoin('users', 't_sell_out_company.user_created', '=' ,'users.id')
                                 ->where('t_sell_out_company.deleted', 0)
                                 ->where('t_sell_out_company.user_created', $user->id)
                                 ->orderBy('t_sell_out_company.id', 'DESC')
@@ -1343,6 +1346,7 @@ class Companyreports extends MX_Controller {
                                 ->leftJoin('m_product', 't_sell_out_company.product_id', '=' ,'m_product.id')
                                 ->leftJoin('m_dipo_partner', 't_sell_out_company.customer_id', '=' ,'m_dipo_partner.id')
                                 ->leftJoin('t_invoice', 't_sell_out_company.invoice_id', '=' ,'t_invoice.id')
+                                ->leftJoin('users', 't_sell_out_company.user_created', '=' ,'users.id')
                                 ->where('t_sell_out_company.deleted', 0)
                                 ->orderBy('t_sell_out_company.id', 'DESC')
                                 ->get();

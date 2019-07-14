@@ -53,10 +53,24 @@ class Suratpesanans extends MX_Controller {
 
         $from = "t_sp";
         $where = "t_sp.deleted = 0";
+
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id == '2'){
+            $where .= " AND (t_sp.user_created = ". $user->id . " OR tbl_dipo.dipo_id = ". $user->dipo_partner_id .")";
+        }
+        else if($user->group_id == '3'){
+            $where .= " AND t_sp.user_created = ". $user->id;
+        }
+
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
+        
         $join[] = array('m_principle', 'm_principle.id = t_sp.principle_id', 'inner');
         $join[] = array('m_dipo_partner', 'm_dipo_partner.id = t_sp.dipo_partner_id', 'inner');
-
+        $join[] = array('users', 't_sp.user_created = users.id', 'left');
+        if($user->group_id == '2'){
+            $join[] = array('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.id', 'left');
+        }
+        
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
             if((bool)strtotime($sSearch)){
@@ -132,9 +146,9 @@ class Suratpesanans extends MX_Controller {
             $from = "t_sp_detail";
             $where = "t_sp_detail.deleted = 0 AND sp_id =".$id;
             $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
+
             $join[] = array('t_sp', 't_sp.id = t_sp_detail.sp_id', 'inner');
             $join[] = array('m_product', 'm_product.id = t_sp_detail.product_id', 'inner');
-            // $join[] = array('t_pricelist', 't_pricelist.product_id = m_product.id', 'inner');
     
             $this->datatables->set_index('t_sp_detail.id');
             $this->datatables->config('database_columns', $database_columns);

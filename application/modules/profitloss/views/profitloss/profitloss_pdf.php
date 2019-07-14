@@ -43,13 +43,13 @@
 				<td>&nbsp;</td>
 				<td>Penjualan</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($penjualan, 0) ?></td>
+				<td align="right"><?php echo number_format($penjualan, 0) ?></td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Retur Penjualan</td>
-				<td class="text-right"><?php echo number_format($retur_penjualan, 0) ?></td>
+				<td align="right"><?php echo number_format($retur_penjualan, 0) ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
@@ -58,7 +58,7 @@
 				<td>Penjualan Bersih</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($penjualan_bersih, 0) ?></td>
+				<td align="right"><?php echo number_format($penjualan_bersih, 0) ?></td>
 			</tr>
 
 			<tr>
@@ -74,20 +74,20 @@
 				<td>&nbsp;</td>
 				<td>Persediaan Barang Dagang Awal</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($persediaan_barang_dagang_awal, 0) ?></td>
+				<td align="right"><?php echo number_format($persediaan_barang_dagang_awal, 0) ?></td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Pembelian</td>
-				<td class="text-right"><?php echo number_format($pembelian, 0) ?></td>
+				<td align="right"><?php echo number_format($pembelian, 0) ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Beban angkut Pembelian</td>
-				<td class="text-right"><?php echo number_format($beban_angkut_pembelian, 0) ?></td>
+				<td align="right"><?php echo number_format($beban_angkut_pembelian, 0) ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
@@ -96,27 +96,27 @@
 				<td>Retur Pembelian</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($retur_pembelian, 0) ?></td>
+				<td align="right"><?php echo number_format($retur_pembelian, 0) ?></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Pembelian Bersih</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($pembelian_bersih, 0) ?></td>
+				<td align="right"><?php echo number_format($pembelian_bersih, 0) ?></td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Barang Siap Jual</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($barang_siap_jual, 0) ?></td>
+				<td align="right"><?php echo number_format($barang_siap_jual, 0) ?></td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Persediaan Akhir</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($persediaan_akhir, 0) ?></td>
+				<td align="right"><?php echo number_format($persediaan_akhir, 0) ?></td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
@@ -124,14 +124,14 @@
 				<td>HPP</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($hpp, 0) ?></td>
+				<td align="right"><?php echo number_format($hpp, 0) ?></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Laba Kotor</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($laba_kotor, 0) ?></td>
+				<td align="right"><?php echo number_format($laba_kotor, 0) ?></td>
 			</tr>
 
 			<tr>
@@ -151,14 +151,14 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>Beban Angkut Penjualan</td>
-				<td class="text-right"><?php echo number_format($beban_angkut_penjualan, 0) ?></td>
+				<td align="right"><?php echo number_format($beban_angkut_penjualan, 0) ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Beban Iklan</td>
-				<td class="text-right"><?php echo number_format($beban_iklan, 0) ?></td>
+				<td align="right"><?php echo number_format($beban_iklan, 0) ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
@@ -166,7 +166,7 @@
 				<td>&nbsp;</td>
 				<td>Total Beban Penjualan</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($total_beban_penjualan, 0) ?></td>
+				<td align="right"><?php echo number_format($total_beban_penjualan, 0) ?></td>
 				<td>&nbsp;</td>
 			</tr>
 
@@ -182,21 +182,21 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>Beban Gaji</td>
-				<td class="text-right"><?php echo number_format($beban_gaji, 0) ?></td>
+				<td align="right"><?php echo number_format($beban_gaji, 0) ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Beban Utilitas</td>
-				<td class="text-right"><?php echo number_format($beban_utilitas, 0) ?></td>
+				<td align="right"><?php echo number_format($beban_utilitas, 0) ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Beban Sewa</td>
-				<td class="text-right"><?php echo number_format($beban_sewa, 0) ?></td>
+				<td align="right"><?php echo number_format($beban_sewa, 0) ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
@@ -204,7 +204,7 @@
 				<td>&nbsp;</td>
 				<td>Total Beban Umum dan Administrasi</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($total_beban_umum_dan_administrasi, 0) ?></td>
+				<td align="right"><?php echo number_format($total_beban_umum_dan_administrasi, 0) ?></td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
@@ -212,7 +212,7 @@
 				<td>Total Beban Operational</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($total_beban_operasional, 0) ?></td>
+				<td align="right"><?php echo number_format($total_beban_operasional, 0) ?></td>
 			</tr>
 
 			<tr>
@@ -229,14 +229,14 @@
 				<td>Pendapatan Bunga</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($pendapatan_bunga, 0) ?></td>
+				<td align="right"><?php echo number_format($pendapatan_bunga, 0) ?></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>Laba Bersih</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td class="text-right"><?php echo number_format($laba_bersih, 0) ?></td>
+				<td align="right"><?php echo number_format($laba_bersih, 0) ?></td>
 			</tr>
 		</table>
 	</div>

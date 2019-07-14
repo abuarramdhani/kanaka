@@ -95,7 +95,7 @@
 					<td><?=$pricelist->product_code?></td>
 					<td><?=$pricelist->barcode_product?></td>
 					<td><?=$pricelist->barcode_carton?></td>
-					<td><?=$pricelist->name?></td>
+					<td><?=$pricelist->name_product?></td>
 					<td><?=$pricelist->packing_size?></td>
 					<td><?=$pricelist->qty_per_ctn?></td>
 					<td><?=$pricelist->length?></td>

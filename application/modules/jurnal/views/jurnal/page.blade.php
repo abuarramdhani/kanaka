@@ -221,7 +221,7 @@
             {"className": "dt-center", "targets": [4, 5, 6]},
             {"targets": [8], "orderable": false}
         ],
-        "order": [0,"asc"],
+        "order": [0,"desc"],
     }).fnSetFilteringDelay(1000);
 
     // Pengaturan Form Validation 

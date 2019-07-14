@@ -41,7 +41,11 @@ class Accountpayables extends MX_Controller {
         $where = "t_sell_in_company.deleted = 0 AND t_sell_in_company.payment_status != 3 AND t_sell_in_company.customer_id > 0";
 
         $user = $this->ion_auth->user()->row();
-        if($user->group_id != '1'){
+        
+        if($user->group_id == '2'){
+            $where .= " AND (t_sell_in_company.user_created = ". $user->id . " OR tbl_dipo.dipo_id = ". $user->dipo_partner_id .")";
+        }
+        else if($user->group_id == '3'){
             $where .= " AND t_sell_in_company.user_created = ". $user->id;
         }
 
@@ -51,7 +55,11 @@ class Accountpayables extends MX_Controller {
             'm_dipo_partner.name',
         );
         $join[] = array('m_dipo_partner', 't_sell_in_company.customer_id = m_dipo_partner.id', 'left');
-        
+        $join[] = array('users', 't_sell_in_company.user_created = users.id', 'left');
+        if($user->group_id == '2'){
+            $join[] = array('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.id', 'left');
+        }
+
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
             if((bool)strtotime($sSearch)){
@@ -112,34 +120,57 @@ class Accountpayables extends MX_Controller {
     
     function pdf(){
         $user = $this->ion_auth->user()->row();
-        if($user->group_id != '1'){
+        
+        if($user->group_id == '2'){
             $data['accountpayables'] = Companyreport::select(
-                    't_sell_in_company.customer_id as id',
-                    'm_dipo_partner.name',
-                    't_sell_in_company.payment_status'
-            )
-            ->join('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
-            ->groupBy( 't_sell_in_company.customer_id', 'm_dipo_partner.name')
-            ->where('t_sell_in_company.deleted', 0)
-            ->where('t_sell_in_company.payment_status', '!=', 3)
-            ->where('t_sell_in_company.customer_id', '>', 0)
-            ->where('t_sell_in_company.user_created', $user->id)
-            ->orderBy('m_dipo_partner.name', 'ASC')
-            ->get();
+                                                't_sell_in_company.customer_id as id',
+                                                'm_dipo_partner.name',
+                                                't_sell_in_company.payment_status'
+                                        )
+                                        ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                        ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                        ->leftJoin('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id', '=' ,'tbl_dipo.id')
+                                        ->groupBy( 't_sell_in_company.customer_id', 'm_dipo_partner.name')
+                                        ->where('t_sell_in_company.deleted', 0)
+                                        ->where('t_sell_in_company.payment_status', '!=', 3)
+                                        ->where('t_sell_in_company.customer_id', '>', 0)
+                                        ->where(function($query) use ($user){
+                                            $query->where('t_sell_in_company.user_created', $user->id)
+                                                ->orWhere('tbl_dipo.dipo_id', $user->dipo_partner_id);
+                                        })
+                                        ->orderBy('m_dipo_partner.name', 'ASC')
+                                        ->get();
+        }
+        else if($user->group_id == '3'){
+            $data['accountpayables'] = Companyreport::select(
+                                                't_sell_in_company.customer_id as id',
+                                                'm_dipo_partner.name',
+                                                't_sell_in_company.payment_status'
+                                        )
+                                        ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                        ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                        ->groupBy( 't_sell_in_company.customer_id', 'm_dipo_partner.name')
+                                        ->where('t_sell_in_company.deleted', 0)
+                                        ->where('t_sell_in_company.payment_status', '!=', 3)
+                                        ->where('t_sell_in_company.customer_id', '>', 0)
+                                        ->where('t_sell_in_company.user_created', $user->id)
+                                        ->orderBy('m_dipo_partner.name', 'ASC')
+                                        ->get();
         }
         else{
             $data['accountpayables'] = Companyreport::select(
-                    't_sell_in_company.customer_id as id',
-                    'm_dipo_partner.name',
-                    't_sell_in_company.payment_status'
-            )
-            ->join('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
-            ->groupBy( 't_sell_in_company.customer_id', 'm_dipo_partner.name')
-            ->where('t_sell_in_company.deleted', 0)
-            ->where('t_sell_in_company.payment_status', '!=', 3)
-            ->where('t_sell_in_company.customer_id', '>', 0)
-            ->orderBy('m_dipo_partner.name', 'ASC')
-            ->get();
+                                            't_sell_in_company.customer_id as id',
+                                            'm_dipo_partner.name',
+                                            't_sell_in_company.payment_status'
+                                    )
+                                    ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                    ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                    ->groupBy( 't_sell_in_company.customer_id', 'm_dipo_partner.name')
+                                    ->where('t_sell_in_company.deleted', 0)
+                                    ->where('t_sell_in_company.payment_status', '!=', 3)
+                                    ->where('t_sell_in_company.customer_id', '>', 0)
+                                    ->orderBy('m_dipo_partner.name', 'ASC')
+                                    ->get();          
         }
 
         $html = $this->load->view('accountpayable/accountpayable/accountpayable_pdf', $data, true);
@@ -151,32 +182,57 @@ class Accountpayables extends MX_Controller {
         header("Content-Disposition: attachment; filename=accountpayable.xls");
         
         $user = $this->ion_auth->user()->row();
-        if($user->group_id != '1'){
+        
+        if($user->group_id == '2'){
             $data['accountpayables'] = Companyreport::select(
-                    't_sell_in_company.customer_id as id',
-                    'm_dipo_partner.name',
-                    't_sell_in_company.payment_status'
-            )
-            ->join('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
-            ->where('t_sell_in_company.deleted', 0)
-            ->where('t_sell_in_company.payment_status', '!=', 3)
-            ->where('t_sell_in_company.customer_id', '>', 0)
-            ->where('t_sell_in_company.user_created', $user->id)
-            ->orderBy('m_dipo_partner.name', 'ASC')
-            ->get();
+                                                't_sell_in_company.customer_id as id',
+                                                'm_dipo_partner.name',
+                                                't_sell_in_company.payment_status'
+                                        )
+                                        ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                        ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                        ->leftJoin('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id', '=' ,'tbl_dipo.id')
+                                        ->groupBy( 't_sell_in_company.customer_id', 'm_dipo_partner.name')
+                                        ->where('t_sell_in_company.deleted', 0)
+                                        ->where('t_sell_in_company.payment_status', '!=', 3)
+                                        ->where('t_sell_in_company.customer_id', '>', 0)
+                                        ->where(function($query) use ($user){
+                                            $query->where('t_sell_in_company.user_created', $user->id)
+                                                ->orWhere('tbl_dipo.dipo_id', $user->dipo_partner_id);
+                                        })
+                                        ->orderBy('m_dipo_partner.name', 'ASC')
+                                        ->get();
+        }
+        else if($user->group_id == '3'){
+            $data['accountpayables'] = Companyreport::select(
+                                                't_sell_in_company.customer_id as id',
+                                                'm_dipo_partner.name',
+                                                't_sell_in_company.payment_status'
+                                        )
+                                        ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                        ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                        ->groupBy( 't_sell_in_company.customer_id', 'm_dipo_partner.name')
+                                        ->where('t_sell_in_company.deleted', 0)
+                                        ->where('t_sell_in_company.payment_status', '!=', 3)
+                                        ->where('t_sell_in_company.customer_id', '>', 0)
+                                        ->where('t_sell_in_company.user_created', $user->id)
+                                        ->orderBy('m_dipo_partner.name', 'ASC')
+                                        ->get();
         }
         else{
             $data['accountpayables'] = Companyreport::select(
-                    't_sell_in_company.customer_id as id',
-                    'm_dipo_partner.name',
-                    't_sell_in_company.payment_status'
-            )
-            ->join('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
-            ->where('t_sell_in_company.deleted', 0)
-            ->where('t_sell_in_company.payment_status', '!=', 3)
-            ->where('t_sell_in_company.customer_id', '>', 0)
-            ->orderBy('m_dipo_partner.name', 'ASC')
-            ->get();
+                                            't_sell_in_company.customer_id as id',
+                                            'm_dipo_partner.name',
+                                            't_sell_in_company.payment_status'
+                                    )
+                                    ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                    ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                    ->groupBy( 't_sell_in_company.customer_id', 'm_dipo_partner.name')
+                                    ->where('t_sell_in_company.deleted', 0)
+                                    ->where('t_sell_in_company.payment_status', '!=', 3)
+                                    ->where('t_sell_in_company.customer_id', '>', 0)
+                                    ->orderBy('m_dipo_partner.name', 'ASC')
+                                    ->get();          
         }
 
         $this->load->view('accountpayable/accountpayable/accountpayable_pdf', $data);
@@ -220,7 +276,11 @@ class Accountpayables extends MX_Controller {
 
         $from = "t_sell_in_company";
         $where = "t_sell_in_company.deleted = 0 AND t_sell_in_company.payment_status != 3 AND t_sell_in_company.customer_id = " . $customer_id;
-        if($user->group_id != '1'){
+        
+        if($user->group_id == '2'){
+            $where .= " AND (t_sell_in_company.user_created = ". $user->id . " OR tbl_dipo.dipo_id = ". $user->dipo_partner_id .")";
+        }
+        else if($user->group_id == '3'){
             $where .= " AND t_sell_in_company.user_created = ". $user->id;
         }
 
@@ -228,7 +288,11 @@ class Accountpayables extends MX_Controller {
 
         $join[] = array('m_dipo_partner', 't_sell_in_company.customer_id = m_dipo_partner.id', 'left');
         $join[] = array('t_invoice', 't_sell_in_company.invoice_id = t_invoice.id', 'left');
-        
+        $join[] = array('users', 't_sell_in_company.user_created = users.id', 'left');
+        if($user->group_id == '2'){
+            $join[] = array('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.id', 'left');
+        }
+
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
             if((bool)strtotime($sSearch)){
@@ -282,40 +346,66 @@ class Accountpayables extends MX_Controller {
     function pdf_detail($customer_id){
         $customer_id = uri_decrypt($customer_id);
         $user = $this->ion_auth->user()->row();
-        if($user->group_id != '1'){
+        
+        if($user->group_id == '2'){
             $data['accountpayables'] = Companyreport::select(
-                'm_dipo_partner.name as customer_name',
-                'difference',
-                't_invoice.invoice_no as invoice_no',
-                'total_value_order_in_ctn_after_tax',
-                'due_date_invoice',
-                't_sell_in_company.top'
-            )
-            ->join('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
-            ->join('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
-            ->where('t_sell_in_company.deleted', 0)
-            ->where('t_sell_in_company.payment_status', '!=', 3)
-            ->where('t_sell_in_company.customer_id', $customer_id)
-            ->where('t_sell_in_company.user_created', $user->id)
-            ->orderBy('m_dipo_partner.name', 'ASC')
-            ->get();
+                                            'm_dipo_partner.name as customer_name',
+                                            'difference',
+                                            't_invoice.invoice_no as invoice_no',
+                                            'total_value_order_in_ctn_after_tax',
+                                            'due_date_invoice',
+                                            't_sell_in_company.top'
+                                        )
+                                        ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                        ->leftJoin('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
+                                        ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                        ->leftJoin('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id', '=' ,'tbl_dipo.id')
+                                        ->where('t_sell_in_company.deleted', 0)
+                                        ->where('t_sell_in_company.payment_status', '!=', 3)
+                                        ->where('t_sell_in_company.customer_id', $customer_id)
+                                        ->where(function($query) use ($user){
+                                            $query->where('t_sell_in_company.user_created', $user->id)
+                                                ->orWhere('tbl_dipo.dipo_id', $user->dipo_partner_id);
+                                        })
+                                        ->orderBy('m_dipo_partner.name', 'ASC')
+                                        ->get();
+        }
+        else if($user->group_id == '3'){
+            $data['accountpayables'] = Companyreport::select(
+                                        'm_dipo_partner.name as customer_name',
+                                        'difference',
+                                        't_invoice.invoice_no as invoice_no',
+                                        'total_value_order_in_ctn_after_tax',
+                                        'due_date_invoice',
+                                        't_sell_in_company.top'
+                                    )
+                                    ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                    ->leftJoin('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
+                                    ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                    ->where('t_sell_in_company.deleted', 0)
+                                    ->where('t_sell_in_company.payment_status', '!=', 3)
+                                    ->where('t_sell_in_company.customer_id', $customer_id)
+                                    ->where('t_sell_in_company.user_created', $user->id)
+                                    ->orderBy('m_dipo_partner.name', 'ASC')
+                                    ->get();
         }
         else{
             $data['accountpayables'] = Companyreport::select(
-                'm_dipo_partner.name as customer_name',
-                'difference',
-                't_invoice.invoice_no as invoice_no',
-                'total_value_order_in_ctn_after_tax',
-                'due_date_invoice',
-                't_sell_in_company.top'
-            )
-            ->join('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
-            ->join('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
-            ->where('t_sell_in_company.deleted', 0)
-            ->where('t_sell_in_company.payment_status', '!=', 3)
-            ->where('t_sell_in_company.customer_id', $customer_id)
-            ->orderBy('m_dipo_partner.name', 'ASC')
-            ->get();
+                                        'm_dipo_partner.name as customer_name',
+                                        'difference',
+                                        't_invoice.invoice_no as invoice_no',
+                                        'total_value_order_in_ctn_after_tax',
+                                        'due_date_invoice',
+                                        't_sell_in_company.top'
+                                    )
+                                    ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                    ->leftJoin('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
+                                    ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                    ->where('t_sell_in_company.deleted', 0)
+                                    ->where('t_sell_in_company.payment_status', '!=', 3)
+                                    ->where('t_sell_in_company.customer_id', $customer_id)
+                                    ->orderBy('m_dipo_partner.name', 'ASC')
+                                    ->get();        
         }
 
         $data['customer'] = Dipo::find($customer_id);
@@ -326,44 +416,70 @@ class Accountpayables extends MX_Controller {
 
     function excel_detail($customer_id){
         header("Content-type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=accountpayable detail.xls");
+        header("Content-Disposition: attachment; filename=accountpayable_detail.xls");
         
         $customer_id = uri_decrypt($customer_id);
         $user = $this->ion_auth->user()->row();
-        if($user->group_id != '1'){
+        
+        if($user->group_id == '2'){
             $data['accountpayables'] = Companyreport::select(
-                'm_dipo_partner.name as customer_name',
-                'difference',
-                't_invoice.invoice_no as invoice_no',
-                'total_value_order_in_ctn_after_tax',
-                'due_date_invoice',
-                't_sell_in_company.top'
-            )
-            ->join('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
-            ->join('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
-            ->where('t_sell_in_company.deleted', 0)
-            ->where('t_sell_in_company.payment_status', '!=', 3)
-            ->where('t_sell_in_company.customer_id', $customer_id)
-            ->where('t_sell_in_company.user_created', $user->id)
-            ->orderBy('m_dipo_partner.name', 'ASC')
-            ->get();
+                                            'm_dipo_partner.name as customer_name',
+                                            'difference',
+                                            't_invoice.invoice_no as invoice_no',
+                                            'total_value_order_in_ctn_after_tax',
+                                            'due_date_invoice',
+                                            't_sell_in_company.top'
+                                        )
+                                        ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                        ->leftJoin('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
+                                        ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                        ->leftJoin('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id', '=' ,'tbl_dipo.id')
+                                        ->where('t_sell_in_company.deleted', 0)
+                                        ->where('t_sell_in_company.payment_status', '!=', 3)
+                                        ->where('t_sell_in_company.customer_id', $customer_id)
+                                        ->where(function($query) use ($user){
+                                            $query->where('t_sell_in_company.user_created', $user->id)
+                                                ->orWhere('tbl_dipo.dipo_id', $user->dipo_partner_id);
+                                        })
+                                        ->orderBy('m_dipo_partner.name', 'ASC')
+                                        ->get();
+        }
+        else if($user->group_id == '3'){
+            $data['accountpayables'] = Companyreport::select(
+                                        'm_dipo_partner.name as customer_name',
+                                        'difference',
+                                        't_invoice.invoice_no as invoice_no',
+                                        'total_value_order_in_ctn_after_tax',
+                                        'due_date_invoice',
+                                        't_sell_in_company.top'
+                                    )
+                                    ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                    ->leftJoin('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
+                                    ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                    ->where('t_sell_in_company.deleted', 0)
+                                    ->where('t_sell_in_company.payment_status', '!=', 3)
+                                    ->where('t_sell_in_company.customer_id', $customer_id)
+                                    ->where('t_sell_in_company.user_created', $user->id)
+                                    ->orderBy('m_dipo_partner.name', 'ASC')
+                                    ->get();
         }
         else{
             $data['accountpayables'] = Companyreport::select(
-                'm_dipo_partner.name as customer_name',
-                'difference',
-                't_invoice.invoice_no as invoice_no',
-                'total_value_order_in_ctn_after_tax',
-                'due_date_invoice',
-                't_sell_in_company.top'
-            )
-            ->join('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
-            ->join('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
-            ->where('t_sell_in_company.deleted', 0)
-            ->where('t_sell_in_company.payment_status', '!=', 3)
-            ->where('t_sell_in_company.customer_id', $customer_id)
-            ->orderBy('m_dipo_partner.name', 'ASC')
-            ->get();
+                                        'm_dipo_partner.name as customer_name',
+                                        'difference',
+                                        't_invoice.invoice_no as invoice_no',
+                                        'total_value_order_in_ctn_after_tax',
+                                        'due_date_invoice',
+                                        't_sell_in_company.top'
+                                    )
+                                    ->leftJoin('m_dipo_partner', 't_sell_in_company.customer_id', '=' ,'m_dipo_partner.id')
+                                    ->leftJoin('t_invoice', 't_sell_in_company.invoice_id', '=' ,'t_invoice.id')
+                                    ->leftJoin('users', 't_sell_in_company.user_created', '=' ,'users.id')
+                                    ->where('t_sell_in_company.deleted', 0)
+                                    ->where('t_sell_in_company.payment_status', '!=', 3)
+                                    ->where('t_sell_in_company.customer_id', $customer_id)
+                                    ->orderBy('m_dipo_partner.name', 'ASC')
+                                    ->get();        
         }
 
         $data['customer'] = Dipo::find($customer_id);

@@ -57,10 +57,23 @@ class Invoices extends MX_Controller {
 
         $from = "t_invoice";
         $where = "t_invoice.deleted = 0";
+        
+        $user = $this->ion_auth->user()->row();
+        if($user->group_id == '2'){
+            $where .= " AND (t_invoice.user_created = ". $user->id . " OR tbl_dipo.dipo_id = ". $user->dipo_partner_id .")";
+        }
+        else if($user->group_id == '3'){
+            $where .= " AND t_invoice.user_created = ". $user->id;
+        }
+
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
         $join[] = array('t_sj', 't_sj.id = t_invoice.sj_id', 'inner');
         $join[] = array('t_sp', 't_sp.id = t_sj.sp_id', 'inner');
         $join[] = array('m_dipo_partner', 'm_dipo_partner.id = t_sp.dipo_partner_id', 'inner');
+        $join[] = array('users', 't_invoice.user_created = users.id', 'left');
+        if($user->group_id == '2'){
+            $join[] = array('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.id', 'left');
+        }
 
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));

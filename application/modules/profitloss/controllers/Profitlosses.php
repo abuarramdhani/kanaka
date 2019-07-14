@@ -33,30 +33,30 @@ class Profitlosses extends MX_Controller {
                 $start_date = date($period.'-01-01');
                 $end_date = date($period.'-12-31');
 
-                $data['penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 4, 'd_k' => 'D'));
-                $data['retur_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 5, 'd_k' => 'D'));
+                $data['penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 4, 'd_k' => 'D'));
+                $data['retur_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 5, 'd_k' => 'D'));
                 $data['penjualan_bersih'] = $data['penjualan'] - $data['retur_penjualan'];
  
-                $data['persediaan_barang_dagang_awal'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 9, 'd_k' => 'K'));
-                $data['pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 2, 'd_k' => 'K'));
-                $data['beban_angkut_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 10, 'd_k' => 'K'));
-                $data['retur_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 3, 'd_k' => 'K'));
+                $data['persediaan_barang_dagang_awal'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 9, 'd_k' => 'K'));
+                $data['pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 2, 'd_k' => 'K'));
+                $data['beban_angkut_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 10, 'd_k' => 'K'));
+                $data['retur_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 3, 'd_k' => 'K'));
                 $data['pembelian_bersih'] = $data['pembelian'] + $data['beban_angkut_pembelian'] + $data['retur_pembelian'];
                 $data['barang_siap_jual'] = $data['pembelian_bersih'];
                 $data['persediaan_akhir'] = $data['persediaan_barang_dagang_awal'] + $data['barang_siap_jual'];
                 $data['hpp'] = $data['persediaan_akhir'];
                 $data['laba_kotor'] = $data['penjualan_bersih'] - $data['hpp'];
 
-                $data['beban_angkut_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 11, 'd_k' => 'K'));
-                $data['beban_iklan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 12, 'd_k' => 'K'));
+                $data['beban_angkut_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 11, 'd_k' => 'K'));
+                $data['beban_iklan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 12, 'd_k' => 'K'));
                 $data['total_beban_penjualan'] = $data['beban_angkut_penjualan'] + $data['beban_iklan'];
-                $data['beban_gaji'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 13, 'd_k' => 'K'));
-                $data['beban_utilitas'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 14, 'd_k' => 'K'));
-                $data['beban_sewa'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 15, 'd_k' => 'K'));
+                $data['beban_gaji'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 13, 'd_k' => 'K'));
+                $data['beban_utilitas'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 14, 'd_k' => 'K'));
+                $data['beban_sewa'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 15, 'd_k' => 'K'));
                 $data['total_beban_umum_dan_administrasi'] = $data['beban_gaji'] + $data['beban_utilitas'] + $data['beban_sewa'];
                 $data['total_beban_operasional'] = $data['total_beban_penjualan'] + $data['total_beban_umum_dan_administrasi'];
 
-                $data['pendapatan_bunga'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 16, 'd_k' => 'D'));
+                $data['pendapatan_bunga'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 16, 'd_k' => 'D'));
                 $data['laba_bersih'] = $data['laba_kotor'] - $data['total_beban_operasional'] + $data['pendapatan_bunga'];
 
                 $data['print_limited_access'] = $this->user_profile->get_user_access('PrintLimited', 'profitloss');
@@ -76,30 +76,30 @@ class Profitlosses extends MX_Controller {
         $start_date = date($period.'-01-01');
         $end_date = date($period.'-12-31');
         
-        $data['penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 4, 'd_k' => 'D'));
-        $data['retur_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 5, 'd_k' => 'D'));
+        $data['penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 4, 'd_k' => 'D'));
+        $data['retur_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 5, 'd_k' => 'D'));
         $data['penjualan_bersih'] = $data['penjualan'] - $data['retur_penjualan'];
 
-        $data['persediaan_barang_dagang_awal'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 9, 'd_k' => 'K'));
-        $data['pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 2, 'd_k' => 'K'));
-        $data['beban_angkut_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 10, 'd_k' => 'K'));
-        $data['retur_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 3, 'd_k' => 'K'));
+        $data['persediaan_barang_dagang_awal'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 9, 'd_k' => 'K'));
+        $data['pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 2, 'd_k' => 'K'));
+        $data['beban_angkut_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 10, 'd_k' => 'K'));
+        $data['retur_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 3, 'd_k' => 'K'));
         $data['pembelian_bersih'] = $data['pembelian'] + $data['beban_angkut_pembelian'] + $data['retur_pembelian'];
         $data['barang_siap_jual'] = $data['pembelian_bersih'];
         $data['persediaan_akhir'] = $data['persediaan_barang_dagang_awal'] + $data['barang_siap_jual'];
         $data['hpp'] = $data['persediaan_akhir'];
         $data['laba_kotor'] = $data['penjualan_bersih'] - $data['hpp'];
 
-        $data['beban_angkut_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 11, 'd_k' => 'K'));
-        $data['beban_iklan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 12, 'd_k' => 'K'));
+        $data['beban_angkut_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 11, 'd_k' => 'K'));
+        $data['beban_iklan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 12, 'd_k' => 'K'));
         $data['total_beban_penjualan'] = $data['beban_angkut_penjualan'] + $data['beban_iklan'];
-        $data['beban_gaji'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 13, 'd_k' => 'K'));
-        $data['beban_utilitas'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 14, 'd_k' => 'K'));
-        $data['beban_sewa'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 15, 'd_k' => 'K'));
+        $data['beban_gaji'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 13, 'd_k' => 'K'));
+        $data['beban_utilitas'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 14, 'd_k' => 'K'));
+        $data['beban_sewa'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 15, 'd_k' => 'K'));
         $data['total_beban_umum_dan_administrasi'] = $data['beban_gaji'] + $data['beban_utilitas'] + $data['beban_sewa'];
         $data['total_beban_operasional'] = $data['total_beban_penjualan'] + $data['total_beban_umum_dan_administrasi'];
 
-        $data['pendapatan_bunga'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 16, 'd_k' => 'D'));
+        $data['pendapatan_bunga'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 16, 'd_k' => 'D'));
         $data['laba_bersih'] = $data['laba_kotor'] - $data['total_beban_operasional'] + $data['pendapatan_bunga'];
 
         $html = $this->load->view('profitloss/profitloss/profitloss_pdf', $data, true);
@@ -116,30 +116,30 @@ class Profitlosses extends MX_Controller {
         $start_date = date($period.'-01-01');
         $end_date = date($period.'-12-31');
 
-        $data['penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 4, 'd_k' => 'D'));
-        $data['retur_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 5, 'd_k' => 'D'));
+        $data['penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 4, 'd_k' => 'D'));
+        $data['retur_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 5, 'd_k' => 'D'));
         $data['penjualan_bersih'] = $data['penjualan'] - $data['retur_penjualan'];
 
-        $data['persediaan_barang_dagang_awal'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 9, 'd_k' => 'K'));
-        $data['pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 2, 'd_k' => 'K'));
-        $data['beban_angkut_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 10, 'd_k' => 'K'));
-        $data['retur_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 3, 'd_k' => 'K'));
+        $data['persediaan_barang_dagang_awal'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 9, 'd_k' => 'K'));
+        $data['pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 2, 'd_k' => 'K'));
+        $data['beban_angkut_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 10, 'd_k' => 'K'));
+        $data['retur_pembelian'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 3, 'd_k' => 'K'));
         $data['pembelian_bersih'] = $data['pembelian'] + $data['beban_angkut_pembelian'] + $data['retur_pembelian'];
         $data['barang_siap_jual'] = $data['pembelian_bersih'];
         $data['persediaan_akhir'] = $data['persediaan_barang_dagang_awal'] + $data['barang_siap_jual'];
         $data['hpp'] = $data['persediaan_akhir'];
         $data['laba_kotor'] = $data['penjualan_bersih'] - $data['hpp'];
 
-        $data['beban_angkut_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 11, 'd_k' => 'K'));
-        $data['beban_iklan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 12, 'd_k' => 'K'));
+        $data['beban_angkut_penjualan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 11, 'd_k' => 'K'));
+        $data['beban_iklan'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 12, 'd_k' => 'K'));
         $data['total_beban_penjualan'] = $data['beban_angkut_penjualan'] + $data['beban_iklan'];
-        $data['beban_gaji'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 13, 'd_k' => 'K'));
-        $data['beban_utilitas'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 14, 'd_k' => 'K'));
-        $data['beban_sewa'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 15, 'd_k' => 'K'));
+        $data['beban_gaji'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 13, 'd_k' => 'K'));
+        $data['beban_utilitas'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 14, 'd_k' => 'K'));
+        $data['beban_sewa'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 15, 'd_k' => 'K'));
         $data['total_beban_umum_dan_administrasi'] = $data['beban_gaji'] + $data['beban_utilitas'] + $data['beban_sewa'];
         $data['total_beban_operasional'] = $data['total_beban_penjualan'] + $data['total_beban_umum_dan_administrasi'];
 
-        $data['pendapatan_bunga'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('deleted' => 0, 'coa_id' => 16, 'd_k' => 'D'));
+        $data['pendapatan_bunga'] = $this->user_profile->get_sum_jurnal($start_date,$end_date,array('t_jurnal.deleted' => 0, 'coa_id' => 16, 'd_k' => 'D'));
         $data['laba_bersih'] = $data['laba_kotor'] - $data['total_beban_operasional'] + $data['pendapatan_bunga'];
         
         $this->load->view('profitloss/profitloss/profitloss_pdf', $data);

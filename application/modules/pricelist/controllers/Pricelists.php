@@ -122,13 +122,21 @@ class Pricelists extends MX_Controller {
 
         $from = "t_pricelist";
         $where = "t_pricelist.deleted = 0 AND m_product.deleted = 0";
-        if($user->group_id != '1'){
+        if($user->group_id == '2'){
+            $where .= " AND (t_pricelist.user_created = ". $user->id . " OR tbl_dipo.dipo_id = ". $user->dipo_partner_id .")";
+        }
+        else if($user->group_id == '3'){
             $where .= " AND t_pricelist.user_created = ". $user->id;
         }
 
         $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
+        
         $join[] = array('m_product', 'm_product.id = t_pricelist.product_id', 'inner');
-
+        $join[] = array('users', 't_pricelist.user_created = users.id', 'left');
+        if($user->group_id == '2'){
+            $join[] = array('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.id', 'left');
+        }
+        
         if ($this->input->get('sSearch') != '') {
             $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
             if((bool)strtotime($sSearch)){
@@ -625,19 +633,51 @@ class Pricelists extends MX_Controller {
         header("Content-Disposition: attachment; filename=pricelist.xls");
 
         $user = $this->ion_auth->user()->row();
-        if($user->group_id != '1'){
-            $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->where('t_pricelist.user_created', $user->id)->orderBy('t_pricelist.id', 'DESC')->get();
+        if($user->group_id == '2'){
+            $data['pricelists'] = Pricelist::select('*', 'm_product.name as name_product')
+                                        ->leftJoin('m_product', 't_pricelist.product_id', '=', 'm_product.id')
+                                        ->leftJoin('users', 't_pricelist.user_created', '=' ,'users.id')
+                                        ->leftJoin('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id', '=' ,'tbl_dipo.id')
+                                        ->where('t_pricelist.deleted', 0)
+                                        ->where('m_product.deleted', 0)
+                                        ->where(function($query) use ($user){
+                                            $query->where('t_pricelist.user_created', $user->id)
+                                                ->orWhere('tbl_dipo.dipo_id', $user->dipo_partner_id);
+                                        })
+                                        ->orderBy('t_pricelist.id', 'DESC')
+                                        ->get();
+                                        
             $discount = $this->db->select('*')
-                      ->order_by('id', 'DESC')
-                      ->get_where('t_pricelist', array('deleted' => 0, 't_pricelist.user_created' => $user->id))
-                      ->row();
+                        ->order_by('id', 'DESC')
+                        ->get_where('t_pricelist', array('deleted' => 0, 't_pricelist.user_created' => $user->id))
+                        ->row();
+        }
+        else if($user->group_id == '3'){
+            $data['pricelists'] = Pricelist::select('*', 'm_product.name as name_product')
+                                        ->leftJoin('m_product', 't_pricelist.product_id', '=', 'm_product.id')
+                                        ->leftJoin('users', 't_pricelist.user_created', '=' ,'users.id')
+                                        ->where('t_pricelist.deleted', 0)
+                                        ->where('m_product.deleted', 0)
+                                        ->where('t_pricelist.user_created', $user->id)
+                                        ->orderBy('t_pricelist.id', 'DESC')
+                                        ->get();
+            $discount = $this->db->select('*')
+                        ->order_by('id', 'DESC')
+                        ->get_where('t_pricelist', array('deleted' => 0, 't_pricelist.user_created' => $user->id))
+                        ->row();
         }
         else{
-            $data['pricelists'] = Pricelist::join('m_product', 't_pricelist.product_id', '=', 'm_product.id')->where('t_pricelist.deleted', 0)->where('m_product.deleted', 0)->orderBy('t_pricelist.id', 'DESC')->get();
+            $data['pricelists'] = Pricelist::select('*', 'm_product.name as name_product')
+                                        ->leftJoin('m_product', 't_pricelist.product_id', '=', 'm_product.id')
+                                        ->leftJoin('users', 't_pricelist.user_created', '=' ,'users.id')
+                                        ->where('t_pricelist.deleted', 0)
+                                        ->where('m_product.deleted', 0)
+                                        ->orderBy('t_pricelist.id', 'DESC')
+                                        ->get();
             $discount = $this->db->select('*')
-                      ->order_by('id', 'DESC')
-                      ->get_where('t_pricelist', array('deleted' => 0))
-                      ->row();
+                        ->order_by('id', 'DESC')
+                        ->get_where('t_pricelist', array('deleted' => 0))
+                        ->row();
         }
         
         $data['discount'] = $discount;

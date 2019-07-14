@@ -367,9 +367,17 @@ class User_profile {
 
 	function get_sum_jurnal($start_date,$end_date,$where)
 	{
-    if($this->ci->ion_auth->user()->row()->group_id != 1){
+    $user = $this->ci->ion_auth->user()->row();
+    if($this->ci->ion_auth->user()->row()->group_id == '2'){
+        $this->ci->db->join('users', 't_jurnal.user_created = users.id');
+        $this->ci->db->join('m_dipo_partner as tbl_dipo', 'users.dipo_partner_id = tbl_dipo.id');
+        $this->ci->db->where('t_jurnal.user_created', $user->id);
+        $this->ci->db->or_where('tbl_dipo.dipo_id', $user->dipo_partner_id);
+    }
+    else if($this->ci->ion_auth->user()->row()->group_id == '3'){
       $this->ci->db->where('user_created', $this->ci->ion_auth->user()->row()->id);
     }
+
     $this->ci->db->where('jurnal_date >=', $start_date);
     $this->ci->db->where('jurnal_date <=', $end_date);
     $this->ci->db->where($where);

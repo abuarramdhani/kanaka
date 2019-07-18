@@ -177,6 +177,13 @@ $route['reports/companyreport/excel']	= 'companyreport/companyreports/excel';
 $route['reports/companyreport/excel_out']	= 'companyreport/companyreports/excel_out';
 
 /**
+* COMPANY REPORT
+*/
+$route['reports/retur'] = 'retur/returs/index';
+$route['reports/retur/pdf']	= 'retur/returs/pdf';
+$route['reports/retur/excel']	= 'retur/returs/excel';
+
+/**
 * DIPO REPORT
 */
 $route['reports/dipo_report'] = 'dipo_report/dipo_reports/index';

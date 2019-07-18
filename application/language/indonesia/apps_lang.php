@@ -46,6 +46,7 @@ $lang['print_pdf'] = 'Cetak (PDF)';
 $lang['detail'] = 'Rincian';
 $lang['activity'] = 'Aktivitas';
 $lang['last_activity'] = 'Aktivitas Terakhir';
+$lang['no.'] = 'No';
 $lang['level'] = 'Level';
 $lang['name'] = "Nama";
 $lang['code'] = "Kode";
@@ -536,3 +537,9 @@ $lang['due_date'] = "Jatuh Tempo";
 ## ACCOUNT RECEIVABLE ##
 $lang['accountreceivable'] = 'Akun Piutang';
 ## END ACCOUNT RECEIVABLE ##
+
+## RETUR ##
+$lang['retur'] = 'Retur';
+$lang['new_retur'] = "Tambah Retur";
+$lang['edit_retur'] = "Ubah Retur";
+## END RETUR ##

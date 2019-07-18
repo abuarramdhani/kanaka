@@ -1259,17 +1259,19 @@
     }
 
     $('#principle_id').change(function(){
-        $.getJSON('{{base_url()}}companyreport/companyreports/getprinciplebyid', {id: $('#principle_id').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data;
+        if($('#principle_id').val() != ""){
+            $.getJSON('{{base_url()}}companyreport/companyreports/getprinciplebyid', {id: $('#principle_id').val()}, function(json, textStatus) {
+                if(json.status == "success"){
+                    var row = json.data;
 
-                $('#top').val(row.top).change();
+                    $('#top').val(row.top).change();
 
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-       });
+                }else if(json.status == "error"){
+                    toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
     });
 
     $('#product_id').change(function(){
@@ -1331,88 +1333,92 @@
     });
 
     $('#net_price_in_ctn_after_tax').change(function(){
-        $.getJSON('{{base_url()}}companyreport/companyreports/getpricelistbyid', {id: $('#net_price_in_ctn_after_tax').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data;
+        if($('#net_price_in_ctn_after_tax').val() != ""){
+            $.getJSON('{{base_url()}}companyreport/companyreports/getpricelistbyid', {id: $('#net_price_in_ctn_after_tax').val()}, function(json, textStatus) {
+                if(json.status == "success"){
+                    var row = json.data;
 
-                var price_hna_per_ctn_after_tax = row.normal_price;
-                var price_hna_per_ctn_before_tax = parseInt(price_hna_per_ctn_after_tax / 1.1);
-                var net_price_in_ctn_after_tax = $('#net_price_in_ctn_after_tax option:selected').text();
-                var net_price_in_ctn_before_tax = parseInt(net_price_in_ctn_after_tax / 1.1);
-                var discount_value = price_hna_per_ctn_after_tax - net_price_in_ctn_after_tax;
-                // var discount = discount_value / price_hna_per_ctn_after_tax;
-                var discount = (discount_value / price_hna_per_ctn_after_tax) * 100;
-                var ppn = net_price_in_ctn_after_tax - net_price_in_ctn_before_tax;
-                
-                var total_order_in_ctn = $('#total_order_in_ctn').val();
-                var total_value_order_in_ctn_before_tax = net_price_in_ctn_before_tax * total_order_in_ctn;
-                var total_value_order_in_ctn_after_tax = net_price_in_ctn_after_tax * total_order_in_ctn;
+                    var price_hna_per_ctn_after_tax = row.normal_price;
+                    var price_hna_per_ctn_before_tax = parseInt(price_hna_per_ctn_after_tax / 1.1);
+                    var net_price_in_ctn_after_tax = $('#net_price_in_ctn_after_tax option:selected').text();
+                    var net_price_in_ctn_before_tax = parseInt(net_price_in_ctn_after_tax / 1.1);
+                    var discount_value = price_hna_per_ctn_after_tax - net_price_in_ctn_after_tax;
+                    // var discount = discount_value / price_hna_per_ctn_after_tax;
+                    var discount = (discount_value / price_hna_per_ctn_after_tax) * 100;
+                    var ppn = net_price_in_ctn_after_tax - net_price_in_ctn_before_tax;
+                    
+                    var total_order_in_ctn = $('#total_order_in_ctn').val();
+                    var total_value_order_in_ctn_before_tax = net_price_in_ctn_before_tax * total_order_in_ctn;
+                    var total_value_order_in_ctn_after_tax = net_price_in_ctn_after_tax * total_order_in_ctn;
 
-                var selling_price = row.dipo_after_tax_round_up;
-                var margin_value = selling_price - total_value_order_in_ctn_after_tax;
-                var margin_percented = parseInt(margin_value / selling_price);
+                    var selling_price = row.dipo_after_tax_round_up;
+                    var margin_value = selling_price - total_value_order_in_ctn_after_tax;
+                    var margin_percented = parseInt(margin_value / selling_price);
 
-                $('#price_hna_per_ctn_before_tax').val(price_hna_per_ctn_before_tax);
-    
-                @if($user->group_id == '1')
-                    $('#discount_value').val(discount_value);
-                    $('#discount').val(discount.toFixed(0));
-                @endif
-    
-                $('#net_price_in_ctn_before_tax').val(net_price_in_ctn_before_tax);
-                $('#ppn').val(ppn);
-                $('#total_value_order_in_ctn_before_tax').val(total_value_order_in_ctn_before_tax);
-                $('#total_value_order_in_ctn_after_tax').val(total_value_order_in_ctn_after_tax);
-                
-                $('#selling_price').val(selling_price);
-                $('#margin_value').val(margin_value);
-                $('#margin_percented').val(margin_percented);
-                $('#price_hna_per_ctn_after_tax').val(price_hna_per_ctn_after_tax);
-                $('#net_price_in_ctn_after_tax_tmp').val(net_price_in_ctn_after_tax);
+                    $('#price_hna_per_ctn_before_tax').val(price_hna_per_ctn_before_tax);
+        
+                    @if($user->group_id == '1')
+                        $('#discount_value').val(discount_value);
+                        $('#discount').val(discount.toFixed(0));
+                    @endif
+        
+                    $('#net_price_in_ctn_before_tax').val(net_price_in_ctn_before_tax);
+                    $('#ppn').val(ppn);
+                    $('#total_value_order_in_ctn_before_tax').val(total_value_order_in_ctn_before_tax);
+                    $('#total_value_order_in_ctn_after_tax').val(total_value_order_in_ctn_after_tax);
+                    
+                    $('#selling_price').val(selling_price);
+                    $('#margin_value').val(margin_value);
+                    $('#margin_percented').val(margin_percented);
+                    $('#price_hna_per_ctn_after_tax').val(price_hna_per_ctn_after_tax);
+                    $('#net_price_in_ctn_after_tax_tmp').val(net_price_in_ctn_after_tax);
 
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-        });
+                }else if(json.status == "error"){
+                    toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
     });
 
     $('#net_price_in_ctn_after_tax_out').change(function(){
-        $.getJSON('{{base_url()}}companyreport/companyreports/getpricelistbyid', {id: $('#net_price_in_ctn_after_tax_out').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data;
+        if($('#net_price_in_ctn_after_tax_out').val() != ""){
+            $.getJSON('{{base_url()}}companyreport/companyreports/getpricelistbyid', {id: $('#net_price_in_ctn_after_tax_out').val()}, function(json, textStatus) {
+                if(json.status == "success"){
+                    var row = json.data;
 
-                var price_hna_per_ctn_after_tax = row.normal_price;
-                var price_hna_per_ctn_before_tax = parseInt(price_hna_per_ctn_after_tax / 1.1);
-                var net_price_in_ctn_after_tax = $('#net_price_in_ctn_after_tax_out option:selected').text();
-                var net_price_in_ctn_before_tax = parseInt(net_price_in_ctn_after_tax / 1.1);
-                var discount_value = price_hna_per_ctn_after_tax - net_price_in_ctn_after_tax;
-                var discount = (discount_value / price_hna_per_ctn_after_tax) * 100;
-                var ppn = net_price_in_ctn_after_tax - net_price_in_ctn_before_tax;
-                
-                var total_order_in_ctn = $('#total_order_in_ctn_out').val();
-                var total_value_order_in_ctn_before_tax = net_price_in_ctn_before_tax * total_order_in_ctn;
-                var total_value_order_in_ctn_after_tax = net_price_in_ctn_after_tax * total_order_in_ctn;
+                    var price_hna_per_ctn_after_tax = row.normal_price;
+                    var price_hna_per_ctn_before_tax = parseInt(price_hna_per_ctn_after_tax / 1.1);
+                    var net_price_in_ctn_after_tax = $('#net_price_in_ctn_after_tax_out option:selected').text();
+                    var net_price_in_ctn_before_tax = parseInt(net_price_in_ctn_after_tax / 1.1);
+                    var discount_value = price_hna_per_ctn_after_tax - net_price_in_ctn_after_tax;
+                    var discount = (discount_value / price_hna_per_ctn_after_tax) * 100;
+                    var ppn = net_price_in_ctn_after_tax - net_price_in_ctn_before_tax;
+                    
+                    var total_order_in_ctn = $('#total_order_in_ctn_out').val();
+                    var total_value_order_in_ctn_before_tax = net_price_in_ctn_before_tax * total_order_in_ctn;
+                    var total_value_order_in_ctn_after_tax = net_price_in_ctn_after_tax * total_order_in_ctn;
 
-                $('#price_hna_per_ctn_before_tax_out').val(price_hna_per_ctn_before_tax);
+                    $('#price_hna_per_ctn_before_tax_out').val(price_hna_per_ctn_before_tax);
 
-                @if($user->group_id == '1')
-                    $('#discount_value_out').val(discount_value);
-                    $('#discount_out').val(discount.toFixed(0));
-                @endif
-                
-                $('#net_price_in_ctn_before_tax_out').val(net_price_in_ctn_before_tax);
-                $('#ppn_out').val(ppn);
-                $('#total_value_order_in_ctn_before_tax_out').val(total_value_order_in_ctn_before_tax);
-                $('#total_value_order_in_ctn_after_tax_out').val(total_value_order_in_ctn_after_tax);
-                $('#price_hna_per_ctn_after_tax_out').val(price_hna_per_ctn_after_tax);
-                $('#net_price_in_ctn_after_tax_out_tmp').val(net_price_in_ctn_after_tax);
-                
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-        });
+                    @if($user->group_id == '1')
+                        $('#discount_value_out').val(discount_value);
+                        $('#discount_out').val(discount.toFixed(0));
+                    @endif
+                    
+                    $('#net_price_in_ctn_before_tax_out').val(net_price_in_ctn_before_tax);
+                    $('#ppn_out').val(ppn);
+                    $('#total_value_order_in_ctn_before_tax_out').val(total_value_order_in_ctn_before_tax);
+                    $('#total_value_order_in_ctn_after_tax_out').val(total_value_order_in_ctn_after_tax);
+                    $('#price_hna_per_ctn_after_tax_out').val(price_hna_per_ctn_after_tax);
+                    $('#net_price_in_ctn_after_tax_out_tmp').val(net_price_in_ctn_after_tax);
+                    
+                }else if(json.status == "error"){
+                    toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
     });
 
     $('#total_order_in_ctn').change(function(){
@@ -1489,17 +1495,19 @@
     });
 
     $('#customer_id_out').change(function(){
-        $.getJSON('{{base_url()}}companyreport/companyreports/getcustomerbyid', {id: $('#customer_id_out').val()}, function(json, textStatus) {
-            if(json.status == "success"){
-                var row = json.data;
+        if($('#customer_id_out').val() != ""){
+            $.getJSON('{{base_url()}}companyreport/companyreports/getcustomerbyid', {id: $('#customer_id_out').val()}, function(json, textStatus) {
+                if(json.status == "success"){
+                    var row = json.data;
 
-                $('#top_out').val(row.top).change();
+                    $('#top_out').val(row.top).change();
 
-            }else if(json.status == "error"){
-                toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
-            }
-            App.unblockUI('#form-wrapper');
-        });
+                }else if(json.status == "error"){
+                    toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
+                }
+                App.unblockUI('#form-wrapper');
+            });
+        }
     });
 
     $('#top').change(function(){

@@ -48,7 +48,7 @@
                     <table id="table-log" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
-                                <th style="width:50px;">{{ lang('no') }}</th>
+                                <th style="width:50px;">{{ lang('no.') }}</th>
                                 <th>{{ lang('user') }}</th>
                                 <th>{{ lang('level') }}</th>
                                 <th>{{ lang('activity') }}</th>

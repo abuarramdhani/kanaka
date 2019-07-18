@@ -167,10 +167,10 @@ class Returs extends MX_Controller {
             $row_value = array();
 
             $btn_action = '';
-            // if($this->user_profile->get_user_access('Updated', 'companyreport')){
+            // if($this->user_profile->get_user_access('Updated', 'retur')){
             //     $btn_action .= '<a href="javascript:void()" onclick="viewDataOut(\'' . uri_encrypt($row->id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
             // }
-            if($this->user_profile->get_user_access('Deleted', 'companyreport')){
+            if($this->user_profile->get_user_access('Deleted', 'retur')){
                 $btn_action .= '<a href="javascript:void()" onclick="deleteDataOut(\'' . uri_encrypt($row->id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
             }
 

@@ -31,97 +31,282 @@
     <!-- END PAGE HEADERs-->
     <div class="row">
         <div class="col-md-12">
-            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <div id="table-wrapper" class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption font-dark">
-                        <i class="icon-grid font-dark"></i>
-                        <span class="caption-subject">{{lang('pricelist')}}</span>
-                    </div>
-                    <div class="tools">
-                        @if($add_access == 1)
-                            <button onclick="add_pricelist()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('new_pricelist')}}</button>
-                        @endif
+            @if($user->group_id == '1')
+                <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                <div id="table-wrapper" class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-dark">
+                            <i class="icon-grid font-dark"></i>
+                            <span class="caption-subject">{{lang('pricelist')}}</span>
+                        </div>
+                        <div class="tools">
+                            @if($add_access == 1)
+                                <button onclick="add_pricelist()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('new_pricelist')}}</button>
+                            @endif
 
-                        @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <!-- <button onClick="return window.open('{{base_url()}}reports/pricelist/pdf')" class="btn btn-danger btn-sm">
-                                <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
-                            </button> -->
-                            <button onClick="return window.open('{{base_url()}}reports/pricelist/excel')" class="btn btn-success btn-sm">
-                                <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
-                            </button>
-                        @endif
+                            @if($print_limited_access == 1 || $print_unlimited_access == 1)
+                                <!-- <button onClick="return window.open('{{base_url()}}reports/pricelist/pdf')" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
+                                </button> -->
+                                <button onClick="return window.open('{{base_url()}}reports/pricelist/excel')" class="btn btn-success btn-sm">
+                                    <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
+                                </button>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <table id="table-pricelist" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+                            <thead>
+                                <tr>
+                                    <th rowspan="3" class="text-center"><?=lang('product_code')?></th>
+                                    <th colspan="2" class="text-center"><?=lang('barcode')?></th>
+                                    <th rowspan="3" class="text-center"><?=lang('product_name')?></th>
+                                    <th rowspan="3" class="text-center"><?=lang('packing_size')?></th>
+                                    <th rowspan="3" class="text-center"><?=lang('qty_per_ctn')?></th>
+                                    <th colspan="4" class="text-center"><?=lang('carton_dimension')?></th>
+                                    <th rowspan="3" class="text-center"><?=lang('weight')?></th>
+                                    <th rowspan="3" class="text-center"><?=lang('normal_price')?></th>
+                                    <th colspan="5" class="text-center"><?=lang('kanaka')?></th>
+                                    <th colspan="5" class="text-center">DIST-POINT (DIPO)<span class="discount-value"><?php if(!empty($discount)) echo $discount->dipo_discount?>%</span></th>
+                                    <th colspan="5" class="text-center"><?=lang('mitra')?><span class="discount-value"><?php if(!empty($discount)) echo$discount->mitra_discount?>%</span></th>
+                                    <th colspan="7" class="text-center"><?=lang('customer')?><span class="discount-value"><?php if(!empty($discount)) echo$discount->customer_discount?>%</span></th>
+                                    <th rowspan="3" class="text-center"><?=lang('created_date')?></th>
+                                    <th rowspan="3" width="13%"><?=lang('options')?></th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2"><?=lang('product')?></th>
+                                    <th rowspan="2"><?=lang('carton')?></th> 
+                                    <th rowspan="2">L</th> 
+                                    <th rowspan="2">W</th> 
+                                    <th rowspan="2">H</th> 
+                                    <th rowspan="2">Vol (m<sup>3</sup>)</th> 
+                                    <th colspan="2"><?=lang('before_tax')?></th> 
+                                    <th colspan="2"><?=lang('after_tax')?></th> 
+                                    <th rowspan="2" class="text-center"><?=lang('stock_availibility')?></th>
+                                    <th colspan="2"><?=lang('before_tax')?></th> 
+                                    <th colspan="3"><?=lang('after_tax')?></th>
+                                    <th colspan="2"><?=lang('before_tax')?></th> 
+                                    <th colspan="3"><?=lang('after_tax')?></th>
+                                    <th colspan="2"><?=lang('before_tax')?></th> 
+                                    <th colspan="3"><?=lang('after_tax')?></th>
+                                    <th colspan="2"><?=lang('het')?></th>
+                                </tr>
+                                <tr>
+                                    <th><?=lang('in_pcs')?></th> 
+                                    <th><?=lang('in_ctn')?></th> 
+                                    <th><?=lang('in_pcs')?></th> 
+                                    <th><?=lang('in_ctn')?></th> 
+                                    <th><?=lang('in_pcs')?></th> 
+                                    <th><?=lang('in_ctn')?></th> 
+                                    <th><?=lang('in_pcs')?></th> 
+                                    <th><?=lang('in_ctn')?></th> 
+                                    <th><?=lang('round_up_in_ctn')?></th> 
+                                    <th><?=lang('in_pcs')?></th> 
+                                    <th><?=lang('in_ctn')?></th> 
+                                    <th><?=lang('in_pcs')?></th> 
+                                    <th><?=lang('in_ctn')?></th> 
+                                    <th><?=lang('round_up_in_ctn')?></th> 
+                                    <th><?=lang('in_pcs')?></th> 
+                                    <th><?=lang('in_ctn')?></th> 
+                                    <th><?=lang('in_pcs')?></th> 
+                                    <th><?=lang('in_ctn')?></th> 
+                                    <th><?=lang('round_up_in_ctn')?></th> 
+                                    <th><?=lang('round_up_in_pcs')?></th> 
+                                    <th><?=lang('round_up_in_ctn')?></th> 
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
-                <div class="portlet-body">
-                    <table id="table-pricelist" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
-                        <thead>
-                            <tr>
-                                <th rowspan="3" class="text-center"><?=lang('product_code')?></th>
-                                <th colspan="2" class="text-center"><?=lang('barcode')?></th>
-                                <th rowspan="3" class="text-center"><?=lang('product_name')?></th>
-                                <th rowspan="3" class="text-center"><?=lang('packing_size')?></th>
-                                <th rowspan="3" class="text-center"><?=lang('qty_per_ctn')?></th>
-                                <th colspan="4" class="text-center"><?=lang('carton_dimension')?></th>
-                                <th rowspan="3" class="text-center"><?=lang('weight')?></th>
-                                <th rowspan="3" class="text-center"><?=lang('normal_price')?></th>
-                                <th colspan="5" class="text-center"><?=lang('kanaka')?></th>
-                                <th colspan="5" class="text-center">DIST-POINT (DIPO)<span class="discount-value"><?php if(!empty($discount)) echo $discount->dipo_discount?>%</span></th>
-                                <th colspan="5" class="text-center"><?=lang('mitra')?><span class="discount-value"><?php if(!empty($discount)) echo$discount->mitra_discount?>%</span></th>
-                                <th colspan="7" class="text-center"><?=lang('customer')?><span class="discount-value"><?php if(!empty($discount)) echo$discount->customer_discount?>%</span></th>
-                                <th rowspan="3" class="text-center"><?=lang('created_date')?></th>
-                                <th rowspan="3" width="13%"><?=lang('options')?></th>
-                            </tr>
-                            <tr>
-                                <th rowspan="2"><?=lang('product')?></th>
-                                <th rowspan="2"><?=lang('carton')?></th> 
-                                <th rowspan="2">L</th> 
-                                <th rowspan="2">W</th> 
-                                <th rowspan="2">H</th> 
-                                <th rowspan="2">Vol (m<sup>3</sup>)</th> 
-                                <th colspan="2"><?=lang('before_tax')?></th> 
-                                <th colspan="2"><?=lang('after_tax')?></th> 
-                                <th rowspan="2" class="text-center"><?=lang('stock_availibility')?></th>
-                                <th colspan="2"><?=lang('before_tax')?></th> 
-                                <th colspan="3"><?=lang('after_tax')?></th>
-                                <th colspan="2"><?=lang('before_tax')?></th> 
-                                <th colspan="3"><?=lang('after_tax')?></th>
-                                <th colspan="2"><?=lang('before_tax')?></th> 
-                                <th colspan="3"><?=lang('after_tax')?></th>
-                                <th colspan="2"><?=lang('het')?></th>
-                            </tr>
-                            <tr>
-                                <th><?=lang('in_pcs')?></th> 
-                                <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('in_pcs')?></th> 
-                                <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('in_pcs')?></th> 
-                                <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('in_pcs')?></th> 
-                                <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('round_up_in_ctn')?></th> 
-                                <th><?=lang('in_pcs')?></th> 
-                                <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('in_pcs')?></th> 
-                                <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('round_up_in_ctn')?></th> 
-                                <th><?=lang('in_pcs')?></th> 
-                                <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('in_pcs')?></th> 
-                                <th><?=lang('in_ctn')?></th> 
-                                <th><?=lang('round_up_in_ctn')?></th> 
-                                <th><?=lang('round_up_in_pcs')?></th> 
-                                <th><?=lang('round_up_in_ctn')?></th> 
-                            </tr>
-                        </thead>
-                    </table>
+                <!-- END EXAMPLE TABLES PORTLET-->
+            @else
+                <div class="tabbable-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_pricelist" data-toggle="tab" aria-expanded="true"> <?= lang('pricelist') ?> </a></li>
+                        <li class=""><a href="#tab_kanaka" data-toggle="tab" aria-expanded="false"> <?= lang('kanaka') ?> </a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_pricelist">
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <div id="table-wrapper" class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption font-dark">
+                                        <i class="icon-grid font-dark"></i>
+                                        <span class="caption-subject">{{lang('pricelist')}}</span>
+                                    </div>
+                                    <div class="tools">
+                                        @if($add_access == 1)
+                                            <button onclick="add_pricelist()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('new_pricelist')}}</button>
+                                        @endif
+
+                                        @if($print_limited_access == 1 || $print_unlimited_access == 1)
+                                            <!-- <button onClick="return window.open('{{base_url()}}reports/pricelist/pdf')" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
+                                            </button> -->
+                                            <button onClick="return window.open('{{base_url()}}reports/pricelist/excel')" class="btn btn-success btn-sm">
+                                                <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
+                                            </button>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <table id="table-pricelist" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="3" class="text-center"><?=lang('product_code')?></th>
+                                                <th colspan="2" class="text-center"><?=lang('barcode')?></th>
+                                                <th rowspan="3" class="text-center"><?=lang('product_name')?></th>
+                                                <th rowspan="3" class="text-center"><?=lang('packing_size')?></th>
+                                                <th rowspan="3" class="text-center"><?=lang('qty_per_ctn')?></th>
+                                                <th colspan="4" class="text-center"><?=lang('carton_dimension')?></th>
+                                                <th rowspan="3" class="text-center"><?=lang('weight')?></th>
+                                                <th rowspan="3" class="text-center"><?=lang('normal_price')?></th>
+                                                <th colspan="5" class="text-center"><?=lang('kanaka')?></th>
+                                                <th colspan="5" class="text-center">DIST-POINT (DIPO)<span class="discount-value"><?php if(!empty($discount)) echo $discount->dipo_discount?>%</span></th>
+                                                <th colspan="5" class="text-center"><?=lang('mitra')?><span class="discount-value"><?php if(!empty($discount)) echo$discount->mitra_discount?>%</span></th>
+                                                <th colspan="7" class="text-center"><?=lang('customer')?><span class="discount-value"><?php if(!empty($discount)) echo$discount->customer_discount?>%</span></th>
+                                                <th rowspan="3" class="text-center"><?=lang('created_date')?></th>
+                                                <th rowspan="3" width="13%"><?=lang('options')?></th>
+                                            </tr>
+                                            <tr>
+                                                <th rowspan="2"><?=lang('product')?></th>
+                                                <th rowspan="2"><?=lang('carton')?></th> 
+                                                <th rowspan="2">L</th> 
+                                                <th rowspan="2">W</th> 
+                                                <th rowspan="2">H</th> 
+                                                <th rowspan="2">Vol (m<sup>3</sup>)</th> 
+                                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                                <th colspan="2"><?=lang('after_tax')?></th> 
+                                                <th rowspan="2" class="text-center"><?=lang('stock_availibility')?></th>
+                                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                                <th colspan="3"><?=lang('after_tax')?></th>
+                                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                                <th colspan="3"><?=lang('after_tax')?></th>
+                                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                                <th colspan="3"><?=lang('after_tax')?></th>
+                                                <th colspan="2"><?=lang('het')?></th>
+                                            </tr>
+                                            <tr>
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('round_up_in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('round_up_in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('round_up_in_ctn')?></th> 
+                                                <th><?=lang('round_up_in_pcs')?></th> 
+                                                <th><?=lang('round_up_in_ctn')?></th> 
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- END EXAMPLE TABLES PORTLET-->
+                        </div>
+                        <div class="tab-pane" id="tab_kanaka">
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <div id="table-wrapper" class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption font-dark">
+                                        <i class="icon-grid font-dark"></i>
+                                        <span class="caption-subject">{{lang('pricelist')}}</span>
+                                    </div>
+                                    <div class="tools">
+                                        @if($print_limited_access == 1 || $print_unlimited_access == 1)
+                                            <!-- <button onClick="return window.open('{{base_url()}}reports/pricelist/pdf')" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
+                                            </button> -->
+                                            <button onClick="return window.open('{{base_url()}}reports/pricelist/excel_kanaka')" class="btn btn-success btn-sm">
+                                                <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
+                                            </button>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <table id="table-kanaka" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="3" class="text-center"><?=lang('product_code')?></th>
+                                                <th colspan="2" class="text-center"><?=lang('barcode')?></th>
+                                                <th rowspan="3" class="text-center"><?=lang('product_name')?></th>
+                                                <th rowspan="3" class="text-center"><?=lang('packing_size')?></th>
+                                                <th rowspan="3" class="text-center"><?=lang('qty_per_ctn')?></th>
+                                                <th colspan="4" class="text-center"><?=lang('carton_dimension')?></th>
+                                                <th rowspan="3" class="text-center"><?=lang('weight')?></th>
+                                                <th rowspan="3" class="text-center"><?=lang('normal_price')?></th>
+                                                <th colspan="5" class="text-center"><?=lang('kanaka')?></th>
+                                                <th colspan="5" class="text-center">DIST-POINT (DIPO)<span class="discount-value"><?php if(!empty($discount)) echo $discount->dipo_discount?>%</span></th>
+                                                <th colspan="5" class="text-center"><?=lang('mitra')?><span class="discount-value"><?php if(!empty($discount)) echo$discount->mitra_discount?>%</span></th>
+                                                <th colspan="7" class="text-center"><?=lang('customer')?><span class="discount-value"><?php if(!empty($discount)) echo$discount->customer_discount?>%</span></th>
+                                                <th rowspan="3" class="text-center"><?=lang('created_date')?></th>
+                                                <th rowspan="3" width="13%"><?=lang('options')?></th>
+                                            </tr>
+                                            <tr>
+                                                <th rowspan="2"><?=lang('product')?></th>
+                                                <th rowspan="2"><?=lang('carton')?></th> 
+                                                <th rowspan="2">L</th> 
+                                                <th rowspan="2">W</th> 
+                                                <th rowspan="2">H</th> 
+                                                <th rowspan="2">Vol (m<sup>3</sup>)</th> 
+                                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                                <th colspan="2"><?=lang('after_tax')?></th> 
+                                                <th rowspan="2" class="text-center"><?=lang('stock_availibility')?></th>
+                                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                                <th colspan="3"><?=lang('after_tax')?></th>
+                                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                                <th colspan="3"><?=lang('after_tax')?></th>
+                                                <th colspan="2"><?=lang('before_tax')?></th> 
+                                                <th colspan="3"><?=lang('after_tax')?></th>
+                                                <th colspan="2"><?=lang('het')?></th>
+                                            </tr>
+                                            <tr>
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('round_up_in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('round_up_in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('in_pcs')?></th> 
+                                                <th><?=lang('in_ctn')?></th> 
+                                                <th><?=lang('round_up_in_ctn')?></th> 
+                                                <th><?=lang('round_up_in_pcs')?></th> 
+                                                <th><?=lang('round_up_in_ctn')?></th> 
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- END EXAMPLE TABLES PORTLET-->
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!-- END EXAMPLE TABLES PORTLET-->
+            @endif
         </div>
     </div>
 </div>
- <div class="modal fade" id="modal_form" role="dialog">
+<div class="modal fade" id="modal_form" role="dialog">
   <div class="modal-dialog" style="width:70%;">
     <div class="modal-content">
       <div class="modal-header">
@@ -586,6 +771,30 @@
         "bLengthChange": true,
         "sServerMethod": "GET",
         "sAjaxSource": "{{ base_url() }}pricelist/pricelists/fetch_data",
+        "columnDefs": [
+            @if($user->group_id == '2')
+                {"visible": false, "searchable": false, "targets": [12, 13, 14, 15, 16, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]},
+            @endif
+
+            @if($user->group_id == '3')
+                {"visible": false, "searchable": false, "targets": [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 27, 28, 29, 30, 31, 32, 33]},
+            @endif
+
+            {"className": "dt-center", "targets": [35]},
+            {"targets": [35], "orderable": false}
+        ],
+        "order": [0,"asc"],
+    }).fnSetFilteringDelay(1000);
+
+
+    // Pengaturan Datatable 
+    var oTable =$('#table-kanaka').dataTable({
+        "responsive": false,
+        "bProcessing": true,
+        "bServerSide": true,
+        "bLengthChange": true,
+        "sServerMethod": "GET",
+        "sAjaxSource": "{{ base_url() }}pricelist/pricelists/fetch_data_kanaka",
         "columnDefs": [
             @if($user->group_id == '2')
                 {"visible": false, "searchable": false, "targets": [12, 13, 14, 15, 16, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]},

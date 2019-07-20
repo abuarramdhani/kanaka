@@ -257,6 +257,220 @@ class Pricelists extends MX_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($selected_data));
     }
 
+    public function fetch_data_kanaka() {
+        $user = $this->ion_auth->user()->row();
+        $database_columns = array(
+            'm_product.id as product_id',
+            't_pricelist.id as pricelist_id',
+            'product_code',
+            'm_product.name',
+            'barcode_product',
+            'barcode_carton',
+            'packing_size',
+            'qty',
+            'length',
+            'height',
+            'width',
+            'volume',
+            'weight',
+            'normal_price',
+            'company_before_tax_pcs',
+            'company_before_tax_ctn',
+            'company_after_tax_pcs',
+            'company_after_tax_ctn',
+            'stock_availibility',
+            'dipo_discount',
+            'dipo_before_tax_pcs',
+            'dipo_before_tax_ctn',
+            'dipo_after_tax_pcs',
+            'dipo_after_tax_ctn',
+            'dipo_after_tax_round_up',
+            'mitra_discount',
+            'mitra_before_tax_pcs',
+            'mitra_before_tax_ctn',
+            'mitra_after_tax_pcs',
+            'mitra_after_tax_ctn',
+            'mitra_after_tax_round_up',
+            'customer_discount',
+            'customer_before_tax_pcs',
+            'customer_before_tax_ctn',
+            'customer_after_tax_pcs',
+            'customer_after_tax_ctn',
+            'customer_after_tax_round_up',
+            'het_round_up_pcs',
+            'het_round_up_ctn',
+            't_pricelist.date_created',
+        );
+
+        $header_columns = array(
+            'product_code',
+            'm_product.name',
+            'barcode_product',
+            'barcode_carton',
+            'packing_size',
+            'qty',
+            'length',
+            'height',
+            'width',
+            'volume',
+            'weight',
+            'normal_price',
+            'company_before_tax_pcs',
+            'company_before_tax_ctn',
+            'company_after_tax_pcs',
+            'company_after_tax_ctn',
+            'stock_availibility',
+            'dipo_discount',
+            'dipo_before_tax_pcs',
+            'dipo_before_tax_ctn',
+            'dipo_after_tax_pcs',
+            'dipo_after_tax_ctn',
+            'dipo_after_tax_round_up',
+            'mitra_discount',
+            'mitra_before_tax_pcs',
+            'mitra_before_tax_ctn',
+            'mitra_after_tax_pcs',
+            'mitra_after_tax_ctn',
+            'mitra_after_tax_round_up',
+            'customer_discount',
+            'customer_before_tax_pcs',
+            'customer_before_tax_ctn',
+            'customer_after_tax_pcs',
+            'customer_after_tax_ctn',
+            'customer_after_tax_round_up',
+            'het_round_up_pcs',
+            'het_round_up_ctn',
+            't_pricelist.date_created',
+        );
+
+        $from = "t_pricelist";
+        $where = "t_pricelist.deleted = 0 AND m_product.deleted = 0 AND users.group_id = 1";
+
+        $order_by = $header_columns[$this->input->get('iSortCol_0')] . " " . $this->input->get('sSortDir_0');
+        
+        $join[] = array('m_product', 'm_product.id = t_pricelist.product_id', 'inner');
+        $join[] = array('users', 't_pricelist.user_created = users.id', 'left');
+        
+        if ($this->input->get('sSearch') != '') {
+            $sSearch = str_replace(array('.', ','), '', $this->db->escape_str($this->input->get('sSearch')));
+            if((bool)strtotime($sSearch)){
+                $sSearch = date('Y-m-d',strtotime($sSearch));
+            }
+            $where .= " AND (";
+            $where .= "m_product.name LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.product_code LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.barcode_product LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.barcode_carton LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.packing_size LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.qty LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.length LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.height LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.width LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.volume LIKE '%" . $sSearch . "%' OR ";
+            $where .= "m_product.weight LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.normal_price LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.company_before_tax_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.company_before_tax_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.company_after_tax_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.company_after_tax_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.stock_availibility LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.dipo_discount LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.dipo_before_tax_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.dipo_before_tax_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.dipo_after_tax_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.dipo_after_tax_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.dipo_after_tax_round_up LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_discount LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_before_tax_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_before_tax_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_after_tax_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_after_tax_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.mitra_after_tax_round_up LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.customer_discount LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.customer_before_tax_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.customer_before_tax_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.customer_after_tax_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.customer_after_tax_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.customer_after_tax_round_up LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.het_round_up_pcs LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.het_round_up_ctn LIKE '%" . $sSearch . "%' OR ";
+            $where .= "t_pricelist.date_created LIKE '%" . $sSearch . "%'";
+            $where .= ")";
+        }
+
+        $this->datatables->set_index('t_pricelist.id');
+        $this->datatables->config('database_columns', $database_columns);
+        $this->datatables->config('from', $from);
+        $this->datatables->config('join', $join);
+        $this->datatables->config('where', $where);
+        $this->datatables->config('order_by', $order_by);
+        $selected_data = $this->datatables->get_select_data();
+        $aa_data = $selected_data['aaData'];
+        $new_aa_data = array();
+        
+        foreach ($aa_data as $row) {
+            $row_value = array();
+
+            $btn_action = '';
+            if($this->user_profile->get_user_access('Updated', 'pricelist')){
+                $btn_action .= '<a href="javascript:void()" onclick="viewData(\'' . uri_encrypt($row->pricelist_id) . '\',\'' . uri_encrypt($row->product_id) . '\')" class="btn btn-warning btn-icon-only btn-circle" data-toggle="ajaxModal" title="' . lang('update') . '"><i class="fa fa-edit"></i> </a>';
+            }
+            if($this->user_profile->get_user_access('Deleted', 'pricelist')){
+                $btn_action .= '<a href="javascript:void()" onclick="deleteData(\'' . uri_encrypt($row->pricelist_id) . '\')" class="btn btn-danger btn-icon-only btn-circle" title="' . lang('delete') . '"><i class="fa fa-trash-o"></i></a>';
+            }
+
+            $row_value[] = $row->product_code;
+            $row_value[] = $row->barcode_product;
+            $row_value[] = $row->barcode_carton;
+            $row_value[] = $row->name;
+            $row_value[] = $row->packing_size;
+            $row_value[] = $row->qty;
+            $row_value[] = $row->length;
+            $row_value[] = $row->width;
+            $row_value[] = $row->height;
+            $row_value[] = $row->volume;
+            $row_value[] = $row->weight;
+            $row_value[] = $row->normal_price;
+            $row_value[] = $row->company_before_tax_pcs;
+            $row_value[] = $row->company_before_tax_ctn;
+            $row_value[] = $row->company_after_tax_pcs;
+            $row_value[] = $row->company_after_tax_ctn;
+            if($row->stock_availibility == 0){
+               $stock = lang('out_of_stock');
+            }else{
+               $stock = lang('available');
+            }
+            $row_value[] = $stock;
+            // $row_value[] = $row->dipo_discount;
+            $row_value[] = $row->dipo_before_tax_pcs;
+            $row_value[] = $row->dipo_before_tax_ctn;
+            $row_value[] = $row->dipo_after_tax_pcs;
+            $row_value[] = $row->dipo_after_tax_ctn;
+            $row_value[] = $row->dipo_after_tax_round_up;
+            // $row_value[] = $row->mitra_discount;
+            $row_value[] = $row->mitra_before_tax_pcs;
+            $row_value[] = $row->mitra_before_tax_ctn;
+            $row_value[] = $row->mitra_after_tax_pcs;
+            $row_value[] = $row->mitra_after_tax_ctn;
+            $row_value[] = $row->mitra_after_tax_round_up;
+            // $row_value[] = $row->customer_discount;
+            $row_value[] = $row->customer_before_tax_pcs;
+            $row_value[] = $row->customer_before_tax_ctn;
+            $row_value[] = $row->customer_after_tax_pcs;
+            $row_value[] = $row->customer_after_tax_ctn;
+            $row_value[] = $row->customer_after_tax_round_up;
+            $row_value[] = $row->het_round_up_pcs;
+            $row_value[] = $row->het_round_up_ctn;
+            $row_value[] = date('d-m-Y',strtotime($row->date_created));
+            $row_value[] = $btn_action;
+            
+            $new_aa_data[] = $row_value;
+        }
+        
+        $selected_data['aaData'] = $new_aa_data;
+        $this->output->set_content_type('application/json')->set_output(json_encode($selected_data));
+    }
+
     public function save() {
         if ($this->input->is_ajax_request()) {
             $user = $this->ion_auth->user()->row();
@@ -679,6 +893,29 @@ class Pricelists extends MX_Controller {
                         ->get_where('t_pricelist', array('deleted' => 0))
                         ->row();
         }
+        
+        $data['discount'] = $discount;
+        
+        $this->load->view('pricelist/pricelist/pricelist_pdf', $data);
+    }
+
+    function excel_kanaka(){
+        header("Content-type: application/octet-stream");
+        header("Content-Disposition: attachment; filename=pricelist.xls");
+
+        $user = $this->ion_auth->user()->row();
+        $data['pricelists'] = Pricelist::select('*', 'm_product.name as name_product')
+                                    ->leftJoin('m_product', 't_pricelist.product_id', '=', 'm_product.id')
+                                    ->leftJoin('users', 't_pricelist.user_created', '=' ,'users.id')
+                                    ->where('t_pricelist.deleted', 0)
+                                    ->where('m_product.deleted', 0)
+                                    ->where('users.group_id', 1)
+                                    ->orderBy('t_pricelist.id', 'DESC')
+                                    ->get();
+        $discount = $this->db->select('*')
+                    ->order_by('id', 'DESC')
+                    ->get_where('t_pricelist', array('deleted' => 0))
+                    ->row();
         
         $data['discount'] = $discount;
         

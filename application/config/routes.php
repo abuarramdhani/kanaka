@@ -167,6 +167,7 @@ $route['master/vendor/excel'] = 'principle/principles/excel';
 $route['reports/pricelist'] = 'pricelist/pricelists/index';
 $route['reports/pricelist/pdf'] = 'pricelist/pricelists/pdf';
 $route['reports/pricelist/excel'] = 'pricelist/pricelists/excel';
+$route['reports/pricelist/excel_kanaka'] = 'pricelist/pricelists/excel_kanaka';
 
 /**
 * COMPANY REPORT

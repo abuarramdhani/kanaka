@@ -543,3 +543,12 @@ $lang['retur'] = 'Retur';
 $lang['new_retur'] = "Tambah Retur";
 $lang['edit_retur'] = "Ubah Retur";
 ## END RETUR ##
+
+## CODE ##
+$lang['new_code'] = "Tambah Kode";
+$lang['edit_code'] = "Ubah Kode";
+$lang['available'] = 'Tersedia';
+$lang['not_available'] = 'Tidak tersedia';
+$lang['principal'] = 'Supplier';
+$lang['type'] = 'Tipe';
+## END CODE ##

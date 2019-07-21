@@ -1,6 +1,6 @@
 @extends('default.views.layouts.default')
 
-@section('title') {{lang('zona')}} @stop
+@section('title') {{lang('code')}} @stop
 
 @section('body')
 <style type="text/css">
@@ -19,13 +19,13 @@
                 <i class="fa fa-circle"></i>
             </li>
             <li>
-                <span>{{lang('zona')}}</span>
+                <span>{{lang('code')}}</span>
             </li>
         </ul>
     </div>
     <!-- END PAGE BAR -->
     <!-- BEGIN PAGE TITLE-->
-    <h3 class="page-title"> {{lang('zona')}} </h3>
+    <h3 class="page-title"> {{lang('code')}} </h3>
     <!-- END PAGE TITLE-->
     <!-- END PAGE HEADERs-->
     <div class="row">
@@ -35,29 +35,31 @@
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="icon-grid font-dark"></i>
-                        <span class="caption-subject">{{lang('zona')}}</span>
+                        <span class="caption-subject">{{lang('code')}}</span>
                     </div>
                     <div class="tools">
                         @if($add_access == 1)
-                            <button onclick="add_zona()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('new_zona')}}</button>
+                            <button onclick="add_code()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>{{lang('new_code')}}</button>
                         @endif
 
                         @if($print_limited_access == 1 || $print_unlimited_access == 1)
-                            <button onClick="return window.open('{{base_url()}}master/zona/pdf')" class="btn btn-danger btn-sm">
+                            <button onClick="return window.open('{{base_url()}}master/code/pdf')" class="btn btn-danger btn-sm">
                                 <i class="fa fa-file-pdf-o"></i> {{ lang('print_pdf') }}
                             </button>
-                            <button onClick="return window.open('{{base_url()}}master/zona/excel')" class="btn btn-success btn-sm">
+                            <button onClick="return window.open('{{base_url()}}master/code/excel')" class="btn btn-success btn-sm">
                                 <i class="fa fa-file-excel-o"></i> {{ lang('print_excel') }}
                             </button>
                         @endif
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <table id="table-zona" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
+                    <table id="table-code" class="table table-striped table-bordered table-hover dt-responsive" width="100%" >
                         <thead>
                             <tr>
-                                <th><?=lang('name')?></th>
-                                <th><?=lang('description')?></th>
+                                <th><?=lang('code')?></th>
+                                <th><?=lang('username')?></th>
+                                <th><?=lang('type')?></th>
+                                <th><?=lang('status')?></th>
                                 <th><?=lang('created_date')?></th>
                                 <th width="13%"><?=lang('options')?></th>
                             </tr>
@@ -74,28 +76,50 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title"><?=lang('new_zona')?></h3>
+        <h3 class="modal-title"><?=lang('new_code')?></h3>
       </div>
-      {{ form_open(null,array('id' => 'form-zona', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
+      {{ form_open(null,array('id' => 'form-code', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
       <div class="modal-body">
         <input type="hidden" name="id" value="">
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('name')?><span class="text-danger">*</span></label>
+            <label class="col-lg-4 control-label"><?=lang('code')?><span class="text-danger">*</span></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="name" id="name" placeholder="<?=lang('name')?>" maxlength="50" />
+                <input type="text" class="form-control input-sm" name="code" id="code" placeholder="<?=lang('code')?>" maxlength="10" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
         
         <div class="form-group form-md-line-input">
-            <label class="col-lg-4 control-label"><?=lang('description')?></label>
+            <label class="col-lg-4 control-label"><?=lang('username')?></label>
             <div class="col-lg-7">
-                <input type="text" class="form-control input-sm" name="description" id="description" placeholder="<?=lang('description')?>" maxlength="150" />
+                <input type="text" class="form-control input-sm" name="username" id="username" placeholder="<?=lang('username')?>" maxlength="15" />
                 <div class="form-control-focus"> </div>
             </div>
         </div>
         
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('type')?></label>
+            <div class="col-lg-7">
+                <select name="type" id="type" class="form-control input-sm">
+                    <option value="dipo">{{ lang('dipo') }}</option>
+                    <option value="partner">{{ lang('partner') }}</option>
+                    <option value="principal">{{ lang('principal') }}</option>
+                </select>
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-md-line-input">
+            <label class="col-lg-4 control-label"><?=lang('status')?></label>
+            <div class="col-lg-7">
+                <select name="status" id="status" class="form-control input-sm">
+                    <option value="0">{{ lang('available') }}</option>
+                    <option value="1">{{ lang('not_available') }}</option>
+                </select>
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
         
       </div>
       <div class="modal-footer">
@@ -110,45 +134,49 @@
 
 @section('scripts')
 <script type="text/javascript">
-    $('#preview-upload-image-field').hide();
 
-    function add_zona(){
-        $('#form-zona')[0].reset(); 
+    function add_code(){
+        $('#form-code')[0].reset(); 
         $('#modal_form').modal('show'); 
-        $('.modal-title').text('<?=lang('new_zona')?>'); 
+        $('.modal-title').text('<?=lang('new_code')?>'); 
 
         $('[name="id"]').val('');
+        $('[name="code"]').attr('readonly', false);
     }
     toastr.options = { "positionClass": "toast-top-right", };
 
     // Pengaturan Datatable 
-    var oTable =$('#table-zona').dataTable({
+    var oTable =$('#table-code').dataTable({
         "responsive": false,
         "bProcessing": true,
         "bServerSide": true,
         "bLengthChange": true,
         "sServerMethod": "GET",
-        "sAjaxSource": "{{ base_url() }}zona/zonas/fetch_data",
+        "sAjaxSource": "{{ base_url() }}code/codes/fetch_data",
         "columnDefs": [
-            {"className": "dt-center", "targets": [3]},
-            {"targets": [3], "orderable": false}
+            {"className": "dt-center", "targets": [5]},
+            {"targets": [5], "orderable": false}
         ],
         "order": [0,"asc"],
     }).fnSetFilteringDelay(1000);
 
     // Pengaturan Form Validation 
-    var form_validator = $("#form-zona").validate({
+    var form_validator = $("#form-code").validate({
         errorPlacement: function(error, element) {
             $(element).parent().closest('.form-group').append(error);
         },
         errorElement: "span",
         rules: {
-            name: "required",
-            // image: "required",
+            code: "required",
+            username: "required",
+            type: "required",
+            status: "required",
         },
         messages: {
-            name: "{{lang('name')}}" + " {{lang('not_empty')}}",
-            // image: "{{lang('image')}}" + " {{lang('not_empty')}}",
+            code: "{{lang('code')}}" + " {{lang('not_empty')}}",
+            username: "{{lang('username')}}" + " {{lang('not_empty')}}",
+            type: "{{lang('type')}}" + " {{lang('not_empty')}}",
+            status: "{{lang('status')}}" + " {{lang('not_empty')}}",
         },
         submitHandler : function(form){
             App.blockUI({
@@ -157,7 +185,7 @@
             $(form).ajaxSubmit({  
                 beforeSubmit:  showRequest,  
                 success:       showResponse,
-                url:       '{{base_url()}}zona/zonas/save',      
+                url:       '{{base_url()}}code/codes/save',      
                 type:      'POST',       
                 clearForm: true ,       
                 resetForm: true ,  
@@ -193,20 +221,19 @@
         App.blockUI({
             target: '#form-wrapper'
         });
-        $.getJSON('{{base_url()}}zona/zonas/view', {id: value}, function(json, textStatus) {
+        $.getJSON('{{base_url()}}code/codes/view', {id: value}, function(json, textStatus) {
             if(json.status == "success"){
                 var row = json.data;
                 $('[name="id"]').val(row.id);
-                $('[name="name"]').val(row.name);
-                $('[name="description"]').val(row.description);
-                // $('[name="image"]').val(row.image);
+                $('[name="code"]').val(row.code);
+                $('[name="username"]').val(row.username);
+                $('[name="type"]').val(row.type).change();
+                $('[name="status"]').val(row.status).change();
 
-                var html = '<img width="250" style="padding: 10px;" src="{{ base_url() }}uploads/images/zonas/' + row.image + '">';
-                $('.preview-upload-image').html(html);
-                $('#preview-upload-image-field').show();
+                $('[name="code"]').attr('readonly', true);
 
                 $('#modal_form').modal('show');
-                $('.modal-title').text('<?=lang('edit_zona')?>'); 
+                $('.modal-title').text('<?=lang('edit_code')?>'); 
             }else if(json.status == "error"){
                 toastr.error('{{ lang("data_not_found") }}','{{ lang("notification") }}');
             }
@@ -228,7 +255,7 @@
                 App.blockUI({
                     target: '#table-wrapper'
                 });
-                $.getJSON('{{base_url()}}zona/zonas/delete', {id: value}, function(json, textStatus) {
+                $.getJSON('{{base_url()}}code/codes/delete', {id: value}, function(json, textStatus) {
                     if(json.status == "success"){
                         toastr.success('{{lang("deleted_succesfully")}}','{{ lang("notification") }}');
                     }else if(json.status == "error"){
@@ -249,23 +276,6 @@
             dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
         });
     }
-    
-    // Preview image in browser
-    var imagesPreview = function(input, placeToInsertImagePreview) {
-        if (input.files) {
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                $($.parseHTML('<img width="100" style="padding: 10px;">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-            }
-            reader.readAsDataURL(input.files);
-        }
-    };
-
-    $('#image').on('change', function() {
-        $('.preview-upload-image').html('');
-        imagesPreview(this, 'div.preview-upload-image');
-        $('#preview-upload-image-field').show();
-    });
-    
+        
 </script>
 @stop

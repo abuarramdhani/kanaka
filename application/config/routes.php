@@ -155,6 +155,13 @@ $route['master/zona/pdf']	= 'zona/zonas/pdf';
 $route['master/zona/excel']	= 'zona/zonas/excel';
 
 /**
+* CODE
+*/
+$route['master/code'] = 'code/codes/index';
+$route['master/code/pdf']	= 'code/codes/pdf';
+$route['master/code/excel']	= 'code/codes/excel';
+
+/**
 * VENDOR/PRINCIPLE
 */
 $route['master/vendor'] = 'principle/principles/index';

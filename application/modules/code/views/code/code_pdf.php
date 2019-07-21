@@ -26,29 +26,33 @@
 </style>
 
 <div id="header">
-    <h2><?php echo lang('zona'); ?></h2>
+    <h2><?php echo lang('code'); ?></h2>
 </div>
 
 <div id="content" style="text-align:center;">
 <table width="100%" border="1" cellpadding="1" cellspacing="0">
 	<tr >
 		<th  align="center" width="5%" height="20px">No</th>
-		<th  align="center"><?=lang('name')?></th>
-		<th  align="center"><?=lang('description')?></th>
+		<th  align="center"><?=lang('code')?></th>
+		<th  align="center"><?=lang('username')?></th>
+		<th  align="center"><?=lang('type')?></th>
+		<th  align="center"><?=lang('status')?></th>
 		<th  align="center"><?=lang('created_date')?></th>
 	</tr>
 	<?php 
     $i=0;
-    if(count($zonas) > 0){
-	   foreach($zonas as $zona){
+    if(count($codes) > 0){
+	   foreach($codes as $code){
 	   $i++;
    	?>
 					
 	<tr style="font-size:9px">
 		<td align="center"><?php echo $i;?></td>
-		<td><?=$zona->name?></td>
-		<td><?=$zona->description?></td>
-		<td><?=date('d-m-Y',strtotime($zona->date_created))?></td>
+		<td><?=$code->code?></td>
+		<td><?=$code->username?></td>
+		<td><?=ucwords(lang($code->type))?></td>
+ 		<td><?=$code->status == 0 ? lang('available') : lang('not_available')?></td>
+		<td><?=date('d-m-Y',strtotime($code->date_created))?></td>
 	</tr>
 	<?php 
         }
@@ -56,7 +60,7 @@
     else{
     ?>
         <tr style="font-size:9px">
-		  <td align="center" colspan="4">No Data Available</td>
+		  <td align="center" colspan="6">No Data Available</td>
         </tr>
     <?php
     }
